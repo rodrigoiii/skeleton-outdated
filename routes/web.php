@@ -8,3 +8,5 @@ $app->get('/', function ()
 $app->get('/test-controller', "TestController:index");
 
 $app->get('/test-view', "TestController:testView");
+
+$app->get('/test-model', "TestController:testModel");
