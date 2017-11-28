@@ -8,4 +8,9 @@ class TestController extends Controller
 	{
 		return "Hello World inside of controller";
 	}
+
+	public function testView($request, $response)
+	{
+		return $this->phpView->render($response, "index.php");
+	}
 }

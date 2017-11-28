@@ -8,6 +8,12 @@ $app = new Slim\App([
 
 $container = $app->getContainer();
 
+// php view
+$container['phpView'] = function ($c)
+{
+	return new Slim\Views\PhpRenderer(__DIR__ . "/../resources/views");
+};
+
 $container['TestController'] = function ($c)
 {
 	return new App\Http\Controllers\TestController($c);
