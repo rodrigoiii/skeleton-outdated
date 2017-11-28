@@ -6,6 +6,13 @@ $app = new Slim\App([
 	]
 ]);
 
+$container = $app->getContainer();
+
+$container['TestController'] = function ($c)
+{
+	return new App\Http\Controllers\TestController($c);
+};
+
 require __DIR__ . "/../routes/web.php";
 
 $app->run();
