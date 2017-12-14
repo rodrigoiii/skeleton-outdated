@@ -1,0 +1,44 @@
+{
+  "name": "gulp-web-dev",
+  "version": "1.0.0",
+  "description": "What is the power of this tools ? Tools for watching sass. Compress your css and js files. Optimize your images to decrease the byte. Move all fonts at the one location.",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cache": "^0.4.6",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-flatten": "^0.3.1",
+    "gulp-if": "^2.0.2",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-merge-media-queries": "^0.2.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.1.2",
+    "gulp-useref": "^3.1.2",
+    "run-sequence": "^1.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rodz3rd2/gulp-web-dev.git"
+  },
+  "keywords": [
+    "web-dev",
+    "gulp",
+    "tools",
+    "compress",
+    "optimize"
+  ],
+  "author": "rodrigogalura3rd@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rodz3rd2/gulp-web-dev/issues"
+  },
+  "homepage": "https://github.com/Rodz3rd2/gulp-web-dev#readme"
+}
