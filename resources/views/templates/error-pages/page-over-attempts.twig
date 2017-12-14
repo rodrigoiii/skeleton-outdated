@@ -1,0 +1,5 @@
+{% extends 'layouts/error-page.twig' %}
+
+{% block title %}Over Attempts{% endblock %}
+{% block header %}Over Attempts{% endblock %}
+{% block message %}Log In is temporary block. Please try again after {{ minutes }} {{ fn.str_plural("minute", minutes) }}.{% endblock %}
