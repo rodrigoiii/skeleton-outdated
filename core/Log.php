@@ -5,7 +5,6 @@ use Monolog\Handler\StreamHandler;
 
 class Log
 {
-	// public static function debug($message)
 	public static function write($method, $message)
 	{
 		$settings = config('monolog');
