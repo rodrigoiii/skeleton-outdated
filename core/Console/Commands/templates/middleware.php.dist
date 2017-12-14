@@ -1,0 +1,11 @@
+<?php
+
+namespace {{namespace}}\Http\Middlewares;
+
+class {{middleware}} extends Middleware
+{
+	public function __invoke($request, $response, $next)
+	{
+		return $next($request, $response);
+	}
+}
