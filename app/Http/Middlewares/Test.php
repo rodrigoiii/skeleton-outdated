@@ -2,7 +2,9 @@
 
 namespace App\Http\Middlewares;
 
-class Middleware
+use Middlewares\Middleware;
+
+class Test extends Middleware
 {
 	protected $container;
 

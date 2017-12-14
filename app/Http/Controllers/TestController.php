@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests;
 
@@ -25,8 +26,14 @@ class TestController extends Controller
 		var_dump($users);
 	}
 
+	public function testMiddleware($request, $response)
+	{
+		return "Print me after calling the middleware";
+	}
+
 	public function testPostRequest($request, $response)
 	{
 		(new Requests\Test($request))->checkRequest();
 	}
+
 }

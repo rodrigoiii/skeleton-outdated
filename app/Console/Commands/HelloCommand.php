@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use Commands\BaseCommand;
+
 class HelloCommand extends BaseCommand
 {
 	private $signature = "greet:hello";
