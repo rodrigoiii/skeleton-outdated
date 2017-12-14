@@ -1,0 +1,42 @@
+Setup from html
+1. Include this thing inside of head tag:
+```html
+<meta name="_token" content='{{ csrf | json_encode }}'>
+```
+
+2. Add this script after the functions.js include:
+```js
+var This = {
+	init: function ()
+	{
+		$.ajaxSetup({
+			complete: function (jqXHR)
+			{
+				var new_token = jqXHR.getResponseHeader('X-CSRF-TOKEN');
+				$('meta[name="_token"]').attr('content', new_token);
+
+				if ($(':input[name="{{ csrf.name_key }}"]').length > 0 && $(':input[name="{{ csrf.value_key }}"]').length > 0)
+				{
+					var csrf = JSON.parse(new_token);
+					for (var key in csrf)
+					{
+						$(':input[name="'+key+'"]').val(csrf[key]);
+					}
+				}
+			}
+		});
+	}
+};
+$(document).ready(This.init);
+```
+
+Usage in ajax POST request like this
+```js
+var data_to_be_post = {id: 1, name: "John Doe"};
+$.ajax({
+	url: '/path/to/file',
+	type: 'default GET (Other values: POST)',
+	dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+	data: $.extend(true, {}, getCsrfToken(), data_to_be_post)
+});
+```

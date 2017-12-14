@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %} {{ fn._env('APP_NAME', "App Name") }}</title>
+
+	<!-- build:css /dist/css/filename.css -->
+	{# <link rel="stylesheet" type="text/css" href="/css/filename.css"> #}
+	<!-- endbuild -->
+	{% block styles %}
+	{% endblock %}
+</head>
+<body>
+
+	{% include "partials/navigation.twig" %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="page-header">{% block page_header %}{% endblock %}</h1>
+
+				{% include "templates/flash-messages/bootstrap.twig" %}
+
+				{% block content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+
+	<!-- build:js /dist/js/filename.js -->
+	{# <script type="text/javascript" src="/js/filename.js"></script> #}
+	<!-- endbuild -->
+	{% block scripts %}
+	{% endblock %}
+</body>
+</html>
