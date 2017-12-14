@@ -31,9 +31,13 @@ class TestController extends Controller
 		return "Print me after calling the middleware";
 	}
 
+	public function testUtilities($request, $response)
+	{
+		App\Utilities\Test::a();
+	}
+
 	public function testPostRequest($request, $response)
 	{
 		(new Requests\Test($request))->checkRequest();
 	}
-
 }
