@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests;
 
 class TestController extends Controller
 {
@@ -22,5 +23,10 @@ class TestController extends Controller
 
 		echo "<pre>";
 		var_dump($users);
+	}
+
+	public function testPostRequest($request, $response)
+	{
+		(new Requests\Test($request))->checkRequest();
 	}
 }
