@@ -11,10 +11,12 @@ include core_path("settings/dotEnv.php");
 $app = new \Slim\App([
 	'settings' => [
 		'displayErrorDetails' => is_dev(),
+		'debug' => is_dev(),
 
 		'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 		'db' => config('database.connections.mysql'),
-		'monolog' => config('monolog')
+		'monolog' => config('monolog'),
+		'tracy' => config('tracy')
 	]
 ]);
 $container = $app->getContainer();

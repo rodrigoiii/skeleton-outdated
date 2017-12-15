@@ -1,5 +1,8 @@
 <?php
 
+# tracy debugbar
+$app->add(new RunTracy\Middlewares\TracyMiddleware($app));
+
 # SharedServer middleware
 $app->add(new \Middlewares\SharedServer($container));
 

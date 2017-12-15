@@ -11,3 +11,6 @@ include core_path("settings/registered-global-middlewares.php");
 
 # eloquent settings
 include core_path("settings/eloquent.php");
+
+# tracy debug bar
+include core_path("settings/tracy.php");

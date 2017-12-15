@@ -60,10 +60,18 @@ $container['twigView'] = function($c)
 		$c->request->getUri()
 	));
 
+	// tracy debug bar settings
+	$twigView->addExtension(new \Twig_Extension_Profiler($c['twig_profile']));
+	$twigView->addExtension(new \Twig_Extension_Debug());
+
 	# Make the helper functions as global
 	$twigView->getEnvironment()->addGlobal('fn', new Functions);
 
 	return $twigView;
+};
+
+$container['twig_profile'] = function ($c) {
+    return new Twig_Profiler_Profile();
 };
 
 # monolog logger
