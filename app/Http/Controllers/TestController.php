@@ -15,7 +15,7 @@ class TestController extends Controller
 
 	public function testView($request, $response)
 	{
-		return $this->phpView->render($response, "index.php");
+		return $this->container->twigView->render($response, "index.twig");
 	}
 
 	public function testModel()
@@ -28,16 +28,6 @@ class TestController extends Controller
 
 	public function testMiddleware($request, $response)
 	{
-		return "Print me after calling the middleware";
-	}
-
-	public function testUtilities($request, $response)
-	{
-		App\Utilities\Test::a();
-	}
-
-	public function testPostRequest($request, $response)
-	{
-		(new Requests\Test($request))->checkRequest();
+		echo "Print me after calling the Test middleware";
 	}
 }

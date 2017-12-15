@@ -22,20 +22,6 @@ function config($string)
 }
 
 /**
- * Returning the absolute path with string provided
- * @param  [string] $string [string provided]
- * @return [string]         [absolute path + string provided]
- */
-function path_for ($string)
-{
-	if ( dirname($_SERVER['PHP_SELF']) === "\\" )
-	{
-		return ($string === "") ? $string : "/" . $string;
-	}
-	return dirname($_SERVER['PHP_SELF']) . "/" . $string;
-}
-
-/**
  * [Check if the host to be use is own]
  * @return boolean
  */
@@ -54,14 +40,25 @@ function isSharedServer()
 }
 
 /**
- * Timthumb is image resizer
- * @param  [string] $file    [image path]
- * @param  [string] $options [options of timthumb]
- * @return [string]          [absolute path with thimthumb, file and options]
+ * Check if file_path is in uploads folder
+ * @param  [string]  $file_path [the path of file]
+ * @return boolean            [true if file is in upload folders, otherwise false]
  */
-function timthumb ($file, $options)
+function isInUpload($file_path)
 {
-	$path = "api/helpers/timthumb?src=".base_url()."/".$file."$options";
+	return strpos($file_path, config('app.upload-path.base')) === 0;
+}
 
-	return isSharedServer() ? "public/{$path}" : $path;
+/**
+ * Base path of the Url
+ * @return [string] [Base of the url]
+ */
+function base_url($str = "")
+{
+	if (!empty($str))
+	{
+		$str = "/{$str}";
+	}
+
+	return _env('APP_URL') . $str;
 }

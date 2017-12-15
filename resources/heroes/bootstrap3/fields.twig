@@ -1,9 +1,0 @@
-{% set isDefined = oldInput.field_name is defined %}
-<div class="form-group has-feedback {{ isDefined ? (errors.field_name ? "has-error" : "has-success") }}">
-	<label for="field-name">Field Name</label>
-	<input type="text" class="form-control" name="field_name" value="{{ oldInput.field_name ?: admin.get.field_name  }}" id="field-name">
-	{% if isDefined %}
-	<span class="glyphicon {{ errors.field_name ? "glyphicon-remove" : "glyphicon-ok" }} form-control-feedback"></span>
-	{% endif %}
-	<span class="help-block">{{ errors.field_name | first }}</span>
-</div>

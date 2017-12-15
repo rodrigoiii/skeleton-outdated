@@ -25,13 +25,13 @@ function config_path($str = "")
 	return base_path("config") . $str;
 }
 
-function foundation_path($str = "")
+function core_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
-	return base_path("foundation") . $str;
+	return base_path("core") . $str;
 }
 
-function database_path($str = "")
+function db_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
 	return base_path("db") . $str;
@@ -49,10 +49,10 @@ function resources_path($str = "")
 	return base_path("resources") . $str;
 }
 
-function security_path($str = "")
+function settings_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
-	return base_path("security") . $str;
+	return base_path("settings") . $str;
 }
 
 function storage_path($str = "")

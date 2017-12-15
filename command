@@ -6,8 +6,15 @@ require __DIR__ . "/vendor/autoload.php";
 
 $app = new Symfony\Component\Console\Application("My Framework 2");
 
+# Core Commands
+$app->add(new Console\Commands\CommandCommand)
+$app->add(new Console\Commands\ControllerCommand)
+$app->add(new Console\Commands\GenerateKeyCommand)
+$app->add(new Console\Commands\MiddlewareCommand)
+$app->add(new Console\Commands\ModelCommand)
+
 /**
- * Commands section here
+ * Your Custom Commands here
  */
 $app->add(new App\Console\Commands\HelloCommand);
 

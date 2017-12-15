@@ -6,18 +6,10 @@ use Middlewares\Middleware;
 
 class Test extends Middleware
 {
-	protected $container;
-
-	public function __construct($container)
+	public function __invoke($request, $response, $next)
 	{
-		$this->container = $container;
-	}
+		echo "I am middleware <br>";
 
-	public function __get($property)
-	{
-		if (isset($this->container->{$property}))
-		{
-			return $this->container->{$property};
-		}
+		return $next($request, $response);
 	}
 }

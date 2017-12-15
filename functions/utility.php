@@ -1,27 +1,6 @@
 <?php
 
 /**
- * array_group
- * @param  array    $data       this should be 2 dimensional
- * @param  array    $column     this should be not multidimensional
- * @return array                group data
- */
-function array_group($data, $column)
-{
-    $new_data = array();
-    $temp = '';
-    foreach ($data as $d) {
-        if ($temp != $d[$column[0]]) {
-            $new_data[$d[$column[0]]] = array($d[$column[1]]);
-            $temp = $d[$column[0]];
-        } else {
-            array_push($new_data[$d[$column[0]]], $d[$column[1]]);
-        }
-    }
-    return $new_data;
-}
-
-/**
  * Generate token(hash string)
  * @param  [string] $string [Mix in uniqid() and salt]
  * @return [string]         [hash string]
@@ -55,15 +34,6 @@ function _dd($to_be_print)
 }
 
 /**
- * Base path of the Url
- * @return [string] [Base of the url]
- */
-function base_url()
-{
-	return _env('APP_URL');
-}
-
-/**
  * Make the slug friendly text
  * @param  [string] $text [to be slugify]
  * @return [string]       [slugify text]
@@ -89,68 +59,10 @@ function slugify($text)
 	$text = strtolower($text);
 
 	if (empty($text)) {
-	return 'n-a';
+		return 'n-a';
 	}
 
 	return $text;
-}
-
-function _empty($arr, $type)
-{
-	switch ($type) {
-		case 'one':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if ( empty($var) )
-					$counter++;
-			}
-			return $counter === 1;
-
-		case 'many':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if ( empty($var) )
-					$counter++;
-			}
-			return $counter >= 1;
-
-		case 'all':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if ( empty($var) )
-					$counter++;
-			}
-			return $counter === count($arr);
-	}
-}
-
-function _not_empty($arr, $type)
-{
-	switch ($type) {
-		case 'one':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if (! empty($var) )
-					$counter++;
-			}
-			return $counter === 1;
-
-		case 'many':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if (! empty($var) )
-					$counter++;
-			}
-			return $counter >= 1;
-
-		case 'all':
-			$counter = 0;
-			foreach ($arr as $var) {
-				if (! empty($var) )
-					$counter++;
-			}
-			return $counter === count($arr);
-	}
 }
 
 function getUserIP()
@@ -210,11 +122,6 @@ function str_title($str, $char = "_")
 	}
 
 	return ucfirst($new_word);
-}
-
-function isInUpload($file_path)
-{
-	return strpos($file_path, config('app.upload_path.base')) === 0;
 }
 
 function get_exploded_date(array $date, $separator="-", $index=0)
