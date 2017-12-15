@@ -8,10 +8,17 @@ $app = new Slim\App([
 
 $container = $app->getContainer();
 
-// php view
-$container['phpView'] = function ($c)
+// twig view
+$container['twigView'] = function ($c)
 {
-	return new Slim\Views\PhpRenderer(__DIR__ . "/../resources/views");
+	$twigView = new \Slim\Views\Twig(__DIR__ . "/../resources/views", ['cache' => false]);
+
+	$twigView->addExtension(new \Slim\Views\TwigExtension(
+		$c->router,
+		$c->request->getUri()
+	));
+
+	return $twigView;
 };
 
 $capsule = new Illuminate\Database\Capsule\Manager;

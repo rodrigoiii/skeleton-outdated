@@ -13,7 +13,7 @@ class TestController extends Controller
 
 	public function testView($request, $response)
 	{
-		return $this->phpView->render($response, "index.php");
+		return $this->twigView->render($response, "index.twig");
 	}
 
 	public function testModel()
