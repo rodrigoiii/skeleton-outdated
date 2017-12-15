@@ -38,7 +38,7 @@ class CommandCommand extends BaseCommand
             $output->writeln("Error: Invalid Command. It must be PascalCase.");
             exit;
         }
-        elseif (file_exists(config('path.console.command_base') . "/" . $command . "Command.php"))
+        elseif (file_exists(app_path("Console/Commands/{$command}Command.php")))
         {
             $output->writeln("Error: The Command is already created.");
             exit;
@@ -65,7 +65,7 @@ class CommandCommand extends BaseCommand
      */
     private function makeTemplate($command)
     {
-        $file = config('path.console.foundation_command_base') . "/templates/command.php.dist";
+        $file = foundation_path("Console/Commands/templates/command.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
@@ -74,7 +74,7 @@ class CommandCommand extends BaseCommand
                 '{{command_name}}' => strtolower($command)
             ]);
 
-            $file_path = config('path.console.command_base') . "/" . $command . "Command.php";
+            $file_path = app_path("Console/Commands/{$command}Command.php");
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);

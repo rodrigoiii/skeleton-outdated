@@ -43,7 +43,7 @@ class ControllerCommand extends BaseCommand
 
             $contoller_namespace = implode("\\",$explode_controller) . "\\";
 
-            $pre_controller_path = config("path.controller.base") . "/" . implode("/", $explode_controller);
+            $pre_controller_path = app_path("Http/Controllers/" . implode("/", $explode_controller));
             $top_template = "namespace {$this->namespace}\Http\Controllers\\" . implode("\\", $explode_controller) . ";\n\n";
             $top_template .= "use {$this->namespace}\Http\Controllers\Controller;";
 
@@ -55,7 +55,7 @@ class ControllerCommand extends BaseCommand
         }
         else
         {
-            $pre_controller_path = config("path.controller.base");
+            $pre_controller_path = app_path("Http/Controllers");
             $top_template = "namespace {$this->namespace}\Http\Controllers;";
 
             $contoller_namespace = "";
@@ -82,7 +82,7 @@ class ControllerCommand extends BaseCommand
             fclose($file);
 
             // register the controller in container
-            $controller_register_path = config('path.registered.controllers_base') . "/registered-controllers.php";
+            $controller_register_path = bootstrap_path("registered-controllers.php");
             $str = "\n" .
             "# " . $contoller_namespace . "{$controller}Controller" . "\n" .
             "\$container['" . $contoller_namespace . "{$controller}Controller'] = function (\$c)" . "\n" .
@@ -111,7 +111,7 @@ class ControllerCommand extends BaseCommand
                 rmdir(dirname($file));
             }
 
-            $file = config('path.registered.controllers_base') . "/registered-controllers.php";
+            $file = bootstrap_path("registered-controllers.php");
             $search = "\n# " . $contoller_namespace . "{$controller}Controller\n\$container['" . $contoller_namespace . "{$controller}Controller'] = function (\$c)\n{\n\treturn new {$this->namespace}\Http\Controllers\\" . $contoller_namespace . "{$controller}Controller(\$c);\n};\n\n";
 
             $content = file_get_contents($file);
@@ -129,7 +129,8 @@ class ControllerCommand extends BaseCommand
 
     private function getTemplate($top_template, $controller, $is_resource = false)
     {
-        $file = config("path.console.foundation_command_base") . "/templates/Controller/controller" . ($is_resource ? "-with-resource" : "") . ".php.dist";
+        // dito natapos. to be continue
+        $file = foundation_path("Console/Commands"). "/templates/Controller/controller" . ($is_resource ? "-with-resource" : "") . ".php.dist";
 
         if (file_exists($file))
         {
