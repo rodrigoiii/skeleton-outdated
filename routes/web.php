@@ -15,3 +15,5 @@ $app->get('/test-middleware', "TestController:testMiddleware")
 ->add(new App\Http\Middlewares\Test($container));
 
 $app->get('/test-session', "TestController:testSession");
+
+$app->get('/test-log', "TestController:testLog");
