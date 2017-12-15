@@ -9,7 +9,9 @@
     "require-dev": {
         "kint-php/kint": "^2.2",
         "symfony/console": "^3.4",
-        "runcmf/runtracy": "^0.2.10"
+        "runcmf/runtracy": "^0.2.10",
+        "robmorgan/phinx": "^0.9.1",
+        "fzaninotto/faker": "^1.7"
     },
     "autoload": {
         "psr-4": {

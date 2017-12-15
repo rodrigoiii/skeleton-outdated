@@ -23,9 +23,7 @@ class TestController extends Controller
 	public function testModel()
 	{
 		$users = User::all();
-
-		echo "<pre>";
-		var_dump($users);
+		_dd($users);
 	}
 
 	public function testMiddleware()

@@ -15,5 +15,5 @@ return [
 	],
 
 	// tracy debug bar
-	'debug-bar' => false
+	'debug-bar' => true
 ];
