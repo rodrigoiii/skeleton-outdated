@@ -2,7 +2,8 @@
 
 $app->get('/', function ()
 {
-	echo "Hello World";
+	echo "Hello World <br>";
+	echo "Please see the routes/web.php to see all routes registered.";
 });
 
 $app->get('/test-controller', "TestController:index");
