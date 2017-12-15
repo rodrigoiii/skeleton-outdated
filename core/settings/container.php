@@ -7,7 +7,7 @@ if (is_dev())
 	{
 		return function ($request, $response, $exception) use($c)
 		{
-			$c['logger']->error($exception);
+			// $c['logger']->error($exception);
 
 			return $c->twigView
 					->render(
