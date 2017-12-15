@@ -7,7 +7,7 @@ if (is_dev())
 	{
 		return function ($request, $response, $exception) use($c)
 		{
-			// $c['logger']->error($exception);
+			$c['logger']->error($exception);
 
 			return $c->twigView
 					->render(
@@ -69,7 +69,7 @@ $container['twigView'] = function($c)
 # monolog logger
 $container['logger'] = function($c)
 {
-	$settings = $c['settings']['logger'];
+	$settings = $c['settings']['monolog'];
 	$log = new \Monolog\Logger($settings['name']);
 	$log->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 	return $log;
