@@ -1,45 +1,37 @@
 <?php
 
-$app = new Slim\App([
+# dotEnv settings
+include core_path("settings/dotEnv.php");
+
+/*
+ |-----------------------------
+ | Setup for 'Slim'
+ |-----------------------------
+ */
+$app = new \Slim\App([
 	'settings' => [
-		'displayErrorDetails' => true // development mode
+		'displayErrorDetails' => is_dev(),
+		'debug' => is_dev(),
+
+		'determineRouteBeforeAppMiddleware' => config('app.route_on'),
+		'db' => config('database.connections.mysql'),
+		'monolog' => config('monolog'),
+		'tracy' => config('tracy')
 	]
 ]);
-
 $container = $app->getContainer();
 
-// twig view
-$container['twigView'] = function ($c)
-{
-	$twigView = new \Slim\Views\Twig(__DIR__ . "/../resources/views", ['cache' => false]);
+# include core settings
+include core_path("settings/core-settings.php");
 
-	$twigView->addExtension(new \Slim\Views\TwigExtension(
-		$c->router,
-		$c->request->getUri()
-	));
+# include your other settings here
+# .
+# .
+# .
+# end
 
-	return $twigView;
-};
-
-$capsule = new Illuminate\Database\Capsule\Manager;
-$capsule->addConnection([
-	'driver'    => 'mysql',
-	'host'      => 'localhost',
-	'database'  => 'test',
-	'username'  => 'root',
-	'password'  => 'secret123',
-	'charset'   => 'utf8',
-	'collation' => 'utf8_unicode_ci',
-	'prefix'    => '',
-]);
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
-
-$container['TestController'] = function ($c)
-{
-	return new App\Http\Controllers\TestController($c);
-};
-
+# web routes
 require __DIR__ . "/../routes/web.php";
 
+# lets rock and roll
 $app->run();
