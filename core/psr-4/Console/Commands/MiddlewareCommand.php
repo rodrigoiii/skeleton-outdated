@@ -38,7 +38,7 @@ class MiddlewareCommand extends BaseCommand
             $output->writeln("Error: Invalid Middleware. It must be PascalCase.");
             exit;
         }
-        elseif (file_exists(config('path.middleware.base') . "/{$middleware}.php"))
+        elseif (file_exists(app_path("Http/Middlewares/{$middleware}.php")))
         {
             $output->writeln("Error: The Middleware is already created.");
             exit;
@@ -55,7 +55,7 @@ class MiddlewareCommand extends BaseCommand
      */
     private function makeTemplate($middleware)
     {
-        $file = config('path.console.foundation_command_base') . "/templates/middleware.php.dist";
+        $file = core_path("psr-4/Console/Commands/templates/middleware.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
@@ -63,7 +63,7 @@ class MiddlewareCommand extends BaseCommand
                 '{{middleware}}' => $middleware
             ]);
 
-            $file_path = config('path.middleware.base') . "/{$middleware}.php";
+            $file_path = app_path("Http/Middlewares/{$middleware}.php");
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);
