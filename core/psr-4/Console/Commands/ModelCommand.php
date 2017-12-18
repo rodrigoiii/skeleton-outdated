@@ -38,7 +38,7 @@ class ModelCommand extends BaseCommand
             $output->writeln("Error: Invalid Model. It must be PascalCase.");
             exit;
         }
-        elseif (file_exists(config('path.model.base') . "/{$model}.php"))
+        elseif (file_exists(app_path("Models/{$model}.php")))
         {
             $output->writeln("Error: The Model is already created.");
             exit;
@@ -55,15 +55,15 @@ class ModelCommand extends BaseCommand
      */
     private function makeTemplate($model)
     {
-        $file = config('path.console.foundation_command_base') . "/templates/model.php.dist";
+        $file = core_path("psr-4/Console/Commands/templates/model.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
-                '{{namespace}}' => "{$this->namespace}",
-                '{{model}}' => $model,
+                '{{namespace}}' => $this->namespace,
+                '{{model}}' => $model
             ]);
 
-            $file_path = config('path.model.base') . "/{$model}.php";
+            $file_path = app_path("Models/{$model}.php");
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);
