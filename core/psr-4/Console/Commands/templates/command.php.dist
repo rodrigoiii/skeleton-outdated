@@ -2,6 +2,8 @@
 
 namespace {{namespace}}\Console\Commands;
 
+use Console\Commands\BaseCommand;
+
 class {{command}}Command extends BaseCommand
 {
 	private $signature = "{{command_name}}";

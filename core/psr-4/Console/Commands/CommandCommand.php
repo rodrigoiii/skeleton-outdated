@@ -65,7 +65,7 @@ class CommandCommand extends BaseCommand
      */
     private function makeTemplate($command)
     {
-        $file = foundation_path("Console/Commands/templates/command.php.dist");
+        $file = core_path("psr-4/Console/Commands/templates/command.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
