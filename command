@@ -4,6 +4,8 @@ if (PHP_SAPI !== "cli") die; // die if not using cli
 
 require __DIR__ . "/vendor/autoload.php";
 
+include core_path("settings/dotEnv.php");
+
 $app = new Symfony\Component\Console\Application("My Framework 2");
 
 # Core Commands
