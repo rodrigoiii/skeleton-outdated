@@ -2,6 +2,8 @@
 
 {{top_template}}
 
+use Controllers\Controller;
+
 class {{controller}}Controller extends Controller
 {
 	public function index($request, $response)
