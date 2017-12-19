@@ -18,3 +18,7 @@ $app->get('/test-middleware', "TestController:testMiddleware")
 $app->get('/test-session', "TestController:testSession");
 
 $app->get('/test-log', "TestController:testLog");
+
+$app->get('/test-ajax', "TestController:testAjax");
+$app->get('/test-ajax-get-to-be-call', "TestController:testGetAjaxToBeCall");
+$app->post('/test-ajax-post-to-be-call', "TestController:testPostAjaxToBeCall")->setName('test-ajax-post');
