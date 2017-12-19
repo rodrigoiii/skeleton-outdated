@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	{% if flash.hasMessage('message') %}
+	<p>{{ flash.getMessage('message') | first }}</p>
+	{% endif %}
+
+	<form method="POST" action="{{ path_for('test-flash') }}">
+		{{ csrf.field | raw }}
+
+		<input type="submit" name="submit-form">
+	</form>
+</body>
+</html>

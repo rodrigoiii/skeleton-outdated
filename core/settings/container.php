@@ -1,6 +1,6 @@
 <?php
 
-if (is_dev())
+if (!is_dev())
 {
 	# override error handler
 	$container['errorHandler'] = function($c)
@@ -66,6 +66,9 @@ $container['twigView'] = function($c)
 
 	# Make the helper functions as global
 	$twigView->getEnvironment()->addGlobal('fn', new Functions);
+
+	# Make 'flash' Global
+	$twigView->getEnvironment()->addGlobal('flash', $c->flash);
 
 	return $twigView;
 };
