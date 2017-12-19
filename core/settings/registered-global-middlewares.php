@@ -1,5 +1,9 @@
 <?php
 
+# Global Csrf middleware
+$app->add(new \Middlewares\GlobalCsrf($container));
+$app->add($container->get('csrf'));
+
 # tracy debugbar
 $app->add(new RunTracy\Middlewares\TracyMiddleware($app));
 

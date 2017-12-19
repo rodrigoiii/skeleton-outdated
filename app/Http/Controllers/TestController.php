@@ -50,4 +50,27 @@ class TestController extends Controller
 
 		return "Check the file storage/logs/app.log to see the logs";
 	}
+
+	public function testAjax($request, $response)
+	{
+		return $this->twigView->render($response, "test-ajax.twig");
+	}
+	public function testGetAjaxToBeCall($request, $response)
+	{
+		$input = $request->getParams();
+
+		return $response->withJson([
+			'message' => "Hello World",
+			'name' => $input['name']
+		]);
+	}
+	public function testPostAjaxToBeCall($request, $response)
+	{
+		$input = $request->getParams();
+
+		return $response->withJson([
+			'message' => "Hello World",
+			'name' => $input['name']
+		]);
+	}
 }

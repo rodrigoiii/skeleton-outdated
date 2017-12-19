@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form method="POST" action="{{ path_for('test-ajax-post') }}">
+		<input type="text" name="first_name">
+		<input type="submit" name="submit-form">
+	</form>
+
+	<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		// test 1
+		// $.ajax({
+		// 	url: '/test-ajax-get-to-be-call',
+		// 	type: 'GET',
+		// 	dataType: 'JSON',
+		// 	data: {name: 'John Doe'},
+
+		// 	success: function(response)
+		// 	{
+		// 		console.log(response);
+		// 	}
+		// });
+
+		// test 2
+		// $.ajax({
+		// 	url: '/test-ajax-post-to-be-call',
+		// 	type: 'POST',
+		// 	dataType: 'JSON',
+		// 	data: {name: 'John Doe'},
+
+		// 	success: function(response)
+		// 	{
+		// 		console.log(response);
+		// 	}
+		// });
+	});
+	</script>
+</body>
+</html>

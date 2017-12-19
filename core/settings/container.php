@@ -70,6 +70,34 @@ $container['twigView'] = function($c)
 	return $twigView;
 };
 
+# slim/flash
+$container['flash'] = function($c)
+{
+	return new \Slim\Flash\Messages();
+};
+
+# slim/csrf
+$container['csrf'] = function($c)
+{
+	$guard = new \Slim\Csrf\Guard;
+	$guard->setFailureCallable( function ($request, $response, $next) use($c) {
+		if ( is_prod() )
+		{
+			return $c->twigView->render(
+				$response->withStatus(403)
+						->withHeader('Content-Type', "text/html"),
+				"templates/error-pages/page-403.twig"
+			);
+		}
+
+		return $response->withStatus(403)
+						->withHeader('Content-Type', "text/html")
+						->write("Failed CSRF check!");
+	});
+	return $guard;
+};
+
+# twig profiler
 $container['twig_profile'] = function ($c) {
     return new Twig_Profiler_Profile();
 };
