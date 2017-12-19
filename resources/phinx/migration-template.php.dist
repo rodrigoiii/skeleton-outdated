@@ -4,7 +4,7 @@ use $useClassName;
 
 class $className extends $baseClassName
 {
-    public function up ()
+    public function up()
     {
         $table = $this->table('__table_name__')
             ->addColumn('column1', 'string')
@@ -13,7 +13,7 @@ class $className extends $baseClassName
         $table->create();
     }
 
-    public function down ()
+    public function down()
     {
         $exist = $this->hasTable('__table_name__');
         if ($exist)
