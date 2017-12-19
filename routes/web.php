@@ -22,3 +22,6 @@ $app->get('/test-log', "TestController:testLog");
 $app->get('/test-ajax', "TestController:testAjax");
 $app->get('/test-ajax-get-to-be-call', "TestController:testGetAjaxToBeCall");
 $app->post('/test-ajax-post-to-be-call', "TestController:testPostAjaxToBeCall")->setName('test-ajax-post');
+
+$app->get('/test-flash', "TestController:getTestFlash")->setName('test-flash');
+$app->post('/test-flash', "TestController:postTestFlash");

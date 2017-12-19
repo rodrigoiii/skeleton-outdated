@@ -73,4 +73,14 @@ class TestController extends Controller
 			'name' => $input['name']
 		]);
 	}
+
+	public function getTestFlash($request, $response)
+	{
+		return $this->twigView->render($response, "test-flash.twig");
+	}
+	public function postTestFlash($request, $response)
+	{
+		$this->flash->addMessage('message', 'Hello WOrld');
+		return $response->withRedirect($this->router->pathFor('test-flash'));
+	}
 }
