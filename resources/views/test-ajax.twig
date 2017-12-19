@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+
+	<meta name="_token" content='{{ csrf.json }}'>
 </head>
 <body>
-	<form method="POST" action="{{ path_for('test-ajax-post') }}">
-		<input type="text" name="first_name">
-		<input type="submit" name="submit-form">
-	</form>
+	<button id="test">Test Post Request multiple times</button>
 
 	<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="/js/system/csrf-helper.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		// test 1
@@ -27,17 +27,19 @@
 		// });
 
 		// test 2
-		// $.ajax({
-		// 	url: '/test-ajax-post-to-be-call',
-		// 	type: 'POST',
-		// 	dataType: 'JSON',
-		// 	data: {name: 'John Doe'},
+		$('#test').click(function(event) {
+			$.ajax({
+				url: '/test-ajax-post-to-be-call',
+				type: 'POST',
+				dataType: 'JSON',
+				data: postWithToken({name: 'John Doe'}),
 
-		// 	success: function(response)
-		// 	{
-		// 		console.log(response);
-		// 	}
-		// });
+				success: function(response)
+				{
+					console.log(response);
+				}
+			});
+		});
 	});
 	</script>
 </body>

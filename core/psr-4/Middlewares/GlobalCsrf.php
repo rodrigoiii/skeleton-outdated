@@ -16,7 +16,8 @@ class GlobalCsrf extends Middleware
 			'field' => '
 				<input type="hidden" name="'.$name_key.'" value="'.$name.'" id="csrf-name">
 				<input type="hidden" name="'.$value_key.'" value="'.$value.'" id="csrf-value">
-			'
+			',
+			'json' => json_encode([$name_key => $name, $value_key => $value])
 		]);
 
 		$response = $response->withAddedHeader('X-CSRF-TOKEN', json_encode([$name_key => $name, $value_key => $value]));
