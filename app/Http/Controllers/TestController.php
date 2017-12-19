@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Controllers\Controller;
 use App\Models\User;
-use App\Http\Requests;
 use Session;
 use Log;
 
