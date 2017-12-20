@@ -113,8 +113,6 @@ class ControllerCommand extends BaseCommand
             $file = core_path("settings/registered-controllers.php");
             $search = "\n# " . $contoller_namespace . "{$controller}Controller\n\$container['" . $contoller_namespace . "{$controller}Controller'] = function (\$c)\n{\n\treturn new {$this->namespace}\Http\Controllers\\" . $contoller_namespace . "{$controller}Controller(\$c);\n};\n\n";
 
-            echo $search;
-
             $content = file_get_contents($file);
             $content = str_replace($search, "", $content);
             file_put_contents($file, $content);
@@ -123,7 +121,7 @@ class ControllerCommand extends BaseCommand
         }
         else
         {
-            $output->writeln("Error: Invalid action. It must be 'create' or 'delete'");
+            $output->writeln("Error: Invalid action. It must be 'make' or 'remove'");
             exit;
         }
     }
