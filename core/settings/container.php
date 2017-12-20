@@ -17,38 +17,38 @@ if (!is_dev())
 					);
 		};
 	};
-
-	# override not found handler
-	$container['notFoundHandler'] = function($c)
-	{
-
-		return function ($request, $response) use($c)
-		{
-			return $c->twigView
-					->render(
-						$response->withStatus(404)
-						->withHeader('Content-Type', "text/html"),
-						config('app.error-pages-path.404')
-					);
-		};
-	};
-
-	# override not allowed handler
-	$container['notAllowedHandler'] = function($c)
-	{
-
-		return function ($request, $response, $methods) use($c)
-		{
-			return $c->twigView
-					->render(
-						$response->withStatus(405)
-						->withHeader('Allow', implode(', ', $methods))
-						->withHeader('Content-Type', "text/html"),
-						config('app.error-pages-path.405')
-					);
-		};
-	};
 }
+
+# override not found handler
+$container['notFoundHandler'] = function($c)
+{
+
+	return function ($request, $response) use($c)
+	{
+		return $c->twigView
+				->render(
+					$response->withStatus(404)
+					->withHeader('Content-Type', "text/html"),
+					config('app.error-pages-path.404')
+				);
+	};
+};
+
+# override not allowed handler
+$container['notAllowedHandler'] = function($c)
+{
+
+	return function ($request, $response, $methods) use($c)
+	{
+		return $c->twigView
+				->render(
+					$response->withStatus(405)
+					->withHeader('Allow', implode(', ', $methods))
+					->withHeader('Content-Type', "text/html"),
+					config('app.error-pages-path.405')
+				);
+	};
+};
 
 # slim twig view
 $container['twigView'] = function($c)
