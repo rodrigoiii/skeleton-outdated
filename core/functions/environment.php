@@ -10,42 +10,6 @@ function is_ajax()
 }
 
 /**
- * Check if the hostname is localhost
- * @return boolean 		true if localhost, otherwise false
- */
-function is_local()
-{
-	return getenv("APP_ENV") === "local";
-}
-
-/**
- * Check if the hostname is staging
- * @return boolean 		true if staging, otherwise false
- */
-function is_staging()
-{
-	return getenv("APP_ENV") === "staging";
-}
-
-/**
- * Check if production mode
- * @return boolean 		true if production mode, otherwise false
- */
-function is_prod()
-{
-	return getenv("APP_ENV") === "production";
-}
-
-/**
- * Check if development mode
- * @return boolean 		true if development mode, otherwise false
- */
-function is_dev()
-{
-	return getenv('DEBUG') == "true";
-}
-
-/**
  * Enhance the getenv function
  * @param  [string] $key   [the key in the .env]
  * @param  [string] $value [to be the value]

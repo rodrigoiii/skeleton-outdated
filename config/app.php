@@ -1,6 +1,12 @@
 <?php
 
 return [
+	'name'      => _env('APP_NAME', "App Name"),
+	'namespace' => _env('APP_NAMESPACE', "App"),
+	'key'       => _env('APP_KEY'),
+
+	'cache' => false,
+
 	'route_on' => true,
 
 	'upload-path' => public_path("uploads"),
@@ -14,6 +20,8 @@ return [
 		"under-construction" => "templates/error-pages/page-under-construction.twig",
 	],
 
+	'debug' => _env('DEBUG_ON', true),
+
 	// tracy debug bar
-	'debug-bar' => true
+	'debug-bar' => _env('DEBUG_BAR_ON', true)
 ];

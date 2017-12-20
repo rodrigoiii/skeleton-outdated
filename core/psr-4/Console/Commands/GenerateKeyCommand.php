@@ -33,7 +33,7 @@ class GenerateKeyCommand extends BaseCommand
 
         if (file_exists($path))
         {
-            $old_key = _env('APP_KEY');
+            $old_key = config('app.key');
             $new_key = sha1(uniqid());
 
             file_put_contents($path, str_replace("APP_KEY={$old_key}", "APP_KEY={$new_key}", file_get_contents($path)));

@@ -21,7 +21,7 @@ class MiddlewareCommand extends BaseCommand
      */
     public function __construct()
     {
-        $this->namespace = _env('APP_NAMESPACE', "App");
+        $this->namespace = config("app.namespace");
 
         parent::__construct($this->signature, $this->description);
     }

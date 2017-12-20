@@ -1,6 +1,6 @@
 <?php
 
-if (!is_dev())
+if (!config('app.debug'))
 {
 	# override error handler
 	$container['errorHandler'] = function($c)
@@ -53,7 +53,7 @@ $container['notAllowedHandler'] = function($c)
 # slim twig view
 $container['twigView'] = function($c)
 {
-	$twigView = new \Slim\Views\Twig(resources_path("views"), ['cache' => is_prod()]);
+	$twigView = new \Slim\Views\Twig(resources_path("views"), ['cache' => config('app.cache')]);
 
 	$twigView->addExtension(new \Slim\Views\TwigExtension(
 		$c->router,
@@ -84,7 +84,7 @@ $container['csrf'] = function($c)
 {
 	$guard = new \Slim\Csrf\Guard;
 	$guard->setFailureCallable( function ($request, $response, $next) use($c) {
-		if ( is_prod() )
+		if (!config('app.debug'))
 		{
 			return $c->twigView->render(
 				$response->withStatus(403)

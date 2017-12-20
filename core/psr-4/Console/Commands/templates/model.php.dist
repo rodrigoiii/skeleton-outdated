@@ -2,9 +2,7 @@
 
 namespace {{namespace}}\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class {{model}} extends Model
+class {{model}} extends BaseModel
 {
 
 }

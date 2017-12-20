@@ -1,8 +1,8 @@
 <?php
 
-# TestController
-$container['TestController'] = function ($c)
+# WelcomeController
+$container['WelcomeController'] = function ($c)
 {
-	return new App\Http\Controllers\TestController($c);
+	return new App\Http\Controllers\WelcomeController($c);
 };
 

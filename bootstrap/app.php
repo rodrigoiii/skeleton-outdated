@@ -10,8 +10,8 @@ include core_path("settings/dotEnv.php");
  */
 $app = new \Slim\App([
 	'settings' => [
-		'displayErrorDetails' => is_dev(),
-		'debug' => is_dev(),
+		'displayErrorDetails' => config('app.debug'),
+		'debug' => config('app.debug'),
 
 		'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 		'db' => config('database.connections.mysql'),

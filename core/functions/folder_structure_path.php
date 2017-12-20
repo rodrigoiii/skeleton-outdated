@@ -13,12 +13,6 @@ function app_path($str = "")
 	return base_path("app") . $str;
 }
 
-function bootstrap_path($str = "")
-{
-	$str = !empty($str) ? "/{$str}" : "";
-	return base_path("bootstrap") . $str;
-}
-
 function config_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
@@ -29,12 +23,6 @@ function core_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
 	return base_path("core") . $str;
-}
-
-function db_path($str = "")
-{
-	$str = !empty($str) ? "/{$str}" : "";
-	return base_path("db") . $str;
 }
 
 function public_path($str = "")

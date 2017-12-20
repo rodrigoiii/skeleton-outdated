@@ -60,7 +60,9 @@ function base_url($str = "")
 		$str = "/{$str}";
 	}
 
-	return _env('APP_URL') . $str;
+	$http = isset($_SERVER['HTTPS']) ? "https" : "http";
+
+	return $http . "://" . $_SERVER['SERVER_NAME'] . $str;
 }
 
 /**
@@ -70,7 +72,7 @@ function base_url($str = "")
  */
 function generate_token($string)
 {
-    $salt = _env('APP_KEY');
+    $salt = config('app.key');
     return md5(uniqid() . $string . $salt );
 }
 
@@ -91,7 +93,6 @@ function pretty_print($to_be_print)
  */
 function _dd($to_be_print)
 {
-	echo "<pre>";
 	d($to_be_print);
 	die;
 }
