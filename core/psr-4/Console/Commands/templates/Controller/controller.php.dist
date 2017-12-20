@@ -2,9 +2,7 @@
 
 {{top_template}}
 
-use Controllers\Controller;
-
-class {{controller}}Controller extends Controller
+class {{controller}}Controller extends BaseController
 {
 	public function index($request, $response)
 	{

@@ -2,9 +2,7 @@
 
 namespace {{namespace}}\Http\Middlewares;
 
-use Middlewares\Middleware;
-
-class {{middleware}} extends Middleware
+class {{middleware}} extends BaseMiddleware
 {
 	public function __invoke($request, $response, $next)
 	{

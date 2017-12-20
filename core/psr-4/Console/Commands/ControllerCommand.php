@@ -44,7 +44,8 @@ class ControllerCommand extends BaseCommand
             $contoller_namespace = implode("\\",$explode_controller) . "\\";
 
             $pre_controller_path = app_path("Http/Controllers/" . implode("/", $explode_controller));
-            $top_template = "namespace {$this->namespace}\Http\Controllers\\" . implode("\\", $explode_controller) . ";";
+            $top_template = "namespace {$this->namespace}\Http\Controllers\\" . implode("\\", $explode_controller) . ";\n\n";
+            $top_template .= "use {$this->namespace}\Http\Controllers\BaseController;";
 
             // create directory
             if (!file_exists($pre_controller_path))
