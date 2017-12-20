@@ -20,8 +20,8 @@ return [
 		"under-construction" => "templates/error-pages/page-under-construction.twig",
 	],
 
-	'debug' => _env('DEBUG_ON', true),
+	'debug' => filter_var(_env('DEBUG_ON', true), FILTER_VALIDATE_BOOLEAN),
 
 	// tracy debug bar
-	'debug-bar' => _env('DEBUG_BAR_ON', true)
+	'debug_bar' => filter_var(_env('DEBUG_BAR_ON', true), FILTER_VALIDATE_BOOLEAN)
 ];
