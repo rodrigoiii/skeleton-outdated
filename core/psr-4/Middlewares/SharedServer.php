@@ -8,7 +8,7 @@ class SharedServer extends Middleware
 {
 	public function __invoke($request, $response, $next)
 	{
-		if (isSharedServer())
+		if (is_shared_server())
 		{
 			$folders = array_map('basename', glob(base_path() . "/*", GLOB_ONLYDIR));
 			$url = trim($_SERVER['REQUEST_URI'], "/");

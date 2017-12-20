@@ -25,7 +25,7 @@ function config($string)
  * [Check if the host to be use is own]
  * @return boolean
  */
-function isOwnServer()
+function is_own_server()
 {
 	return count(glob($_SERVER['DOCUMENT_ROOT'] . "/.env")) === 0;
 }
@@ -34,7 +34,7 @@ function isOwnServer()
  * [Check if the host to be use is shared]
  * @return boolean
  */
-function isSharedServer()
+function is_shared_server()
 {
 	return count(glob($_SERVER['DOCUMENT_ROOT'] . "/.env")) === 1;
 }
@@ -44,7 +44,7 @@ function isSharedServer()
  * @param  [string]  $file_path [the path of file]
  * @return boolean            [true if file is in upload folders, otherwise false]
  */
-function isInUpload($file_path)
+function is_in_upload($file_path)
 {
 	return strpos($file_path, config('app.upload-path.base')) === 0;
 }
@@ -129,7 +129,7 @@ function slugify($text)
 	return $text;
 }
 
-function getUserIP()
+function get_user_ip()
 {
     $client  = @$_SERVER['HTTP_CLIENT_IP'];
     $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -151,7 +151,7 @@ function getUserIP()
     return $ip;
 }
 
-function isActive($pattern, $text)
+function is_active($pattern, $text)
 {
 	$pattern = preg_quote($pattern, "/");
 	return preg_match("/^{$pattern}$/", $_SERVER['REQUEST_URI']) === 1 ? $text : "";

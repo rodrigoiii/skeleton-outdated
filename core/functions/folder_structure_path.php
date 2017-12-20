@@ -2,7 +2,7 @@
 
 function base_path($str = "")
 {
-	$root = PHP_SAPI === "cli" ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'] . (isOwnServer() ? "/.." : "");
+	$root = PHP_SAPI === "cli" ? $_SERVER['PWD'] : $_SERVER['DOCUMENT_ROOT'] . (is_own_server() ? "/.." : "");
 	$str = !empty($str) ? "/{$str}" : "";
 	return $root . $str;
 }
