@@ -21,10 +21,31 @@ $app = new \Slim\App([
 ]);
 $container = $app->getContainer();
 
-# include core settings
-include core_path("settings/core-settings.php");
+# container
+include core_path("settings/container.php");
+# include your other container here ...
+# .
+# .
+# .
+# end
 
-# include your other settings here
+# controller registered
+include core_path("settings/registered-controllers.php");
+
+# middleware registered
+include core_path("settings/registered-global-middlewares.php");
+# include your custom middleware as global here ...
+# .
+# .
+# .
+# end
+
+# eloquent settings
+include core_path("settings/eloquent.php");
+
+# tracy debug bar
+include core_path("settings/tracy.php");
+# include your custom settings here ...
 # .
 # .
 # .

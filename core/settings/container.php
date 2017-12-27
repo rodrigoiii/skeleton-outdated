@@ -113,6 +113,3 @@ $container['logger'] = function($c)
 	$log->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 	return $log;
 };
-
-// include container that developer provide
-include settings_path("container.php");
