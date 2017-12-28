@@ -33,27 +33,54 @@ class ModelCommand extends BaseCommand
     {
         $model = $input->getArgument('model');
 
+        // have directory
+        if (strpos($model, "/"))
+        {
+            $explode_model = explode("/", $model);
+            $model = array_pop($explode_model);
+
+            $contoller_namespace = implode("\\",$explode_model) . "\\";
+
+            $pre_model_path = app_path("Models/" . implode("/", $explode_model));
+            $top_template = "namespace {$this->namespace}\Models\\" . implode("\\", $explode_model) . ";\n+.";
+
+            // create directory
+            if (!file_exists($pre_model_path))
+            {
+                mkdir($pre_model_path, 0755, true);
+            }
+        }
+        else
+        {
+            $pre_model_path = app_path("Models");
+            $top_template = "namespace {$this->namespace}\Http\Controllers;";
+
+            $contoller_namespace = "";
+        }
+
         if (!ctype_upper($model[0]))
         {
             $output->writeln("Error: Invalid Model. It must be PascalCase.");
             exit;
         }
-        elseif (file_exists(app_path("Models/{$model}.php")))
+        elseif (file_exists("{$pre_model_path}/{$model}.php"))
         {
             $output->writeln("Error: The Model is already created.");
             exit;
         }
 
-        $output->writeln($this->makeTemplate($model) ? "Successfully created." : "File not created. Check the file path.");
+        $output->writeln($this->makeTemplate($top_template, $pre_model_path, $model) ? "Successfully created." : "File not created. Check the file path.");
     }
 
     /**
      * [Create model template]
      * @depends handle
+     * @param  [string] $top_template [template at the top part]
+     * @param  [string] $pre_model_path [the pre string represent as folder before the file]
      * @param  [string] $model [model name]
      * @return [boolean]    [Return true if successfully creating file otherwise false]
      */
-    private function makeTemplate($model)
+    private function makeTemplate($top_template, $pre_model_path, $model)
     {
         $file = core_path("psr-4/Console/Commands/templates/model.php.dist");
         if (file_exists($file))
@@ -63,7 +90,7 @@ class ModelCommand extends BaseCommand
                 '{{model}}' => $model
             ]);
 
-            $file_path = app_path("Models/{$model}.php");
+            $file_path = "{$pre_model_path}/{$model}.php";
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);
