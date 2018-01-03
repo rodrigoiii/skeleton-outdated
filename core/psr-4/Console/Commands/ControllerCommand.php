@@ -129,7 +129,7 @@ class ControllerCommand extends BaseCommand
 
     private function getTemplate($top_template, $controller, $is_resource = false)
     {
-        $file = core_path("psr-4/Console/Commands/templates/Controller/controller" . ($is_resource ? "-with-resource" : "") . ".php.dist");
+        $file = core_path("psr-4/Console/Commands/templates/controller/controller" . ($is_resource ? "-with-resource" : "") . ".php.dist");
 
         if (file_exists($file))
         {
