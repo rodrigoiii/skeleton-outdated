@@ -4,7 +4,6 @@ bower_components
 .env
 *.sublime-project
 *.sublime-workspace
-composer.lock
 phinx.yml
 public/dist
 resources/dist-views
