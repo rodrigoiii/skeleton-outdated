@@ -1,0 +1,22 @@
+<?php
+
+namespace {{namespace}}\Notifications;
+
+use Mail;
+
+class {{notification}}
+{
+    public function __construct()
+    {
+        //
+    }
+
+    public function sendMail()
+    {
+        return (new Mail)
+            ->subject("")
+            ->from(['email' => "name"])
+            ->to(['email' => "name"])
+            ->view("emails/path-to-twig-file");
+    }
+}
