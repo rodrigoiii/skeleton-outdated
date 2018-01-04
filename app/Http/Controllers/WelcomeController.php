@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-class WelcomeController extends BaseController
+use Controllers\Controller;
+
+class WelcomeController extends Controller
 {
 	public function index($request, $response)
 	{

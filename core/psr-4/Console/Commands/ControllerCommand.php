@@ -44,8 +44,7 @@ class ControllerCommand extends BaseCommand
             $contoller_namespace = implode("\\",$explode_controller) . "\\";
 
             $pre_controller_path = app_path("Http/Controllers/" . implode("/", $explode_controller));
-            $top_template = "namespace {$this->namespace}\Http\Controllers\\" . implode("\\", $explode_controller) . ";\n\n";
-            $top_template .= "use {$this->namespace}\Http\Controllers\BaseController;";
+            $sub_directories = "\\" . implode("\\", $explode_controller);
 
             // create directory
             if (!file_exists($pre_controller_path))
@@ -56,7 +55,7 @@ class ControllerCommand extends BaseCommand
         else
         {
             $pre_controller_path = app_path("Http/Controllers");
-            $top_template = "namespace {$this->namespace}\Http\Controllers;";
+            $sub_directories = "";
 
             $contoller_namespace = "";
         }
@@ -78,7 +77,7 @@ class ControllerCommand extends BaseCommand
 
             // create file
             $file = fopen($pre_controller_path . "/{$controller}Controller.php", "w");
-            fwrite($file, $this->getTemplate($top_template, $controller, $resource));
+            fwrite($file, $this->getTemplate($sub_directories, $controller, $resource));
             fclose($file);
 
             // register the controller in container
@@ -127,7 +126,7 @@ class ControllerCommand extends BaseCommand
         }
     }
 
-    private function getTemplate($top_template, $controller, $is_resource = false)
+    private function getTemplate($sub_directories, $controller, $is_resource = false)
     {
         $file = core_path("psr-4/Console/Commands/templates/controller/controller" . ($is_resource ? "-with-resource" : "") . ".php.dist");
 
@@ -136,7 +135,8 @@ class ControllerCommand extends BaseCommand
             $template = file_get_contents($file);
 
             return strtr($template, [
-                '{{top_template}}' => $top_template,
+                '{{namespace}}' => $this->namespace,
+                '{{sub_directories}}' => $sub_directories,
                 '{{controller}}' => $controller
             ]);
         }
