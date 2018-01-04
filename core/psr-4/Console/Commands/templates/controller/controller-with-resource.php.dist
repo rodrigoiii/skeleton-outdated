@@ -1,8 +1,10 @@
 <?php
 
-{{top_template}}
+namespace {{namespace}}\Http\Controllers{{sub_directories}};
 
-class {{controller}}Controller extends BaseController
+use Controllers\Controller;
+
+class {{controller}}Controller extends Controller
 {
 	public function index($request, $response)
 	{

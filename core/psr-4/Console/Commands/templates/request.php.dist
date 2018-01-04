@@ -3,18 +3,11 @@
 namespace {{namespace}}\Http\Requests;
 
 use {{namespace}}\Validation\Validator;
-use Request\Request;
+use Requests\Request;
 use Respect\Validation\Validator as v;
 
 class {{request}} extends Request
 {
-    private $request;
-
-    public function __construct($request = [])
-    {
-        $this->request = $request;
-    }
-
     public function rules()
     {
         return [
@@ -22,7 +15,7 @@ class {{request}} extends Request
         ];
     }
 
-    public function test()
+    public function isValid()
     {
         $validate = Validator::validate($this->request, $this->rules());
         return $validate::passed();

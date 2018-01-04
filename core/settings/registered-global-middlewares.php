@@ -1,5 +1,8 @@
 <?php
 
+# old input middleware
+$app->add(new \Middlewares\OldInput($container));
+
 # Global Csrf middleware
 $app->add(new \Middlewares\GlobalCsrf($container));
 $app->add($container->get('csrf'));

@@ -4,7 +4,7 @@ namespace {{namespace}}\Http\Controllers{{sub_directories}};
 
 use Controllers\Controller;
 
-class {{controller}}Controller extends BaseController
+class {{controller}}Controller extends Controller
 {
 	public function index($request, $response)
 	{

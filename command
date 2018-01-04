@@ -17,6 +17,7 @@ $app->add(new Console\Commands\ModelCommand);
 $app->add(new Console\Commands\ValidatorCommand);
 $app->add(new Console\Commands\RequestCommand);
 $app->add(new Console\Commands\NotificationCommand);
+$app->add(new Console\Commands\ChangeWebModeCommand);
 $app->add(new Console\Commands\TestCommand);
 
 /**

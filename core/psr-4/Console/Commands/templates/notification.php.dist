@@ -17,6 +17,6 @@ class {{notification}}
             ->subject("")
             ->from(['email' => "name"])
             ->to(['email' => "name"])
-            ->view("emails/path-to-twig-file");
+            ->view("path-to-twig-file");
     }
 }
