@@ -37,12 +37,6 @@ function resources_path($str = "")
 	return base_path("resources") . $str;
 }
 
-function settings_path($str = "")
-{
-	$str = !empty($str) ? "/{$str}" : "";
-	return base_path("settings") . $str;
-}
-
 function storage_path($str = "")
 {
 	$str = !empty($str) ? "/{$str}" : "";
