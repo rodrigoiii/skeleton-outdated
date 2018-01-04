@@ -3,9 +3,10 @@
 namespace {{namespace}}\Http\Requests;
 
 use {{namespace}}\Validation\Validator;
+use Request\Request;
 use Respect\Validation\Validator as v;
 
-class {{request}} extends BaseRequest
+class {{request}} extends Request
 {
     private $request;
 
