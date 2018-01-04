@@ -1,0 +1,11 @@
+{
+  "name": "web-dependency",
+  "version": "1.0.0",
+  "description": "Web dependency of project",
+  "main": "index.js",
+  "author": "rodrigogalura3rd@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap3": "^3.3.5"
+  }
+}

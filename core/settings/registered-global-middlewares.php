@@ -4,7 +4,10 @@
 $app->add(new \Middlewares\GlobalCsrf($container));
 $app->add($container->get('csrf'));
 
-# tracy debugbar
+# global error middleware
+$app->add(new \Middlewares\GlobalErrors($container));
+
+# tracy debugbar middleware
 $app->add(new RunTracy\Middlewares\TracyMiddleware($app));
 
 # SharedServer middleware

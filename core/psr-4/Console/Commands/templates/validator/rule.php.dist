@@ -1,0 +1,13 @@
+<?php
+
+namespace {{namespace}}\Validation\Rules;
+
+use Respect\Validation\Rules\AbstractRule;
+
+class {{validator}} extends AbstractRule
+{
+    public function validate($input)
+    {
+        //
+    }
+}

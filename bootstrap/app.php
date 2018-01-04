@@ -40,11 +40,6 @@ include core_path("settings/registered-global-middlewares.php");
 # .
 # end
 
-# eloquent settings
-include core_path("settings/eloquent.php");
-
-# tracy debug bar
-include core_path("settings/tracy.php");
 # include your custom settings here ...
 # .
 # .

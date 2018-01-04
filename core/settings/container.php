@@ -113,3 +113,9 @@ $container['logger'] = function($c)
 	$log->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 	return $log;
 };
+
+# respect validation
+$container['validator'] = function($c)
+{
+	return new \App\Validation\Validator;
+};

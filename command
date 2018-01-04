@@ -14,6 +14,7 @@ $app->add(new Console\Commands\ControllerCommand);
 $app->add(new Console\Commands\GenerateKeyCommand);
 $app->add(new Console\Commands\MiddlewareCommand);
 $app->add(new Console\Commands\ModelCommand);
+$app->add(new Console\Commands\ValidatorCommand);
 $app->add(new Console\Commands\TestCommand);
 
 /**
