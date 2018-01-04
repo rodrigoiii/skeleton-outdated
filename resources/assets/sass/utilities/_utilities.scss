@@ -1,17 +1,2 @@
 @import "bootstrap3/bootstrap3";
 @import "other-device-viewport";
-@import "reset"; // uncomment this if you want to use this
-
-.btn
-{
-	&-flat
-	{
-		border-radius: 0;
-	}
-}
-
-.captcha
-{
-	display: inline-block;
-	vertical-align: bottom;
-}
