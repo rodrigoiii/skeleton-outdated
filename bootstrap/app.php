@@ -40,6 +40,7 @@ include core_path("settings/registered-global-middlewares.php");
 # .
 # end
 
+include core_path('settings/lib.php');
 # include your custom settings here ...
 # .
 # .
