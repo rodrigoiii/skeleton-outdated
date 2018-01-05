@@ -1,6 +1,17 @@
 <?php
 
 /**
+ * Enhance the getenv function
+ * @param  [string] $key   [the key in the .env]
+ * @param  [string] $value [to be the value]
+ * @return [string]        [return the content if it is set, otherwise the var value]
+ */
+function _env($key, $value = "")
+{
+    return !empty(getenv($key)) ? getenv($key) : $value;
+}
+
+/**
  * Access the configuration at the config folder.
  * @param  [string] $string [path with dot separated]
  * @return [mix]         [return specify value according to paramater]
@@ -73,7 +84,7 @@ function base_url($str = "")
 function generate_token($string)
 {
     $salt = config('app.key');
-    return md5(uniqid() . $string . $salt );
+    return md5(uniqid() . $string . $salt);
 }
 
 /**
