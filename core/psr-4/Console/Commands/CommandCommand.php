@@ -36,15 +36,12 @@ class CommandCommand extends BaseCommand
         if (!ctype_upper($command[0]))
         {
             $output->writeln("Error: Invalid Command. It must be PascalCase.");
-            exit;
         }
         elseif (file_exists(app_path("Console/Commands/{$command}Command.php")))
         {
             $output->writeln("Error: The Command is already created.");
-            exit;
         }
-
-        if ($this->makeTemplate($command))
+        elseif ($this->makeTemplate($command))
         {
             $output->writeln([
                 "Successfully created.",

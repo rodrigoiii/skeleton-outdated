@@ -14,7 +14,6 @@ class ChangeWebModeCommandTest extends TestCase
 
     public static function setUpBeforeClass()
     {
-
         $app = new Application;
         $app->setAutoExit(false);
         $app->add(new ChangeWebModeCommand);
