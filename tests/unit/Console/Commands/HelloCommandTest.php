@@ -25,7 +25,7 @@ class HelloCommandTest extends TestCase
      */
     public function it_will_print_hello_world()
     {
-        $this->expectOutputString("Hello World\n");
+        $this->expectOutputString("Hello World" . PHP_EOL);
         echo $this->tester->getDisplay();
     }
 }
