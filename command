@@ -8,21 +8,31 @@ include core_path("settings/dotEnv.php");
 
 $app = new Symfony\Component\Console\Application("My Framework 2");
 
-# Core Commands
-$app->add(new Console\Commands\CommandCommand);
-$app->add(new Console\Commands\ControllerCommand);
-$app->add(new Console\Commands\GenerateKeyCommand);
-$app->add(new Console\Commands\MiddlewareCommand);
-$app->add(new Console\Commands\ModelCommand);
-$app->add(new Console\Commands\ValidatorCommand);
-$app->add(new Console\Commands\RequestCommand);
-$app->add(new Console\Commands\NotificationCommand);
-$app->add(new Console\Commands\ChangeWebModeCommand);
-$app->add(new Console\Commands\TestCommand);
+/**
+ * Core Commands
+ */
+use Console\Commands as C;
+
+$app->addCommands([
+    new C\CommandCommand,
+    new C\ControllerCommand,
+    new C\GenerateKeyCommand,
+    new C\MiddlewareCommand,
+    new C\ModelCommand,
+    new C\ValidatorCommand,
+    new C\RequestCommand,
+    new C\NotificationCommand,
+    new C\ChangeWebModeCommand,
+    new C\TestCommand
+]);
 
 /**
  * Your Custom Commands here
  */
-$app->add(new App\Console\Commands\HelloCommand);
+use App\Console\Commands as CC;
+
+$app->addCommands([
+    new CC\HelloCommand
+]);
 
 $app->run();
