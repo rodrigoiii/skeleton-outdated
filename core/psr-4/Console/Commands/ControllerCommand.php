@@ -64,7 +64,7 @@ class ControllerCommand extends BaseCommand
 
         if ($action === "make")
         {
-            if ($controller[0] !== "_" && ! ctype_upper($controller[0]) )
+            if (!ctype_upper($controller[0]))
             {
                 $output->writeln("Error: Invalid Controller. It must be PascalCase.");
                 exit;
