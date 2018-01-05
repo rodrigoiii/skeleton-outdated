@@ -5,6 +5,7 @@ bower_components
 *.sublime-project
 *.sublime-workspace
 phinx.yml
+phpunit.xml
 public/dist
 resources/dist-views
 !.gitignore
