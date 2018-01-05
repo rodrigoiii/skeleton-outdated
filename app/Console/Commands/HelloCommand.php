@@ -17,6 +17,6 @@ class HelloCommand extends BaseCommand
 
 	public function handle($input, $output)
 	{
-		$output->write("Hello World");
+		$output->writeln("Hello World");
 	}
 }

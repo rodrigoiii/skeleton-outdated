@@ -4,12 +4,15 @@ use App\Console\Commands\HelloCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 class HelloCommandTest extends TestCase
 {
+    protected $tester;
+
     public function setUp()
     {
-        $app = new Application("Test Command");
+        $app = new Application;
         $app->setAutoExit(false);
         $app->add(new HelloCommand);
 
@@ -22,7 +25,7 @@ class HelloCommandTest extends TestCase
      */
     public function it_will_print_hello_world()
     {
-        $this->expectOutputString("Hello World");
+        $this->expectOutputString("Hello World\n");
         echo $this->tester->getDisplay();
     }
 }
