@@ -35,6 +35,10 @@ class ControllerCommand extends BaseCommand
         $controller = $input->getArgument('controller');
         $resource = $input->getOption('resource');
 
+        $pre_controller_path = app_path("Http/Controllers");
+        $sub_directories = "";
+        $contoller_namespace = "";
+
         // have directory
         if (strpos($controller, "/"))
         {
@@ -51,13 +55,6 @@ class ControllerCommand extends BaseCommand
             {
                 mkdir($pre_controller_path, 0755, true);
             }
-        }
-        else
-        {
-            $pre_controller_path = app_path("Http/Controllers");
-            $sub_directories = "";
-
-            $contoller_namespace = "";
         }
 
         $file = $pre_controller_path . "/{$controller}Controller.php";
