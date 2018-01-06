@@ -4,6 +4,7 @@ return [
 	'name'      => _env('APP_NAME', "App Name"),
 	'namespace' => _env('APP_NAMESPACE', "App"),
 	'key'       => _env('APP_KEY'),
+	'mode' 		=> _env('WEB_MODE'),
 
 	'cache' => false,
 
