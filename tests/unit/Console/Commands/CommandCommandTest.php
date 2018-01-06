@@ -9,6 +9,7 @@ class CommandCommandTest extends TestCase
 {
     protected static $tester;
     protected static $namespace;
+    protected static $commands_data;
 
     public static function setUpBeforeClass()
     {
@@ -18,52 +19,64 @@ class CommandCommandTest extends TestCase
 
         self::$tester = new ApplicationTester($app);
         self::$namespace = config("app.namespace");
-    }
-
-    public function commands_data()
-    {
-        return [
-            [["A", "B", "AB"]]
-        ];
+        self::$commands_data = ["A", "A", "B", "B", "_", "a", "b"];
     }
 
     /**
      * @test
-     * @dataProvider commands_data
      */
-    public function it_will_create_file($commands)
+    public function it_will_create_file()
     {
+        $commands = self::$commands_data;
+
         foreach ($commands as $command) {
-            self::$tester->run(["make:command", '_command' => $command]);
-            $this->assertFileExists(app_path("Console/Commands/{$command}Command.php"));
+            if (!file_exists(app_path("Console/Commands/{$command}Command.php")))
+            {
+                self::$tester->run(["make:command", '_command' => $command]);
+
+                if (ctype_upper($command[0]))
+                {
+                    $this->assertFileExists(app_path("Console/Commands/{$command}Command.php"));
+                }
+                else
+                {
+                    $this->assertFalse(file_exists(app_path("Console/Commands/{$command}Command.php")));
+                }
+            }
         }
     }
 
     /**
      * @test
-     * @dataProvider commands_data
      */
-    public function content_is_correct($commands)
+    public function content_is_correct()
     {
+        $commands = self::$commands_data;
         $file = core_path("psr-4/Console/Commands/templates/command.php.dist");
 
         foreach ($commands as $command) {
-            $content = strtr(file_get_contents($file, [
-                '{{namespace}}' => self::$namespace,
-                '{{command}}' => $command,
-                '{{command_name}}' => strtolower($command)
-            ]));
+            if (ctype_upper($command[0]) && file_exists(app_path("Console/Commands/{$command}Command.php")))
+            {
+                $content = strtr(file_get_contents($file), [
+                    '{{namespace}}' => self::$namespace,
+                    '{{command}}' => $command,
+                    '{{command_name}}' => strtolower($command)
+                ]);
 
-            $this->assertEquals($content, file_get_contents(app_path("Console/Commands/{$command}Command.php")));
+                $this->assertEquals($content, file_get_contents(app_path("Console/Commands/{$command}Command.php")));
+            }
         }
     }
 
-    // /**
-    //  * @test
-    //  * @dataProvider commands_data
-    //  */
-    // public function it_will_not_create_file()
-    // {
+    public static function tearDownAfterClass()
+    {
+        $commands = self::$commands_data;
 
-    // }
+        foreach ($commands as $command) {
+            if (ctype_upper($command[0]) && file_exists(app_path("Console/Commands/{$command}Command.php")))
+            {
+                unlink(app_path("Console/Commands/{$command}Command.php"));
+            }
+        }
+    }
 }
