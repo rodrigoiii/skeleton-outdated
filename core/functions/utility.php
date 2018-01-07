@@ -109,37 +109,9 @@ function _dd($to_be_print)
 }
 
 /**
- * Make the slug friendly text
- * @param  [string] $text [to be slugify]
- * @return [string]       [slugify text]
+ * Get user ip address
+ * @return [string] [ip address]
  */
-function slugify($text)
-{
-	// replace non letter or digits by -
-	$text = preg_replace('~[^\pL\d]+~u', '-', $text);
-
-	// transliterate
-	$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-
-	// remove unwanted characters
-	$text = preg_replace('~[^-\w]+~', '', $text);
-
-	// trim
-	$text = trim($text, '-');
-
-	// remove duplicate -
-	$text = preg_replace('~-+~', '-', $text);
-
-	// lowercase
-	$text = strtolower($text);
-
-	if (empty($text)) {
-		return 'n-a';
-	}
-
-	return $text;
-}
-
 function get_user_ip()
 {
     $client  = @$_SERVER['HTTP_CLIENT_IP'];
@@ -160,52 +132,4 @@ function get_user_ip()
     }
 
     return $ip;
-}
-
-function is_active($pattern, $text)
-{
-	$pattern = preg_quote($pattern, "/");
-	return preg_match("/^{$pattern}$/", $_SERVER['REQUEST_URI']) === 1 ? $text : "";
-}
-
-function is_valid_date($date, $format = "Y-m-d")
-{
-    $d = DateTime::createFromFormat($format, $date);
-    return $d && $d->format($format) === $date;
-}
-
-function is_philippine_mobile_number($number)
-{
-	return preg_match("/^(09|\+639)\d{9}$/", $number);
-}
-
-function str_title($str, $char = "_")
-{
-	$new_word = "";
-	for ($i=0; $i < strlen($str); $i++) {
-		if ($str[$i] === $char)
-		{
-			try {
-				$new_word .= " " . strtoupper($str[++$i]);
-			} catch (Exception $e) {
-			}
-		}
-		else
-		{
-			$new_word .= $str[$i];
-		}
-	}
-
-	return ucfirst($new_word);
-}
-
-function get_exploded_date(array $date, $separator="-", $index=0)
-{
-	$exploded_date = [];
-	foreach ($date as $d) {
-		$explode_year = explode($separator, $d);
-		$exploded_date[] = $explode_year[$index];
-	}
-
-	return $exploded_date;
 }
