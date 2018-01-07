@@ -37,7 +37,7 @@ class ControllerCommand extends BaseCommand
 
         $pre_controller_path = app_path("Http/Controllers");
         $sub_directories = "";
-        $contoller_namespace = "";
+        $pre_controller_namespace = "";
 
         // have directory
         if (strpos($controller, "/"))
@@ -45,10 +45,9 @@ class ControllerCommand extends BaseCommand
             $explode_controller = explode("/", $controller);
             $controller = array_pop($explode_controller);
 
-            $contoller_namespace = implode("\\",$explode_controller) . "\\";
-
             $pre_controller_path = app_path("Http/Controllers/" . implode("/", $explode_controller));
             $sub_directories = "\\" . implode("\\", $explode_controller);
+            $pre_controller_namespace = implode("\\", $explode_controller) . "\\";
 
             // create directory
             if (!file_exists($pre_controller_path))
@@ -57,7 +56,12 @@ class ControllerCommand extends BaseCommand
             }
         }
 
-        $file = $pre_controller_path . "/{$controller}Controller.php";
+        $file = "{$pre_controller_path}/{$controller}Controller.php";
+        $registered_controller_file = core_path("settings/registered-controllers.php");
+        $template = strtr(file_get_contents(core_path("psr-4/Console/Commands/templates/controller/controller-container.php.dist")), [
+            '{{controller}}' => $controller,
+            '{{pre_controller_namespace}}' => $pre_controller_namespace
+        ]);
 
         if ($action === "make")
         {
@@ -78,16 +82,8 @@ class ControllerCommand extends BaseCommand
             fclose($file);
 
             // register the controller in container
-            $controller_register_path = core_path("settings/registered-controllers.php");
-            $str = "\n" .
-            "# " . $contoller_namespace . "{$controller}Controller" . "\n" .
-            "\$container['" . $contoller_namespace . "{$controller}Controller'] = function (\$c)" . "\n" .
-            "{" . "\n" .
-            "\treturn new {$this->namespace}\Http\Controllers\\" . $contoller_namespace . "{$controller}Controller(\$c);" . "\n" .
-            "};" . "\n\n";
-
-            $file = fopen($controller_register_path, "a");
-            fwrite($file, $str);
+            $file = fopen($registered_controller_file, "a");
+            fwrite($file, $template);
             fclose($file);
 
             $output->writeln("Successfully created.");
@@ -107,12 +103,8 @@ class ControllerCommand extends BaseCommand
                 rmdir(dirname($file));
             }
 
-            $file = core_path("settings/registered-controllers.php");
-            $search = "\n# " . $contoller_namespace . "{$controller}Controller\n\$container['" . $contoller_namespace . "{$controller}Controller'] = function (\$c)\n{\n\treturn new {$this->namespace}\Http\Controllers\\" . $contoller_namespace . "{$controller}Controller(\$c);\n};\n\n";
-
-            $content = file_get_contents($file);
-            $content = str_replace($search, "", $content);
-            file_put_contents($file, $content);
+            $content = file_get_contents($registered_controller_file);
+            file_put_contents($registered_controller_file, str_replace($template, "", $content));
 
             $output->writeln("Successfully deleted.");
         }
