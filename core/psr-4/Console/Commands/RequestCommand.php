@@ -33,18 +33,17 @@ class RequestCommand extends BaseCommand
     {
         $request = $input->getArgument('request');
 
-        if ($request[0] !== "_" && ! ctype_upper($request[0]) )
-        {
-            $output->writeln("Error: Invalid Request. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists(app_path("Http/Requests/{$request}.php")))
-        {
-            $output->writeln("Error: The Request is already created.");
-            exit;
-        }
+        try {
+            if ($request[0] !== "_" && ! ctype_upper($request[0]) )
+                throw new \Exception("Error: Invalid Request. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->makeTemplate($request) ? "Successfully created." : "File not created. Check the file path.");
+            if (file_exists(app_path("Http/Requests/{$request}.php")))
+                throw new \Exception("Error: The Request is already created.", 1);
+
+            $output->writeln($this->makeTemplate($request) ? "Successfully created." : "File not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     /**

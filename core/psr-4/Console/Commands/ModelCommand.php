@@ -50,18 +50,17 @@ class ModelCommand extends BaseCommand
                 mkdir($pre_model_path, 0755, true);
         }
 
-        if (!ctype_upper($model[0]))
-        {
-            $output->writeln("Error: Invalid Model. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists("{$pre_model_path}/{$model}.php"))
-        {
-            $output->writeln("Error: The Model is already created.");
-            exit;
-        }
+        try {
+            if (!ctype_upper($model[0]))
+                throw new \Exception("Error: Invalid Model. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->makeTemplate($sub_directories, $pre_model_path, $model) ? "Successfully created." : "File not created. Check the file path.");
+            if (file_exists("{$pre_model_path}/{$model}.php"))
+                throw new \Exception("Error: The Model is already created.", 1);
+
+            $output->writeln($this->makeTemplate($sub_directories, $pre_model_path, $model) ? "Successfully created." : "File not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     /**

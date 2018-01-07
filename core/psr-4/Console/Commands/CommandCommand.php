@@ -34,8 +34,11 @@ class CommandCommand extends BaseCommand
         $command = $input->getArgument('_command');
 
         try {
-            if (!ctype_upper($command[0])) throw new \Exception("Error: Invalid Command. It must be PascalCase.", 1);
-            if (file_exists(app_path("Console/Commands/{$command}Command.php"))) throw new \Exception("Error: The Command is already created.", 1);
+            if (!ctype_upper($command[0]))
+                throw new \Exception("Error: Invalid Command. It must be Characters and PascalCase.", 1);
+
+            if (file_exists(app_path("Console/Commands/{$command}Command.php")))
+                throw new \Exception("Error: The Command is already created.", 1);
 
             $output->writeln($this->makeTemplate($command) ?
                             "Successfully created." . PHP_EOL . "Do not forget to registered it in 'command' file at the root." :

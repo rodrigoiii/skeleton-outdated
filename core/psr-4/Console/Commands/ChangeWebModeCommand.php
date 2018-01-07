@@ -33,15 +33,18 @@ class ChangeWebModeCommand extends BaseCommand
         $path = base_path('.env');
 
         try {
-            if (!file_exists($path)) throw new \Exception(".env file is not exist.", 1);
-            if (!in_array($new_mode, ["UP", "DOWN"])) throw new \Exception("Invalid web mode. Value must be \"UP\" or \"DOWN\"", 1);
+            if (!file_exists($path))
+                throw new \Exception(".env file is not exist.", 1);
+
+            if (!in_array($new_mode, ["UP", "DOWN"]))
+                throw new \Exception("Invalid web mode. Value must be \"UP\" or \"DOWN\"", 1);
 
             $old_mode = _env('WEB_MODE');
-            if ($new_mode === $old_mode) throw new \Exception("Web mode is already {$new_mode}.", 1);
+            if ($new_mode === $old_mode)
+                throw new \Exception("Web mode is already {$new_mode}.", 1);
 
             file_put_contents($path, str_replace("WEB_MODE={$old_mode}", "WEB_MODE={$new_mode}", file_get_contents($path)));
             $output->writeln("WEB_MODE is now {$new_mode}");
-
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }

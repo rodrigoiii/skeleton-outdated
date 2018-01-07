@@ -33,18 +33,17 @@ class MiddlewareCommand extends BaseCommand
     {
         $middleware = $input->getArgument('middleware');
 
-        if ($middleware[0] !== "_" && ! ctype_upper($middleware[0]) )
-        {
-            $output->writeln("Error: Invalid Middleware. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists(app_path("Http/Middlewares/{$middleware}.php")))
-        {
-            $output->writeln("Error: The Middleware is already created.");
-            exit;
-        }
+        try {
+            if (!ctype_upper($middleware[0]))
+                throw new \Exception("Error: Invalid Middleware. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->makeTemplate($middleware) ? "Successfully created." : "File not created. Check the file path.");
+            if (file_exists(app_path("Http/Middlewares/{$middleware}.php")))
+                throw new \Exception("Error: The Middleware is already created.", 1);
+
+            $output->writeln($this->makeTemplate($middleware) ? "Successfully created." : "File not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     /**

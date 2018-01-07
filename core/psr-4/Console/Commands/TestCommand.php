@@ -17,6 +17,8 @@ class TestCommand extends BaseCommand
     {
         $test = $input->getArgument('test');
 
+        $pre_test_path = base_path("tests");
+
         // have directory
         if (strpos($test, "/"))
         {
@@ -27,27 +29,20 @@ class TestCommand extends BaseCommand
 
             // create directory
             if (!file_exists($pre_test_path))
-            {
                 mkdir($pre_test_path, 0755, true);
-            }
-        }
-        else
-        {
-            $pre_test_path = base_path("tests");
         }
 
-        if (!ctype_upper($test[0]))
-        {
-            $output->writeln("Error: Invalid Model. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists("{$pre_test_path}/{$test}Test.php"))
-        {
-            $output->writeln("Error: The Model is already created.");
-            exit;
-        }
+        try {
+            if (!ctype_upper($test[0]))
+                throw new \Exception("Error: Invalid Test. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->makeTemplate($pre_test_path, $test) ? "Successfully created." : "File not created. Check the file path.");
+            if (file_exists("{$pre_test_path}/{$test}Test.php"))
+                throw new \Exception("Error: The Test is already created.", 1);
+
+            $output->writeln($this->makeTemplate($pre_test_path, $test) ? "Successfully created." : "File not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     /**

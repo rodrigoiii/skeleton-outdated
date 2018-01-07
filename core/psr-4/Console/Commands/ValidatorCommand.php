@@ -34,19 +34,18 @@ class ValidatorCommand extends BaseCommand
         $validator = $input->getArgument('validator');
         $error_message = $input->getOption('error_message');
 
-        if (!ctype_upper($validator[0]))
-        {
-            $output->writeln("Error: Invalid Validator. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists(app_path("Validation/Rules/{$validator}.php")))
-        {
-            $output->writeln("Error: The Validator is already created.");
-            exit;
-        }
+        try {
+            if (!ctype_upper($validator[0]))
+                throw new \Exception("Error: Invalid Validator. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->ruleTemplate($validator) ? "Successfully created rule class." : "Rule file not created. Check the file path.");
-        $output->writeln($this->exceptionTemplate($validator, $error_message) ? "Successfully created exception class." : "Exception file not created. Check the file path.");
+            if (file_exists(app_path("Validation/Rules/{$validator}.php")))
+                throw new \Exception("Error: The Validator is already created.", 1);
+
+            $output->writeln($this->ruleTemplate($validator) ? "Successfully created rule class." : "Rule file not created. Check the file path.");
+            $output->writeln($this->exceptionTemplate($validator, $error_message) ? "Successfully created exception class." : "Exception file not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     private function ruleTemplate($validator)

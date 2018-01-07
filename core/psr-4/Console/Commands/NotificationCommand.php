@@ -33,18 +33,17 @@ class NotificationCommand extends BaseCommand
     {
         $notification = $input->getArgument('notification');
 
-        if (!ctype_upper($notification[0]))
-        {
-            $output->writeln("Error: Invalid Notification. It must be PascalCase.");
-            exit;
-        }
-        elseif (file_exists(app_path("Notifications/{$notification}.php")))
-        {
-            $output->writeln("Error: The Notification is already created.");
-            exit;
-        }
+        try {
+            if (!ctype_upper($notification[0]))
+                throw new \Exception("Error: Invalid Notification. It must be Characters and PascalCase.", 1);
 
-        $output->writeln($this->makeTemplate($notification) ? "Successfully created." : "File not created. Check the file path.");
+            if (file_exists(app_path("Notifications/{$notification}.php")))
+                throw new \Exception("Error: The Notification is already created.", 1);
+
+            $output->writeln($this->makeTemplate($notification) ? "Successfully created." : "File not created. Check the file path.");
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+        }
     }
 
     /**
