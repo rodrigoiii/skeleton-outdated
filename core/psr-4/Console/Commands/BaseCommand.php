@@ -27,7 +27,7 @@ class BaseCommand extends Command
 		parent::__construct();
 	}
 
-	protected function configure ()
+	protected function configure()
 	{
 		$this->setName($this->name);
 		$this->setDescription($this->description);
@@ -41,7 +41,7 @@ class BaseCommand extends Command
 		}
 	}
 
-	protected function execute (InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$this->handle($input, $output);
 	}
