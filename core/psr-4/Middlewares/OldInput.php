@@ -8,12 +8,12 @@ class OldInput extends Middleware
 {
     public function __invoke($request, $response, $next)
     {
-        if ( $old_input = Session::get('old_input', true) )
+        if ($old_input = Session::get('old_input', true))
         {
             $new_old_input = [];
 
             foreach ($old_input as $field => $input) {
-                if ( is_array($input) )
+                if (is_array($input))
                 {
                     foreach ($input as $key => $value) {
                         $new_old_input[$field][$key] = $input[$key];
@@ -29,7 +29,7 @@ class OldInput extends Middleware
             // $this->phpView->addAttribute('old_input', $old_input);
         }
 
-        if ( $old_input_file = Session::get('old_input_file', true) )
+        if ($old_input_file = Session::get('old_input_file', true))
         {
             $this->twigView->getEnvironment()->addGlobal('oldInputFile', $old_input_file);
         }
