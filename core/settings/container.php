@@ -1,6 +1,6 @@
 <?php
 
-if (!config('app.debug'))
+if (is_prod())
 {
 	# override error handler
 	$container['errorHandler'] = function($c)
@@ -22,7 +22,6 @@ if (!config('app.debug'))
 # override not found handler
 $container['notFoundHandler'] = function($c)
 {
-
 	return function ($request, $response) use($c)
 	{
 		return $c->twigView
@@ -37,7 +36,6 @@ $container['notFoundHandler'] = function($c)
 # override not allowed handler
 $container['notAllowedHandler'] = function($c)
 {
-
 	return function ($request, $response, $methods) use($c)
 	{
 		return $c->twigView
@@ -84,7 +82,7 @@ $container['csrf'] = function($c)
 {
 	$guard = new \Slim\Csrf\Guard;
 	$guard->setFailureCallable( function ($request, $response, $next) use($c) {
-		if (!config('app.debug'))
+		if (is_prod())
 		{
 			return $c->twigView->render(
 				$response->withStatus(403)

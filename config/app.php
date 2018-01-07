@@ -1,9 +1,10 @@
 <?php
 
 return [
-	'name'      => _env('APP_NAME', "App Name"),
-	'namespace' => _env('APP_NAMESPACE', "App"),
-	'key'       => _env('APP_KEY'),
+	'name'        => _env('APP_NAME', "App Name"),
+	'namespace'   => _env('APP_NAMESPACE', "App"),
+	'environment' => in_array(_env('APP_ENV'), ["development", "production", "testing"]) ? _env('APP_ENV') : "development",
+	'key'         => _env('APP_KEY'),
 
 	'web_mode' => _env('WEB_MODE'),
 

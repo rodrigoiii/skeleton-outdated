@@ -2,6 +2,7 @@ vendor/
 node_modules
 bower_components
 .env
+.env.test
 *.sublime-project
 *.sublime-workspace
 phinx.yml
