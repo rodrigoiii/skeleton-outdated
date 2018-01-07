@@ -32,30 +32,18 @@ class ChangeWebModeCommand extends BaseCommand
         $new_mode = strtoupper($input->getArgument('mode'));
         $path = base_path('.env');
 
-        if (file_exists($path))
-        {
-            $old_mode = _env('WEB_MODE');
+        try {
+            if (!file_exists($path)) throw new \Exception(".env file is not exist.", 1);
+            if (!in_array($new_mode, ["UP", "DOWN"])) throw new \Exception("Invalid web mode. Value must be \"UP\" or \"DOWN\"", 1);
 
-            if (in_array($new_mode, ["UP", "DOWN"]))
-            {
-                if ($new_mode !== $old_mode)
-                {
-                    file_put_contents($path, str_replace("WEB_MODE={$old_mode}", "WEB_MODE={$new_mode}", file_get_contents($path)));
-                    $output->writeln("WEB_MODE is now {$new_mode}");
-                }
-                else
-                {
-                    $output->writeln("Web mode is already {$new_mode}.\n");
-                }
-            }
-            else
-            {
-                $output->writeln("Invalid web mode. Value must be \"UP\" or \"DOWN\"\n");
-            }
-        }
-        else
-        {
-            $output->writeln(".env file is not exist.");
+            $old_mode = _env('WEB_MODE');
+            if ($new_mode === $old_mode) throw new \Exception("Web mode is already {$new_mode}.", 1);
+
+            file_put_contents($path, str_replace("WEB_MODE={$old_mode}", "WEB_MODE={$new_mode}", file_get_contents($path)));
+            $output->writeln("WEB_MODE is now {$new_mode}");
+
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
         }
     }
 }
