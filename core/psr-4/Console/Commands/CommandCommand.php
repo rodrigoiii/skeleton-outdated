@@ -35,7 +35,7 @@ class CommandCommand extends BaseCommand
 
         try {
             if (!ctype_upper($command[0])) throw new \Exception("Error: Invalid Command. It must be PascalCase.", 1);
-            if (file_exists(app_path("Console/Commands/{$command}Command.php"))) throw new Exception("Error: The Command is already created.", 1);
+            if (file_exists(app_path("Console/Commands/{$command}Command.php"))) throw new \Exception("Error: The Command is already created.", 1);
 
             $output->writeln($this->makeTemplate($command) ?
                             "Successfully created." . PHP_EOL . "Do not forget to registered it in 'command' file at the root." :
@@ -56,7 +56,7 @@ class CommandCommand extends BaseCommand
         $file = core_path("psr-4/Console/Commands/templates/command.php.dist");
 
         try {
-            if (!file_exists($file)) throw new Exception("{$file} file is not exist.", 1);
+            if (!file_exists($file)) throw new \Exception("{$file} file is not exist.", 1);
 
             $template = strtr(file_get_contents($file), [
                 '{{namespace}}' => "{$this->namespace}",
