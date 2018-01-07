@@ -33,29 +33,21 @@ class ModelCommand extends BaseCommand
     {
         $model = $input->getArgument('model');
 
+        $pre_model_path = app_path("Models");
+        $sub_directories = "";
+
         // have directory
         if (strpos($model, "/"))
         {
             $explode_model = explode("/", $model);
             $model = array_pop($explode_model);
 
-            $contoller_namespace = implode("\\",$explode_model) . "\\";
-
             $pre_model_path = app_path("Models/" . implode("/", $explode_model));
-            $top_template = "namespace {$this->namespace}\Models\\" . implode("\\", $explode_model) . ";\n+.";
+            $sub_directories = "\\" . implode("\\", $explode_model);
 
             // create directory
             if (!file_exists($pre_model_path))
-            {
                 mkdir($pre_model_path, 0755, true);
-            }
-        }
-        else
-        {
-            $pre_model_path = app_path("Models");
-            $top_template = "namespace {$this->namespace}\Http\Controllers;";
-
-            $contoller_namespace = "";
         }
 
         if (!ctype_upper($model[0]))
@@ -69,24 +61,25 @@ class ModelCommand extends BaseCommand
             exit;
         }
 
-        $output->writeln($this->makeTemplate($top_template, $pre_model_path, $model) ? "Successfully created." : "File not created. Check the file path.");
+        $output->writeln($this->makeTemplate($sub_directories, $pre_model_path, $model) ? "Successfully created." : "File not created. Check the file path.");
     }
 
     /**
      * [Create model template]
      * @depends handle
-     * @param  [string] $top_template [template at the top part]
+     * @param  [string] $sub_directories [sub directories of class]
      * @param  [string] $pre_model_path [the pre string represent as folder before the file]
      * @param  [string] $model [model name]
      * @return [boolean]    [Return true if successfully creating file otherwise false]
      */
-    private function makeTemplate($top_template, $pre_model_path, $model)
+    private function makeTemplate($sub_directories, $pre_model_path, $model)
     {
         $file = core_path("psr-4/Console/Commands/templates/model.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
                 '{{namespace}}' => $this->namespace,
+                '{{sub_directories}}' => $sub_directories,
                 '{{model}}' => $model
             ]);
 
