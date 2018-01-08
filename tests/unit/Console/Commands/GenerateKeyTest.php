@@ -23,7 +23,6 @@ class GenerateKeyTest extends TestCase
         self::$dotenv->overload();
 
         self::$old_app_key = config('app.key');
-        Log::write('debug', self::$old_app_key);
     }
 
     public function setUp()
@@ -39,7 +38,6 @@ class GenerateKeyTest extends TestCase
         self::$tester->run(["key:generate"]);
         self::$dotenv->overload();
 
-        Log::write('debug', _env('APP_KEY'));
         $this->assertFalse(_env('APP_KEY') === self::$old_app_key);
     }
 }
