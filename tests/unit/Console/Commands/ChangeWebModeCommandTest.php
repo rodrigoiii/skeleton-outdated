@@ -34,7 +34,7 @@ class ChangeWebModeCommandTest extends TestCase
      */
     public function it_will_change_to_up_mode()
     {
-        self::$tester->run(["web-mode", 'mode' => "up"]);
+        self::$tester->run(["change:web-mode", 'mode' => "up"]);
         self::$dotenv->overload();
 
         $this->assertEquals("up", strtolower(_env('WEB_MODE')));
@@ -45,7 +45,7 @@ class ChangeWebModeCommandTest extends TestCase
      */
     public function it_will_change_to_down_mode()
     {
-        self::$tester->run(["web-mode", 'mode' => "down"]);
+        self::$tester->run(["change:web-mode", 'mode' => "down"]);
         self::$dotenv->overload();
 
         $this->assertEquals("down", strtolower(_env('WEB_MODE')));
@@ -54,6 +54,6 @@ class ChangeWebModeCommandTest extends TestCase
     public static function tearDownAfterClass()
     {
         self::$dotenv->overload();
-        self::$tester->run(['web-mode', 'mode' => strtolower(self::$old_mode)]);
+        self::$tester->run(['change:web-mode', 'mode' => strtolower(self::$old_mode)]);
     }
 }

@@ -6,7 +6,7 @@ require __DIR__ . "/vendor/autoload.php";
 
 include core_path("settings/dotEnv.php");
 
-$app = new Symfony\Component\Console\Application("My Framework 2");
+$app = new Symfony\Component\Console\Application("My Framework");
 
 /**
  * Core Commands
@@ -23,6 +23,7 @@ $app->addCommands([
     new C\RequestCommand,
     new C\NotificationCommand,
     new C\ChangeWebModeCommand,
+    new C\ChangeEnvironmentCommand,
     new C\TestCommand
 ]);
 

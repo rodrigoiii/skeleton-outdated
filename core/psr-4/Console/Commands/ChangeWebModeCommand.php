@@ -8,7 +8,7 @@ class ChangeWebModeCommand extends BaseCommand
      * Console command signature
      * @var string
      */
-    private $signature = "web-mode {mode : [UP | DOWN]}";
+    private $signature = "change:web-mode {mode : [UP | DOWN]}";
 
     /**
      * Console command description

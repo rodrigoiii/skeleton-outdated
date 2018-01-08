@@ -3,7 +3,7 @@
 return [
 	'name'        => _env('APP_NAME', "App Name"),
 	'namespace'   => _env('APP_NAMESPACE', "App"),
-	'environment' => in_array(_env('APP_ENV'), ["development", "production", "testing"]) ? _env('APP_ENV') : "development",
+	'environment' => _env('APP_ENV', "development"), // Options: development, production, testing
 	'key'         => _env('APP_KEY'),
 
 	'web_mode' => _env('WEB_MODE'),
