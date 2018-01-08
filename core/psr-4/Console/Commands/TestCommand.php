@@ -4,7 +4,7 @@ namespace Console\Commands;
 
 class TestCommand extends BaseCommand
 {
-    private $signature = "make:test {test}";
+    private $signature = "make:test {test} {--t|type= : [command]}";
 
     private $description = "Create phpunit test class template.";
 
@@ -16,6 +16,7 @@ class TestCommand extends BaseCommand
     public function handle($input, $output)
     {
         $test = $input->getArgument('test');
+        $type = $input->getOption('type');
 
         $pre_test_path = base_path("tests");
 
@@ -39,7 +40,7 @@ class TestCommand extends BaseCommand
             if (file_exists("{$pre_test_path}/{$test}Test.php"))
                 throw new \Exception("Error: The Test is already created.", 1);
 
-            $output->writeln($this->makeTemplate($pre_test_path, $test) ? "Successfully created." : "File not created. Check the file path.");
+            $output->writeln($this->makeTemplate($pre_test_path, $test, $type) ? "Successfully created." : "File not created. Check the file path.");
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }
@@ -49,12 +50,24 @@ class TestCommand extends BaseCommand
      * [Create test template]
      * @depends handle
      * @param  [string] $pre_test_path [the pre string represent as folder before the file]
-     * @param  [string] $test [test name]
+     * @param  [string] $test [test class name]
+     * @param  [string] $type [test type]
      * @return [boolean]    [Return true if successfully creating file otherwise false]
      */
-    private function makeTemplate($pre_test_path, $test)
+    private function makeTemplate($pre_test_path, $test, $type)
     {
-        $file = core_path("psr-4/Console/Commands/templates/test.php.dist");
+        switch ($type) {
+            case 'command':
+                $filename = "test-command.php.dist";
+                break;
+
+            default:
+                $filename = "test.php.dist";
+                break;
+        }
+
+        $file = core_path("psr-4/Console/Commands/templates/test/{$filename}");
+
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
