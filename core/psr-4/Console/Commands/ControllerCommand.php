@@ -61,7 +61,7 @@ class ControllerCommand extends BaseCommand
             if (!ctype_upper($controller[0]))
                 throw new \Exception("Error: Invalid Controller. It must be Characters and PascalCase.", 1);
 
-            $file = "{$pre_controller_path}/{$controller}Controller.php";
+            $file = "{$pre_controller_path}/{$controller}.php";
             $registered_controller_file = core_path("settings/registered-controllers.php");
             $template = strtr(file_get_contents(core_path("psr-4/Console/Commands/templates/controller/controller-container.php.dist")), [
                 '{{controller}}' => $controller,
@@ -74,7 +74,7 @@ class ControllerCommand extends BaseCommand
                     throw new \Exception("Error: The Controller is already created.", 1);
 
                 // create file
-                $file = fopen($pre_controller_path . "/{$controller}Controller.php", "w");
+                $file = fopen($pre_controller_path . "/{$controller}.php", "w");
                 fwrite($file, $this->getTemplate($sub_directories, $controller, $resource));
                 fclose($file);
 

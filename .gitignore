@@ -5,6 +5,7 @@ bower_components
 .env.test
 *.sublime-project
 *.sublime-workspace
+*.log
 phinx.yml
 phpunit.xml
 public/dist

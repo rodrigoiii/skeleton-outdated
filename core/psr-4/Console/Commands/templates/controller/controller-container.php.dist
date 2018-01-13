@@ -1,6 +1,6 @@
-# {{pre_controller_namespace}}{{controller}}Controller
-$container['{{pre_controller_namespace}}{{controller}}Controller'] = function ($c)
+# {{pre_controller_namespace}}{{controller}}
+$container['{{pre_controller_namespace}}{{controller}}'] = function ($c)
 {
-    return new App\Http\Controllers\{{pre_controller_namespace}}{{controller}}Controller($c);
+    return new App\Http\Controllers\{{pre_controller_namespace}}{{controller}}($c);
 };
 

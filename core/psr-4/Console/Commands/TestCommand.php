@@ -37,7 +37,7 @@ class TestCommand extends BaseCommand
             if (!ctype_upper($test[0]))
                 throw new \Exception("Error: Invalid Test. It must be Characters and PascalCase.", 1);
 
-            if (file_exists("{$pre_test_path}/{$test}Test.php"))
+            if (file_exists("{$pre_test_path}/{$test}.php"))
                 throw new \Exception("Error: The Test is already created.", 1);
 
             $output->writeln($this->makeTemplate($pre_test_path, $test, $type) ? "Successfully created." : "File not created. Check the file path.");
@@ -74,7 +74,7 @@ class TestCommand extends BaseCommand
                 '{{test}}' => $test
             ]);
 
-            $file_path = "{$pre_test_path}/{$test}Test.php";
+            $file_path = "{$pre_test_path}/{$test}.php";
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);

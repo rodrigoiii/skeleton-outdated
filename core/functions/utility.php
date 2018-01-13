@@ -44,25 +44,19 @@ function is_shared_server()
  * @param  [string]  $file_path [the path of file]
  * @return boolean            [true if file is in upload folders, otherwise false]
  */
-function is_in_upload($file_path)
+function is_in_uploads($file_path)
 {
-	return strpos($file_path, config('app.upload-path.base')) === 0;
+	return strpos($file_path, config('app.uploads_path')) === 0;
 }
 
 /**
  * Base path of the Url
  * @return [string] [Base of the url]
  */
-function base_url($str = "")
+function base_url($str_added = "")
 {
-	if (!empty($str))
-	{
-		$str = "/{$str}";
-	}
-
-	$http = isset($_SERVER['HTTPS']) ? "https" : "http";
-
-	return $http . "://" . $_SERVER['SERVER_NAME'] . $str;
+    $str_added = !empty($str_added) ? "/{$str_added}" : "";
+    return $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . $str_added;
 }
 
 /**

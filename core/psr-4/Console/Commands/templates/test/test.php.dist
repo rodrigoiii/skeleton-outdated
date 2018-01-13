@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class {{test}}Test extends TestCase
+class {{test}} extends TestCase
 {
     //
 }

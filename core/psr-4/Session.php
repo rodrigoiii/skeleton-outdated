@@ -2,9 +2,16 @@
 
 class Session
 {
-	public static function put($key, $value)
+	public static function put($key, $value, $is_array = false)
 	{
-		$_SESSION[$key] = $value;
+		if ($is_array)
+		{
+			$_SESSION[$key][] = $value;
+		}
+		else
+		{
+			$_SESSION[$key] = $value;
+		}
 	}
 
 	public static function get($key, $flash = false)

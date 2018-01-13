@@ -12,10 +12,10 @@ return [
 
 	'route_on' => true,
 
-	'upload-path' => public_path("uploads"),
+	'uploads_path' => "uploads",
 
 	// these path are relative on 'resources/views' path
-	'error-pages-path' => [
+	'error_pages_path' => [
 		"500" => "templates/error-pages/page-500.twig",
 		"405" => "templates/error-pages/page-405.twig",
 		"404" => "templates/error-pages/page-404.twig",

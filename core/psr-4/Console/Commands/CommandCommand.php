@@ -37,7 +37,7 @@ class CommandCommand extends BaseCommand
             if (!ctype_upper($command[0]))
                 throw new \Exception("Error: Invalid Command. It must be Characters and PascalCase.", 1);
 
-            if (file_exists(app_path("Console/Commands/{$command}Command.php")))
+            if (file_exists(app_path("Console/Commands/{$command}.php")))
                 throw new \Exception("Error: The Command is already created.", 1);
 
             $output->writeln($this->makeTemplate($command) ?
@@ -67,7 +67,7 @@ class CommandCommand extends BaseCommand
                 '{{command_name}}' => strtolower($command)
             ]);
 
-            $file_path = app_path("Console/Commands/{$command}Command.php");
+            $file_path = app_path("Console/Commands/{$command}.php");
 
             $file = fopen($file_path, "w");
             fwrite($file, $template);

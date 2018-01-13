@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\ApplicationTester;
 
-class {{test}}Test extends TestCase
+class {{test}} extends TestCase
 {
     protected static $tester;
 

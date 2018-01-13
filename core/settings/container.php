@@ -13,7 +13,7 @@ if (is_prod())
 					->render(
 						$response->withStatus(500)
 						->withHeader('Content-Type', "text/html"),
-						config('app.error-pages-path.500')
+						config('app.error_pages_path.500')
 					);
 		};
 	};
@@ -28,7 +28,7 @@ $container['notFoundHandler'] = function($c)
 				->render(
 					$response->withStatus(404)
 					->withHeader('Content-Type', "text/html"),
-					config('app.error-pages-path.404')
+					config('app.error_pages_path.404')
 				);
 	};
 };
@@ -43,7 +43,7 @@ $container['notAllowedHandler'] = function($c)
 					$response->withStatus(405)
 					->withHeader('Allow', implode(', ', $methods))
 					->withHeader('Content-Type', "text/html"),
-					config('app.error-pages-path.405')
+					config('app.error_pages_path.405')
 				);
 	};
 };
