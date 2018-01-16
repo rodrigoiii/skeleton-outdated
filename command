@@ -20,7 +20,7 @@ $app->addCommands([
     new C\GenerateKeyCommand,
     new C\MiddlewareCommand,
     new C\ModelCommand,
-    new C\ValidatorCommand,
+    new C\RuleCommand,
     new C\RequestCommand,
     new C\NotificationCommand,
     new C\ChangeWebModeCommand,

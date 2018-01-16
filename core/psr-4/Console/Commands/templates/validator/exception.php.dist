@@ -4,7 +4,7 @@ namespace {{namespace}}\Validation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 
-class {{validator}}Exception extends ValidationException
+class {{rule}}Exception extends ValidationException
 {
     public static $defaultTemplates = [
         self::MODE_DEFAULT => [
