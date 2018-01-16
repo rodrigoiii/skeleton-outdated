@@ -51,9 +51,9 @@ $container['notAllowedHandler'] = function($c)
 # slim twig view
 $container['twigView'] = function($c)
 {
-	$twigView = new \Slim\Views\Twig(resources_path("views"), ['cache' => config('app.cache')]);
+	$twigView = new Slim\Views\Twig(resources_path("views"), ['cache' => config('app.cache')]);
 
-	$twigView->addExtension(new \Slim\Views\TwigExtension(
+	$twigView->addExtension(new Slim\Views\TwigExtension(
 		$c->router,
 		$c->request->getUri()
 	));
@@ -61,8 +61,11 @@ $container['twigView'] = function($c)
 	# Make the helper functions as global
 	$twigView->getEnvironment()->addGlobal('fn', new Functions);
 
-	# Make 'flash' Global
+	# Make 'flash' global
 	$twigView->getEnvironment()->addGlobal('flash', $c->flash);
+
+	# Make 'debugbar' global
+	$twigView->getEnvironment()->addGlobal('debugbar_renderer', $c->debugbar_renderer);
 
 	return $twigView;
 };
@@ -70,13 +73,13 @@ $container['twigView'] = function($c)
 # slim/flash
 $container['flash'] = function($c)
 {
-	return new \Slim\Flash\Messages();
+	return new Slim\Flash\Messages();
 };
 
 # slim/csrf
 $container['csrf'] = function($c)
 {
-	$guard = new \Slim\Csrf\Guard;
+	$guard = new Slim\Csrf\Guard;
 	$guard->setFailureCallable( function ($request, $response, $next) use($c) {
 		if (is_prod())
 		{
@@ -98,7 +101,7 @@ $container['csrf'] = function($c)
 $container['logger'] = function($c)
 {
 	$settings = $c['settings']['monolog'];
-	$log = new \Monolog\Logger($settings['name']);
+	$log = new Monolog\Logger($settings['name']);
 	$log->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
 	return $log;
 };
@@ -106,5 +109,20 @@ $container['logger'] = function($c)
 # respect validation
 $container['validator'] = function($c)
 {
-	return new \App\Validation\Validator;
+	return new App\Validation\Validator;
+};
+
+# maximebf debugbar
+$container['debugbar'] = function($c)
+{
+	return new DebugBar\StandardDebugBar;
+};
+
+# maximebf debugbar renderer
+$container['debugbar_renderer'] = function($c)
+{
+	$debugbar = $c->debugbar;
+	$debugbarRenderer = $debugbar->getJavascriptRenderer("vendor/php-debugbar");
+
+	return $debugbarRenderer;
 };
