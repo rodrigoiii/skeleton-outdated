@@ -106,9 +106,10 @@ $container['csrf'] = function($c)
 $container['logger'] = function($c)
 {
     $settings = $c['settings']['monolog'];
-    $log = new Monolog\Logger($settings['name']);
-    $log->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
-    return $log;
+    $logger = new Monolog\Logger($settings['name']);
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+
+    return $logger;
 };
 
 # respect validation
@@ -118,16 +119,16 @@ $container['validator'] = function($c)
 };
 
 # maximebf debugbar
-$container['debugbar'] = function($c)
+$container['debugbar'] = function($c) use ($app)
 {
-    return new DebugBar\StandardDebugBar;
+    $debugbar = new DebugBar\StandardDebugBar;
+    return $debugbar;
 };
 
 # maximebf debugbar renderer
 $container['debugbar_renderer'] = function($c)
 {
-    $debugbar = $c->debugbar;
-    $debugbarRenderer = $debugbar->getJavascriptRenderer("vendor/php-debugbar");
+    $debugbarRenderer = $c->debugbar->getJavascriptRenderer("vendor/php-debugbar");
 
     return $debugbarRenderer;
 };
