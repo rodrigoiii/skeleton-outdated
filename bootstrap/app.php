@@ -20,6 +20,13 @@ $app = new \Slim\App([
 ]);
 $container = $app->getContainer();
 
+include core_path('settings/lib.php');
+# include your custom settings here ...
+# .
+# .
+# .
+# end
+
 # container
 include core_path("settings/container.php");
 # include your other container here ...
@@ -34,13 +41,6 @@ include core_path("settings/registered-controllers.php");
 # middleware registered
 include core_path("settings/registered-global-middlewares.php");
 # include your custom middleware as global here ...
-# .
-# .
-# .
-# end
-
-include core_path('settings/lib.php');
-# include your custom settings here ...
 # .
 # .
 # .
