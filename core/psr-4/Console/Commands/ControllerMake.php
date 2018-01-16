@@ -2,19 +2,19 @@
 
 namespace Console\Commands;
 
-class ControllerCommand extends BaseCommand
+class ControllerMakeCommand extends BaseCommand
 {
     /**
      * Console command signature
      * @var string
      */
-    private $signature = "controller {action} {controller} {--r|resource}";
+    private $signature = "make:controller {controller} {--r|resource}";
 
     /**
      * Console command description
      * @var string
      */
-    private $description = "Create or remove controller class template.";
+    private $description = "Create controller class template and registered it in slim container.";
 
     /**
      * Create a new command instance
@@ -31,14 +31,10 @@ class ControllerCommand extends BaseCommand
      */
     public function handle($input, $output)
     {
-        $action = $input->getArgument('action');
         $controller = $input->getArgument('controller');
         $resource = $input->getOption('resource');
 
         try {
-            if (!in_array($action, ["make", "remove"]))
-                throw new \Exception("Error: Invalid action. It must be 'make' or 'remove'", 1);
-
             $pre_controller_path = app_path("Http/Controllers");
             $sub_directories = "";
             $pre_controller_namespace = "";
@@ -63,43 +59,29 @@ class ControllerCommand extends BaseCommand
 
             $file = "{$pre_controller_path}/{$controller}.php";
             $registered_controller_file = core_path("settings/registered-controllers.php");
-            $template = strtr(file_get_contents(core_path("psr-4/Console/Commands/templates/controller/controller-container.php.dist")), [
+            $registered_template = strtr(file_get_contents(core_path("psr-4/Console/Commands/templates/controller/controller-container.php.dist")), [
                 '{{controller}}' => $controller,
                 '{{pre_controller_namespace}}' => $pre_controller_namespace
             ]);
 
-            if ($action === "make")
-            {
-                if (file_exists($file))
-                    throw new \Exception("Error: The Controller is already created.", 1);
+            if (file_exists($file))
+                throw new \Exception("Error: The Controller is already created.", 1);
 
+            $template = $this->getTemplate($sub_directories, $controller, $resource);
+            if ($template !== false)
+            {
                 // create file
-                $file = fopen($pre_controller_path . "/{$controller}.php", "w");
-                fwrite($file, $this->getTemplate($sub_directories, $controller, $resource));
-                fclose($file);
+                $file_controller = fopen($pre_controller_path . "/{$controller}.php", "w");
+                fwrite($file_controller, $template);
+                fclose($file_controller);
 
                 // register the controller in container
-                $file = fopen($registered_controller_file, "a");
-                fwrite($file, $template);
-                fclose($file);
-
-                $output->writeln("Successfully created.");
+                $file_registered_controller = fopen($registered_controller_file, "a");
+                fwrite($file_registered_controller, $registered_template);
+                fclose($file_registered_controller);
             }
-            else // $action is remove
-            {
-                if (!file_exists($file))
-                    throw new \Exception("Error: " . $controller . " is not exist.", 1);
 
-                unlink($file);
-
-                if (count(glob(dirname($file) . "/*.php")) === 0)
-                    rmdir(dirname($file));
-
-                $content = file_get_contents($registered_controller_file);
-                file_put_contents($registered_controller_file, str_replace($template, "", $content));
-
-                $output->writeln("Successfully deleted.");
-            }
+            $output->writeln(file_exists($file) ? "Successfully created." : "File is not created.");
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }
