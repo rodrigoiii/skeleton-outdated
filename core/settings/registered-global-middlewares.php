@@ -2,6 +2,9 @@
 
 use Middlewares as M;
 
+# whoops middleware
+$app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware($app));
+
 # old input middleware
 $app->add(new M\OldInput($container));
 
