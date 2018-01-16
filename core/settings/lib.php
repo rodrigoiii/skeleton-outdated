@@ -14,15 +14,6 @@ $capsule::connection()->enableQueryLog();
 
 /*
  |-----------------------------
- | Setup for 'runcmf/runtracy' debug bar
- |-----------------------------
- */
-use Tracy\Debugger;
-Debugger::enable(config('app.debug_bar') ? Debugger::DEVELOPMENT : Debugger::PRODUCTION, storage_path("logs"));
-Debugger::timer();
-
-/*
- |-----------------------------
  | Setup for 'respect/validation'
  |-----------------------------
  */

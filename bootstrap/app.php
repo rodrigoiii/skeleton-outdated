@@ -15,8 +15,7 @@ $app = new \Slim\App([
 
 		'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 		'db' => config('database.connections.mysql'),
-		'monolog' => config('monolog'),
-		'tracy' => config('tracy')
+		'monolog' => config('monolog')
 	]
 ]);
 $container = $app->getContainer();
