@@ -122,6 +122,13 @@ $container['validator'] = function($c)
 $container['debugbar'] = function($c) use ($app)
 {
     $debugbar = new DebugBar\StandardDebugBar;
+
+    // add monolog
+    $debugbar->addCollector(new DebugBar\Bridge\MonologCollector($c->logger));
+
+    // custom collector
+    $debugbar->addCollector(new App\Utilities\Debugbar\EloquentCollector);
+
     return $debugbar;
 };
 
