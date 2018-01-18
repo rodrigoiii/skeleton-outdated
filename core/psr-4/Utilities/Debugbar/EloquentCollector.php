@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utilities\Debugbar;
+namespace Utilities\Debugbar;
 
 use DebugBar\DataCollector\PDO\PDOCollector;
 use DebugBar\DataCollector\PDO\TraceablePDO;
