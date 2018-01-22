@@ -48,24 +48,29 @@ $container['notAllowedHandler'] = function($c)
     };
 };
 
+// Twig
+$container['twig_profile'] = function () {
+    return new Twig_Profiler_Profile();
+};
+
 # slim twig view
 $container['twigView'] = function($c)
 {
     $twigView = new Slim\Views\Twig(resources_path("views"), ['cache' => config('app.cache')]);
 
-    $twigView->addExtension(new Slim\Views\TwigExtension(
-        $c->router,
-        $c->request->getUri()
-    ));
+    $twigView->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
+
+    if (!is_prod())
+    {
+        $twigView->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
+        $twigView->addExtension(new Twig_Extension_Debug());
+    }
 
     # Make the helper functions as global
     $twigView->getEnvironment()->addGlobal('fn', new Functions);
 
     # Make 'flash' global
     $twigView->getEnvironment()->addGlobal('flash', $c->flash);
-
-    # Make 'debugbar' global
-    $twigView->getEnvironment()->addGlobal('debugbar_renderer', $c->debugbar_renderer);
 
     return $twigView;
 };
@@ -116,26 +121,4 @@ $container['logger'] = function($c)
 $container['validator'] = function($c)
 {
     return new App\Validation\Validator;
-};
-
-# maximebf debugbar
-$container['debugbar'] = function($c) use ($app)
-{
-    $debugbar = new DebugBar\StandardDebugBar;
-
-    // add monolog
-    $debugbar->addCollector(new DebugBar\Bridge\MonologCollector($c->logger));
-
-    // custom collector
-    $debugbar->addCollector(new Utilities\Debugbar\EloquentCollector);
-
-    return $debugbar;
-};
-
-# maximebf debugbar renderer
-$container['debugbar_renderer'] = function($c)
-{
-    $debugbarRenderer = $c->debugbar->getJavascriptRenderer("vendor/php-debugbar");
-
-    return $debugbarRenderer;
 };

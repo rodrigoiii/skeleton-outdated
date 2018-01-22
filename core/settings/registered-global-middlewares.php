@@ -2,8 +2,9 @@
 
 use Middlewares as M;
 
-# whoops middleware
-$app->add(new \Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware($app));
+# tracy debugbar
+if (!is_prod())
+    $app->add(new RunTracy\Middlewares\TracyMiddleware($app));
 
 # old input middleware
 $app->add(new M\OldInput($container));

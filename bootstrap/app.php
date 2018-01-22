@@ -9,14 +9,17 @@ include core_path("settings/dotEnv.php");
  |-----------------------------
  */
 $app = new \Slim\App([
-	'settings' => [
-		'displayErrorDetails' => config('app.debug'),
-		'debug' => config('app.debug'),
+    'settings' => [
+        'displayErrorDetails' => config('app.debug'),
 
-		'determineRouteBeforeAppMiddleware' => config('app.route_on'),
-		'db' => config('database.connections.mysql'),
-		'monolog' => config('monolog')
-	]
+        'addContentLengthHeader' => false, // if true = Unexpected data in output buffer
+
+        'determineRouteBeforeAppMiddleware' => config('app.route_on'),
+
+        'db' => config('database.connections.mysql'),
+        'monolog' => config('monolog'),
+        'tracy' => config('tracy')
+    ]
 ]);
 $container = $app->getContainer();
 

@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Respect\Validation\Validator as v;
+
 /*
  |-----------------------------
  | Setup for 'illuminate/database'
  |-----------------------------
  */
-use Illuminate\Database\Capsule\Manager as Capsule;
 $capsule = new Capsule;
 $capsule->addConnection($container['settings']['db']);
 $capsule->setAsGlobal();
@@ -17,5 +19,15 @@ $capsule::connection()->enableQueryLog();
  | Setup for 'respect/validation'
  |-----------------------------
  */
-use Respect\Validation\Validator as v;
 v::with(config('app.namespace') . '\\Validation\\Rules\\');
+
+/*
+ |-----------------------------
+ | Enable tracy debug bar
+ |-----------------------------
+ */
+if (!is_prod() && config('app.debug_bar'))
+{
+    Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, storage_path('logs'));
+    Tracy\Debugger::timer();
+}
