@@ -4,15 +4,6 @@ $(document).ready(function() {
 		{
 			var new_token = jqXHR.getResponseHeader('X-CSRF-TOKEN');
 			$('meta[name="_token"]').attr('content', new_token);
-
-			if ($(':input[name="{{ csrf.name_key }}"]').length > 0 && $(':input[name="{{ csrf.value_key }}"]').length > 0)
-			{
-				var csrf = JSON.parse(new_token);
-				for (var key in csrf)
-				{
-					$(':input[name="'+key+'"]').val(csrf[key]);
-				}
-			}
 		}
 	});
 });
