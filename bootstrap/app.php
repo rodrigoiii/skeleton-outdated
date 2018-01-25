@@ -24,30 +24,27 @@ $app = new \Slim\App([
 $container = $app->getContainer();
 
 include core_path('settings/lib.php');
-# include your custom settings here ...
-# .
-# .
-# .
-# end
+/**
+ * include your custom settings here ...
+ */
+
 
 # container
 include core_path("settings/container.php");
-# include your other container here ...
-# .
-# .
-# .
-# end
+/**
+ * include your other container here ...
+ */
+
 
 # controller registered
 include core_path("settings/registered-controllers.php");
 
 # middleware registered
 include core_path("settings/registered-global-middlewares.php");
-# include your custom middleware as global here ...
-# .
-# .
-# .
-# end
+/**
+ * include your custom middleware as global here ...
+ */
+
 
 # web routes
 require __DIR__ . "/../routes/web.php";
