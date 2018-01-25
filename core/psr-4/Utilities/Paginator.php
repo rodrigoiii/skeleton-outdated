@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utilities;
+namespace Utilities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\UrlWindow;

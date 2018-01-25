@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utilities;
+namespace Utilities;
 
 use Slim\Flash\Messages;
 
