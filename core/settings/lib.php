@@ -26,7 +26,7 @@ v::with(config('app.namespace') . '\\Validation\\Rules\\');
  | Enable tracy debug bar
  |-----------------------------
  */
-if (!is_prod() && config('app.debug_bar'))
+if (!is_prod() && config('framework.debug_bar'))
 {
     Tracy\Debugger::enable(Tracy\Debugger::DEVELOPMENT, storage_path('logs'));
     Tracy\Debugger::timer();

@@ -10,15 +10,15 @@ include core_path("settings/dotEnv.php");
  */
 $app = new \Slim\App([
     'settings' => [
-        'displayErrorDetails' => config('app.debug'),
+        'displayErrorDetails' => config('framework.debug'),
 
         'addContentLengthHeader' => false, // if true = Unexpected data in output buffer
 
-        'determineRouteBeforeAppMiddleware' => config('app.route_on'),
+        'determineRouteBeforeAppMiddleware' => config('framework.route_on'),
 
-        'db' => config('database.connections.mysql'),
-        'monolog' => config('monolog'),
-        'tracy' => config('tracy')
+        'db' => config('framework.database_connection.mysql'),
+        'monolog' => config('framework.monolog'),
+        'tracy' => config('framework.tracy_debugbar')
     ]
 ]);
 $container = $app->getContainer();

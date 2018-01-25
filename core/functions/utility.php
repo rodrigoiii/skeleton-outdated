@@ -46,7 +46,7 @@ function is_shared_server()
  */
 function is_in_uploads($file_path)
 {
-	return strpos($file_path, config('app.uploads_path')) === 0;
+	return strpos($file_path, config('framework.uploads_path')) === 0;
 }
 
 /**

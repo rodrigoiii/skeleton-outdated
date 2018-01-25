@@ -13,7 +13,7 @@ if (is_prod())
                     ->render(
                         $response->withStatus(500)
                         ->withHeader('Content-Type', "text/html"),
-                        config('app.error_pages_path.500')
+                        config('framework.error_pages_path.500')
                     );
         };
     };
@@ -28,7 +28,7 @@ $container['notFoundHandler'] = function($c)
                 ->render(
                     $response->withStatus(404)
                     ->withHeader('Content-Type', "text/html"),
-                    config('app.error_pages_path.404')
+                    config('framework.error_pages_path.404')
                 );
     };
 };
@@ -43,7 +43,7 @@ $container['notAllowedHandler'] = function($c)
                     $response->withStatus(405)
                     ->withHeader('Allow', implode(', ', $methods))
                     ->withHeader('Content-Type', "text/html"),
-                    config('app.error_pages_path.405')
+                    config('framework.error_pages_path.405')
                 );
     };
 };
@@ -56,7 +56,7 @@ $container['twig_profile'] = function () {
 # slim twig view
 $container['twigView'] = function($c)
 {
-    $twigView = new Slim\Views\Twig(resources_path("views"), ['cache' => config('app.cache')]);
+    $twigView = new Slim\Views\Twig(resources_path("views"), ['cache' => config('framework.cache')]);
 
     $twigView->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
 
