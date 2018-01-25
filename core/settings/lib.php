@@ -19,7 +19,8 @@ $capsule::connection()->enableQueryLog();
  | Setup for 'respect/validation'
  |-----------------------------
  */
-v::with(config('app.namespace') . '\\Validation\\Rules\\');
+v::with("Validation\\Rules\\");
+v::with(config('app.namespace') . "\\Validation\\Rules\\");
 
 /*
  |-----------------------------
