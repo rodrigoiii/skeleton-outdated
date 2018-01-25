@@ -17,7 +17,8 @@
         "vlucas/phpdotenv": "^2.4",
         "monolog/monolog": "^1.23",
         "symfony/console": "^3.4",
-        "respect/validation": "^1.1"
+        "respect/validation": "^1.1",
+        "illuminate/pagination": "^5.5"
     },
     "require-dev": {
         "kint-php/kint": "^2.2",
