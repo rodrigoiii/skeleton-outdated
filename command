@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 if (PHP_SAPI !== "cli") die; // die if not using cli
@@ -22,7 +23,7 @@ $app->addCommands([
     new C\ModelCommand,
     new C\RuleCommand,
     new C\RequestCommand,
-    new C\NotificationCommand,
+    // new C\NotificationCommand,
     new C\ChangeWebModeCommand,
     new C\ChangeEnvironmentCommand,
     new C\TestCommand
