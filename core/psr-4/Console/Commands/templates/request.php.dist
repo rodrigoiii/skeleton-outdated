@@ -15,13 +15,13 @@ class {{request}} extends Request
             case 'POST':
                 $rules = [
                     //
-                ]
+                ];
                 break;
 
             case 'PUT':
                 $rules = [
                     //
-                ]
+                ];
                 break;
 
             default:
