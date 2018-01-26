@@ -116,3 +116,15 @@ function get_user_ip()
 
     return $ip;
 }
+
+/**
+ * Convert string to title format
+ * @param  string $str  The subject
+ * @param  string $char The character chain in words
+ * @return string       String title format
+ */
+function str_title($str, $char = "_")
+{
+    $title_array = array_map("ucfirst", explode($char, $str));
+    return implode(" ", $title_array);
+}
