@@ -10,9 +10,25 @@ class {{request}} extends Request
 {
     public function rules()
     {
-        return [
-            // field => validator
-        ];
+        switch(strtoupper($this->request->getMethod()))
+        {
+            case 'POST':
+                $rules = [
+                    //
+                ]
+                break;
+
+            case 'PUT':
+                $rules = [
+                    //
+                ]
+                break;
+
+            default:
+            $rules = [];
+        }
+
+        return $rules;
     }
 
     public function isValid()
