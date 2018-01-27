@@ -1,14 +1,5 @@
 vendor/
 node_modules
-bower_components
 .env
-.env.test
-*.sublime-project
-*.sublime-workspace
-*.log
 phinx.yml
-phpunit.xml
-public/dist
-public/vendor/php-debugbar
-resources/dist-views
 !.gitignore

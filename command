@@ -25,7 +25,6 @@ $app->addCommands([
     new C\RequestCommand,
     new C\ChangeWebModeCommand,
     new C\ChangeEnvironmentCommand,
-    new C\TestCommand,
 
     # use rodrigoiii/notification library to enable this feature
     // new C\_NotificationCommand,
