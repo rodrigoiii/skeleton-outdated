@@ -70,8 +70,10 @@ class ControllerRemoveCommand extends BaseCommand
             unlink($file);
 
             // remove it folder if there's no php file
-            if (count(glob(dirname($file) . "/*.php")) === 0)
+            if (count(glob(dirname($file) . "/*.php")) === 0 && dirname($file) !== app_path("Http/Controllers"))
+            {
                 rmdir(dirname($file));
+            }
 
             $content = file_get_contents($registered_controller_file);
             file_put_contents($registered_controller_file, str_replace($registered_template, "", $content));

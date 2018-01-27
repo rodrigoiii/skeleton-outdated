@@ -2,7 +2,7 @@
 
 namespace Console\Commands;
 
-class NotificationCommand extends BaseCommand
+class _NotificationCommand extends BaseCommand
 {
     /**
      * Console command signature
@@ -40,6 +40,11 @@ class NotificationCommand extends BaseCommand
             if (file_exists(app_path("Notifications/{$notification}.php")))
                 throw new \Exception("Error: The Notification is already created.", 1);
 
+            if (!file_exists(app_path("Notifications")))
+            {
+                mkdir(app_path("Notifications"));
+            }
+
             $output->writeln($this->makeTemplate($notification) ? "Successfully created." : "File not created. Check the file path.");
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
@@ -54,7 +59,7 @@ class NotificationCommand extends BaseCommand
      */
     private function makeTemplate($notification)
     {
-        $file = core_path("psr-4/Console/Commands/templates/notification.php.dist");
+        $file = core_path("psr-4/Console/Commands/templates/_notification/notification.php.dist");
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [

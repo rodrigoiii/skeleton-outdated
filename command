@@ -25,10 +25,13 @@ $app->addCommands([
     new C\RequestCommand,
     new C\ChangeWebModeCommand,
     new C\ChangeEnvironmentCommand,
-    new C\TestCommand
+    new C\TestCommand,
 
     # use rodrigoiii/notification library to enable this feature
-    // new C\NotificationCommand,
+    new C\_NotificationCommand,
+
+    # use rodrigoiii/auth library
+    // new C\_AuthCommand,
 ]);
 
 /**
