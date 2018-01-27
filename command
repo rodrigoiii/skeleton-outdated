@@ -5,6 +5,12 @@ if (PHP_SAPI !== "cli") die; // die if not using cli
 
 require __DIR__ . "/vendor/autoload.php";
 
+if (!file_exists(base_path(".env")))
+{
+    echo "Error: .env file is required." . PHP_EOL;
+    die;
+}
+
 include core_path("settings/dotEnv.php");
 
 $app = new Symfony\Component\Console\Application("My Framework");
@@ -26,10 +32,10 @@ $app->addCommands([
     new C\ChangeWebModeCommand,
     new C\ChangeEnvironmentCommand,
 
-    # use rodrigoiii/notification library to enable this feature
+    # use rodrigoiii/notification-slim library to enable this feature
     // new C\_NotificationCommand,
 
-    # use rodrigoiii/auth library
+    # use rodrigoiii/framework-auth library
     // new C\_AuthCommand,
 ]);
 
