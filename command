@@ -28,7 +28,7 @@ $app->addCommands([
     new C\TestCommand,
 
     # use rodrigoiii/notification library to enable this feature
-    new C\_NotificationCommand,
+    // new C\_NotificationCommand,
 
     # use rodrigoiii/auth library
     // new C\_AuthCommand,
