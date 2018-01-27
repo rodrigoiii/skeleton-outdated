@@ -24,6 +24,3 @@ $app->add(new M\RemoveTrailingSlash($container));
 
 # DetermineRouteBeforeAppMiddleware middleware
 $app->add(new M\DetermineRouteBeforeAppMiddleware($container));
-
-# Pagination middleware
-$app->add(new M\Pagination($container));
