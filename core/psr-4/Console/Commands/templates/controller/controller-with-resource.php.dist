@@ -31,7 +31,7 @@ class {{controller}} extends Controller
 		// code
 	}
 
-	public function update($request, $response)
+	public function update($request, $response, $args)
 	{
 		// code
 	}
