@@ -62,7 +62,7 @@ class CommandCommand extends BaseCommand
             if (!file_exists($file)) throw new \Exception("{$file} file is not exist.", 1);
 
             $template = strtr(file_get_contents($file), [
-                '{{namespace}}' => "{$this->namespace}",
+                '{{namespace}}' => $this->namespace,
                 '{{command}}' => $command,
                 '{{command_name}}' => strtolower($command)
             ]);

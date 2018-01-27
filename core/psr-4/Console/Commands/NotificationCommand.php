@@ -58,7 +58,7 @@ class NotificationCommand extends BaseCommand
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
-                '{{namespace}}' => "{$this->namespace}",
+                '{{namespace}}' => $this->namespace,
                 '{{notification}}' => $notification,
             ]);
 
