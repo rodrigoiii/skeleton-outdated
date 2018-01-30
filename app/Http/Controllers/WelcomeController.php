@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use RodrigoIII\FrameworkCore\Controllers\Controller;
+use Framework\BaseController;
 
-class WelcomeController extends Controller
+class WelcomeController extends BaseController
 {
 	public function index($request, $response)
 	{

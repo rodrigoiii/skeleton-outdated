@@ -1,16 +1,16 @@
 <?php
 
-// \Slim\App
-(new RodrigoIII\FrameworkCore\Core)->boot([
+# Slim\App
+(new Framework\Core)->boot([
     'settings' => [
-        'displayErrorDetails' => config('framework.debug'),
+        'displayErrorDetails' => config('app.debug'),
 
         'addContentLengthHeader' => false, // if true = Unexpected data in output buffer
 
-        'determineRouteBeforeAppMiddleware' => config('framework.route_on'),
+        'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 
-        'db' => config('framework.database_connection.mysql'),
-        'monolog' => config('framework.monolog'),
-        'tracy' => config('framework.tracy_debugbar')
+        'db' => config('database.database_connection.mysql'),
+        'monolog' => config('logger.monolog'),
+        'tracy' => config('debug-bar.settings')
     ]
 ]);
