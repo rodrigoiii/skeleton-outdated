@@ -80,7 +80,7 @@ return [
      * Monolog library
      */
     'monolog' => [
-        'name' => config('app.name'),
+        'name' => "Framework",
         'level' => Monolog\Logger::DEBUG,
         'path' => storage_path("logs/app.log")
     ],

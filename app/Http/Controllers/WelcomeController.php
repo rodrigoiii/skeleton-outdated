@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Controllers\Controller;
+use RodrigoIII\FrameworkCore\Controllers\Controller;
 
 class WelcomeController extends Controller
 {
