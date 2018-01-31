@@ -3,7 +3,7 @@
 namespace {{namespace}}\Models\_Auth;
 
 use Illuminate\Database\Eloquent\Model;
-use RodrigoIII\Auth\Models\AuthAttemptTrait;
+use Framework\Auth\Models\AuthAttemptTrait;
 
 class AuthAttempt extends Model
 {

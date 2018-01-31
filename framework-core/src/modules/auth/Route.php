@@ -9,7 +9,21 @@ class Route
     public function __construct()
     {
         global $app, $container;
-        static::setupRoutes($app, $container);
+
+        try {
+            if (!isset($container['settings']['_auth']))
+            {
+                throw new \Exception("Auth module is not registered in slim application settings.", 1);
+            }
+            elseif (!file_exists(config_path("_auth.php")))
+            {
+                throw new \Exception("Auth module is disabled.", 1);
+            }
+
+            static::setupRoutes($app, $container);
+        } catch (\Exception $e) {
+            exit($e->getMessage());
+        }
     }
 
     public static function setupRoutes($app, $container)

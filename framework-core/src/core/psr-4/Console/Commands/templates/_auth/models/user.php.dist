@@ -3,7 +3,7 @@
 namespace {{namespace}}\Models\_Auth;
 
 use Illuminate\Database\Eloquent\Model;
-use RodrigoIII\Auth\Models\UserTrait;
+use Framework\Auth\Models\UserTrait;
 
 class User extends Model
 {

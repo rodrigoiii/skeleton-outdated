@@ -6,7 +6,7 @@ use Framework\Auth\Bridge;
 
 trait ValidToLoginTrait
 {
-    public function renderTemplate($request, $response)
+    public function renderTemplate($response)
     {
         echo "Login is lock because your login attempts exceed in system limit.";
         die;

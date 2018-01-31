@@ -172,7 +172,7 @@ class _AuthCommand extends BaseCommand
         fwrite($file, $app);
         fclose($file);
 
-        $file = fopen(resources_path("views/_auth/templates/flash-message/flash.twig"), "w");
+        $file = fopen(resources_path("views/_auth/templates/flash-message/bootstrap.twig"), "w");
         fwrite($file, $flash);
         fclose($file);
 

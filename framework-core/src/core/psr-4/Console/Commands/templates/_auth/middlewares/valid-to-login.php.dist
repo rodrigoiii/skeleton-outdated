@@ -2,10 +2,10 @@
 
 namespace {{namespace}}\Http\Middlewares\_Auth;
 
-use Middlewares\Middleware;
-use RodrigoIII\Auth\Middlewares\ValidToLoginTrait;
+use Framework\BaseMiddleware;
+use Framework\Auth\Middlewares\ValidToLoginTrait;
 
-class ValidToLogin extends Middleware
+class ValidToLogin extends BaseMiddleware
 {
     use ValidToLoginTrait;
 }

@@ -2,10 +2,10 @@
 
 namespace {{namespace}}\Http\Middlewares\_Auth;
 
-use Middlewares\Middleware;
-use RodrigoIII\Auth\Middlewares\UserTrait;
+use Framework\BaseMiddleware;
+use Framework\Auth\Middlewares\UserTrait;
 
-class User extends Middleware
+class User extends BaseMiddleware
 {
     use UserTrait;
 }

@@ -2,10 +2,10 @@
 
 namespace {{namespace}}\Http\Controllers\_Auth;
 
-use Controllers\Controller;
-use RodrigoIII\Auth\Controllers\AuthTrait;
+use Framework\BaseController;
+use Framework\Auth\Controllers\AuthTrait;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     use AuthTrait;
 }
