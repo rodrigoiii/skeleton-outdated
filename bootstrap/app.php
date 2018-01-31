@@ -10,8 +10,7 @@ $app = new \Slim\App([
 
         'db' => config('database.database_connection.mysql'),
         'monolog' => config('logger.monolog'),
-        'tracy' => config('debug-bar.settings'),
-        '_auth' => config('_auth')
+        'tracy' => config('debug-bar.settings')
     ]
 ]);
 $container = $app->getContainer();
