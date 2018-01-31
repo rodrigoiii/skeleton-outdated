@@ -128,3 +128,32 @@ function str_title($str, $char = "_")
     $title_array = array_map("ucfirst", explode($char, $str));
     return implode(" ", $title_array);
 }
+
+/**
+ * Remove files and it's folder
+ * @return string Path name of files
+ */
+function rmdir_recursion($path)
+{
+    $files = glob("{$path}/*");
+    while ($file = current($files))
+    {
+        if (is_file($file))
+        {
+            unlink($file);
+
+            $dir = dirname($file);
+            while (count(glob("{$dir}/*")) === 0)
+            {
+                rmdir($dir);
+                $dir = dirname($dir);
+            }
+        }
+        else
+        {
+            rmdir_recursion($file);
+        }
+
+        next($files);
+    }
+}

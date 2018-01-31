@@ -32,11 +32,10 @@ final class CoreCommand
             new Commands\ChangeWebModeCommand,
             new Commands\ChangeEnvironmentCommand,
 
+            // modules
+            new Commands\_AuthCommand,
             # use rodrigoiii/notification-slim library to enable this feature
             // new Commands\_NotificationCommand,
-
-            # use rodrigoiii/framework-auth library
-            // new Commands\_AuthCommand,
         ]);
 
         $app->addCommands($custom_commands);

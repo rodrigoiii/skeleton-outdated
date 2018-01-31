@@ -1,0 +1,13 @@
+<?php
+
+namespace {{namespace}}\Models\_Auth;
+
+use Illuminate\Database\Eloquent\Model;
+use RodrigoIII\Auth\Models\AuthAttemptTrait;
+
+class AuthAttempt extends Model
+{
+    use AuthAttemptTrait;
+
+    protected $fillable = ['email', 'request_uri', 'ip_address', 'attempted'];
+}

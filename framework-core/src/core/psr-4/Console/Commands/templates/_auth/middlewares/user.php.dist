@@ -1,0 +1,11 @@
+<?php
+
+namespace {{namespace}}\Http\Middlewares\_Auth;
+
+use Middlewares\Middleware;
+use RodrigoIII\Auth\Middlewares\UserTrait;
+
+class User extends Middleware
+{
+    use UserTrait;
+}

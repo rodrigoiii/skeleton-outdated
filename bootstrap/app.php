@@ -1,7 +1,6 @@
 <?php
 
-# Slim\App
-(new Framework\Core)->boot([
+$app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => config('app.debug'),
 
@@ -11,6 +10,11 @@
 
         'db' => config('database.database_connection.mysql'),
         'monolog' => config('logger.monolog'),
-        'tracy' => config('debug-bar.settings')
+        'tracy' => config('debug-bar.settings'),
+        '_auth' => config('_auth')
     ]
 ]);
+$container = $app->getContainer();
+
+# Slim\App
+(new Framework\Core)->boot();

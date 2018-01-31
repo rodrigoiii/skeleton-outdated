@@ -13,10 +13,9 @@ final class Core
      * Boot all need of application.
      * @return void
      */
-    public function boot(array $slim_args)
+    public function boot()
     {
-        $app = new \Slim\App($slim_args);
-        $container = $app->getContainer();
+        global $app, $container;
 
         $this->includeSettings($app, $container);
 
