@@ -3,7 +3,7 @@
 namespace App\Validation;
 
 use Respect\Validation\Exceptions\NestedValidationException;
-use Session;
+use Framework\Utilities\Session;
 
 class Validator
 {
