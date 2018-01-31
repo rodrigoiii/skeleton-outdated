@@ -12,7 +12,7 @@
     ],
     "minimum-stability": "alpha",
     "require": {
-        "rodrigoiii/framework-core": "^1.0"
+        "rodrigoiii/framework-core": "^0.1"
     },
     "require-dev": {
         "kint-php/kint": "^2.2",
