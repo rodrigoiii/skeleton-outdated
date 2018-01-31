@@ -1,0 +1,19 @@
+<?php
+
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Tester\ApplicationTester;
+
+class {{test}} extends TestCase
+{
+    protected static $tester;
+
+    public static function setUpBeforeClass()
+    {
+        $app = new Application;
+        $app->setAutoExit(false);
+        $app->add(new {{test}}); // complete the namespace of {{test}} class
+
+        self::$tester = new ApplicationTester($app);
+    }
+}

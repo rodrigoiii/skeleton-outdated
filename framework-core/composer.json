@@ -1,0 +1,47 @@
+{
+    "name": "rodrigoiii/framework-core",
+    "description": "The core for rodrigoiii/framework",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Rodrigo Galura III",
+            "email": "rodrigogalura3rd@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha",
+    "require": {
+        "php": "^5.6.30 || ^7.0",
+        "slim/slim": "^3.9",
+        "slim/twig-view": "^2.3",
+        "slim/csrf": "^0.8.2",
+        "slim/flash": "^0.4.0",
+        "illuminate/database": "^5.4",
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.23",
+        "symfony/console": "^3.4",
+        "respect/validation": "^1.1"
+    },
+    "require-dev": {
+        "kint-php/kint": "^2.2",
+        "robmorgan/phinx": "^0.9.2",
+        "fzaninotto/faker": "^1.7",
+        "runcmf/runtracy": "^0.2.10",
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "src/core/psr-4/"
+        },
+        "files": [
+            "src/core/settings/functions.php",
+            "src/core/settings/dotEnv.php"
+        ]
+    },
+    "autoload-test": {
+        "psr-4": {
+            "Framework\\Tests\\": "tests/"
+        }
+    }
+}

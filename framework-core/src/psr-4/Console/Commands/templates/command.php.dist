@@ -1,0 +1,22 @@
+<?php
+
+namespace {{namespace}}\Console\Commands;
+
+use Framework\BaseCommand;
+
+class {{command}} extends BaseCommand
+{
+	private $signature = "{{command_name}}";
+
+	private $description = "";
+
+	public function __construct()
+	{
+		parent::__construct($this->signature, $this->description);
+	}
+
+	public function handle($input, $output)
+	{
+		$output->writeln("Command {{command}} is ready.");
+	}
+}
