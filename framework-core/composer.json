@@ -32,11 +32,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Framework\\": "src/core/psr-4/"
+            "Framework\\": "core/src/psr-4/"
         },
         "files": [
-            "src/core/settings/functions.php",
-            "src/core/settings/dotEnv.php"
+            "core/src/settings/functions.php",
+            "core/src/settings/dotEnv.php"
         ]
     },
     "autoload-test": {

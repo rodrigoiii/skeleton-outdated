@@ -24,8 +24,18 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Framework\\": "framework-core/core/src/psr-4/"
         },
-        "files": ["app/helpers.php"]
+        "files": [
+            "framework-core/core/src/settings/functions.php",
+            "framework-core/core/src/settings/dotEnv.php",
+            "app/helpers.php"
+        ]
+    },
+    "autoload-test": {
+        "psr-4": {
+            "Framework\\Tests\\": "tests/"
+        }
     }
 }
