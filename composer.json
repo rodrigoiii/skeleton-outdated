@@ -4,7 +4,6 @@
     "type": "project",
     "license": "MIT",
     "keywords": ["micro framework", "framework", "slim", "php"],
-    "version": "0.1",
     "authors": [
         {
             "name": "Rodrigo Galura III",
