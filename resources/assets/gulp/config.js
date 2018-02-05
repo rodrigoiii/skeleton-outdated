@@ -30,10 +30,12 @@ module.exports = {
             dir: "resources/views",
             sources: ["test.twig"],
             search_path: "public",
+            dest: ""
         },
 
         images: {
             command: "build:image",
+            dir: "resources/views",
             sources: ["public"],
             dest: "",
         },
