@@ -1,5 +1,5 @@
-var del         = require("del"),
-    path        = require('path');
+var del  = require("del"),
+    path = require('path');
 
 module.exports = function (gulp, plugins, config) {
     var sources = [];
