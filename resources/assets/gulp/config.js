@@ -25,15 +25,16 @@ module.exports = {
     },
 
     build: {
-        view: {
-            command: "build:view",
-            sources: ["resources/views/**/*.twig"],
+        views: {
+            command: "build:views",
+            dir: "resources/views",
+            sources: ["test.twig"],
             search_path: "public",
         },
 
-        image: {
+        images: {
             command: "build:image",
-            sources: [],
+            sources: ["public"],
             dest: "",
         },
 
