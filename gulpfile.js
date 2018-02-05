@@ -19,3 +19,4 @@ gulp.task("watch", [config.sass.watch_command, config.scripts.watch_command], fu
 
 gulp.task(config.build.views.command, getTask("build-views"));
 gulp.task(config.build.images.command, getTask("build-images"));
+gulp.task(config.build.fonts.command, getTask("build-fonts"));

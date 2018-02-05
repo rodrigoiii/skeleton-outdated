@@ -40,9 +40,19 @@ module.exports = {
             dest: "img",
         },
 
-
-        font_sources: [],
-        font_dest: "",
+        fonts: {
+            command: "build:fonts",
+            dir: "public",
+            sources: [
+                "**/*.eot",
+                "**/*.svg",
+                "**/*.ttf",
+                "**/*.woff",
+                "**/*.woff2",
+                "**/*.otf",
+            ],
+            dest: "fonts",
+        },
 
         dist: "public/dist",
     }
