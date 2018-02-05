@@ -4,17 +4,18 @@ module.exports = {
 
     sass: {
         command: "sass",
-        watch_command: "sass-watch",
+        watch_command: "sass:watch",
         dir: "resources/assets/sass",
         dest: "public/css",
         sources: [
-            "app.scss"
+            "app.scss",
+            "a.scss"
         ]
     },
 
     scripts: {
         command: "scripts",
-        watch_command: "scripts-watch",
+        watch_command: "scripts:watch",
         dir: "resources/assets/js",
         dest: "public/js",
         sources: [
