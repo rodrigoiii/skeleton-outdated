@@ -14,11 +14,12 @@ module.exports = {
 
     scripts: {
         command: "scripts",
+        watch_command: "scripts-watch",
         dir: "resources/assets/js",
         dest: "public/js",
         sources: [
             "test.js",
-            "built-in/csrf-helper.js",
+            "built-in/csrf-helper.js"
         ]
     }
 };

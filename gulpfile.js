@@ -14,3 +14,4 @@ function getTask(task) {
 gulp.task(config.sass.command, getTask("sass"));
 gulp.task(config.scripts.command, getTask("scripts"));
 gulp.task(config.sass.watch_command, [config.sass.command], getTask('sass-watch'));
+gulp.task(config.scripts.watch_command, [config.scripts.command], getTask('scripts-watch'));
