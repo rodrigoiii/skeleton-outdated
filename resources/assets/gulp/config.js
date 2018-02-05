@@ -34,10 +34,10 @@ module.exports = {
         },
 
         images: {
-            command: "build:image",
-            dir: "resources/views",
-            sources: ["public"],
-            dest: "",
+            command: "build:images",
+            dir: "public",
+            sources: ["img/edited.jpg"],
+            dest: "img",
         },
 
 

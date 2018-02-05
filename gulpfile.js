@@ -18,3 +18,4 @@ gulp.task(config.scripts.watch_command, [config.scripts.command], getTask('scrip
 gulp.task("watch", [config.sass.watch_command, config.scripts.watch_command], function () {});
 
 gulp.task(config.build.views.command, getTask("build-views"));
+gulp.task(config.build.images.command, getTask("build-images"));
