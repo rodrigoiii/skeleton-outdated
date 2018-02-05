@@ -22,5 +22,18 @@ module.exports = {
             "test.js",
             "built-in/csrf-helper.js"
         ]
+    },
+
+    build: {
+        css_js_sources: ["resources/views/**/*.twig"],
+        css_js_search_path: "public",
+
+        img_sources: [],
+        img_dest: "",
+
+        font_sources: [],
+        font_dest: "",
+
+        dist: "public/dist",
     }
 };

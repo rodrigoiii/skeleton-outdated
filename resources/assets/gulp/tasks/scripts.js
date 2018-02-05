@@ -5,13 +5,13 @@ module.exports = function (gulp, plugins, config) {
     }
 
     return function () {
-        gulp.src(sources, {base: config.scripts.dir})
-        .pipe(plugins.plumber({
-            errorHandler: function (err) {
-                console.log(err);
-                this.emit("end");
-            }
-        }))
-        .pipe(gulp.dest(config.scripts.dest));
+        return gulp.src(sources, {base: config.scripts.dir})
+                .pipe(plugins.plumber({
+                    errorHandler: function (err) {
+                        console.log(err);
+                        this.emit("end");
+                    }
+                }))
+                .pipe(gulp.dest(config.scripts.dest));
     };
 };

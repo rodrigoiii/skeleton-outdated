@@ -16,3 +16,5 @@ gulp.task(config.scripts.command, getTask("scripts"));
 gulp.task(config.sass.watch_command, [config.sass.command], getTask('sass-watch'));
 gulp.task(config.scripts.watch_command, [config.scripts.command], getTask('scripts-watch'));
 gulp.task("watch", [config.sass.watch_command, config.scripts.watch_command], function () {});
+
+gulp.task("build:css-js", getTask("build-css-js"));
