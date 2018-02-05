@@ -25,11 +25,18 @@ module.exports = {
     },
 
     build: {
-        css_js_sources: ["resources/views/**/*.twig"],
-        css_js_search_path: "public",
+        view: {
+            command: "build:view",
+            sources: ["resources/views/**/*.twig"],
+            search_path: "public",
+        },
 
-        img_sources: [],
-        img_dest: "",
+        image: {
+            command: "build:image",
+            sources: [],
+            dest: "",
+        },
+
 
         font_sources: [],
         font_dest: "",
