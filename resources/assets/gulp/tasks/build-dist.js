@@ -1,11 +1,13 @@
 var runSequence = require("run-sequence");
 
 module.exports = function (gulp, plugins, config) {
-    runSequence('delete:dist', [
-        config.sass.command,
-        config.scripts.command,
-        config.build.views.command,
-        config.build.images.command,
-        config.build.fonts.command
-    ]);
+    return function () {
+        runSequence('delete:dist', [
+            config.sass.command,
+            config.scripts.command,
+            config.build.views.command,
+            config.build.images.command,
+            config.build.fonts.command
+        ]);
+    };
 };

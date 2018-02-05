@@ -1,10 +1,10 @@
 module.exports = function (gulp, plugins, config) {
-    var sources = [];
-    for (var i in config.sass.sources) {
-        sources[i] = config.sass.dir + "/" + config.sass.sources[i];
-    }
-
     return function () {
+        var sources = [];
+        for (var i in config.sass.sources) {
+            sources[i] = config.sass.dir + "/" + config.sass.sources[i];
+        }
+
         return gulp.src(sources, {base: config.sass.dir})
                 .pipe(plugins.plumber({
                     errorHandler: function (err) {
