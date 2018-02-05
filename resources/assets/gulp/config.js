@@ -1,9 +1,10 @@
 // these are relative at the location of gulpfile.js.
 module.exports = {
     tasks_dir: "./resources/assets/gulp/tasks",
-    default_task: "scripts",
 
     sass: {
+        command: "sass",
+        watch_command: "sass-watch",
         dir: "resources/assets/sass",
         dest: "public/css",
         sources: [
@@ -12,6 +13,7 @@ module.exports = {
     },
 
     scripts: {
+        command: "scripts",
         dir: "resources/assets/js",
         dest: "public/js",
         sources: [

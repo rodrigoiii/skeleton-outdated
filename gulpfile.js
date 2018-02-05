@@ -1,5 +1,6 @@
 var gulp = require("gulp"),
     plugins = require("gulp-load-plugins")({
+        DEBUG: true,
         rename: {
             'gulp-merge-media-queries': "mmq"
         }
@@ -10,6 +11,6 @@ function getTask(task) {
     return require(config.tasks_dir + "/" + task)(gulp, plugins, config);
 }
 
-gulp.task('sass', getTask("sass"));
-gulp.task('scripts', getTask("scripts"));
-gulp.task('default', getTask(config.default_task));
+gulp.task(config.sass.command, getTask("sass"));
+gulp.task(config.scripts.command, getTask("scripts"));
+gulp.task(config.sass.watch_command, [config.sass.command], getTask('sass-watch'));
