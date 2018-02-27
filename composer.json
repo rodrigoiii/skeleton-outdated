@@ -12,7 +12,16 @@
     ],
     "minimum-stability": "alpha",
     "require": {
-        "rodrigoiii/framework-core": "dev-dev"
+        "php": "^5.6.30 || ^7.0",
+        "slim/slim": "^3.9",
+        "slim/twig-view": "^2.3",
+        "slim/csrf": "^0.8.2",
+        "slim/flash": "^0.4.0",
+        "illuminate/database": "^5.4",
+        "vlucas/phpdotenv": "^2.4",
+        "monolog/monolog": "^1.23",
+        "symfony/console": "^3.4",
+        "respect/validation": "^1.1"
     },
     "require-dev": {
         "kint-php/kint": "^2.2",
@@ -23,16 +32,13 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Framework\\": "system/classes/"
         },
         "files": [
+            "system/functions/function.php",
             "app/helpers.php"
         ]
-    },
-    "autoload-test": {
-        "psr-4": {
-            "Framework\\Tests\\": "tests/"
-        }
     },
     "scripts": {
         "post-create-project-cmd": [

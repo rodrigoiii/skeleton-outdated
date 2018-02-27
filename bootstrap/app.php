@@ -1,5 +1,8 @@
 <?php
 
+Framework\System::init();
+
+# Framework Application
 $app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => config('app.debug'),
@@ -13,7 +16,10 @@ $app = new \Slim\App([
         'tracy' => config('debug-bar.settings')
     ]
 ]);
+
+# Application Container
 $container = $app->getContainer();
 
-# Slim\App
-(new Framework\Core)->boot();
+Framework\System::process();
+
+$app->run();

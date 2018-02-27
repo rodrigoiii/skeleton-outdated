@@ -1,0 +1,7 @@
+<phpunit bootstrap="tests/bootstrap.php">
+    <testsuites>
+        <testsuite name="Framework Commands Test Suites">
+            <directory suffix="Test.php">./tests/Framework/Commands</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

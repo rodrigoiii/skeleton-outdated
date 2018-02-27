@@ -1,0 +1,14 @@
+{% extends "layouts/quick-crud.twig" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">{{model_capital}} Info</h1>
+            <a href="{{ path_for('{{model_singular}}.list') }}" class="btn btn-default">Back to {{model_singular}} list</a>
+            <br>
+            {{ {{model_singular}} | json_encode }}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+<?php
+
+namespace {{namespace}}\Http\Middlewares\_Auth;
+
+use Framework\BaseMiddleware;
+use Framework\Auth\Middlewares\ValidToLoginTrait;
+
+class ValidToLogin extends BaseMiddleware
+{
+    use ValidToLoginTrait;
+}

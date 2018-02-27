@@ -1,0 +1,18 @@
+<?php
+
+use Framework\Utilities\Time;
+
+return [
+    'default_login_attempt_length' => 5,
+
+    'default_login_lock_time' => Time::MINUTE * 30, // 30 minutes
+
+    'default_session_expiration' => Time::MINUTE * 30, // 30 minutes
+
+    'model_namespace' => "App\Models\_Auth",
+    'view_path' => resources_path("views"),
+    'controller_namespace' => "App\Http\Controllers\_Auth",
+    'middleware_namespace' => "App\Http\Middlewares\_Auth",
+
+    'url_prefix' => "auth"
+];

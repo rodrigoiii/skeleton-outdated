@@ -1,9 +1,44 @@
 #!/usr/bin/env php
 <?php
 
-// composer autoload
+if (PHP_SAPI !== "cli") die; // die if not using cli
+
+use Framework\Console\Commands as Command;
+use Symfony\Component\Console\Application;
+
+# composer autoload
 require __DIR__ . "/vendor/autoload.php";
 
-(new Framework\CoreCommand)->boot([
-    new App\Console\Commands\HelloCommand
-]);
+# application environment
+require system_path("environment.php");
+
+$app = new Application(config('app.name'));
+
+$commands = [
+    new Command\MakeCommandCommand,
+    new Command\MakeControllerCommand,
+    new Command\RemoveControllerCommand,
+    new Command\GenerateKeyCommand,
+    new Command\MakeMiddlewareCommand,
+    new Command\MakeModelCommand,
+    new Command\MakeRuleCommand,
+    new Command\MakeRequestCommand,
+    new Command\ChangeWebModeCommand,
+    new Command\ChangeEnvironmentCommand,
+    new Command\MakeTestCommand,
+
+    # auth command
+    // new Command\_MakeAuthCommand,
+
+    # quick crud
+    // new Command\_MakeQuickCrudCommand,
+    // new Command\_RemoveQuickCrudCommand,
+
+    # email notification
+    // new Command\_MakeNotificationCommand
+];
+
+$app->addCommands($commands);
+
+# run the application
+$app->run();

@@ -1,0 +1,31 @@
+{% extends "layouts/quick-crud.twig" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Update {{model_capital}}</h1>
+
+            <form role="form" method="POST" action="{{ path_for('{{model_singular}}.edit', {id: {{model_singular}}.id}) }}">
+                {{ csrf.field | raw }}
+
+                <input type="hidden" name="_METHOD" value="PUT">
+
+                <div class="form-group has-feedback {{ errors ? errors.column1 ? 'has-error' : 'has-success' }}">
+                    <label for="column1">Column 1</label>
+                    <input type="text" name="column1" class="form-control" value="{{ oldInput.column1 ?: {{model_singular}}.column1 }}" autofocus>
+                    {% if errors %}
+                    <span class="glyphicon {{ errors.column1 ? "glyphicon-remove" : "glyphicon-ok" }} form-control-feedback"></span>
+                    {% endif %}
+                    <span class="help-block">{{ errors.column1 | first }}</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Update {{model_capital}}" class="btn btn-primary">
+                    <a href="{{ path_for('{{model_singular}}.list') }}" class="btn btn-default">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
