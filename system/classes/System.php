@@ -6,17 +6,21 @@ class System
 {
     public static function init()
     {
+        global $app, $container;
+
         session_start();
 
         date_default_timezone_set(config('app.default_timezone'));
 
-        require __DIR__ . "/../environment.php";
+        require system_path("environment.php");
     }
 
     public static function process()
     {
-        require __DIR__ . "/../system.php";
+        global $app, $container;
 
-        require __DIR__ . "/../routes/web.php";
+        require system_path("system.php");
+
+        require base_path("routes/web.php");
     }
 }

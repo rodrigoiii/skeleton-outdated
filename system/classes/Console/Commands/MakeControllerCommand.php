@@ -60,7 +60,7 @@ class MakeControllerCommand extends BaseCommand
                 throw new \Exception("Error: Invalid Controller. It must be Characters and PascalCase.", 1);
 
             $file = "{$pre_controller_path}/{$controller}.php";
-            $registered_controller_file = settings_path("registered-controllers.php");
+            $registered_controller_file = system_path("registered-controllers.php");
             $registered_template = strtr(file_get_contents(__DIR__ . "/templates/controller/controller-container.php.dist"), [
                 '{{controller}}' => $controller,
                 '{{pre_controller_namespace}}' => $pre_controller_namespace

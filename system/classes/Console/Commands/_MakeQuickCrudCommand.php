@@ -167,7 +167,7 @@ class _MakeQuickCrudCommand extends BaseCommand
         fclose($file);
 
         // register the controller in container
-        $file = fopen(settings_path("registered-controllers.php"), "a");
+        $file = fopen(system_path("registered-controllers.php"), "a");
         fwrite($file, $registered_template);
         fclose($file);
 

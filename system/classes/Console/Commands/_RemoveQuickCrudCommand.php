@@ -87,7 +87,7 @@ class _RemoveQuickCrudCommand extends BaseCommand
      */
     private function removeAndUnregisterController($model)
     {
-        $registered_controller_file = settings_path("registered-controllers.php");
+        $registered_controller_file = system_path("registered-controllers.php");
         $content = file_get_contents($registered_controller_file);
         $registered_template = strtr(file_get_contents(__DIR__ . "/templates/controller/controller-container.php.dist"), [
             '{{controller}}' => "{$model}Controller",
