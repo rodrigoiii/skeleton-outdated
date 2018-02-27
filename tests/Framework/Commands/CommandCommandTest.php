@@ -10,7 +10,6 @@ class CommandCommandTest extends TestCase
     protected static $tester;
     protected static $namespace;
     protected static $existing_commands;
-    // protected static $commands_data;
 
     public static function setUpBeforeClass()
     {
