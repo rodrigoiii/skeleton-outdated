@@ -19,5 +19,14 @@ return [
     'web_mode' => _env('WEB_MODE'),
 
     # Debug mode
-    'debug' => filter_var(_env('DEBUG_ON', true), FILTER_VALIDATE_BOOLEAN)
+    'debug' => filter_var(_env('DEBUG_ON', true), FILTER_VALIDATE_BOOLEAN),
+
+    # Aliases
+    'aliases' => [
+        // Framework Utilities
+        'File'    => Framework\Utilities\File::class,
+        'Flash'   => Framework\Utilities\Flash::class,
+        'Log'     => Framework\Utilities\Log::class,
+        'Session' => Framework\Utilities\Session::class,
+    ]
 ];
