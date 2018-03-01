@@ -4,14 +4,14 @@
 if (PHP_SAPI !== "cli") die; // die if not using cli
 
 use App\Console\Commands as AppCommand;
+use Framework\ConsoleSystem;
 use Framework\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
 # composer autoload
 require __DIR__ . "/vendor/autoload.php";
 
-# application environment
-require system_path("environment.php");
+ConsoleSystem::init();
 
 $app = new Application(config('app.name'));
 
