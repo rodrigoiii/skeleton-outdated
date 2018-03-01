@@ -24,8 +24,6 @@ return [
     # Aliases
     'aliases' => [
         // Framework Utilities
-        'File'    => Framework\Utilities\File::class,
-        'Flash'   => Framework\Utilities\Flash::class,
         'Log'     => Framework\Utilities\Log::class,
         'Session' => Framework\Utilities\Session::class,
     ]
