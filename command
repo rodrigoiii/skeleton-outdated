@@ -3,6 +3,7 @@
 
 if (PHP_SAPI !== "cli") die; // die if not using cli
 
+use App\Console\Commands as AppCommand;
 use Framework\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
@@ -14,7 +15,11 @@ require system_path("environment.php");
 
 $app = new Application(config('app.name'));
 
-$commands = [
+$app_commands = [
+    new AppCommand\HelloCommand
+];
+
+$framework_commands = [
     new Command\MakeCommandCommand,
     new Command\MakeControllerCommand,
     new Command\RemoveControllerCommand,
@@ -38,7 +43,7 @@ $commands = [
     // new Command\_MakeNotificationCommand
 ];
 
-$app->addCommands($commands);
+$app->addCommands(array_merge($app_commands, $framework_commands));
 
 # run the application
 $app->run();
