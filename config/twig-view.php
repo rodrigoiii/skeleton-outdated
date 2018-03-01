@@ -3,8 +3,6 @@
 return [
     'cache' => false,
 
-    'views_path' => resources_path('views'),
-
     # error pages path, relative in views_path
     'error_pages' => [
         "500" => "templates/error-pages/page-500.twig",
