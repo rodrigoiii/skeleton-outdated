@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Welcome Page | {{ fn.config('app.name') }}</title>
+    <title>{{ config('app.name') }}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="icon" href="/favicon.png">
 
@@ -55,7 +55,8 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to My Framework</h1>
+    <h1>{{ config('app.name') }}</h1>
+    <p>Build awesome application using this light but powerful micro framework.</p>
 </body>
 </html>
 <!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->

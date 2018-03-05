@@ -66,8 +66,7 @@ $container['twigView'] = function($c)
         $twigView->addExtension(new Twig_Extension_Debug());
     }
 
-    # Make the helper functions as global
-    // $twigView->getEnvironment()->addGlobal('fn', new Functions);
+    $twigView->getEnvironment()->addFunction(new Twig_Function('config', 'config'));
 
     # Make 'flash' global
     $twigView->getEnvironment()->addGlobal('flash', $c->flash);

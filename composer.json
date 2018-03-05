@@ -1,6 +1,6 @@
 {
     "name": "rodrigoiii/framework",
-    "description": "Build awesome application using this light but powerful micro framework",
+    "description": "Build awesome application using this light but powerful micro framework.",
     "type": "project",
     "license": "MIT",
     "keywords": ["micro framework", "framework", "slim", "php"],
