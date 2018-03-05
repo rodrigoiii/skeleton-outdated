@@ -6,15 +6,29 @@ use Framework\BaseCommand;
 
 class MakeTestCommand extends BaseCommand
 {
+    /**
+     * Console command signature
+     * @var string
+     */
     private $signature = "make:test {test} {--t|type= : [command]}";
 
+    /**
+     * Console command description
+     * @var string
+     */
     private $description = "Create phpunit test class template.";
 
+    /**
+     * Create a new command instance
+     */
     public function __construct()
     {
         parent::__construct($this->signature, $this->description);
     }
 
+    /**
+     * Execute the console command
+     */
     public function handle($input, $output)
     {
         $test = $input->getArgument('test');

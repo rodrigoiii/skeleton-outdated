@@ -31,6 +31,7 @@ $framework_commands = [
     new Command\ChangeWebModeCommand,
     new Command\ChangeEnvironmentCommand,
     new Command\MakeTestCommand,
+    new Command\BuildDistCommand,
 
     # auth command
     // new Command\_MakeAuthCommand,

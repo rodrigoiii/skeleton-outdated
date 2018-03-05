@@ -1,4 +1,4 @@
-# Framework v1.0
+# Framework v1.1.0
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,10 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.1
+* Use web-dev-tools library. Checkout the library <a href="https://www.npmjs.com/package/web-dev-tools">https://www.npmjs.com/package/web-dev-tools</a>.
+* Add BuildDistCommand command to run some commands that need to be execute.
+
 Framework v1.0
 * Update the README.md.
 * Add Twig function config.
