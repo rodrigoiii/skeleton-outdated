@@ -12,7 +12,6 @@ $app = new \Slim\App([
         'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 
         'db' => config('database.database_connection.mysql'),
-        'monolog' => config('logger.monolog'),
         'tracy' => config('debug-bar.settings')
     ]
 ]);
