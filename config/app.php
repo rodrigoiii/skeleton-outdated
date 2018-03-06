@@ -19,7 +19,7 @@ return [
     'web_mode' => _env('WEB_MODE'),
 
     # Debug mode
-    'debug' => filter_var(_env('DEBUG_ON', true), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 
     # Aliases
     'aliases' => [

@@ -32,6 +32,7 @@ $framework_commands = [
     new Command\ChangeEnvironmentCommand,
     new Command\MakeTestCommand,
     new Command\BuildDistCommand,
+    new Command\DeleteDistCommand,
 
     # auth command
     // new Command\_MakeAuthCommand,

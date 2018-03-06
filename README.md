@@ -1,4 +1,4 @@
-# Framework v1.1.0
+# Framework v1.1.1
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,11 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.1.1
+* Add USE_DIST environment.
+* Change default value of DEBUG_BAR_ON and DEBUG_ON config.
+* Add command delete:dist to rollback the command build:dist.
+
 Framework v1.1
 * Use web-dev-tools library. Checkout the library <a href="https://www.npmjs.com/package/web-dev-tools">https://www.npmjs.com/package/web-dev-tools</a>.
 * Add BuildDistCommand command to run some commands that need to be execute.

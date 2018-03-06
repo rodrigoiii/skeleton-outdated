@@ -56,7 +56,7 @@ $container['twig_profile'] = function () {
 # slim twig view
 $container['twigView'] = function($c)
 {
-    $twigView = new Slim\Views\Twig(resources_path('views'), ['cache' => config('twig-view.cache')]);
+    $twigView = new Slim\Views\Twig(config('twig-view.views_path'), ['cache' => config('twig-view.cache')]);
 
     $twigView->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
 
