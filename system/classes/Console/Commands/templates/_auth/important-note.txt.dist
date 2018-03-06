@@ -1,29 +1,32 @@
-//////////////////////////////////////////////////////////////////
-// Important Note: You need to setup manually the following:    //
-// * The database                                               //
-// * Include configuration of library.                          //
-//                                                              //
-// # The database                                               //
-//     Create table base on the schema                          //
-//     users(                                                   //
-//         first_name VARCHAR(25),                              //
-//         last_name VARCHAR(25),                               //
-//         email_name VARCHAR(25),                              //
-//         password_name VARCHAR(25),                           //
-//         auth_token VARCHAR(25) DEFAULT(""),                  //
-//     )                                                        //
-//                                                              //
-//     auth_attempts(                                           //
-//         email VARCHAR(25),                                   //
-//         request_uri VARCHAR(25),                             //
-//         ip_address VARCHAR(25),                              //
-//         attempted VARCHAR(25),                               //
-//     )                                                        //
-//                                                              //
-// # Include configuration of library                           //
-//     $app = new \Slim\App([                                   //
-//         'settings' => [                                      //
-//             '_auth' => config('_auth') // include this thing //
-//         ]                                                    //
-//     ]);                                                      //
-//////////////////////////////////////////////////////////////////
+Important Note: You need to setup manually the following:
+* The database
+* Include configuration of library.
+
+# The database
+    Create table base on the schema
+    users(
+        first_name VARCHAR(25),
+        last_name VARCHAR(25),
+        email_name VARCHAR(25),
+        password_name VARCHAR(25),
+        auth_token VARCHAR(25) DEFAULT(""),
+    )
+
+    auth_attempts(
+        email VARCHAR(25),
+        request_uri VARCHAR(25),
+        ip_address VARCHAR(25),
+        attempted VARCHAR(25),
+    )
+
+# Route
+    Register your route with this snippet code beneath:
+
+    (new \AuthSlim\AuthRoute(config('auth')))->routes();
+
+    // Use middleware YourMiddlewareClassForUser for authenticated routes
+    $app->get('/authenticated-page', function ($request, $response) {
+        return $this->view->render($response, "auth/authenticated-page.twig");
+    })
+    ->add(new YourMiddlewareClassForUser($container))
+    ->setName('auth.authenticated-page');

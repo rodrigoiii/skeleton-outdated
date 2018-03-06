@@ -1,6 +1,5 @@
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -11,7 +10,6 @@
             <a class="navbar-brand" href="#">Authentication</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if auth_user.check %}
@@ -25,7 +23,7 @@
                 <li><a href="{{ path_for('auth.login') }}">Log In</a></li>
                 {% endif %}
             </ul>
-        </div><!-- /.navbar-collapse -->
+        </div>
     </div>
 </nav>
 

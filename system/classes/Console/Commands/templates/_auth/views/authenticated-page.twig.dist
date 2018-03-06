@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authenticated Page</title>
+</head>
+<body>
+    {% include "auth/partials/nav.twig" %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">Home Page</h1>
+
+                {% if flash.getMessage('alert-message') %}
+                    {{ flash.getMessage('alert-message') | first }}
+                {% endif %}
+
+                <p>Welcome</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

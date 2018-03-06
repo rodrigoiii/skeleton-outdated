@@ -16,7 +16,7 @@ class _MakeAuthCommand extends BaseCommand
      * Console command description
      * @var string
      */
-    private $description = "Make authentication like a boom!. (special command)";
+    private $description = "Make authentication like a boom!.";
 
     /**
      * Create a new command instance
@@ -34,7 +34,7 @@ class _MakeAuthCommand extends BaseCommand
     public function handle($input, $output)
     {
         try {
-            if (file_exists(config_path("_auth.php")))
+            if (file_exists(config_path("auth.php")))
             {
                 throw new \Exception("Authentication is already created.", 1);
             }
@@ -64,16 +64,16 @@ class _MakeAuthCommand extends BaseCommand
             '{{namespace}}' => $this->namespace
         ]);
 
-        if (!file_exists(app_path("Models/_Auth")))
+        if (!file_exists(app_path("Models/Auth")))
         {
-            mkdir(app_path("Models/_Auth"));
+            mkdir(app_path("Models/Auth"));
         }
 
-        $file = fopen(app_path("Models/_Auth/User.php"), "w");
+        $file = fopen(app_path("Models/Auth/User.php"), "w");
         fwrite($file, $user_template);
         fclose($file);
 
-        $file = fopen(app_path("Models/_Auth/AuthAttempt.php"), "w");
+        $file = fopen(app_path("Models/Auth/AuthAttempt.php"), "w");
         fwrite($file, $auth_attempt_template);
         fclose($file);
 
@@ -136,16 +136,16 @@ class _MakeAuthCommand extends BaseCommand
         ]);
         $registered_template = strtr(file_get_contents(__DIR__ . "/templates/controller/controller-container.php.dist"), [
             '{{controller}}' => "AuthController",
-            '{{pre_controller_namespace}}' => "_Auth\\"
+            '{{pre_controller_namespace}}' => "Auth\\"
         ]);
 
-        if (!file_exists(app_path("Http/Controllers/_Auth")))
+        if (!file_exists(app_path("Http/Controllers/Auth")))
         {
-            mkdir(app_path("Http/Controllers/_Auth"));
+            mkdir(app_path("Http/Controllers/Auth"));
         }
 
         // create file
-        $file = fopen(app_path("Http/Controllers/_Auth/AuthController.php"), "w");
+        $file = fopen(app_path("Http/Controllers/Auth/AuthController.php"), "w");
         fwrite($file, $controller_template);
         fclose($file);
 
@@ -173,19 +173,19 @@ class _MakeAuthCommand extends BaseCommand
             '{{namespace}}' => $this->namespace
         ]);
 
-        if (!file_exists(app_path("Http/Middlewares/_Auth")))
+        if (!file_exists(app_path("Http/Middlewares/Auth")))
         {
-            mkdir(app_path("Http/Middlewares/_Auth"));
+            mkdir(app_path("Http/Middlewares/Auth"));
         }
 
-        $file = fopen(app_path("Http/Middlewares/_Auth/Guest.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/Guest.php"), "w");
         fwrite($file, $guest_template);
         fclose($file);
 
-        $file = fopen(app_path("Http/Middlewares/_Auth/User.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/User.php"), "w");
         fwrite($file, $user_template);
         fclose($file);
-        $file = fopen(app_path("Http/Middlewares/_Auth/ValidToLogin.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/ValidToLogin.php"), "w");
         fwrite($file, $valid_to_login_template);
         fclose($file);
 
@@ -198,9 +198,14 @@ class _MakeAuthCommand extends BaseCommand
      */
     private function makeConfigTemplate()
     {
-        $config_template = file_get_contents(__DIR__ . "/templates/_auth/config.php.dist");
+        $config_template = strtr(file_get_contents(__DIR__ . "/templates/_auth/config.php.dist"), [
+            '{{controller_class}}' => $this->namespace . "\Http\Controllers\Auth\AuthController",
+            '{{valid_to_login_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\ValidToLogin",
+            '{{user_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\User",
+            '{{guest_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\Guest"
+        ]);
 
-        $file = fopen(config_path("_auth.php"), "w");
+        $file = fopen(config_path("auth.php"), "w");
         fwrite($file, $config_template);
         fclose($file);
 

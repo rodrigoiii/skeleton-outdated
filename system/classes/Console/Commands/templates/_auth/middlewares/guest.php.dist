@@ -1,9 +1,9 @@
 <?php
 
-namespace {{namespace}}\Http\Middlewares\_Auth;
+namespace {{namespace}}\Http\Middlewares\Auth;
 
 use Framework\BaseMiddleware;
-use Framework\Auth\Middlewares\GuestTrait;
+use AuthSlim\Middlewares\Guest as GuestTrait;
 
 class Guest extends BaseMiddleware
 {
