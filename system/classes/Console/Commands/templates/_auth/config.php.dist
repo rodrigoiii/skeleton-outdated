@@ -3,8 +3,8 @@
 return [
     'AuthController' => {{controller_class}}::class,
     'ValidToLoginMiddleware' => {{valid_to_login_middleware_class}}::class,
-    'UserMiddleware' => {{ user_middleware_class }}::class,
-    'GuestMiddleware' => {{ guest_middleware_class }}::class,
+    'UserMiddleware' => {{user_middleware_class}}::class,
+    'GuestMiddleware' => {{guest_middleware_class}}::class,
 
     'url_prefix' => "auth",
     'url_login' => "login",

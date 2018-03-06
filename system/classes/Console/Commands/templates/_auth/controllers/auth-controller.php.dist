@@ -8,4 +8,27 @@ use AuthSlim\Controllers\AuthController as Auth;
 class AuthController extends BaseController
 {
     use Auth;
+
+    // override twigView container
+    public function getTwigView()
+    {
+        return $this->twigView;
+    }
+
+    public function successRedirect($response)
+    {
+        $this->flash->addMessage('success', "Successfully Login.");
+        return $response->withRedirect($this->container->router->pathFor('auth.authenticated-page'));
+    }
+
+    public function failRedirect($response)
+    {
+        $this->flash->addMessage('danger', "Invalid email and password.");
+        return $response->withRedirect($this->container->router->pathFor('auth.login'));
+    }
+
+    public function getLogin($request, $response)
+    {
+        return $this->getTwigView()->render($response, "auth/login.twig");
+    }
 }

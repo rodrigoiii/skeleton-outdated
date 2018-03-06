@@ -44,6 +44,7 @@ class _MakeAuthCommand extends BaseCommand
             $this->makeControllerTemplate();
             $this->makeMiddlewareTemplate();
             $this->makeConfigTemplate();
+            $this->makeDbTemplate();
 
             $this->showImportantNote();
         } catch (\Exception $e) {
@@ -60,9 +61,6 @@ class _MakeAuthCommand extends BaseCommand
         $user_template = strtr(file_get_contents(__DIR__ . "/templates/_auth/models/user.php.dist"), [
             '{{namespace}}' => $this->namespace
         ]);
-        $auth_attempt_template = strtr(file_get_contents(__DIR__ . "/templates/_auth/models/auth-attempt.php.dist"), [
-            '{{namespace}}' => $this->namespace
-        ]);
 
         if (!file_exists(app_path("Models/Auth")))
         {
@@ -73,11 +71,7 @@ class _MakeAuthCommand extends BaseCommand
         fwrite($file, $user_template);
         fclose($file);
 
-        $file = fopen(app_path("Models/Auth/AuthAttempt.php"), "w");
-        fwrite($file, $auth_attempt_template);
-        fclose($file);
-
-       echo "Create Model Done." . PHP_EOL;
+        echo "Create Model Done." . PHP_EOL;
     }
 
     /**
@@ -86,43 +80,33 @@ class _MakeAuthCommand extends BaseCommand
      */
     private function makeViewTemplate()
     {
-        $home = file_get_contents(__DIR__ . "/templates/_auth/views/home.twig.dist");
+        $authenticated_page = file_get_contents(__DIR__ . "/templates/_auth/views/authenticated-page.twig.dist");
         $login = file_get_contents(__DIR__ . "/templates/_auth/views/login.twig.dist");
-        $nav = file_get_contents(__DIR__ . "/templates/_auth/views/layouts/partials/nav.twig.dist");
-        $app = file_get_contents(__DIR__ . "/templates/_auth/views/layouts/app.twig.dist");
+        $nav = file_get_contents(__DIR__ . "/templates/_auth/views/partials/nav.twig.dist");
 
-        if (!file_exists(resources_path("views/_auth")))
+        if (!file_exists(resources_path("views/auth")))
         {
-            mkdir(resources_path("views/_auth"));
+            mkdir(resources_path("views/auth"));
         }
 
-        if (!file_exists(resources_path("views/_auth/layouts")))
+        if (!file_exists(resources_path("views/auth/partials")))
         {
-            mkdir(resources_path("views/_auth/layouts"));
+            mkdir(resources_path("views/auth/partials"));
         }
 
-        if (!file_exists(resources_path("views/_auth/layouts/partials")))
-        {
-            mkdir(resources_path("views/_auth/layouts/partials"));
-        }
-
-        $file = fopen(resources_path("views/_auth/home.twig"), "w");
-        fwrite($file, $home);
+        $file = fopen(resources_path("views/auth/authenticated-page.twig"), "w");
+        fwrite($file, $authenticated_page);
         fclose($file);
 
-        $file = fopen(resources_path("views/_auth/login.twig"), "w");
+        $file = fopen(resources_path("views/auth/login.twig"), "w");
         fwrite($file, $login);
         fclose($file);
 
-        $file = fopen(resources_path("views/_auth/layouts/partials/nav.twig"), "w");
+        $file = fopen(resources_path("views/auth/partials/nav.twig"), "w");
         fwrite($file, $nav);
         fclose($file);
 
-        $file = fopen(resources_path("views/_auth/layouts/app.twig"), "w");
-        fwrite($file, $app);
-        fclose($file);
-
-       echo "Create View Done." . PHP_EOL;
+        echo "Create View Done." . PHP_EOL;
     }
 
     /**
@@ -213,12 +197,38 @@ class _MakeAuthCommand extends BaseCommand
     }
 
     /**
+     * Make database template
+     * @depends enable
+     */
+    private function makeDbTemplate()
+    {
+        $migration_users = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180306091257_create_table_user.php.dist");
+        $migration_auth_attempts = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180306091308_create_table_auth_attempts.php.dist");
+        $seed_users = file_get_contents(__DIR__ . "/templates/_auth/db/seeds/UserSeeder.php.dist");
+
+        $file = fopen(base_path("db/migrations/20180306091257_create_table_user.php"), "w");
+        fwrite($file, $migration_users);
+        fclose($file);
+
+        $file = fopen(base_path("db/migrations/20180306091309_create_table_auth_attempts.php"), "w");
+        fwrite($file, $migration_auth_attempts);
+        fclose($file);
+
+        $file = fopen(base_path("db/seeds/UserSeeder.php"), "w");
+        fwrite($file, $seed_users);
+        fclose($file);
+    }
+
+    /**
      * Display the important note
      * @depend handle
      * @return [void]
      */
     private function showImportantNote()
     {
-        echo file_get_contents(__DIR__ . "/templates/_auth/important-note.txt.dist");
+        echo PHP_EOL;
+        echo strtr(file_get_contents(__DIR__ . "/templates/_auth/important-note.txt.dist"), [
+            '{{namespace}}' => $this->namespace
+        ]);
     }
 }
