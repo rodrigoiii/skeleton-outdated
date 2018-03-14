@@ -162,14 +162,14 @@ class _MakeAuthCommand extends BaseCommand
             mkdir(app_path("Http/Middlewares/Auth"));
         }
 
-        $file = fopen(app_path("Http/Middlewares/Auth/Guest.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/GuestMiddleware.php"), "w");
         fwrite($file, $guest_template);
         fclose($file);
 
-        $file = fopen(app_path("Http/Middlewares/Auth/User.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/UserMiddleware.php"), "w");
         fwrite($file, $user_template);
         fclose($file);
-        $file = fopen(app_path("Http/Middlewares/Auth/ValidToLogin.php"), "w");
+        $file = fopen(app_path("Http/Middlewares/Auth/ValidToLoginMiddleware.php"), "w");
         fwrite($file, $valid_to_login_template);
         fclose($file);
 
@@ -184,9 +184,9 @@ class _MakeAuthCommand extends BaseCommand
     {
         $config_template = strtr(file_get_contents(__DIR__ . "/templates/_auth/config.php.dist"), [
             '{{controller_class}}' => $this->namespace . "\Http\Controllers\Auth\AuthController",
-            '{{valid_to_login_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\ValidToLogin",
-            '{{user_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\User",
-            '{{guest_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\Guest"
+            '{{valid_to_login_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\ValidToLoginMiddleware",
+            '{{user_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\UserMiddleware",
+            '{{guest_middleware_class}}' => $this->namespace . "\Http\Middlewares\Auth\GuestMiddleware"
         ]);
 
         $file = fopen(config_path("auth.php"), "w");

@@ -3,9 +3,9 @@
 namespace {{namespace}}\Http\Middlewares\Auth;
 
 use Framework\BaseMiddleware;
-use AuthSlim\Middlewares\ValidToLogin as ValidToLoginTrait;
+use AuthSlim\Middlewares\ValidToLoginMiddlewareTrait;
 
-class ValidToLogin extends BaseMiddleware
+class ValidToLoginMiddleware extends BaseMiddleware
 {
-    use ValidToLoginTrait;
+    use ValidToLoginMiddlewareTrait;
 }

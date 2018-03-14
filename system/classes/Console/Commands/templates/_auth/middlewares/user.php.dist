@@ -2,25 +2,19 @@
 
 namespace {{namespace}}\Http\Middlewares\Auth;
 
-use {{namespace}}\Models\Auth\User as UserModel;
+use {{namespace}}\Models\Auth\User;
 use AuthSlim\Auth\Auth;
-use AuthSlim\Middlewares\User as UserTrait;
+use AuthSlim\Middlewares\UserMiddlewareTrait;
 use Framework\BaseMiddleware;
 
-class User extends BaseMiddleware
+class UserMiddleware extends BaseMiddleware
 {
-    use UserTrait;
-
-    // override twigView container
-    public function getTwigView()
-    {
-        return $this->twigView;
-    }
+    use UserMiddlewareTrait;
 
     public function authenticated()
     {
         $this->getTwigView()->getEnvironment()->addGlobal('auth_user', [
-            'get'  => UserModel::find(Auth::user()->id),
+            'get'  => User::find(Auth::user()->id),
             'check'  => Auth::check(),
         ]);
     }

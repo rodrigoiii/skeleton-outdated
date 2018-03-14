@@ -9,7 +9,7 @@ if (is_prod())
         {
             $c['logger']->error($exception);
 
-            return $c->twigView
+            return $c->view
                     ->render(
                         $response->withStatus(500)
                         ->withHeader('Content-Type', "text/html"),
@@ -24,7 +24,7 @@ $container['notFoundHandler'] = function($c)
 {
     return function ($request, $response) use($c)
     {
-        return $c->twigView
+        return $c->view
                 ->render(
                     $response->withStatus(404)
                     ->withHeader('Content-Type', "text/html"),
@@ -38,7 +38,7 @@ $container['notAllowedHandler'] = function($c)
 {
     return function ($request, $response, $methods) use($c)
     {
-        return $c->twigView
+        return $c->view
                 ->render(
                     $response->withStatus(405)
                     ->withHeader('Allow', implode(', ', $methods))
@@ -54,24 +54,24 @@ $container['twig_profile'] = function () {
 };
 
 # slim twig view
-$container['twigView'] = function($c)
+$container['view'] = function($c)
 {
-    $twigView = new Slim\Views\Twig(config('twig-view.views_path'), ['cache' => config('twig-view.cache')]);
+    $view = new Slim\Views\Twig(config('twig-view.views_path'), ['cache' => config('twig-view.cache')]);
 
-    $twigView->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
+    $view->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
 
     if (!is_prod())
     {
-        $twigView->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
-        $twigView->addExtension(new Twig_Extension_Debug());
+        $view->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
+        $view->addExtension(new Twig_Extension_Debug());
     }
 
-    $twigView->getEnvironment()->addFunction(new Twig_Function('config', 'config'));
+    $view->getEnvironment()->addFunction(new Twig_Function('config', 'config'));
 
     # Make 'flash' global
-    $twigView->getEnvironment()->addGlobal('flash', $c->flash);
+    $view->getEnvironment()->addGlobal('flash', $c->flash);
 
-    return $twigView;
+    return $view;
 };
 
 $container['db'] = function($c) use ($capsule) // $capsule is in lib.php file
@@ -92,7 +92,7 @@ $container['csrf'] = function($c)
     $guard->setFailureCallable( function ($request, $response, $next) use($c) {
         if (is_prod())
         {
-            return $c->twigView->render(
+            return $c->view->render(
                 $response->withStatus(403)->withHeader('Content-Type', "text/html"),
                 config('twig-view.error_pages.403')
             );

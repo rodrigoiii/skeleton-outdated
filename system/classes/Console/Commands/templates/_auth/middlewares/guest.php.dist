@@ -3,9 +3,9 @@
 namespace {{namespace}}\Http\Middlewares\Auth;
 
 use Framework\BaseMiddleware;
-use AuthSlim\Middlewares\Guest as GuestTrait;
+use AuthSlim\Middlewares\GuestMiddlewareTrait;
 
-class Guest extends BaseMiddleware
+class GuestMiddleware extends BaseMiddleware
 {
-    use GuestTrait;
+    use GuestMiddlewareTrait;
 }

@@ -8,6 +8,6 @@ class WelcomeController extends BaseController
 {
 	public function index($request, $response)
 	{
-		return $this->twigView->render($response, "index.twig");
+		return $this->view->render($response, "index.twig");
 	}
 }

@@ -26,13 +26,13 @@ class OldInput extends BaseMiddleware
                 }
             }
 
-            $this->twigView->getEnvironment()->addGlobal('oldInput', $new_old_input);
+            $this->view->getEnvironment()->addGlobal('oldInput', $new_old_input);
             // $this->phpView->addAttribute('old_input', $old_input);
         }
 
         if ($old_input_file = Session::get('old_input_file', true))
         {
-            $this->twigView->getEnvironment()->addGlobal('oldInputFile', $old_input_file);
+            $this->view->getEnvironment()->addGlobal('oldInputFile', $old_input_file);
         }
 
         Session::put('old_input', $request->getParams());
