@@ -23,3 +23,6 @@ $app->add(new M\SharedServer($container));
 
 # RemoveTrailingSlash middleware
 $app->add(new M\RemoveTrailingSlash($container));
+
+# RemoveTrailingSlash middleware
+$app->add(new M\WebMode($container));
