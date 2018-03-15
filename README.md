@@ -10,6 +10,12 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.2
+* Implement web mode.
+* Fix config/twig-view, cache must be either false or absolute path for to save cache.
+* Add option for creating email template.
+* Add storage/cache folder.
+
 Framework v1.1.1
 * Add USE_DIST environment.
 * Change default value of DEBUG_BAR_ON and DEBUG_ON config.
