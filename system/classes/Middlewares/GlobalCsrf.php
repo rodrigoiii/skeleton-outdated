@@ -16,7 +16,7 @@ class GlobalCsrf extends BaseMiddleware
 
 		$json_token = json_encode([$name_key => $name, $value_key => $value]);
 
-		$this->twigView->getEnvironment()->addGlobal('csrf', [
+		$this->view->getEnvironment()->addGlobal('csrf', [
 			'field' => '
 				<input type="hidden" name="'.$name_key.'" value="'.$name.'">
 				<input type="hidden" name="'.$value_key.'" value="'.$value.'">

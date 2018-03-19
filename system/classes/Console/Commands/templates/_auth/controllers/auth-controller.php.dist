@@ -3,17 +3,11 @@
 namespace {{namespace}}\Http\Controllers\Auth;
 
 use Framework\BaseController;
-use AuthSlim\Controllers\AuthController as Auth;
+use AuthSlim\Controllers\AuthControllerTrait;
 
 class AuthController extends BaseController
 {
-    use Auth;
-
-    // override twigView container
-    public function getTwigView()
-    {
-        return $this->twigView;
-    }
+    use AuthControllerTrait;
 
     public function successRedirect($response)
     {

@@ -4,9 +4,9 @@ Important Note: You need to setup manually the following:
 
 (new \AuthSlim\AuthRoute(config('auth')))->routes();
 
-// Use middleware {{namespace}}\Http\Middlewares\Auth\User for authenticated routes
+// Use middleware {{namespace}}\Http\Middlewares\Auth\UserMiddleware for authenticated routes
 $app->get('/authenticated-page', function ($request, $response) {
-    return $this->twigView->render($response, "auth/authenticated-page.twig");
+    return $this->view->render($response, "auth/authenticated-page.twig");
 })
-->add(new {{namespace}}\Http\Middlewares\Auth\User($container))
+->add(new {{namespace}}\Http\Middlewares\Auth\UserMiddleware($container))
 ->setName('auth.authenticated-page');
