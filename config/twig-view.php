@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'cache' => false,
+    # cache directory or false to disable
+    'cache' => is_prod() ? storage_path("cache/views") : false,
 
     'views_path' => resources_path(filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN) ? 'dist-views' : "views"),
 

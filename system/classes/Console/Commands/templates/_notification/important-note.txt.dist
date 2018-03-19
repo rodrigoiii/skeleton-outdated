@@ -1,0 +1,11 @@
+Important note: You need to add the configuration inside of slim application settings. See the example below:
+
+$app = new \Slim\App([
+    'settings' => [
+        ...
+
+        'db' => config('database.database_connection.mysql'),
+        'tracy' => config('debug-bar.settings'),
+        'mail' => config('notification-slim') // HEY! like this
+    ]
+]);

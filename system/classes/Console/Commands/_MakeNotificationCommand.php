@@ -10,7 +10,7 @@ class _MakeNotificationCommand extends BaseCommand
      * Console command signature
      * @var string
      */
-    private $signature = "make:notification {notification}";
+    private $signature = "make:notification {notification} {--t|email_template_name= : email template}";
 
     /**
      * Console command description
@@ -34,6 +34,7 @@ class _MakeNotificationCommand extends BaseCommand
     public function handle($input, $output)
     {
         $notification = $input->getArgument('notification');
+        $email_template_name = $input->getOption('email_template_name');
 
         try {
             if (!ctype_upper($notification[0]))
@@ -47,7 +48,13 @@ class _MakeNotificationCommand extends BaseCommand
                 mkdir(app_path("Notifications"));
             }
 
-            $output->writeln($this->makeTemplate($notification) ? "Successfully created." : "File not created. Check the file path.");
+            if (!file_exists(config_path("notification-slim.php")))
+            {
+                $output->writeln($this->makeConfigTemplate() ? "Successfully created config template." : "File not created. Check the file path.");
+                $this->showImportantNote();
+            }
+
+            $output->writeln($this->makeNotificationTemplate($notification, $email_template_name) ? "Successfully created notification and email template." : "File not created. Check the file path.");
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }
@@ -59,7 +66,7 @@ class _MakeNotificationCommand extends BaseCommand
      * @param  [string] $notification [notification name]
      * @return [boolean]    [Return true if successfully creating file otherwise false]
      */
-    private function makeTemplate($notification)
+    private function makeNotificationTemplate($notification, $email_template_name)
     {
         $file = __DIR__ . "/templates/_notification/notification.php.dist";
         if (file_exists($file))
@@ -75,7 +82,97 @@ class _MakeNotificationCommand extends BaseCommand
             fwrite($file, $template);
             fclose($file);
 
+            return file_exists($file_path) && (!is_null($email_template_name) ? $this->makeEmailTemplate($email_template_name) : true);
+        }
+        else
+        {
+            exit("{{$file}} file is not exist.");
+        }
+
+        return false;
+    }
+
+    /**
+     * [Create configuration template]
+     * @depends handle
+     * @return [boolean]    [Return true if successfully creating file otherwise false]
+     */
+    private function makeConfigTemplate()
+    {
+        $file = __DIR__ . "/templates/_notification/config.php.dist";
+        if (file_exists($file))
+        {
+            $template = file_get_contents($file);
+
+            $file_path = config_path("notification-slim.php");
+
+            $file = fopen($file_path, "w");
+            fwrite($file, $template);
+            fclose($file);
+
             return file_exists($file_path);
+        }
+        else
+        {
+            exit("{{$file}} file is not exist.");
+        }
+
+        return false;
+    }
+
+    /**
+     * [Create email template]
+     * @depends makeNotificationTemplate
+     * @param  [string] $email_template_name [email template filename]
+     * @return [boolean]    [Return true if successfully creating file otherwise false]
+     */
+    private function makeEmailTemplate($email_template_name)
+    {
+        $file = __DIR__ . "/templates/_notification/email.twig.dist";
+        if (file_exists($file))
+        {
+            $template = file_get_contents($file);
+
+            $file_path = resources_path("views/emails/{$email_template_name}.twig");
+
+            if (!file_exists(resources_path("views/emails")))
+            {
+                mkdir(resources_path("views/emails"));
+            }
+
+            if (file_exists($file_path))
+            {
+                echo "{$email_template_name}.twig is already exist. You need to create email template manually at resources/views/emails folder." . PHP_EOL;
+                return true;
+            }
+
+            $file = fopen($file_path, "w");
+            fwrite($file, $template);
+            fclose($file);
+
+            return file_exists($file_path);
+        }
+        else
+        {
+            exit("{{$file}} file is not exist.");
+        }
+
+        return false;
+    }
+
+    /**
+     * [Show important note]
+     * @depends handle
+     * @return [void]
+     */
+    private function showImportantNote()
+    {
+        $file = __DIR__ . "/templates/_notification/important-note.txt.dist";
+        if (file_exists($file))
+        {
+            $template = file_get_contents($file);
+
+            echo $template . PHP_EOL;
         }
         else
         {
