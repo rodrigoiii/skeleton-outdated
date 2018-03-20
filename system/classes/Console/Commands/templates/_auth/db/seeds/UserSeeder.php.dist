@@ -19,7 +19,7 @@ class UserSeeder extends AbstractSeed
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $email,
-                'password' => password_hash(sha1($email), PASSWORD_DEFAULT)
+                'password' => password_hash($email, PASSWORD_DEFAULT)
             ];
 
             echo __CLASS__ . " => {$i}/{$limit}\n";

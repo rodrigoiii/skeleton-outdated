@@ -15,6 +15,6 @@ class PasswordVerify extends AbstractRule
 
     public function validate($input)
     {
-        return password_verify(sha1($input), $this->password);
+        return password_verify($input, $this->password);
     }
 }
