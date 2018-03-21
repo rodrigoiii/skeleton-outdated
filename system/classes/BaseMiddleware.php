@@ -17,5 +17,7 @@ class BaseMiddleware
 		{
 			return $this->container->{$property};
 		}
+
+		return null;
 	}
 }

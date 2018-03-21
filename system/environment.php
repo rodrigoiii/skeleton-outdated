@@ -18,5 +18,8 @@ $dotenv->required([
     'DEBUG_ON', 'DEBUG_BAR_ON',
 
     # application mode
-    'WEB_MODE'
+    'WEB_MODE',
+
+    # flag whether use dist or not
+    'USE_DIST'
 ]);
