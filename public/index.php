@@ -3,7 +3,10 @@
 // composer autoload
 require __DIR__ . "/../vendor/autoload.php";
 
-// our application
-$app = include __DIR__ . "/../bootstrap/app.php";
+// application environment
+require system_path("environment.php");
 
-$app->run();
+// // our application
+// $app = include __DIR__ . "/../bootstrap/app.php";
+
+// $app->run();
