@@ -3,17 +3,18 @@
 
 if (PHP_SAPI !== "cli") die; // die if not using cli
 
+# composer autoload
+require __DIR__ . "/vendor/autoload.php";
+
 use App\Console\Commands as AppCommand;
 use Framework\ConsoleSystem;
 use Framework\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
-# composer autoload
-require __DIR__ . "/vendor/autoload.php";
+// our application
+$app = include __DIR__ . "/bootstrap/app.php";
 
-ConsoleSystem::init();
-
-$app = new Application(config('app.name'));
+$console_app = new Application(config('app.name'));
 
 $app_commands = [
     new AppCommand\HelloCommand
@@ -45,7 +46,7 @@ $framework_commands = [
     // new Command\_MakeNotificationCommand
 ];
 
-$app->addCommands(array_merge($app_commands, $framework_commands));
+$console_app->addCommands(array_merge($app_commands, $framework_commands));
 
 # run the application
-$app->run();
+$console_app->run();

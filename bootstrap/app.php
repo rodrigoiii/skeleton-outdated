@@ -21,4 +21,4 @@ $container = $app->getContainer();
 
 Framework\System::process();
 
-$app->run();
+return $app;
