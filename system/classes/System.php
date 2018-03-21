@@ -18,8 +18,6 @@ class System
         foreach (config('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
-
-        require system_path("environment.php");
     }
 
     public static function process()
