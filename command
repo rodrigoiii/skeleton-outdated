@@ -7,12 +7,11 @@ if (PHP_SAPI !== "cli") die; // die if not using cli
 require __DIR__ . "/vendor/autoload.php";
 
 use App\Console\Commands as AppCommand;
-use Framework\ConsoleSystem;
 use Framework\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
-// our application
-$app = include __DIR__ . "/bootstrap/app.php";
+// include application
+include __DIR__ . "/bootstrap/app.php";
 
 $console_app = new Application(config('app.name'));
 
