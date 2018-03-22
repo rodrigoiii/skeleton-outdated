@@ -1,5 +1,15 @@
 Important note: You need to add the configuration inside of slim application settings. See the example below:
 
+file: .env
+# mail settings
+MAIL_DRIVER=smtp
+MAIL_HOST=mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_DEBUG=true
+
+file: bootstrap/app.php
 $app = new \Slim\App([
     'settings' => [
         ...

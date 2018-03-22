@@ -16,7 +16,7 @@ $capsule::connection()->enableQueryLog();
  | Setup for 'respect/validation'
  |-----------------------------
  */
-Respect\Validation\Validator::with("Validation\\Rules\\");
+Respect\Validation\Validator::with("Framework\\Validation\\Rules\\");
 Respect\Validation\Validator::with(config('app.namespace') . "\\Validation\\Rules\\");
 
 /*

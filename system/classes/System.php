@@ -6,8 +6,6 @@ class System
 {
     public static function init()
     {
-        global $app, $container;
-
         # start the session
         session_start();
 
@@ -20,10 +18,8 @@ class System
         }
     }
 
-    public static function process()
+    public static function process($app, $container)
     {
-        global $app, $container;
-
         require system_path("system.php");
 
         require base_path("routes/web.php");

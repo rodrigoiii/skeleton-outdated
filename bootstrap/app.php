@@ -12,13 +12,14 @@ $app = new \Slim\App([
         'determineRouteBeforeAppMiddleware' => config('app.route_on'),
 
         'db' => config('database.database_connection.mysql'),
-        'tracy' => config('debug-bar.settings')
+        'monolog' => config('logger.monolog'),
+        'tracy' => config('debug-bar.tracy.settings')
     ]
 ]);
 
 # Application Container
 $container = $app->getContainer();
 
-Framework\System::process();
+Framework\System::process($app, $container);
 
 return $app;

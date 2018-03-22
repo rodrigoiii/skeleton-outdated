@@ -8,6 +8,9 @@ if (!is_prod())
     $app->add(new \RunTracy\Middlewares\TracyMiddleware($app));
 }
 
+# determine route before app middleware
+$app->add(new M\AppMiddleware($container));
+
 # old input middleware
 $app->add(new M\OldInput($container));
 
