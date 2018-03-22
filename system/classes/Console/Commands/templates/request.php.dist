@@ -2,7 +2,7 @@
 
 namespace {{namespace}}\Http\Requests;
 
-use {{namespace}}\Validation\Validator;
+use Framework\Validation\Validator;
 use Framework\BaseRequest;
 use Respect\Validation\Validator as v;
 

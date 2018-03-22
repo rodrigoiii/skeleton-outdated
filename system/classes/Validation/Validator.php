@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validation;
+namespace Framework\Validation;
 
 use Respect\Validation\Exceptions\NestedValidationException;
 use Framework\Utilities\Session;
