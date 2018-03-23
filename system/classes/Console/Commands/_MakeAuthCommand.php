@@ -80,7 +80,7 @@ class _MakeAuthCommand extends BaseCommand
      */
     private function makeViewTemplate()
     {
-        $authenticated_page = file_get_contents(__DIR__ . "/templates/_auth/views/authenticated-page.twig.dist");
+        $authenticated_page = file_get_contents(__DIR__ . "/templates/_auth/views/authenticated-home-page.twig.dist");
         $login = file_get_contents(__DIR__ . "/templates/_auth/views/login.twig.dist");
         $nav = file_get_contents(__DIR__ . "/templates/_auth/views/partials/nav.twig.dist");
 
@@ -94,7 +94,7 @@ class _MakeAuthCommand extends BaseCommand
             mkdir(resources_path("views/auth/partials"));
         }
 
-        $file = fopen(resources_path("views/auth/authenticated-page.twig"), "w");
+        $file = fopen(resources_path("views/auth/authenticated-home-page.twig"), "w");
         fwrite($file, $authenticated_page);
         fclose($file);
 
