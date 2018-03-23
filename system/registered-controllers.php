@@ -18,3 +18,9 @@ $container['Auth\RegisterController'] = function ($c)
     return new App\Http\Controllers\Auth\RegisterController($c);
 };
 
+# Auth\ChangePasswordController
+$container['Auth\ChangePasswordController'] = function ($c)
+{
+    return new App\Http\Controllers\Auth\ChangePasswordController($c);
+};
+

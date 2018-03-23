@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Validation\Rules;
+namespace AuthSlim\Validation\Rules;
 
 use Respect\Validation\Rules\AbstractRule;
 

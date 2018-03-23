@@ -14,6 +14,17 @@ class User extends Model
         $this->save();
     }
 
+    public function getFullName()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function changePassword($new_password)
+    {
+        $this->password = password_hash($new_password, PASSWORD_DEFAULT);
+        return $this->save();
+    }
+
     public static function getByEmailAndPassword($email, $password)
     {
         $user = static::where('email', $email)->first();

@@ -13,15 +13,16 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if auth_user.check %}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ auth_user.get.getFullName() }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
-                    </ul>
-                </li>
+                    <li {{ server['REQUEST_URI'] == path_for('auth.change-password') ? "class=active" }}><a href="{{ path_for('auth.change-password') }}">Change Password</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ auth_user.get.getFullName() }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">Logout</a></li>
+                        </ul>
+                    </li>
                 {% else %}
-                <li {{ server['REQUEST_URI'] == path_for('auth.login') ? "class=active" }}><a href="{{ path_for('auth.login') }}">Log In</a></li>
-                <li {{ server['REQUEST_URI'] == path_for('auth.register') ? "class=active" }}><a href="{{ path_for('auth.register') }}">Register</a></li>
+                    <li {{ server['REQUEST_URI'] == path_for('auth.login') ? "class=active" }}><a href="{{ path_for('auth.login') }}">Log In</a></li>
+                    <li {{ server['REQUEST_URI'] == path_for('auth.register') ? "class=active" }}><a href="{{ path_for('auth.register') }}">Register</a></li>
                 {% endif %}
             </ul>
         </div>

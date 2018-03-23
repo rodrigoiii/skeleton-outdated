@@ -3,18 +3,10 @@
 namespace AuthSlim\Requests;
 
 use AuthSlim\Validation\Validator;
-use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator as v;
 
-class UserRequest
+class UserRequest extends BaseRequest
 {
-    protected $request;
-
-    public function __construct(ServerRequestInterface $request)
-    {
-        $this->request = $request;
-    }
-
     public function rules()
     {
         switch(strtoupper($this->request->getMethod()))

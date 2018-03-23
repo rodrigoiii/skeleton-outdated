@@ -9,4 +9,4 @@ $app->get('/authenticated-page', function ($request, $response) {
     return $this->view->render($response, "auth/authenticated-page.twig");
 })
 ->add(new App\Http\Middlewares\Auth\UserMiddleware($container))
-->setName('auth.authenticated-page');
+->setName('auth.authenticated-home-page');

@@ -28,6 +28,7 @@ class AuthRoute
 
             'AuthController' => isset($options['AuthController']) ? $options['AuthController'] : "AuthController",
             'RegisterController' => isset($options['RegisterController']) ? $options['RegisterController'] : "RegisterController",
+            'ChangePasswordController' => isset($options['ChangePasswordController']) ? $options['ChangePasswordController'] : "ChangePasswordController",
         ];
 
         Auth::$LOGIN_SESSION_EXPIRATION = $this->options['login_session_expiration'];
@@ -43,6 +44,7 @@ class AuthRoute
 
         $app->group("/" . $options['url_prefix'], function() use ($container, $options)
         {
+            # login
             $this->group("[/" . $options['url_login'] . "]", function () use ($container, $options)
             {
                 # get login
@@ -54,15 +56,24 @@ class AuthRoute
             ->add(new $options['ValidToLoginMiddleware']($container))
             ->add(new $options['GuestMiddleware']($container));
 
+            # registration
             $this->group("/register", function () use ($options) {
                 $this->get('', $options['RegisterController'] . ":getRegister")->setName('auth.register');
                 $this->post('', $options['RegisterController'] . ":postRegister");
             })
             ->add(new $options['GuestMiddleware']($container));
 
-            $this->group('/verify', function () use ($options) {
-                $this->get('/register-user/{token}', $options['RegisterController'] . ":verifyUser")->setName('auth.verify.register-user');
-            });
+            # confirm registration
+            $this->get('/verify/register-user/{token}', $options['RegisterController'] . ":verifyUser")
+            ->add(new $options['GuestMiddleware']($container))
+            ->setName('auth.verify.register-user');
+
+            # change password
+            $this->group("/change-password", function () use ($options) {
+                $this->get('', $options['ChangePasswordController'] . ":getChangePassword")->setName('auth.change-password');
+                $this->post('', $options['ChangePasswordController'] . ":postChangePassword");
+            })
+            ->add(new $options['UserMiddleware']($container));
 
             # logout
             $this->post('/' . $options['url_logout'], $options['AuthController'] . ":logout")

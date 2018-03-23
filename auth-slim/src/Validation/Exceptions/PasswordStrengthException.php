@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Validation\Exceptions;
+namespace AuthSlim\Validation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 

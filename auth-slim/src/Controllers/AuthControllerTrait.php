@@ -20,7 +20,7 @@ trait AuthControllerTrait
     public function successRedirect($response)
     {
         $this->getFlash()->addMessage('alert-message', "Successfully Login.");
-        return $response->withRedirect($this->container->router->pathFor('auth.authenticated-page'));
+        return $response->withRedirect($this->container->router->pathFor('auth.authenticated-home-page'));
     }
 
     public function failRedirect($response)

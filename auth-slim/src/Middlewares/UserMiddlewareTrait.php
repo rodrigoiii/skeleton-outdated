@@ -29,7 +29,8 @@ trait UserMiddlewareTrait
     public function authenticated()
     {
         $this->getTwigView()->getEnvironment()->addGlobal('auth_user', [
-            'check'  => Auth::check()
+            'check'  => Auth::check(),
+            'get' => Auth::user()
         ]);
     }
 

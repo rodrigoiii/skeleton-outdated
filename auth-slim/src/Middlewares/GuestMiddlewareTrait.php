@@ -14,7 +14,7 @@ trait GuestMiddlewareTrait
     public function alreadLoggedInRedirect($response)
     {
         $this->getFlash()->addMessage('alert-message', "You are already logged in.");
-        return $response->withRedirect($this->container->router->pathFor('auth.authenticated-page'));
+        return $response->withRedirect($this->container->router->pathFor('auth.authenticated-home-page'));
     }
 
     public function __invoke($request, $response, $next)

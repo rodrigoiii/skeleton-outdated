@@ -22,6 +22,7 @@ class RegisterController extends BaseController
 
     public function failRedirect($response)
     {
+        $this->flash->addMessage('danger', "Registration is not working this time. Please try again later.");
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
