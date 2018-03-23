@@ -23,6 +23,7 @@
                 {% else %}
                     <li {{ server['REQUEST_URI'] == path_for('auth.login') ? "class=active" }}><a href="{{ path_for('auth.login') }}">Log In</a></li>
                     <li {{ server['REQUEST_URI'] == path_for('auth.register') ? "class=active" }}><a href="{{ path_for('auth.register') }}">Register</a></li>
+                    <li {{ server['REQUEST_URI'] == path_for('auth.forgot-password') ? "class=active" }}><a href="{{ path_for('auth.forgot-password') }}">Forgot Password</a></li>
                 {% endif %}
             </ul>
         </div>

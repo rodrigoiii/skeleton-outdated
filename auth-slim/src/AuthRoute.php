@@ -29,6 +29,8 @@ class AuthRoute
             'AuthController' => isset($options['AuthController']) ? $options['AuthController'] : "AuthController",
             'RegisterController' => isset($options['RegisterController']) ? $options['RegisterController'] : "RegisterController",
             'ChangePasswordController' => isset($options['ChangePasswordController']) ? $options['ChangePasswordController'] : "ChangePasswordController",
+            'ForgotPasswordController' => isset($options['ForgotPasswordController']) ? $options['ForgotPasswordController'] : "ForgotPasswordController",
+            'ResetPasswordController' => isset($options['ResetPasswordController']) ? $options['ResetPasswordController'] : "ResetPasswordController",
         ];
 
         Auth::$LOGIN_SESSION_EXPIRATION = $this->options['login_session_expiration'];
@@ -74,6 +76,20 @@ class AuthRoute
                 $this->post('', $options['ChangePasswordController'] . ":postChangePassword");
             })
             ->add(new $options['UserMiddleware']($container));
+
+            # forgot password
+            $this->group("/forgot-password", function () use ($options) {
+                $this->get('', $options['ForgotPasswordController'] . ":getForgotPassword")->setName('auth.forgot-password');
+                $this->post('', $options['ForgotPasswordController'] . ":postForgotPassword");
+            })
+            ->add(new $options['GuestMiddleware']($container));
+
+            # reset password
+            $this->group("/reset-password", function () use ($options) {
+                $this->get('/{token}', $options['ResetPasswordController'] . ":getResetPassword")->setName('auth.reset-password');
+                $this->post('/{token}', $options['ResetPasswordController'] . ":postResetPassword");
+            })
+            ->add(new $options['GuestMiddleware']($container));
 
             # logout
             $this->post('/' . $options['url_logout'], $options['AuthController'] . ":logout")

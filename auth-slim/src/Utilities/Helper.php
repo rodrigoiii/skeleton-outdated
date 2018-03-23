@@ -32,7 +32,7 @@ class Helper
         return implode(" ", $title_array);
     }
 
-    public function baseUrl($str_added = "")
+    public static function baseUrl($str_added = "")
     {
         $str_added = !empty($str_added) ? "/{$str_added}" : "";
         return $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['SERVER_NAME'] . $str_added;

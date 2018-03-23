@@ -49,7 +49,19 @@ trait RegisterControllerTrait
         return $response->withRedirect($this->container->router->pathFor('auth.register'));
     }
 
-    public function verifyUserSuccessRedirect($verification_token, $response)
+    public function successSendEmailConfirmation($response)
+    {
+        $this->getFlash()->addMessage('alert-message', "Email confirmation was sent! Please check your email.");
+        return $response->withRedirect($this->container->router->pathFor('auth.login'));
+    }
+
+    public function failSendEmailConfirmation($response)
+    {
+        $this->getFlash()->addMessage('alert-message', "Unable to send email to verify your account this time. Please try again later.");
+        return $response->withRedirect($this->container->router->pathFor('auth.login'));
+    }
+
+    public function successConfirmUserRedirect($verification_token, $response)
     {
         $data = $verification_token->getDecryptData();
 
@@ -67,13 +79,13 @@ trait RegisterControllerTrait
         }
         else
         {
-            return $this->verifyUserFailRedirect($response);
+            return $this->failConfirmUserRedirect($response);
         }
 
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
-    public function verifyUserFailRedirect($response)
+    public function failConfirmUserRedirect($response)
     {
         $this->getFlash()->addMessage('danger', "Sorry! You cannot verify you account this time. Please try again later.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
@@ -112,7 +124,8 @@ trait RegisterControllerTrait
             $this->getLogger()->info("Token for register: Verification link: {$link}");
 
             // send confirmation email
-            $this->sendConfirmationEmail($input, $link);
+            $is_sent = $this->sendConfirmationEmail($input, $link);
+            return $is_sent ? $this->successSendEmailConfirmation($response) : $this->failSendEmailConfirmation($response);
         }
         else
         {
@@ -166,12 +179,14 @@ trait RegisterControllerTrait
             throw new NotFoundException($request, $response);
         }
 
-        return $verification_token->verify() ? $this->verifyUserSuccessRedirect($verification_token, $response) : $this->verifyUserFailRedirect($response);
+        return $verification_token->verify() ? $this->successConfirmUserRedirect($verification_token, $response) : $this->failConfirmUserRedirect($response);
     }
 
     public function sendConfirmationEmail($input, $link)
     {
         $fullname = $input['first_name'] . " " . $input['last_name'];
-        (new ConfirmRegistration(['from@gmail.com' => "Foo Bar"], [$input['email'] => $fullname], $link))->sendMail();
+        $is_sent = (new ConfirmRegistration(['from@gmail.com' => "Foo Bar"], [$input['email'] => $fullname], $link))->sendMail();
+
+        return $is_sent;
     }
 }

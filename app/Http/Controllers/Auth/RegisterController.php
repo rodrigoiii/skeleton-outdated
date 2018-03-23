@@ -26,6 +26,18 @@ class RegisterController extends BaseController
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
+    public function successSendEmailConfirmation($response)
+    {
+        $this->getFlash()->addMessage('success', "Email confirmation was sent! Please check your email.");
+        return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
+    public function failSendEmailConfirmation($response)
+    {
+        $this->getFlash()->addMessage('danger', "Unable to send email to verify your account this time. Please try again later.");
+        return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
     public function getRegister($request, $response)
     {
         return $this->view->render($response, "auth/register.twig");

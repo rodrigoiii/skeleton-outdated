@@ -24,3 +24,15 @@ $container['Auth\ChangePasswordController'] = function ($c)
     return new App\Http\Controllers\Auth\ChangePasswordController($c);
 };
 
+# Auth\ForgotPasswordController
+$container['Auth\ForgotPasswordController'] = function ($c)
+{
+    return new App\Http\Controllers\Auth\ForgotPasswordController($c);
+};
+
+# Auth\ResetPasswordController
+$container['Auth\ResetPasswordController'] = function ($c)
+{
+    return new App\Http\Controllers\Auth\ResetPasswordController($c);
+};
+

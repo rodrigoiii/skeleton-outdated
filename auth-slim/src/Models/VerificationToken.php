@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationToken extends Model
 {
     const TYPE_REGISTER = "register";
+    const TYPE_FORGOT_PASSWORD = "forgot-password";
 
     protected $fillable = ['type', 'token', 'data', 'is_verified'];
 
@@ -43,7 +44,9 @@ class VerificationToken extends Model
 
     public static function findByToken($token)
     {
-        return static::where('token', $token)->first();
+        return static::where('token', $token)
+                ->orderBy('created_at', "DESC")
+                ->first();
     }
 
     public static function encryptData(array $data)
