@@ -3,5 +3,8 @@
         <testsuite name="Framework Commands Test Suites">
             <directory suffix="Test.php">./tests/Framework/Commands</directory>
         </testsuite>
+        <testsuite name="Auth Slim">
+            <directory suffix="Test.php">./auth-slim/tests</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

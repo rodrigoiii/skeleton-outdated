@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authenticated Page</title>
+
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap3/dist/css/bootstrap.css">
+</head>
+<body>
+    {% include "auth/partials/nav.twig" %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">Home Page</h1>
+
+                {% include "templates/flash-messages/bootstrap.twig" %}
+
+                <p>Welcome</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+</body>
+</html>
