@@ -24,13 +24,13 @@ trait ChangePasswordControllerTrait
 
     public function successRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Successfully changing password.");
+        $this->getFlash()->addMessage('success', "Successfully changing password.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
     public function failRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Changing password is not working this time. Please try again later.");
+        $this->getFlash()->addMessage('danger', "Changing password is not working this time. Please try again later.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 

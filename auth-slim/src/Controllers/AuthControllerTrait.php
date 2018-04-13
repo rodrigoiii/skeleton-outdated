@@ -19,13 +19,13 @@ trait AuthControllerTrait
 
     public function successRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Successfully Login.");
+        $this->getFlash()->addMessage('success', "Successfully Login.");
         return $response->withRedirect($this->container->router->pathFor('auth.authenticated-home-page'));
     }
 
     public function failRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Invalid email and password.");
+        $this->getFlash()->addMessage('danger', "Invalid email and password.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
@@ -36,7 +36,7 @@ trait AuthControllerTrait
 
     public function getLogin($request, $response)
     {
-        return $this->getTwigView()->render($response, "login.twig");
+        return $this->getTwigView()->render($response, "auth/login.twig");
     }
 
     public function postLogin($request, $response)

@@ -33,13 +33,13 @@ trait RegisterControllerTrait
 
     public function successRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Successfully Registered.");
+        $this->getFlash()->addMessage('success', "Successfully Registered.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
     public function failRedirect($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Registration is not working this time. Please try again later.");
+        $this->getFlash()->addMessage('danger', "Registration is not working this time. Please try again later.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
@@ -51,13 +51,13 @@ trait RegisterControllerTrait
 
     public function successSendEmailConfirmation($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Email confirmation was sent! Please check your email.");
+        $this->getFlash()->addMessage('success', "Email confirmation was sent! Please check your email.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
     public function failSendEmailConfirmation($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Unable to send email to verify your account this time. Please try again later.");
+        $this->getFlash()->addMessage('danger', "Unable to send email to verify your account this time. Please try again later.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
@@ -93,7 +93,7 @@ trait RegisterControllerTrait
 
     public function getRegister($request, $response)
     {
-        return $this->view->render($response, "register.twig");
+        return $this->view->render($response, "auth/register.twig");
     }
 
     public function postRegister($request, $response)

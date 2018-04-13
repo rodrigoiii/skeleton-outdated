@@ -40,13 +40,13 @@ trait ForgotPasswordControllerTrait
 
     public function successSendEmailResetPassword($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Reset password email was sent! Please check your email.");
+        $this->getFlash()->addMessage('success', "Reset password email was sent! Please check your email.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
     public function failSendEmailResetPassword($response)
     {
-        $this->getFlash()->addMessage('alert-message', "Unable to send email to reset your password this time. Please try again later.");
+        $this->getFlash()->addMessage('danger', "Unable to send email to reset your password this time. Please try again later.");
         return $response->withRedirect($this->container->router->pathFor('auth.login'));
     }
 
