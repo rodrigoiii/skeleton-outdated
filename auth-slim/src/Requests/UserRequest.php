@@ -16,7 +16,7 @@ class UserRequest extends BaseRequest
                     'first_name' => v::notEmpty(),
                     'last_name' => v::notEmpty(),
                     'email' => v::notEmpty()->email()->not(v::emailExist()),
-                    'password' => v::notEmpty()->passwordStrength()
+                    'password' => v::notEmpty()->passwordStrength()->confirmPassword($this->request->getParam('confirm_password')),
                 ];
                 break;
 
