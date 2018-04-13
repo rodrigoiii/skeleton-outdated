@@ -3,6 +3,7 @@
 namespace AuthSlim;
 
 use AuthSlim\Auth\Auth;
+use AuthSlim\Models\VerificationToken;
 use Respect\Validation\Validator as v;
 
 class AuthRoute
@@ -20,7 +21,7 @@ class AuthRoute
             'login_attempt_length' => isset($options['login_attempt_length']) ? $options['login_attempt_length'] : Auth::$LOGIN_ATTEMPT_LENGTH, // 5 attempts
             'login_lock_time' => isset($options['login_lock_time']) ? $options['login_lock_time'] : Auth::$LOGIN_LOCK_TIME, // 30 minutes
 
-            'register_request_expiration' => isset($options['register_request_expiration']) ? $options['register_request_expiration'] : 60 * 60 * 5, // 5 hours
+            'register_request_expiration' => isset($options['register_request_expiration']) ? $options['register_request_expiration'] : VerificationToken::$REGISTER_REQUEST_EXPIRATION, // 5 hours
 
             'ValidToLoginMiddleware' => isset($options['ValidToLoginMiddleware']) ? $options['ValidToLoginMiddleware'] : "ValidToLogin",
             'UserMiddleware' => isset($options['UserMiddleware']) ? $options['UserMiddleware'] : "User",
@@ -36,6 +37,8 @@ class AuthRoute
         Auth::$LOGIN_SESSION_EXPIRATION = $this->options['login_session_expiration'];
         Auth::$LOGIN_ATTEMPT_LENGTH = $this->options['login_attempt_length'];
         Auth::$LOGIN_LOCK_TIME = $this->options['login_lock_time'];
+
+        VerificationToken::$REGISTER_REQUEST_EXPIRATION = $this->options['register_request_expiration'];
 
         v::with("AuthSlim\\Validation\\Rules\\");
     }
