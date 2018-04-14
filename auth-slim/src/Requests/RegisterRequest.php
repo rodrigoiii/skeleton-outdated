@@ -5,13 +5,15 @@ namespace AuthSlim\Requests;
 use AuthSlim\Validation\Validator;
 use Respect\Validation\Validator as v;
 
-class ChangePasswordRequest extends BaseRequest
+class RegisterRequest extends BaseRequest
 {
     public function rules()
     {
         return [
-            'current_password' => v::notEmpty()->currentPassword(),
-            'new_password' => v::notEmpty()->passwordStrength()->confirmPassword($this->request->getParam('confirm_new_password'))
+            'first_name' => v::notEmpty(),
+            'last_name' => v::notEmpty(),
+            'email' => v::notEmpty()->email()->not(v::emailExist()),
+            'password' => v::notEmpty()->passwordStrength()->confirmPassword($this->request->getParam('confirm_password')),
         ];
     }
 

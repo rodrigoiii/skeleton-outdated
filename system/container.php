@@ -67,6 +67,7 @@ $container['view'] = function($c)
     }
 
     $view->getEnvironment()->addFunction(new Twig_Function('config', 'config'));
+    $view->getEnvironment()->addFunction(new Twig_Function('in_array', 'in_array'));
 
     # Make 'flash' global
     $view->getEnvironment()->addGlobal('flash', $c->flash);

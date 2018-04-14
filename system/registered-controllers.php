@@ -18,12 +18,6 @@ $container['Auth\RegisterController'] = function ($c)
     return new App\Http\Controllers\Auth\RegisterController($c);
 };
 
-# Auth\ChangePasswordController
-$container['Auth\ChangePasswordController'] = function ($c)
-{
-    return new App\Http\Controllers\Auth\ChangePasswordController($c);
-};
-
 # Auth\ForgotPasswordController
 $container['Auth\ForgotPasswordController'] = function ($c)
 {
@@ -34,5 +28,11 @@ $container['Auth\ForgotPasswordController'] = function ($c)
 $container['Auth\ResetPasswordController'] = function ($c)
 {
     return new App\Http\Controllers\Auth\ResetPasswordController($c);
+};
+
+# Auth\AccountDetailController
+$container['Auth\AccountDetailController'] = function ($c)
+{
+    return new App\Http\Controllers\Auth\AccountDetailController($c);
 };
 

@@ -25,6 +25,22 @@ class User extends Model
         return $this->save();
     }
 
+    public function changeAccountDetail($new_fname, $new_lname, $new_email, $new_password)
+    {
+        $this->first_name = $new_fname;
+        $this->last_name = $new_lname;
+        $this->email = $new_email;
+        if (!empty($new_password))
+        {
+            $this->password = password_hash($new_password, PASSWORD_DEFAULT);
+        }
+        $is_dirty = $this->isDirty();
+
+        $this->save();
+
+        return $is_dirty;
+    }
+
     public static function getByEmailAndPassword($email, $password)
     {
         $user = static::where('email', $email)->first();

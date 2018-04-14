@@ -14,6 +14,11 @@ trait ResetPasswordControllerTrait
         return $this->container->view;
     }
 
+    public function getFlash()
+    {
+        return $this->container->flash;
+    }
+
     public function getLogger()
     {
         return $this->container->logger;

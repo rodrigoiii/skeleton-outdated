@@ -5,7 +5,7 @@ namespace AuthSlim\Controllers;
 use AuthSlim\Models\User;
 use AuthSlim\Models\VerificationToken;
 use AuthSlim\Notifications\ConfirmRegistration;
-use AuthSlim\Requests\UserRequest;
+use AuthSlim\Requests\RegisterRequest;
 use AuthSlim\Utilities\Helper;
 use Slim\Exception\NotFoundException;
 
@@ -98,7 +98,7 @@ trait RegisterControllerTrait
 
     public function postRegister($request, $response)
     {
-        if (!(new UserRequest($request))->isValid())
+        if (!(new RegisterRequest($request))->isValid())
         {
             return $response->withRedirect($this->container->router->pathFor('auth.register'));
         }

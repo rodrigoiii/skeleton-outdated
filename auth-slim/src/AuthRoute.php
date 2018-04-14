@@ -29,9 +29,9 @@ class AuthRoute
 
             'AuthController' => isset($options['AuthController']) ? $options['AuthController'] : "AuthController",
             'RegisterController' => isset($options['RegisterController']) ? $options['RegisterController'] : "RegisterController",
-            'ChangePasswordController' => isset($options['ChangePasswordController']) ? $options['ChangePasswordController'] : "ChangePasswordController",
             'ForgotPasswordController' => isset($options['ForgotPasswordController']) ? $options['ForgotPasswordController'] : "ForgotPasswordController",
             'ResetPasswordController' => isset($options['ResetPasswordController']) ? $options['ResetPasswordController'] : "ResetPasswordController",
+            'AccountDetailController' => isset($options['AccountDetailController']) ? $options['AccountDetailController'] : "AccountDetailController"
         ];
 
         Auth::$LOGIN_SESSION_EXPIRATION = $this->options['login_session_expiration'];
@@ -73,10 +73,12 @@ class AuthRoute
             ->add(new $options['GuestMiddleware']($container))
             ->setName('auth.verify.register-user');
 
-            # change password
-            $this->group("/change-password", function () use ($options) {
-                $this->get('', $options['ChangePasswordController'] . ":getChangePassword")->setName('auth.change-password');
-                $this->post('', $options['ChangePasswordController'] . ":postChangePassword");
+            # update account detail
+            $this->group("/account-detail", function () use ($options) {
+                $this->get('', $options['AccountDetailController'] . ":index")->setName('auth.account-detail');
+
+                $this->get('/edit', $options['AccountDetailController'] . ":edit")->setName('auth.account-detail.update');
+                $this->post('/edit', $options['AccountDetailController'] . ":update");
             })
             ->add(new $options['UserMiddleware']($container));
 
