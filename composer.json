@@ -16,7 +16,6 @@
         "illuminate/database": "^5.4",
         "monolog/monolog": "^1.23",
         "respect/validation": "^1.1",
-        "rodrigoiii/notification-slim": "^0.1.1",
         "slim/csrf": "^0.8.2",
         "slim/flash": "^0.4.0",
         "slim/slim": "^3.9",
@@ -35,9 +34,6 @@
         "psr-4": {
             "App\\": "app/",
             "Framework\\": "system/classes/"
-
-            ,"AuthSlim\\": "auth-slim/src"
-            ,"NotificationSlim\\": "notification-slim/src"
         },
         "files": [
             "system/functions/function.php",
@@ -46,7 +42,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "AuthSlim\\Tests\\": "auth-slim/tests"
+            "Framework\\Tests\\": "tests"
         }
     },
     "scripts": {
