@@ -3,6 +3,7 @@
 namespace AuthSlim;
 
 use AuthSlim\Auth\Auth;
+use AuthSlim\Models\AuthAttempt;
 use AuthSlim\Models\VerificationToken;
 use Respect\Validation\Validator as v;
 
@@ -17,11 +18,14 @@ class AuthRoute
             'url_login' => isset($options['url_login']) ? $options['url_login'] : "login",
             'url_logout' => isset($options['url_logout']) ? $options['url_logout'] : "logout",
 
-            'login_session_expiration' => isset($options['login_session_expiration']) ? $options['login_session_expiration'] : Auth::$LOGIN_SESSION_EXPIRATION, // 30 minutes,
-            'login_attempt_length' => isset($options['login_attempt_length']) ? $options['login_attempt_length'] : Auth::$LOGIN_ATTEMPT_LENGTH, // 5 attempts
-            'login_lock_time' => isset($options['login_lock_time']) ? $options['login_lock_time'] : Auth::$LOGIN_LOCK_TIME, // 30 minutes
+            'authenticated_session_expiration' => isset($options['authenticated_session_expiration']) ? $options['authenticated_session_expiration'] : Auth::$AUTHENTICATED_SESSION_EXPIRATION,
 
-            'register_request_expiration' => isset($options['register_request_expiration']) ? $options['register_request_expiration'] : VerificationToken::$REGISTER_REQUEST_EXPIRATION, // 5 hours
+            'enable_login_lock' => isset($options['enable_login_lock']) ? $options['enable_login_lock'] : AuthAttempt::$ENABLE_LOGIN_LOCK,
+            'login_attempt_length' => isset($options['login_attempt_length']) ? $options['login_attempt_length'] : AuthAttempt::$LOGIN_ATTEMPT_LENGTH,
+            'login_lock_time' => isset($options['login_lock_time']) ? $options['login_lock_time'] : AuthAttempt::$LOGIN_LOCK_TIME,
+
+            'register_request_expiration' => isset($options['register_request_expiration']) ? $options['register_request_expiration'] : VerificationToken::$REGISTER_REQUEST_EXPIRATION,
+            'reset_password_request_expiration' => isset($options['reset_password_request_expiration']) ? $options['reset_password_request_expiration'] : VerificationToken::$RESET_PASSWORD_REQUEST_EXPIRATION,
 
             'ValidToLoginMiddleware' => isset($options['ValidToLoginMiddleware']) ? $options['ValidToLoginMiddleware'] : "ValidToLogin",
             'UserMiddleware' => isset($options['UserMiddleware']) ? $options['UserMiddleware'] : "User",
@@ -34,11 +38,14 @@ class AuthRoute
             'AccountDetailController' => isset($options['AccountDetailController']) ? $options['AccountDetailController'] : "AccountDetailController"
         ];
 
-        Auth::$LOGIN_SESSION_EXPIRATION = $this->options['login_session_expiration'];
-        Auth::$LOGIN_ATTEMPT_LENGTH = $this->options['login_attempt_length'];
-        Auth::$LOGIN_LOCK_TIME = $this->options['login_lock_time'];
+        Auth::$AUTHENTICATED_SESSION_EXPIRATION = $this->options['authenticated_session_expiration'];
+
+        AuthAttempt::$ENABLE_LOGIN_LOCK = $this->options['enable_login_lock'];
+        AuthAttempt::$LOGIN_ATTEMPT_LENGTH = $this->options['login_attempt_length'];
+        AuthAttempt::$LOGIN_LOCK_TIME = $this->options['login_lock_time'];
 
         VerificationToken::$REGISTER_REQUEST_EXPIRATION = $this->options['register_request_expiration'];
+        VerificationToken::$RESET_PASSWORD_REQUEST_EXPIRATION = $this->options['reset_password_request_expiration'];
 
         v::with("AuthSlim\\Validation\\Rules\\");
     }

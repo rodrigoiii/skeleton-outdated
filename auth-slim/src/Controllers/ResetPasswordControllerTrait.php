@@ -53,7 +53,7 @@ trait ResetPasswordControllerTrait
         }
 
         $verification_token = VerificationToken::findByToken($token);
-        if ($verification_token->isExpired())
+        if ($verification_token->isTokenForResetPasswordExpired())
         {
             $this->getLogger()->warning("Token for resetting password: Token is already expired.");
             $verification_token->delete();

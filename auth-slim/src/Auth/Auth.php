@@ -8,9 +8,7 @@ use Carbon\Carbon;
 
 class Auth
 {
-    public static $LOGIN_SESSION_EXPIRATION = 60 * 30;
-    public static $LOGIN_ATTEMPT_LENGTH = 5;
-    public static $LOGIN_LOCK_TIME = 60 * 30;
+    public static $AUTHENTICATED_SESSION_EXPIRATION = 60 * 30;
 
     /**
      * Attempt to log in via email and password
@@ -80,7 +78,7 @@ class Auth
         if (static::check())
         {
             return Carbon::parse(Session::get('auth_session_start'))
-                    ->addSeconds(static::$LOGIN_SESSION_EXPIRATION) <= Carbon::now();
+                    ->addSeconds(static::$AUTHENTICATED_SESSION_EXPIRATION) <= Carbon::now();
         }
 
         return true;

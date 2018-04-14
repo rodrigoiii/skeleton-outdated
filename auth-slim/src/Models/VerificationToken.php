@@ -9,16 +9,23 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationToken extends Model
 {
     const TYPE_REGISTER = "register";
-    const TYPE_FORGOT_PASSWORD = "forgot-password";
+    const TYPE_RESET_PASSWORD = "reset-password";
 
     protected $fillable = ['type', 'token', 'data', 'is_verified'];
 
     public static $REGISTER_REQUEST_EXPIRATION = 60 * 60 * 5; // 5 hours
+    public static $RESET_PASSWORD_REQUEST_EXPIRATION = 60 * 60 * 5; // 5 hours
 
-    public function isExpired()
+    public function isTokenForRegisterExpired()
     {
         return Carbon::parse($this->created_at)
                 ->addSeconds(static::$REGISTER_REQUEST_EXPIRATION) <= Carbon::now();
+    }
+
+    public function isTokenForResetPasswordExpired()
+    {
+        return Carbon::parse($this->created_at)
+                ->addSeconds(static::$RESET_PASSWORD_REQUEST_EXPIRATION) <= Carbon::now();
     }
 
     public function isVerified()

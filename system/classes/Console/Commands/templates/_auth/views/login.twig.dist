@@ -1,41 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+{% extends "auth/layouts/app.twig" %}
 
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-</head>
-<body>
-    {% include "auth/partials/nav.twig" %}
+{% block title %}Login Page |{% endblock %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="page-header">Login Page</h1>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Login Page</h1>
 
-                {% include "templates/flash-messages/bootstrap.twig" %}
+            {% include "auth/templates/flash-messages/bootstrap.twig" %}
 
-                <form action="{{ path_for('auth.login') }}" method="POST" role="form">
-                    {{ csrf.field | raw }}
+            <form action="{{ path_for('auth.login') }}" method="POST" role="form">
+                {{ csrf.field | raw }}
 
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" autofocus>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" name="email" autofocus />
+                </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password">
-                    </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" />
+                </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
         </div>
     </div>
-
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

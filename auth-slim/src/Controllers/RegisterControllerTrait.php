@@ -165,7 +165,7 @@ trait RegisterControllerTrait
         }
 
         $verification_token = VerificationToken::findByToken($token);
-        if ($verification_token->isExpired())
+        if ($verification_token->isTokenForRegisterExpired())
         {
             $this->getLogger()->warning("Token for register: Token is already expired.");
             $verification_token->delete();

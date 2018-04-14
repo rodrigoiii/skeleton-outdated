@@ -62,7 +62,7 @@ trait ForgotPasswordControllerTrait
         $token = uniqid();
 
         VerificationToken::create([
-            'type' => VerificationToken::TYPE_FORGOT_PASSWORD,
+            'type' => VerificationToken::TYPE_RESET_PASSWORD,
             'token' => $token,
             'data' => VerificationToken::encryptData([
                 'email' => $email

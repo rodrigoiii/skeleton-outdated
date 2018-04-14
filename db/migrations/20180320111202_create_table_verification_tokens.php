@@ -8,7 +8,7 @@ class CreateTableVerificationTokens extends AbstractMigration
     public function up()
     {
         $table = $this->table('verification_tokens')
-            ->addColumn('type', 'enum', ['values' => ["register", "forgot-password"]])
+            ->addColumn('type', 'enum', ['values' => ["register", "reset-password"]])
             ->addColumn('token', 'string', ['limit' => 25])
             ->addColumn('data', 'text', ['limit' => MysqlAdapter::TEXT_TINY])
             ->addColumn('is_verified', 'boolean', ['default' => 0])

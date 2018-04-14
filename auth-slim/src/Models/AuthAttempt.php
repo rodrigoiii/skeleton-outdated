@@ -11,8 +11,14 @@ class AuthAttempt extends Model
 {
     protected $fillable = ['email', 'request_uri', 'ip_address'];
 
+    public static $ENABLE_LOGIN_LOCK = true;
+    public static $LOGIN_ATTEMPT_LENGTH = 5;
+    public static $LOGIN_LOCK_TIME = 60 * 30;
+
     public static function add($email)
     {
+        if (!static::$ENABLE_LOGIN_LOCK) return;
+
         $parse_url = parse_url($_SERVER['REQUEST_URI']);
         $request_uri = $parse_url['path'];
 
@@ -35,6 +41,8 @@ class AuthAttempt extends Model
 
     public static function reset()
     {
+        if (!static::$ENABLE_LOGIN_LOCK) return;
+
         $ids = static::getByIpAndUri()
                 ->get()
                 ->pluck('id')
@@ -45,7 +53,9 @@ class AuthAttempt extends Model
 
     public static function isValidToLogin()
     {
-        $default_login_lock = Auth::$LOGIN_LOCK_TIME;
+        if (!static::$ENABLE_LOGIN_LOCK) return true;
+
+        $default_login_lock = static::$LOGIN_LOCK_TIME;
 
         $last_attempt = static::getByIpAndUri()
                         ->whereRaw("created_at <= DATE_SUB(NOW(), INTERVAL {$default_login_lock} SECOND)")
@@ -58,6 +68,6 @@ class AuthAttempt extends Model
     {
         return static::getByIpAndUri()
                 ->get()
-                ->count() >= Auth::$LOGIN_ATTEMPT_LENGTH;
+                ->count() >= static::$LOGIN_ATTEMPT_LENGTH;
     }
 }
