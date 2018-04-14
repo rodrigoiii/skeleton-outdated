@@ -373,7 +373,7 @@ class _MakeAuthCommand extends BaseCommand
     {
         $migration_users = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180306091257_create_table_user.php.dist");
         $migration_auth_attempts = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180306091308_create_table_auth_attempts.php.dist");
-        $migration_verification_tokens = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180306091308_create_table_auth_attempts.php.dist");
+        $migration_verification_tokens = file_get_contents(__DIR__ . "/templates/_auth/db/migrations/20180320111202_create_table_verification_tokens.php.dist");
         $seed_users = file_get_contents(__DIR__ . "/templates/_auth/db/seeds/UserSeeder.php.dist");
 
         $file = fopen(base_path("db/migrations/20180306091257_create_table_user.php"), "w");
@@ -382,6 +382,10 @@ class _MakeAuthCommand extends BaseCommand
 
         $file = fopen(base_path("db/migrations/20180306091309_create_table_auth_attempts.php"), "w");
         fwrite($file, $migration_auth_attempts);
+        fclose($file);
+
+        $file = fopen(base_path("db/migrations/20180320111202_create_table_verification_tokens.php"), "w");
+        fwrite($file, $migration_verification_tokens);
         fclose($file);
 
         $file = fopen(base_path("db/seeds/UserSeeder.php"), "w");
