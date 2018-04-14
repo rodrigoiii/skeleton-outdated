@@ -13,9 +13,7 @@ $app = new \Slim\App([
 
         'db' => config('database.database_connection.mysql'),
         'monolog' => config('logger.monolog'),
-        'tracy' => config('debug-bar.tracy.settings'),
-
-        'mail' => config('notification-slim')
+        'tracy' => config('debug-bar.tracy.settings')
     ]
 ]);
 

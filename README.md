@@ -1,8 +1,8 @@
-# Framework v1.1.1
+# Framework v1.3
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
-* Create project via composer. Use command `composer require rodrigoiii/framework-core`.
+* Create project via composer. Use command `composer require rodrigoiii/framework`.
 * Create virtual host then make the folder public as root of your project.
 * Then test it in any browser you have available to see if it is working.
 
@@ -10,6 +10,9 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.3
+* Snippet for Auth Slim Library v1.2.0
+
 Framework v1.2
 * Implement web mode.
 * Fix config/twig-view, cache must be either false or absolute path for to save cache.

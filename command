@@ -38,7 +38,7 @@ $framework_commands = [
     new Command\DeleteDistCommand,
 
     # auth command
-    new Command\_MakeAuthCommand,
+    // new Command\_MakeAuthCommand,
 
     # quick crud
     // new Command\_MakeQuickCrudCommand,
