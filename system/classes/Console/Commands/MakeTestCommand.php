@@ -10,7 +10,7 @@ class MakeTestCommand extends BaseCommand
      * Console command signature
      * @var string
      */
-    private $signature = "make:test {test} {--t|type= : [command]}";
+    private $signature = "make:test {test}";
 
     /**
      * Console command description
@@ -32,7 +32,6 @@ class MakeTestCommand extends BaseCommand
     public function handle($input, $output)
     {
         $test = $input->getArgument('test');
-        $type = $input->getOption('type');
 
         $pre_test_path = base_path("tests");
 
@@ -56,7 +55,7 @@ class MakeTestCommand extends BaseCommand
             if (file_exists("{$pre_test_path}/{$test}.php"))
                 throw new \Exception("Error: The Test is already created.", 1);
 
-            $output->writeln($this->makeTemplate($pre_test_path, $test, $type) ? "Successfully created." : "File not created. Check the file path.");
+            $output->writeln($this->makeTemplate($pre_test_path, $test) ? "Successfully created." : "File not created. Check the file path.");
         } catch (Exception $e) {
             $output->writeln($e->getMessage());
         }
@@ -67,22 +66,11 @@ class MakeTestCommand extends BaseCommand
      * @depends handle
      * @param  [string] $pre_test_path [the pre string represent as folder before the file]
      * @param  [string] $test [test class name]
-     * @param  [string] $type [test type]
      * @return [boolean]    [Return true if successfully creating file otherwise false]
      */
-    private function makeTemplate($pre_test_path, $test, $type)
+    private function makeTemplate($pre_test_path, $test)
     {
-        switch ($type) {
-            case 'command':
-                $filename = "test-command.php.dist";
-                break;
-
-            default:
-                $filename = "test.php.dist";
-                break;
-        }
-
-        $file = __DIR__ . "/templates/test/{$filename}";
+        $file = __DIR__ . "/templates/test/test.php.dist";
 
         if (file_exists($file))
         {
