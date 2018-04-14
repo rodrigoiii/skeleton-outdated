@@ -2,10 +2,10 @@
 
 namespace {{namespace}}\Http\Controllers\Auth;
 
-use AuthSlim\Controllers\AccountDetailControllerTrait;
+use AuthSlim\Controllers\AuthControllerTrait;
 use Framework\BaseController;
 
-class AccountDetailController extends BaseController
+class AuthController extends BaseController
 {
-    use AccountDetailControllerTrait;
+    use AuthControllerTrait;
 }

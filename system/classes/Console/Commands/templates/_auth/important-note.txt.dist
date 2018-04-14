@@ -2,7 +2,7 @@ Important Note: You need to setup manually the following:
 
 * Register your route with this snippet code beneath:
 
-(new \AuthSlim\AuthRoute(config('auth')))->routes();
+(new \AuthSlim\AuthRoute(config('auth')))->routes($app, $container);
 
 // Use middleware {{namespace}}\Http\Middlewares\Auth\UserMiddleware for authenticated routes
 $app->get('/authenticated-page', function ($request, $response) {
