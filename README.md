@@ -10,6 +10,10 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.3.2
+* Add files db/migration/.gitkeep db/seeds/.gitkeep
+* Add loading button when submitting form
+
 Framework v1.3
 * Snippet for Auth Slim Library v1.2.0
 
