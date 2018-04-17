@@ -1,4 +1,0 @@
-{
-    "valid": ["Command_", "CommandName", "Abcde"],
-    "invalid": ["_Command", "command", "aBCDE"]
-}
