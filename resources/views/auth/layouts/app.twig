@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} Auth Slim</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap3/dist/css/bootstrap.css">
+    {% block styles %}{% endblock %}
+
+    <link rel="icon" href="/favicon.png">
+</head>
+<body>
+    {% include "auth/layouts/partials/nav.twig" %}
+
+    {% block content %}
+    {% endblock %}
+
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            $(this).find('button[type="submit"]').button("loading")
+        });
+    });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -25,6 +25,6 @@ return [
     'aliases' => [
         // FrameworkCore Utilities
         'Log'     => FrameworkCore\Utilities\Log::class,
-        'Session' => FrameworkCore\Utilities\Session::class,
+        'Session' => FrameworkCore\Utilities\Session::class
     ]
 ];

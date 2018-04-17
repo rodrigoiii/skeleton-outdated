@@ -34,7 +34,8 @@
         "psr-4": {
             "App\\": "app/"
 
-            ,"FrameworkCore\\": "framework-core"
+            ,"FrameworkCore\\": "framework-core/",
+            "AuthSlim\\": "../auth-slim/src/"
         },
         "files": [
             "app/helpers.php",
