@@ -23,7 +23,7 @@
                     <input type="password" class="form-control" name="password" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <button type="submit" class="btn btn-primary" data-loading-text="Loading ...">Log in</button>
             </form>
         </div>
     </div>

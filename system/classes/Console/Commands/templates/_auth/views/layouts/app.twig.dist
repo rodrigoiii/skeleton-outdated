@@ -18,6 +18,13 @@
 
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/node_modules/bootstrap3/dist/js/bootstrap.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('form').submit(function(event) {
+            $(this).find('button[type="submit"]').button("loading")
+        });
+    });
+    </script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

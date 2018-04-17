@@ -38,7 +38,7 @@
                     <input type="password" class="form-control" name="confirm_password" />
                 </div>
 
-                <button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary" data-loading-text="Loading ...">Register</button>
             </form>
         </div>
     </div>
