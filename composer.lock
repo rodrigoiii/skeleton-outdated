@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e72044f969bb629a85faf97674dac6e9",
+    "content-hash": "18df6b4fbd73205a67d497f5c4659e81",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -832,35 +832,46 @@
             "time": "2018-01-02T21:47:22+00:00"
         },
         {
-            "name": "rodrigoiii/auth-slim",
-            "version": "v0.1",
+            "name": "rodrigoiii/framework-core",
+            "version": "v1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rodrigoiii/auth-slim.git",
-                "reference": "aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5"
+                "url": "https://github.com/Rodz3rd2/framework-core.git",
+                "reference": "ef52e2866dc8d0a2089cf9bcdddb6557814016ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/auth-slim/zipball/aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5",
-                "reference": "aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5",
+                "url": "https://api.github.com/repos/Rodz3rd2/framework-core/zipball/ef52e2866dc8d0a2089cf9bcdddb6557814016ee",
+                "reference": "ef52e2866dc8d0a2089cf9bcdddb6557814016ee",
                 "shasum": ""
             },
             "require": {
-                "carbondate/carbon": "^1.23.2",
                 "illuminate/database": "^5.4",
+                "monolog/monolog": "^1.23",
                 "php": "^5.6.30 || ^7.0",
+                "respect/validation": "^1.1",
+                "slim/csrf": "^0.8.2",
                 "slim/flash": "^0.4.0",
                 "slim/slim": "^3.9",
-                "slim/twig-view": "^2.3"
+                "slim/twig-view": "^2.3",
+                "symfony/console": "^3.4",
+                "vlucas/phpdotenv": "^2.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7"
+                "fzaninotto/faker": "^1.7",
+                "kint-php/kint": "^2.2",
+                "phpunit/phpunit": "^5.7",
+                "robmorgan/phinx": "^0.9.2",
+                "runcmf/runtracy": "^0.2.10"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "AuthSlim\\": "src/"
-                }
+                    "FrameworkCore\\": "src/classes"
+                },
+                "files": [
+                    "src/functions/function.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -868,12 +879,18 @@
             ],
             "authors": [
                 {
-                    "name": "rodz3rd2",
+                    "name": "Rodrigo Galura III",
                     "email": "rodrigogalura3rd@gmail.com"
                 }
             ],
-            "description": "Rapid authentication for slim 3 micro framework.",
-            "time": "2018-02-28T09:41:47+00:00"
+            "description": "Core of rodrigoiii/framework project.",
+            "keywords": [
+                "framework",
+                "micro framework",
+                "php",
+                "slim"
+            ],
+            "time": "2018-04-17T11:00:31+00:00"
         },
         {
             "name": "slim/csrf",
@@ -2346,6 +2363,50 @@
                 "phinx"
             ],
             "time": "2017-12-23T06:48:51+00:00"
+        },
+        {
+            "name": "rodrigoiii/auth-slim",
+            "version": "v0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rodrigoiii/auth-slim.git",
+                "reference": "aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rodrigoiii/auth-slim/zipball/aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5",
+                "reference": "aa52cda1e7d0c4a3253b4a63ae7b3a861b76dda5",
+                "shasum": ""
+            },
+            "require": {
+                "carbondate/carbon": "^1.23.2",
+                "illuminate/database": "^5.4",
+                "php": "^5.6.30 || ^7.0",
+                "slim/flash": "^0.4.0",
+                "slim/slim": "^3.9",
+                "slim/twig-view": "^2.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AuthSlim\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "rodz3rd2",
+                    "email": "rodrigogalura3rd@gmail.com"
+                }
+            ],
+            "description": "Rapid authentication for slim 3 micro framework.",
+            "time": "2018-02-28T09:41:47+00:00"
         },
         {
             "name": "runcmf/runtracy",
