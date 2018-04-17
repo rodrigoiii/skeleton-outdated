@@ -1,6 +1,6 @@
 <?php
 
-Framework\System::init();
+FrameworkCore\System::init();
 
 # Framework Application
 $app = new \Slim\App([
@@ -20,6 +20,6 @@ $app = new \Slim\App([
 # Application Container
 $container = $app->getContainer();
 
-Framework\System::process($app, $container);
+FrameworkCore\System::process($app, $container);
 
 return $app;

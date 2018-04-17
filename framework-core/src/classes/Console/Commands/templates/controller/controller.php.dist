@@ -1,0 +1,13 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers{{sub_directories}};
+
+use FrameworkCore\BaseController;
+
+class {{controller}} extends BaseController
+{
+	public function index($request, $response)
+	{
+		// code
+	}
+}

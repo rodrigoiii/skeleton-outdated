@@ -1,0 +1,43 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers{{sub_directories}};
+
+use FrameworkCore\BaseController;
+
+class {{controller}} extends BaseController
+{
+	public function index($request, $response)
+	{
+		// code
+	}
+
+	public function show($request, $response, $args)
+	{
+		// code
+	}
+
+	public function create($request, $response)
+	{
+		// code
+	}
+
+	public function store($request, $response)
+	{
+		// code
+	}
+
+	public function edit($request, $response, $args)
+	{
+		// code
+	}
+
+	public function update($request, $response, $args)
+	{
+		// code
+	}
+
+	public function delete($request, $response, $args)
+	{
+		// code
+	}
+}

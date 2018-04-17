@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Framework\BaseController;
+use FrameworkCore\BaseController;
 
 class WelcomeController extends BaseController
 {

@@ -1,0 +1,13 @@
+<?php
+
+namespace {{namespace}}\Http\Middlewares{{sub_directories}};
+
+use FrameworkCore\BaseMiddleware;
+
+class {{middleware}} extends BaseMiddleware
+{
+	public function __invoke($request, $response, $next)
+	{
+		return $next($request, $response);
+	}
+}

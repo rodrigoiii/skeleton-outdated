@@ -23,8 +23,8 @@ return [
 
     # Aliases
     'aliases' => [
-        // Framework Utilities
-        'Log'     => Framework\Utilities\Log::class,
-        'Session' => Framework\Utilities\Session::class,
+        // FrameworkCore Utilities
+        'Log'     => FrameworkCore\Utilities\Log::class,
+        'Session' => FrameworkCore\Utilities\Session::class,
     ]
 ];

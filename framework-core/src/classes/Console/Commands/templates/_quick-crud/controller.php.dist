@@ -1,0 +1,90 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers;
+
+use {{namespace}}\Http\Requests\{{model_capital}}Request;
+use {{namespace}}\Models\{{model_capital}};
+use FrameworkCore\BaseController;
+use FrameworkCore\Utilities\Flash;
+use FrameworkCore\Utilities\Paginator;
+
+class {{model_capital}}Controller extends BaseController
+{
+    public function index($request, $response)
+    {
+        $paginator = new Paginator(new {{model_capital}}, 10, $this->router->pathFor('{{model_singular}}.list'));
+        ${{model_plural}} = $pagination = $paginator->getData();
+        $elements = $paginator->getElements();
+
+        return $this->view->render($response, "{{model_singular}}-crud/index.twig", compact(
+            '{{model_plural}}', 'pagination', 'elements'
+        ));
+    }
+
+    public function show($request, $response, $args)
+    {
+        ${{model_singular}} = {{model_capital}}::find($args['id']);
+        return $this->view->render($response, "{{model_singular}}-crud/show.twig", compact('{{model_singular}}'));
+    }
+
+    public function search($request, $response)
+    {
+        ${{model_plural}} = {{model_capital}}::search($request->getParam('keyword'));
+        return $this->view->render($response, "{{model_singular}}-crud/search.twig", compact('{{model_plural}}'));
+    }
+
+    public function create($request, $response)
+    {
+        return $this->view->render($response, "{{model_singular}}-crud/create.twig");
+    }
+
+    public function store($request, $response)
+    {
+        if (!(new {{model_capital}}Request($request))->isValid())
+        {
+            return $response->withRedirect($this->router->pathFor('{{model_singular}}.create'));
+        }
+
+        (new Flash)->addMessage({{model_capital}}::_create($request->getParams()) instanceof {{model_capital}},
+            ['success' => "Successfully created."],
+            ['danger' => "Cannot create {{model_singular}}."]
+        );
+
+        return $response->withRedirect($this->router->pathFor('{{model_singular}}.list'));
+    }
+
+    public function edit($request, $response, $args)
+    {
+        ${{model_singular}} = {{model_capital}}::find($args['id']);
+        return $this->view->render($response, "{{model_singular}}-crud/edit.twig", compact('{{model_singular}}'));
+    }
+
+    public function update($request, $response, $args)
+    {
+        $id = $args['id'];
+
+        if (!(new {{model_capital}}Request($request))->isValid())
+        {
+            return $response->withRedirect($this->router->pathFor('{{model_singular}}.edit', compact('id')));
+        }
+
+        $has_changed = {{model_capital}}::_update($id, $request->getParams());
+
+        (new Flash)->addMessage($has_changed,
+            ['success' => "Successfully updated."],
+            ['warning' => "No changes."]
+        );
+
+        return $response->withRedirect($this->router->pathFor('{{model_singular}}.list'));
+    }
+
+    public function delete($request, $response, $args)
+    {
+        (new Flash)->addMessage({{model_capital}}::destroy($args['id']),
+            ['success' => "Successfully deleted."],
+            ['danger' => "Cannot delete {{model_singular}}."]
+        );
+
+        return $response->withRedirect($this->router->pathFor('{{model_singular}}.list'));
+    }
+}

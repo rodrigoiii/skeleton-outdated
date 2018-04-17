@@ -1,0 +1,126 @@
+<?php
+
+if (is_prod())
+{
+    # override error handler
+    $container['errorHandler'] = function($c)
+    {
+        return function ($request, $response, $exception) use($c)
+        {
+            $c['logger']->error($exception);
+
+            return $c->view
+                    ->render(
+                        $response->withStatus(500)
+                        ->withHeader('Content-Type', "text/html"),
+                        config('twig-view.error_pages.500')
+                    );
+        };
+    };
+}
+
+# override not found handler
+$container['notFoundHandler'] = function($c)
+{
+    return function ($request, $response) use($c)
+    {
+        return $c->view
+                ->render(
+                    $response->withStatus(404)
+                    ->withHeader('Content-Type', "text/html"),
+                    config('twig-view.error_pages.404')
+                );
+    };
+};
+
+# override not allowed handler
+$container['notAllowedHandler'] = function($c)
+{
+    return function ($request, $response, $methods) use($c)
+    {
+        return $c->view
+                ->render(
+                    $response->withStatus(405)
+                    ->withHeader('Allow', implode(', ', $methods))
+                    ->withHeader('Content-Type', "text/html"),
+                    config('twig-view.error_pages.405')
+                );
+    };
+};
+
+// Twig
+$container['twig_profile'] = function () {
+    return new Twig_Profiler_Profile();
+};
+
+# slim twig view
+$container['view'] = function($c)
+{
+    $view = new Slim\Views\Twig(config('twig-view.views_path'), ['cache' => config('twig-view.cache')]);
+
+    $view->addExtension(new Slim\Views\TwigExtension($c->router, $c->request->getUri()));
+
+    if (!is_prod())
+    {
+        $view->addExtension(new Twig_Extension_Profiler($c['twig_profile']));
+        $view->addExtension(new Twig_Extension_Debug());
+    }
+
+    $view->getEnvironment()->addFunction(new Twig_Function('config', 'config'));
+    $view->getEnvironment()->addFunction(new Twig_Function('in_array', 'in_array'));
+
+    include_once system_path("registered-twig-functions.php");
+
+    # Make 'flash' global
+    $view->getEnvironment()->addGlobal('flash', $c->flash);
+
+    return $view;
+};
+
+$container['db'] = function($c) use ($capsule) // $capsule is in lib.php file
+{
+    return $capsule;
+};
+
+# slim/flash
+$container['flash'] = function($c)
+{
+    return new Slim\Flash\Messages();
+};
+
+# slim/csrf
+$container['csrf'] = function($c)
+{
+    $guard = new Slim\Csrf\Guard;
+    $guard->setFailureCallable( function ($request, $response, $next) use($c) {
+        if (is_prod())
+        {
+            return $c->view->render(
+                $response->withStatus(403)->withHeader('Content-Type', "text/html"),
+                config('twig-view.error_pages.403')
+            );
+        }
+
+        return $response->withStatus(403)
+                        ->withHeader('Content-Type', "text/html")
+                        ->write("Failed CSRF check!");
+    });
+    return $guard;
+};
+
+# monolog logger
+$container['logger'] = function($c)
+{
+    $settings = $c['settings']['monolog'];
+    $logger = new Monolog\Logger($settings['name']);
+    $logger->pushHandler(new \Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+
+    return $logger;
+};
+
+# respect validation
+$container['validator'] = function($c)
+{
+    $Validator = config('app.namespace') . "\Validation\Validator";
+    return new $Validator;
+};

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Framework\BaseCommand;
+use FrameworkCore\BaseCommand;
 
 class HelloCommand extends BaseCommand
 {

@@ -1,0 +1,16 @@
+<?php
+
+use PHPUnit\FrameworkCore\TestCase;
+
+class {{test}} extends TestCase
+{
+    public function setUp()
+    {
+        // set up
+    }
+
+    public function tearDown()
+    {
+        // tear down
+    }
+}
