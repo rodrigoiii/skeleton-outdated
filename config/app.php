@@ -25,6 +25,9 @@ return [
     'aliases' => [
         // FrameworkCore Utilities
         'Log'     => FrameworkCore\Utilities\Log::class,
-        'Session' => FrameworkCore\Utilities\Session::class
+        'Session' => FrameworkCore\Utilities\Session::class,
+
+        // Rapid Authentication library
+        // 'Auth' => AuthSlim\User\AuthRoute::class
     ]
 ];
