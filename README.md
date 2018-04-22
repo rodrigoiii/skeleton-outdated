@@ -1,4 +1,4 @@
-# Framework v1.3
+# Framework v1.4
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,9 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.4
+* Separate core of the framework into another repository.
+
 Framework v1.3.2
 * Add files db/migration/.gitkeep db/seeds/.gitkeep
 * Add loading button when submitting form
