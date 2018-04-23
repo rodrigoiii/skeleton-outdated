@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "18df6b4fbd73205a67d497f5c4659e81",
+    "content-hash": "364b1ad6b22d3966036173471c305919",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -833,16 +833,16 @@
         },
         {
             "name": "rodrigoiii/framework-core",
-            "version": "v1.3",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/framework-core.git",
-                "reference": "2abaecf1fb7a3d71aabd9624a985a9063d0421f4"
+                "reference": "16ee3344e0515683937be0e6ec2b83b5e3b63bba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/2abaecf1fb7a3d71aabd9624a985a9063d0421f4",
-                "reference": "2abaecf1fb7a3d71aabd9624a985a9063d0421f4",
+                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/16ee3344e0515683937be0e6ec2b83b5e3b63bba",
+                "reference": "16ee3344e0515683937be0e6ec2b83b5e3b63bba",
                 "shasum": ""
             },
             "require": {
@@ -891,7 +891,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-04-18T10:45:09+00:00"
+            "time": "2018-04-22T10:49:47+00:00"
         },
         {
             "name": "slim/csrf",

@@ -37,12 +37,14 @@ module.exports = {
                 "**/*.png",
                 "**/*.gif"
             ],
+            flatten: true,
             dest: "img"
         },
 
         fonts: {
             command: "build:fonts",
             dir: "public",
+            flatten: true,
             sources: [
                 "**/*.eot",
                 "**/*.svg",

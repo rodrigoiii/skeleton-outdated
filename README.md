@@ -1,4 +1,4 @@
-# Framework v1.4.1
+# Framework v1.5
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,10 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.5
+* Update web-dev-tools node package.
+* Update composer.lock
+
 Framework v1.4.1
 * Update composer.lock
 * Remove .env.testing and phpunit.xml files.
