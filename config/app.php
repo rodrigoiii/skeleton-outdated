@@ -28,6 +28,7 @@ return [
         'Session' => FrameworkCore\Utilities\Session::class,
 
         // Rapid Authentication library
-        // 'Auth' => AuthSlim\User\AuthRoute::class
+        // 'Auth' => AuthSlim\User\AuthRoute::class,
+        // 'AuthAdmin' => AuthSlim\Admin\AuthRoute::class
     ]
 ];
