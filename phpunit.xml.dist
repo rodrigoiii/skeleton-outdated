@@ -1,4 +1,4 @@
-<phpunit bootstrap="tests/back-end/bootstrap.php">
+<phpunit bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="Framework Commands Test Suites">
             <directory suffix="Test.php">./tests/SpecialCommands</directory>
