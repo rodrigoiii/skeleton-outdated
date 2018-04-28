@@ -33,6 +33,8 @@ $framework_commands = [
     new Command\MakeTestCommand,
     new Command\BuildDistCommand,
     new Command\DeleteDistCommand,
+    new Command\MakeJobCommand,
+    new Command\PerformJobCommand,
 
     # auth command
     // new Command\_MakeAuthCommand,
