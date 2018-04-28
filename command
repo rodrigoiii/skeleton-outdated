@@ -38,8 +38,8 @@ $framework_commands = [
     // new Command\_MakeAuthCommand,
 
     # quick crud
-    new Command\_MakeQuickCrudCommand,
-    new Command\_RemoveQuickCrudCommand,
+    // new Command\_MakeCrudCommand,
+    // new Command\_RemoveCrudCommand,
 
     # email notification
     // new Command\_MakeNotificationCommand
