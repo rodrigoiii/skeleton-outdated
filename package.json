@@ -40,5 +40,8 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-sass": "^3.1.0",
     "web-dev-tools": "^3.4.0"
+  },
+  "dependencies": {
+    "hoek": "^5.0.3"
   }
 }
