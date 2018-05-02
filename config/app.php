@@ -18,6 +18,9 @@ return [
     # Application either UP or DOWN(under construction)
     'web_mode' => _env('WEB_MODE'),
 
+    # Commonly use for production
+    'use_dist' => filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
+
     # Debug mode
     'debug' => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 

@@ -37,7 +37,7 @@ module.exports = {
                 "**/*.png",
                 "**/*.gif"
             ],
-            flatten: true,
+            flatten: false,
             dest: "img"
         },
 
