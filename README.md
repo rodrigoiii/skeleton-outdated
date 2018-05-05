@@ -1,4 +1,4 @@
-# Framework v1.5
+# Framework v1.6
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,20 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.6
+* Remove Special Commands folder in tests directory.
+* Quick Crud command
+* Use datatable plugin instead of Pagination php package.
+* Apply utility Datatable class.
+* Implement Queue Job.
+* Add upload function to upload file.
+* Add alias for Rapid Authentication Library.
+* The framework is now compatible from php version 5.6.30 above.
+* Map the structure of tables to model to avoid excessing from length of fields.
+* Add shortcut command for web-dev-tools.
+* Remove testing environment.
+* Fix potential security vulnerability.
+
 Framework v1.5
 * Update web-dev-tools node package.
 * Update composer.lock
