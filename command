@@ -33,18 +33,20 @@ $framework_commands = [
     new Command\MakeTestCommand,
     new Command\BuildDistCommand,
     new Command\DeleteDistCommand,
-    new Command\MakeJobCommand,
-    new Command\PerformJobCommand,
-
-    # auth command
-    // new Command\_MakeAuthCommand,
 
     # quick crud
     // new Command\_MakeCrudCommand,
     // new Command\_RemoveCrudCommand,
 
-    # email notification
+    # rodrigoiii/auth-slim library
+    // new Command\_MakeAuthCommand,
+
+    # rodrigoiii/notification-slim
     // new Command\_MakeNotificationCommand
+
+    # rodrigoiii/queue-job-slim
+    // new Command\_MakeJobCommand,
+    // new Command\_PerformJobCommand,
 ];
 
 $console_app->addCommands(array_merge($app_commands, $framework_commands));
