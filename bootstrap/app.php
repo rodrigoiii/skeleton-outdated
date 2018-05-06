@@ -13,8 +13,7 @@ $app = new \Slim\App([
 
         'db' => config('database.database_connection.mysql'),
         'monolog' => config('logger.monolog'),
-        'tracy' => config('debug-bar.tracy.settings'),
-        'queue-job' => config('queue-job.pheanstalk')
+        'tracy' => config('debug-bar.tracy.settings')
     ]
 ]);
 
