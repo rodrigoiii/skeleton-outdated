@@ -1,3 +1,3 @@
 <?php
 
-# register your custom middleware globally
+# register your custom middleware globally.
