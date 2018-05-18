@@ -1,4 +1,4 @@
-# Framework v1.6
+# Framework v1.6.2
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
