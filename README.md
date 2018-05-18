@@ -10,6 +10,9 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.6.2
+* rodrigoiii/framework-core v1.4.2
+
 Framework v1.6.1
 * Remove queue-job inside of framework. Make this as 3rd party library.
 
