@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e698ac14b47347a47d3ccc3f604b543",
+    "content-hash": "db7ff4022b4ca631d694f35b58f05c26",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -837,16 +837,16 @@
         },
         {
             "name": "rodrigoiii/framework-core",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/framework-core.git",
-                "reference": "96b860a0827bba80f59b4bc6711584002c4845ec"
+                "reference": "02fe5775d2561fe679b0a6275c8a23f6cb33155e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/96b860a0827bba80f59b4bc6711584002c4845ec",
-                "reference": "96b860a0827bba80f59b4bc6711584002c4845ec",
+                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/02fe5775d2561fe679b0a6275c8a23f6cb33155e",
+                "reference": "02fe5775d2561fe679b0a6275c8a23f6cb33155e",
                 "shasum": ""
             },
             "require": {
@@ -895,7 +895,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-05-18T04:59:03+00:00"
+            "time": "2018-05-24T06:16:28+00:00"
         },
         {
             "name": "slim/csrf",
