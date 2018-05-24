@@ -837,16 +837,16 @@
         },
         {
             "name": "rodrigoiii/framework-core",
-            "version": "v1.4.3",
+            "version": "v1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/framework-core.git",
-                "reference": "02fe5775d2561fe679b0a6275c8a23f6cb33155e"
+                "reference": "713a9741dcfbeeb779b6f4de8cc513251b9d8b91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/02fe5775d2561fe679b0a6275c8a23f6cb33155e",
-                "reference": "02fe5775d2561fe679b0a6275c8a23f6cb33155e",
+                "url": "https://api.github.com/repos/rodrigoiii/framework-core/zipball/713a9741dcfbeeb779b6f4de8cc513251b9d8b91",
+                "reference": "713a9741dcfbeeb779b6f4de8cc513251b9d8b91",
                 "shasum": ""
             },
             "require": {
@@ -895,7 +895,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-05-24T06:16:28+00:00"
+            "time": "2018-05-24T06:34:28+00:00"
         },
         {
             "name": "slim/csrf",
