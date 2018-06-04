@@ -31,7 +31,7 @@ return [
         'Session' => FrameworkCore\Utilities\Session::class,
 
         // Rapid Authentication library
-        'Auth' => AuthSlim\User\Auth\Auth::class,
-        'AuthAdmin' => AuthSlim\Admin\Auth\Auth::class
+        // 'Auth' => AuthSlim\User\Auth\Auth::class,
+        // 'AuthAdmin' => AuthSlim\Admin\Auth\Auth::class
     ]
 ];
