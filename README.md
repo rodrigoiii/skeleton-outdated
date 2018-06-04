@@ -1,4 +1,4 @@
-# Framework v1.6.4
+# Framework v1.6.5
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,22 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.6.5
+✔ Remove mustache as web dependency @done (18-06-04 07:51)
+✔ Remove assets/js/test.js @done (18-06-04 07:52)
+✔ Update .env.example version into latest version. @done (18-06-04 07:53)
+✔ Update web dev tools @done (18-06-04 08:02)
+✔ Update command in BuildDistCommand. It used old command web-dev-tools. @done (18-06-04 08:03)
+✔ Remove dist-views directory also when building dist. @done (18-06-04 08:04)
+✔ Remove fzaninotto/faker in auth-slim at composer.json. @done (18-06-04 08:05)
+✔ Add public/dist and resources/dist-views in .gitignore @done (18-06-04 08:05)
+✔ Add '/' at the first of all registered in .gitignore @done (18-06-04 08:08)
+✔ Use only one .gitignore file. @done (18-06-04 08:14)
+✔ Remove Auth word at the last namespace of model User. @done (18-06-04 08:19)
+✔ make the key as function name and value as function in registered-twig-functions. @done (18-06-04 08:23)
+✔ Comment the Auth Slim class aliases in config/app.php file. @done (18-06-04 08:26)
+✔ Add yarn-error.log in .gitignore @done (18-06-04 08:26)
+
 Framework v1.6.4
 * Update the dependency
 
