@@ -1,7 +1,30 @@
-vendor/
-node_modules/
-.env
-.env.testing
-phinx.yml
-phpunit.xml
+# package manager
+/vendor
+/**/node_modules/
+
+# environment
+/.env
+/.env.testing
+
+# compiled assets
+/public/css/*
+/public/js/*
+
+# database migration
+/phinx.yml
+
+# phpunit
+/phpunit.xml
+
+# storage
+/storage/cache/*
+/storage/logs/*
+
+# yarn error log
+/**/yarn-error.log
+
+# build dist
+/public/dist
+/resources/dist-views
+
 !.gitignore
