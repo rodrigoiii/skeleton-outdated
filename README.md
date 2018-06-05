@@ -1,4 +1,4 @@
-# Framework v1.6.6
+# Framework v1.6.7
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,9 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.6.7
+* Exclude .gitkeep on ignoring files
+
 Framework v1.6.6
 * Use rodrigoiii/framework-core v1.4.6
 
