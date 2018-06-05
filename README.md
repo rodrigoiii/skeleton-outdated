@@ -1,4 +1,4 @@
-# Framework v1.6.5
+# Framework v1.6.6
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
@@ -10,6 +10,9 @@ Build awesome application using this light but powerful micro framework.
 The docs is under maintenance.
 
 ## CHANGELOGS
+Framework v1.6.6
+* Use rodrigoiii/framework-core v1.4.6
+
 Framework v1.6.5
 ✔ Remove mustache as web dependency @done (18-06-04 07:51)
 ✔ Remove assets/js/test.js @done (18-06-04 07:52)
