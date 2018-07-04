@@ -46,7 +46,7 @@ $framework_commands = [
     // new Command\_MakeAuthCommand,
 
     # rodrigoiii/notification-slim
-    // new Command\_MakeNotificationCommand
+    // new Command\_MakeNotificationCommand,
 
     # rodrigoiii/queue-job-slim
     // new Command\_MakeJobCommand,
