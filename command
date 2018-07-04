@@ -38,10 +38,6 @@ $framework_commands = [
     new Command\BuildDistCommand,
     new Command\DeleteDistCommand,
 
-    # quick crud
-    // new Command\_MakeCrudCommand,
-    // new Command\_RemoveCrudCommand,
-
     # rodrigoiii/auth-slim library
     // new Command\_MakeAuthCommand,
 
