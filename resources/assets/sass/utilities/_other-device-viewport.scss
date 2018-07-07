@@ -1,9 +1,11 @@
+// custom view port
 $SCREEN_WIDTH: 640px;
 $SCREEN_HEIGHT: 1136px;
 
 $VW: $SCREEN_WIDTH / 100px;
 $VH: $SCREEN_HEIGHT / 100px;
 
+// mobile view port
 $MOBILE_L: 425px;
 $MOBILE_M: 375px;
 $MOBILE_S: 320px;
