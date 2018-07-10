@@ -1,3 +1,3 @@
 <?php
 
-$app->get('/', "WelcomeController:index");
+$app->get('/', ["WelcomeController", "index"]);

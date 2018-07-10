@@ -1,24 +1,17 @@
 <?php
 
-$system = new FrameworkCore\System;
+$app = new FrameworkCore\SlimRodrigo([
+    'settings.displayErrorDetails' => config('app.debug'),
+    'settings.addContentLengthHeader' => false, // if true = Unexpected data in output buffer
+    'settings.determineRouteBeforeAppMiddleware' => config('app.route_on'),
 
-# Framework Application
-$app = new \Slim\App([
-    'settings' => [
-        'displayErrorDetails' => config('app.debug'),
-
-        'addContentLengthHeader' => false, // if true = Unexpected data in output buffer
-
-        'determineRouteBeforeAppMiddleware' => config('app.route_on'),
-
-        'db' => config('database.database_connection.mysql'),
-        'tracy' => config('debug-bar.tracy.settings')
-    ]
+    'settings.db' => config('database.database_connection.mysql'),
+    'settings.tracy' => config('debug-bar.tracy.settings')
 ]);
 
 # Application Container
 $container = $app->getContainer();
 
-$system->boot($app, $container);
+$app->boot();
 
 return $app;
