@@ -8,11 +8,10 @@ class WelcomeController extends BaseController
 {
     /**
      * Render welcome page
-     * @param  Psr\Http\Message\RequestInterface $request
      * @param  Psr\Http\Message\ResponseInterface $response
      * @return mixed
      */
-    public function index($request, $response)
+    public function index($response)
     {
         return $this->view->render($response, "index.twig");
     }
