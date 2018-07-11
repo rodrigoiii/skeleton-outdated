@@ -16,7 +16,7 @@ class HelloCommand extends BaseCommand
      * Console command description
      * @var string
      */
-    private $description = "Greet command, just for guide to create your custom command.";
+    private $description = "Display Hello World.";
 
     /**
      * Create a new command instance

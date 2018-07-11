@@ -2,14 +2,13 @@
 
 namespace App\Http\Requests;
 
-use FrameworkCore\Validation\Validator;
 use FrameworkCore\BaseRequest;
 use Respect\Validation\Validator as v;
 
 class UserRequest extends BaseRequest
 {
     /**
-     * Create rules using Respect Validation
+     * Create rules using Respect Validation Library
      * @return array
      */
     public function rules()
@@ -33,19 +32,9 @@ class UserRequest extends BaseRequest
                 break;
 
             default:
-            $rules = [];
+                $rules = [];
         }
 
         return $rules;
-    }
-
-    /**
-     * Check if input provided passed on rules.
-     * @return boolean
-     */
-    public function isValid()
-    {
-        $validate = Validator::validate($this->request, $this->rules());
-        return $validate::passed();
     }
 }

@@ -6,7 +6,6 @@ if (PHP_SAPI !== "cli") die; // die if not using cli
 # composer autoload
 require __DIR__ . "/vendor/autoload.php";
 
-use App\Console\Commands as AppCommand;
 use FrameworkCore\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
@@ -18,7 +17,7 @@ $console_app = new Application(config('app.name'));
 $app_commands = array_map(function($absolute_path_file) {
     $base_file = basename($absolute_path_file, ".php");
 
-    $command_class = "App\\Console\\Commands\\{$base_file}";
+    $command_class = config('app.namespace') . "\\Console\\Commands\\{$base_file}";
 
     return new $command_class;
 }, glob(app_path('Console/Commands/*.php')));
@@ -26,7 +25,6 @@ $app_commands = array_map(function($absolute_path_file) {
 $framework_commands = [
     new Command\MakeCommandCommand,
     new Command\MakeControllerCommand,
-    new Command\RemoveControllerCommand,
     new Command\GenerateKeyCommand,
     new Command\MakeMiddlewareCommand,
     new Command\MakeModelCommand,

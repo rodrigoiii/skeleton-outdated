@@ -7,20 +7,28 @@ use App\Models\User;
 use FrameworkCore\BaseController;
 use FrameworkCore\Utilities\DataTable;
 use Illuminate\Database\Capsule\Manager as DB;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class UserController extends BaseController
 {
     /**
      * [index description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
      */
-    public function index($request, $response)
+    public function index($response)
     {
         return $this->view->render($response, "user/index.twig");
     }
 
+    /**
+     * [data description]
+     *
+     * @param  ServerRequestInterface $request
+     * @param  ResponseInterface $response
+     * @return json
+     */
     public function data($request, $response)
     {
         $data = $request->getParams();
@@ -33,9 +41,8 @@ class UserController extends BaseController
 
     /**
      * [show description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
      */
     public function show($id, $request, $response)
     {
@@ -45,29 +52,23 @@ class UserController extends BaseController
 
     /**
      * [create description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
      */
-    public function create($request, $response)
+    public function create($response)
     {
         return $this->view->render($response, "user/create.twig");
     }
 
     /**
      * [store description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     * @param  UserRequest $UserRequest
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
      */
-    public function store($request, $response)
+    public function store(UserRequest $UserRequest, $response)
     {
-        if (!(new UserRequest($request))->isValid())
-        {
-            return $response->withRedirect($this->router->pathFor('user.create'));
-        }
-
-        $input = $request->getParams();
+        $input = $UserRequest->getParam('email');
 
         $result = User::create([
             'first_name' => $input['first_name'],
@@ -85,11 +86,10 @@ class UserController extends BaseController
 
     /**
      * [edit description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
-     * @return mixed
+     * @param  ResponseInterface $response
+     * @return ResponseInterface
      */
-    public function edit($id, $request, $response)
+    public function edit($id, $response)
     {
         $user = User::find($id);
         return $this->view->render($response, "user/edit.twig", compact('user'));
@@ -97,18 +97,13 @@ class UserController extends BaseController
 
     /**
      * [update description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
+     * @param  UserRequest $UserRequest
+     * @param  ResponseInterface $response
      * @return mixed
      */
-    public function update($id, $request, $response)
+    public function update($id, UserRequest $UserRequest, $response)
     {
-        if (!(new UserRequest($request))->isValid())
-        {
-            return $response->withRedirect($this->router->pathFor('user.edit', compact('id')));
-        }
-
-        $has_changed = User::_update($id, $request->getParams());
+        $has_changed = User::_update($id, $UserRequest->getParams());
 
         flash($has_changed,
             ['success' => "Successfully updated"],
@@ -120,12 +115,11 @@ class UserController extends BaseController
 
     /**
      * [delete description]
-     * @param  Psr\Http\Message\RequestInterface $request
-     * @param  Psr\Http\Message\ResponseInterface $response
+     * @param  ResponseInterface $response
      * @param  array $args
      * @return mixed
      */
-    public function delete($id, $request, $response)
+    public function delete($id, $response)
     {
         flash(User::destroy($id),
             ['success' => "Successfully deleted"],
