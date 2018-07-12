@@ -42,10 +42,11 @@ class UserController extends BaseController
     /**
      * [show description]
      *
+     * @param  integer $id
      * @param  Response $response
      * @return Response
      */
-    public function show($id, $request, $response)
+    public function show($id, $response)
     {
         $user = User::find($id);
         return $this->view->render($response, "user/show.twig", compact('user'));
@@ -90,6 +91,7 @@ class UserController extends BaseController
     /**
      * [edit description]
      *
+     * @param  integer $id
      * @param  Response $response
      * @return Response
      */
@@ -102,9 +104,10 @@ class UserController extends BaseController
     /**
      * [update description]
      *
+     * @param  integer $id
      * @param  UserRequest $_request
      * @param  Response $response
-     * @return mixed
+     * @return Response
      */
     public function update($id, UserRequest $_request, $response)
     {
@@ -121,9 +124,9 @@ class UserController extends BaseController
     /**
      * [delete description]
      *
+     * @param  integer $id
      * @param  Response $response
-     * @param  array $args
-     * @return mixed
+     * @return Response
      */
     public function delete($id, $response)
     {
