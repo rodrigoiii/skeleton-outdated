@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "node node_modules/.bin/wdt scripts && node node_modules/.bin/wdt sass",
     "watch": "node node_modules/.bin/wdt watch",
+    "build:up": "node node_modules/.bin/wdt build:dist",
+    "build:down": "node node_modules/.bin/wdt delete:dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
