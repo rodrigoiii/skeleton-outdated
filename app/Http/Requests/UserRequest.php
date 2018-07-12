@@ -9,6 +9,7 @@ class UserRequest extends BaseRequest
 {
     /**
      * Create rules using Respect Validation Library
+     *
      * @return array
      */
     public function rules()

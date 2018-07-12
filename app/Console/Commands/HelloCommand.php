@@ -3,23 +3,27 @@
 namespace App\Console\Commands;
 
 use FrameworkCore\BaseCommand;
+use Symfony\Component\Console\Input\InputInterface as Input;
+use Symfony\Component\Console\Output\OutputInterface as Output;
 
 class HelloCommand extends BaseCommand
 {
     /**
-     * Console command signature
+     * The command signature.
+     *
      * @var string
      */
     private $signature = "greet:hello";
 
     /**
-     * Console command description
+     * The command description.
+     *
      * @var string
      */
     private $description = "Display Hello World.";
 
     /**
-     * Create a new command instance
+     * Create a new command instance.
      */
     public function __construct()
     {
@@ -27,9 +31,13 @@ class HelloCommand extends BaseCommand
     }
 
     /**
-     * Execute the console command
+     * To be call after execute the command.
+     *
+     * @param  Input $input
+     * @param  Output $output
+     * @return void
      */
-    public function handle($input, $output)
+    public function handle(Input $input, Output $output)
     {
         $output->writeln("Hello World");
     }

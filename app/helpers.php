@@ -1,6 +1,10 @@
 <?php
 
-function printHelloWorld()
+/**
+ * Your custom functions goes here.
+ */
+
+function custom_function()
 {
-    echo "Hello world";
+    //
 }

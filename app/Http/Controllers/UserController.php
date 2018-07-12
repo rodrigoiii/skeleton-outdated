@@ -12,24 +12,24 @@ use Psr\Http\Message\ResponseInterface as Response;
 class UserController extends BaseController
 {
     /**
-     * [index description]
+     * Display list of users.
      *
      * @param  Response $response
      * @return Response
      */
-    public function index($response)
+    public function index(Response $response)
     {
         return $this->view->render($response, "user/index.twig");
     }
 
     /**
-     * [data description]
+     * Fetch all users in database then return it as json.
      *
      * @param  Request $request
      * @param  Response $response
      * @return json
      */
-    public function data($request, $response)
+    public function data(Request $request, Response $response)
     {
         $data = $request->getParams();
         $select = \DB::table('users');
@@ -40,37 +40,37 @@ class UserController extends BaseController
     }
 
     /**
-     * [show description]
+     * Display the user details.
      *
      * @param  integer $id
      * @param  Response $response
      * @return Response
      */
-    public function show($id, $response)
+    public function show($id, Response $response)
     {
         $user = User::find($id);
         return $this->view->render($response, "user/show.twig", compact('user'));
     }
 
     /**
-     * [create description]
+     * Display form to create user info.
      *
      * @param  Response $response
      * @return Response
      */
-    public function create($response)
+    public function create(Response $response)
     {
         return $this->view->render($response, "user/create.twig");
     }
 
     /**
-     * [store description]
+     * After submitting the form, the user info should be save in the database.
      *
      * @param  UserRequest $_request
      * @param  Response $response
      * @return Response
      */
-    public function store(UserRequest $_request, $response)
+    public function store(UserRequest $_request, Response $response)
     {
         $input = $_request->getParams();
 
@@ -89,27 +89,27 @@ class UserController extends BaseController
     }
 
     /**
-     * [edit description]
+     * Display form to edit user info.
      *
      * @param  integer $id
      * @param  Response $response
      * @return Response
      */
-    public function edit($id, $response)
+    public function edit($id, Response $response)
     {
         $user = User::find($id);
         return $this->view->render($response, "user/edit.twig", compact('user'));
     }
 
     /**
-     * [update description]
+     * After submitting the form, the user info should be updated in the database.
      *
      * @param  integer $id
      * @param  UserRequest $_request
      * @param  Response $response
      * @return Response
      */
-    public function update($id, UserRequest $_request, $response)
+    public function update($id, UserRequest $_request, Response $response)
     {
         $has_changed = User::_update($id, $_request->getParams());
 
@@ -122,13 +122,13 @@ class UserController extends BaseController
     }
 
     /**
-     * [delete description]
+     * Delete the specific user.
      *
      * @param  integer $id
      * @param  Response $response
      * @return Response
      */
-    public function delete($id, $response)
+    public function delete($id, Response $response)
     {
         flash(User::destroy($id),
             ['success' => "Successfully deleted"],
