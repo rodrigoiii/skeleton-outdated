@@ -26,9 +26,9 @@ return [
 
     # Aliases
     'aliases' => [
-        // FrameworkCore Utilities
         'Log'     => FrameworkCore\Utilities\Log::class,
         'Session' => FrameworkCore\Utilities\Session::class,
+        'DB' => Illuminate\Database\Capsule\Manager::class
 
         // Rapid Authentication library
         // 'Auth' => AuthSlim\User\Auth\Auth::class,

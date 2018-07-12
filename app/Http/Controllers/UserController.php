@@ -6,16 +6,16 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use FrameworkCore\BaseController;
 use FrameworkCore\Utilities\DataTable;
-use Illuminate\Database\Capsule\Manager as DB;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class UserController extends BaseController
 {
     /**
      * [index description]
-     * @param  ResponseInterface $response
-     * @return ResponseInterface
+     *
+     * @param  Response $response
+     * @return Response
      */
     public function index($response)
     {
@@ -25,14 +25,14 @@ class UserController extends BaseController
     /**
      * [data description]
      *
-     * @param  ServerRequestInterface $request
-     * @param  ResponseInterface $response
+     * @param  Request $request
+     * @param  Response $response
      * @return json
      */
     public function data($request, $response)
     {
         $data = $request->getParams();
-        $select = DB::table('users');
+        $select = \DB::table('users');
         $columns = ['id', 'first_name', 'last_name', 'email'];
 
         $dataTable = new DataTable($data, $select, $columns);
@@ -41,8 +41,9 @@ class UserController extends BaseController
 
     /**
      * [show description]
-     * @param  ResponseInterface $response
-     * @return ResponseInterface
+     *
+     * @param  Response $response
+     * @return Response
      */
     public function show($id, $request, $response)
     {
@@ -52,8 +53,9 @@ class UserController extends BaseController
 
     /**
      * [create description]
-     * @param  ResponseInterface $response
-     * @return ResponseInterface
+     *
+     * @param  Response $response
+     * @return Response
      */
     public function create($response)
     {
@@ -62,13 +64,14 @@ class UserController extends BaseController
 
     /**
      * [store description]
-     * @param  UserRequest $UserRequest
-     * @param  ResponseInterface $response
-     * @return ResponseInterface
+     *
+     * @param  UserRequest $_request
+     * @param  Response $response
+     * @return Response
      */
-    public function store(UserRequest $UserRequest, $response)
+    public function store(UserRequest $_request, $response)
     {
-        $input = $UserRequest->getParam('email');
+        $input = $_request->getParams();
 
         $result = User::create([
             'first_name' => $input['first_name'],
@@ -86,8 +89,9 @@ class UserController extends BaseController
 
     /**
      * [edit description]
-     * @param  ResponseInterface $response
-     * @return ResponseInterface
+     *
+     * @param  Response $response
+     * @return Response
      */
     public function edit($id, $response)
     {
@@ -97,13 +101,14 @@ class UserController extends BaseController
 
     /**
      * [update description]
-     * @param  UserRequest $UserRequest
-     * @param  ResponseInterface $response
+     *
+     * @param  UserRequest $_request
+     * @param  Response $response
      * @return mixed
      */
-    public function update($id, UserRequest $UserRequest, $response)
+    public function update($id, UserRequest $_request, $response)
     {
-        $has_changed = User::_update($id, $UserRequest->getParams());
+        $has_changed = User::_update($id, $_request->getParams());
 
         flash($has_changed,
             ['success' => "Successfully updated"],
@@ -115,7 +120,8 @@ class UserController extends BaseController
 
     /**
      * [delete description]
-     * @param  ResponseInterface $response
+     *
+     * @param  Response $response
      * @param  array $args
      * @return mixed
      */
