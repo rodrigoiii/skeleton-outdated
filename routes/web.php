@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Register your routes on this file.
+ */
+
 $app->get('/', ["WelcomeController", "index"]);
 
 $app->group('/users', function () {
