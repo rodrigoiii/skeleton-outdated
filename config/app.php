@@ -6,7 +6,7 @@ return [
     'environment' => _env('APP_ENV', "development"), // Options: development, production
     'key'         => _env('APP_KEY'),
 
-    # default timezone
+    # Default timezone
     'default_timezone' => "Asia/Manila",
 
     # Where upload will be stored. The location is `public/uploads`
@@ -29,9 +29,5 @@ return [
         'Log'     => FrameworkCore\Utilities\Log::class,
         'Session' => FrameworkCore\Utilities\Session::class,
         'DB' => Illuminate\Database\Capsule\Manager::class
-
-        // Rapid Authentication library
-        // 'Auth' => AuthSlim\User\Auth\Auth::class,
-        // 'AuthAdmin' => AuthSlim\Admin\Auth\Auth::class
     ]
 ];

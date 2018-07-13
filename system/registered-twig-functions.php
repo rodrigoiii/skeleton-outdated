@@ -1,6 +1,6 @@
 <?php
 
-# register your custom function if you want to accessible in twig view.
+# register the function below if you want to access it in twig view.
 
 return [
     //
