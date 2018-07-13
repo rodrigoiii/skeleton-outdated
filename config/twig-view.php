@@ -4,8 +4,6 @@ return [
     # cache directory or false to disable
     'cache' => is_prod() ? storage_path("cache/views") : false,
 
-    'views_path' => resources_path(filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN) ? 'dist-views' : "views"),
-
     # error pages path, relative in views_path
     'error_pages' => [
         "500" => "templates/error-pages/page-500.twig",
