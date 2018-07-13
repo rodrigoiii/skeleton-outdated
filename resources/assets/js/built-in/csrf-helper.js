@@ -8,6 +8,13 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * The framework use slim csrf(cross site request forge) by default.
+ * Use this function to use POST request.
+ *
+ * @param  json data
+ * @return json data with csrf token
+ */
 function postWithToken(data)
 {
     var csrf = {};
