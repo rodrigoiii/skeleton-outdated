@@ -17,10 +17,10 @@ $console_app = new Application(config('app.name'));
 $app_commands = array_map(function($absolute_path_file) {
     $base_file = basename($absolute_path_file, ".php");
 
-    $command_class = config('app.namespace') . "\\Console\\Commands\\{$base_file}";
+    $command_class = config('app.namespace') . "\\Commands\\{$base_file}";
 
     return new $command_class;
-}, glob(app_path('Console/Commands/*.php')));
+}, glob(app_path('Commands/*.php')));
 
 $framework_commands = [
     new Command\MakeCommandCommand,
