@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Register your routes on this file.
+ * Register your web routes on this file.
  */
 
 $app->get('/', ["WelcomeController", "index"]);
 
 $app->group('/users', function () {
     $this->get('', ["UserController", "index"])->setName('user.list');
-    $this->get('/data', ["UserController", "data"])->setName('user.data');
+    $this->get('/data', ["UserController", "data"])->setName('api.user.data');
 
     $this->get('/{id:[0-9]+}/show', ["UserController", "show"])->setName('user.show');
     $this->get('/search', ["UserController", "search"])->setName('user.search');

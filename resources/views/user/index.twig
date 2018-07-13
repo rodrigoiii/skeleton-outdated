@@ -53,7 +53,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: $.fn.dataTable.pipeline({
-            url: "{{ path_for('user.data') }}"
+            url: "{{ path_for('api.user.data') }}"
         }),
         columns: [
             {data: "id"},
