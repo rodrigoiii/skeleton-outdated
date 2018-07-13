@@ -5,6 +5,9 @@ return [
     'namespace'   => _env('APP_NAMESPACE', "App"),
     'environment' => _env('APP_ENV', "development"), // Options: development, production
     'key'         => _env('APP_KEY'),
+    'web_mode'    => _env('WEB_MODE'),
+    'use_dist'    => filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
+    'debug'       => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 
     # Default timezone
     'default_timezone' => "Asia/Manila",
@@ -14,15 +17,6 @@ return [
 
     # Determine route before application middleware
     'route_on' => true,
-
-    # Application either UP or DOWN(under construction)
-    'web_mode' => _env('WEB_MODE'),
-
-    # Commonly use for production
-    'use_dist' => filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
-
-    # Debug mode
-    'debug' => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 
     # Aliases
     'aliases' => [
