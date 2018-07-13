@@ -3,9 +3,9 @@
 return [
     'name'        => _env('APP_NAME', "App Name"),
     'namespace'   => _env('APP_NAMESPACE', "App"),
-    'environment' => _env('APP_ENV', "development"), // Options: development, production
+    'environment' => _env('APP_ENV', "development"),
     'key'         => _env('APP_KEY'),
-    'web_mode'    => _env('WEB_MODE'),
+    'app_mode'    => filter_var(_env('UP', false), FILTER_VALIDATE_BOOLEAN),
     'use_dist'    => filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
     'debug'       => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 
