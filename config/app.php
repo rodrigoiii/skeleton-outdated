@@ -1,13 +1,13 @@
 <?php
 
 return [
-    'name'        => _env('APP_NAME', "App Name"),
-    'namespace'   => _env('APP_NAMESPACE', "App"),
-    'environment' => _env('APP_ENV', "development"),
-    'key'         => _env('APP_KEY'),
-    'mode'        => filter_var(_env('APP_MODE', false), FILTER_VALIDATE_BOOLEAN),
-    'use_dist'    => filter_var(_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
-    'debug'       => filter_var(_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
+    'name'        => app_env('APP_NAME', "App Name"),
+    'namespace'   => app_env('APP_NAMESPACE', "App"),
+    'app_environment' => app_env('APP_ENV', "development"),
+    'key'         => app_env('APP_KEY'),
+    'mode'        => filter_var(app_env('APP_MODE', false), FILTER_VALIDATE_BOOLEAN),
+    'use_dist'    => filter_var(app_env('USE_DIST', false), FILTER_VALIDATE_BOOLEAN),
+    'debug'       => filter_var(app_env('DEBUG_ON', false), FILTER_VALIDATE_BOOLEAN),
 
     # Default timezone
     'default_timezone' => "Asia/Manila",
