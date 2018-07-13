@@ -1,4 +1,5 @@
-# Framework v1.6.7
+# slim-rodrigo v2.0.0-dev
+
 Build awesome application using this light but powerful micro framework.
 
 ## Installation
