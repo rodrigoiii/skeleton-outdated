@@ -978,12 +978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/slim-rodrigo-core.git",
-                "reference": "ef697525fb912e07251a35b28fcc8657ddffde16"
+                "reference": "286b31cd4aeaf877265e266f06e3c030f0ef2e33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/slim-rodrigo-core/zipball/ef697525fb912e07251a35b28fcc8657ddffde16",
-                "reference": "ef697525fb912e07251a35b28fcc8657ddffde16",
+                "url": "https://api.github.com/repos/rodrigoiii/slim-rodrigo-core/zipball/286b31cd4aeaf877265e266f06e3c030f0ef2e33",
+                "reference": "286b31cd4aeaf877265e266f06e3c030f0ef2e33",
                 "shasum": ""
             },
             "require": {
@@ -1025,7 +1025,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-07-14T07:43:32+00:00"
+            "time": "2018-07-14T08:27:47+00:00"
         },
         {
             "name": "slim/csrf",
