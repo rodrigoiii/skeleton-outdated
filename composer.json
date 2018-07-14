@@ -1,5 +1,5 @@
 {
-    "name": "rodrigoiii/framework",
+    "name": "rodrigoiii/slim-rodrigo",
     "description": "Build awesome application using this light but powerful micro framework.",
     "type": "project",
     "license": "MIT",
@@ -10,7 +10,6 @@
             "email": "rodrigogalura3rd@gmail.com"
         }
     ],
-    "minimum-stability": "alpha",
     "require": {
         "php": "^5.6.30 || ^7.0 || ^7.1",
         "rodrigoiii/framework-core": "dev-v1.5.0-dev"
@@ -45,6 +44,8 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true,
-        "php": "5.6.30"
+        "platform": {
+            "php": "5.6.30"
+        }
     }
 }
