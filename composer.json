@@ -28,11 +28,6 @@
             "app/helpers.php"
         ]
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Framework\\Tests\\": "tests"
-        }
-    },
     "scripts": {
         "post-create-project-cmd": [
             "php command generate:key"

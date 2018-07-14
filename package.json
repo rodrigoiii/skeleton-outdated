@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/rodrigoiii/framework#readme",
   "devDependencies": {
-    "web-dev-tools": "^3.4.2"
+    "web-dev-tools": "^3.5.0"
   },
   "dependencies": {
     "hoek": "^4.2.1"

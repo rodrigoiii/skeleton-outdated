@@ -20,8 +20,8 @@ return [
 
     # Aliases
     'aliases' => [
-        'Log'     => FrameworkCore\Utilities\Log::class,
-        'Session' => FrameworkCore\Utilities\Session::class,
+        'Log'     => SlimRodrigoCore\Utilities\Log::class,
+        'Session' => SlimRodrigoCore\Utilities\Session::class,
         'DB' => Illuminate\Database\Capsule\Manager::class
     ]
 ];

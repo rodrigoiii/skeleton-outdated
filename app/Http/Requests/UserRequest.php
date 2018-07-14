@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use FrameworkCore\BaseRequest;
+use SlimRodrigoCore\BaseRequest;
 use Respect\Validation\Validator as v;
 
 class UserRequest extends BaseRequest
