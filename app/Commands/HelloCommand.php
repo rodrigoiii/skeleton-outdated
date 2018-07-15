@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use SlimRodrigoCore\BaseCommand;
+use SkeletonCore\BaseCommand;
 use Symfony\Component\Console\Input\InputInterface as Input;
 use Symfony\Component\Console\Output\OutputInterface as Output;
 

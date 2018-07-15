@@ -1,6 +1,6 @@
 <?php
 
-$app = new SlimRodrigoCore\SlimRodrigo([
+$app = new SkeletonCore\App([
     'settings.displayErrorDetails' => config('app.debug'),
     'settings.addContentLengthHeader' => false, // disable the automatic addition of the Content-Length header in the response
     'settings.determineRouteBeforeAppMiddleware' => config('app.route_on'),

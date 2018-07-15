@@ -20,8 +20,8 @@ return [
 
     # Aliases
     'aliases' => [
-        'Log'     => SlimRodrigoCore\Utilities\Log::class,
-        'Session' => SlimRodrigoCore\Utilities\Session::class,
+        'Log' => SkeletonCore\Utilities\Log::class,
+        'Session' => SkeletonCore\Utilities\Session::class,
         'DB' => Illuminate\Database\Capsule\Manager::class
     ]
 ];

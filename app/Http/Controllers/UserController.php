@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use SlimRodrigoCore\BaseController;
-use SlimRodrigoCore\Utilities\DataTable;
+use SkeletonCore\BaseController;
+use SkeletonCore\Utilities\DataTable;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 

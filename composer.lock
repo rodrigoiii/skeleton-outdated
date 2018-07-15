@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aae6c337578427672e1ae77b9a713a4c",
+    "content-hash": "993bdb779ef703aa35cef96e3f66ec1d",
     "packages": [
         {
             "name": "carbondate/carbon",

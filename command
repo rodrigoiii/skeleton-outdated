@@ -6,7 +6,7 @@ if (PHP_SAPI !== "cli") die; // die if not using cli
 # composer autoload
 require __DIR__ . "/vendor/autoload.php";
 
-use SlimRodrigoCore\Console\Commands as Command;
+use SkeletonCore\Console\Commands as Command;
 use Symfony\Component\Console\Application;
 
 // include application
