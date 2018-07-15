@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "993bdb779ef703aa35cef96e3f66ec1d",
+    "content-hash": "df2eaa5a8055cb83d2929dd0b4756d4f",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -962,17 +962,17 @@
             "time": "2018-07-02T06:22:41+00:00"
         },
         {
-            "name": "rodrigoiii/framework-core",
+            "name": "rodrigoiii/skeleton-core",
             "version": "dev-v1.5.0-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rodrigoiii/slim-rodrigo-core.git",
-                "reference": "286b31cd4aeaf877265e266f06e3c030f0ef2e33"
+                "url": "https://github.com/rodrigoiii/skeleton-core.git",
+                "reference": "5efc4523ad60cef98d505585341113ed962f2504"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/slim-rodrigo-core/zipball/286b31cd4aeaf877265e266f06e3c030f0ef2e33",
-                "reference": "286b31cd4aeaf877265e266f06e3c030f0ef2e33",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/5efc4523ad60cef98d505585341113ed962f2504",
+                "reference": "5efc4523ad60cef98d505585341113ed962f2504",
                 "shasum": ""
             },
             "require": {
@@ -990,7 +990,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SlimRodrigoCore\\": "src/classes"
+                    "SkeletonCore\\": "src/classes"
                 },
                 "files": [
                     "src/environment.php",
@@ -1007,14 +1007,14 @@
                     "email": "rodrigogalura3rd@gmail.com"
                 }
             ],
-            "description": "This project belongs to rodrigoiii/slim-rodrigo.",
+            "description": "This project belongs to rodrigoiii/skeleton.",
             "keywords": [
                 "framework",
                 "micro framework",
                 "php",
                 "slim"
             ],
-            "time": "2018-07-14T08:27:47+00:00"
+            "time": "2018-07-15T11:21:41+00:00"
         },
         {
             "name": "slim/csrf",
@@ -2148,7 +2148,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "rodrigoiii/framework-core": 20
+        "rodrigoiii/skeleton-core": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
