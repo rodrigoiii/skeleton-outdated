@@ -3,10 +3,10 @@
   "version": "1.1.0",
   "description": "Build awesome application using this light but powerful micro framework.",
   "scripts": {
-    "dev": "node node_modules/.bin/wdt scripts && node node_modules/.bin/wdt sass",
-    "watch": "node node_modules/.bin/wdt watch",
-    "build:up": "node node_modules/.bin/wdt build:dist",
-    "build:down": "node node_modules/.bin/wdt delete:dist",
+    "dev": "node node_modules/.bin/sponge scripts && node node_modules/.bin/sponge sass",
+    "watch": "node node_modules/.bin/sponge watch",
+    "build:up": "node node_modules/.bin/sponge build:dist",
+    "build:down": "node node_modules/.bin/sponge delete:dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -41,7 +41,7 @@
   },
   "homepage": "https://github.com/rodrigoiii/framework#readme",
   "devDependencies": {
-    "web-dev-tools": "^3.5.0"
+    "sponge-rod": "^3.6.0"
   },
   "dependencies": {
     "hoek": "^4.2.1"
