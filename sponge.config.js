@@ -1,61 +1,60 @@
+var fs = require("fs-extra");
+
 module.exports = {
     debug: false,
 
     sass: {
-        command: "sass",
-        watch_command: "sass:watch",
-        dir: "resources/assets/sass",
-        dest: "public/css",
-        sources: ["**/*.scss"]
+        src: "resources/assets/sass/**/*.scss",
+        dest: "public/css"
     },
 
     scripts: {
-        command: "scripts",
-        watch_command: "scripts:watch",
-        dir: "resources/assets/js",
+        src: "resources/assets/js/**/*.js",
         dest: "public/js",
-        sources: ["**/*.js"]
     },
 
-    build: {
-        views: {
-            command: "build:views",
-            dir: "resources/views",
-            sources: [
-                "**/*.html",
-                "**/*.twig"
-            ],
-            search_path: "public",
-            dest: ""
-        },
+    build_views: {
+        src: "resources/views/**/*.twig",
+        dest: "resources/dist-views",
+        useref_options: {
+            searchPath: "public"
+        }
+    },
 
-        images: {
-            command: "build:images",
-            dir: "public",
-            sources: [
-                "**/*.jpg",
-                "**/*.png",
-                "**/*.gif"
-            ],
-            flatten: false,
-            dest: "img"
-        },
+    build_images: {
+        src: [
+            "public/**/*.jpg",
+            "public/**/*.png",
+            "public/**/*.gif",
+        ],
+        dest: "public/dist/img",
+        use_flatten: false
+    },
 
-        fonts: {
-            command: "build:fonts",
-            dir: "public",
-            flatten: true,
-            sources: [
-                "**/*.eot",
-                "**/*.svg",
-                "**/*.ttf",
-                "**/*.woff",
-                "**/*.woff2",
-                "**/*.otf"
-            ],
-            dest: "fonts"
-        },
+    build_fonts: {
+        src: [
+            "public/**/*.eot",
+            "public/**/*.svg",
+            "public/**/*.ttf",
+            "public/**/*.woff",
+            "public/**/*.woff2",
+            "public/**/*.otf"
+        ],
+        dest: "public/dist/fonts",
+        use_flatten: true
+    },
 
-        dist: "resources/dist-views"
+    unbuild_dir: ["public/dist", "resources/dist-views"],
+
+    build_callback: function() {
+        fs.copy("resources/dist-views/dist", "public/dist", function(err) {
+            if (err) return console.error(err);
+
+            fs.remove("resources/dist-views/dist");
+        });
+    },
+
+    unbuild_callback: function() {
+        console.log("unbuild callback");
     }
 };

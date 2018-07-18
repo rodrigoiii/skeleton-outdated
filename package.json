@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "node node_modules/.bin/sponge scripts && node node_modules/.bin/sponge sass",
     "watch": "node node_modules/.bin/sponge watch",
-    "build:up": "node node_modules/.bin/sponge build:dist",
-    "build:down": "node node_modules/.bin/sponge delete:dist",
+    "build": "node node_modules/.bin/sponge build",
+    "unbuild": "node node_modules/.bin/sponge unbuild",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -41,7 +41,8 @@
   },
   "homepage": "https://github.com/rodrigoiii/framework#readme",
   "devDependencies": {
-    "sponge-rod": "^3.6.0"
+    "fs-extra": "^7.0.0",
+    "sponge-rod": "^3.7.2"
   },
   "dependencies": {
     "hoek": "^4.2.1"
