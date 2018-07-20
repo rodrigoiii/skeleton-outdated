@@ -5,7 +5,6 @@ namespace App\Controllers;
 use App\Requests\UserRequest;
 use App\Models\User;
 use SkeletonCore\BaseController;
-use SkeletonCore\Utilities\DataTable;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -32,11 +31,10 @@ class UserController extends BaseController
     public function data(Request $request, Response $response)
     {
         $data = $request->getParams();
-        $select = \DB::table('users');
+        $query_builder = \DB::table('users');
         $columns = ['id', 'first_name', 'last_name', 'email'];
 
-        $dataTable = new DataTable($data, $select, $columns);
-        return $response->withJson($dataTable->getResponse());
+        return $response->withJson(datatable($data, $query_builder, $columns));
     }
 
     /**
