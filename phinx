@@ -1,0 +1,2 @@
+#!/usr/bin/env php
+<?php system("./vendor/bin/" . array_shift($argv) . " " . implode(" ", $argv) . " --ansi");
