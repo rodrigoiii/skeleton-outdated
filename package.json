@@ -1,7 +1,7 @@
 {
-  "name": "framework",
-  "version": "1.1.0",
-  "description": "Build awesome application using this light but powerful micro framework.",
+  "name": "skeleton",
+  "version": "2.0.0",
+  "description": "Skeleton is a model view controller(mvc) pattern built on slim3.",
   "scripts": {
     "dev": "node node_modules/.bin/sponge scripts && node node_modules/.bin/sponge sass",
     "watch": "node node_modules/.bin/sponge watch",
@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rodrigoiii/framework.git"
+    "url": "git+https://github.com/rodrigoiii/skeleton.git"
   },
   "keywords": [
     "micro framework",
-    "framework",
+    "skeleton",
     "slim",
     "php",
     "webpack",
@@ -37,9 +37,9 @@
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rodrigoiii/framework/issues"
+    "url": "https://github.com/rodrigoiii/skeleton/issues"
   },
-  "homepage": "https://github.com/rodrigoiii/framework#readme",
+  "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
     "fs-extra": "^7.0.0",
     "sponge-rod": "^3.7.2"
