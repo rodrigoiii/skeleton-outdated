@@ -967,12 +967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "5efc4523ad60cef98d505585341113ed962f2504"
+                "reference": "f2e467e991ca2c0fceeaa3f0984bc87d15ee7419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/5efc4523ad60cef98d505585341113ed962f2504",
-                "reference": "5efc4523ad60cef98d505585341113ed962f2504",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/f2e467e991ca2c0fceeaa3f0984bc87d15ee7419",
+                "reference": "f2e467e991ca2c0fceeaa3f0984bc87d15ee7419",
                 "shasum": ""
             },
             "require": {
@@ -1014,7 +1014,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-07-15T11:21:41+00:00"
+            "time": "2018-07-16T09:09:01+00:00"
         },
         {
             "name": "slim/csrf",
