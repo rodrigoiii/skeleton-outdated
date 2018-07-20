@@ -14,6 +14,7 @@ The docs is not yet available. I will make it if this project get 50 stars.
 * The controller class should has suffix 'Controller'.
 * The middleware class should has suffix 'Middleware'.
 * The request class should has suffix 'Request'.
+* When you remove the Validation Rule, delete Validation Exception also.
 
 ## License
 My Framework is released under the MIT Licence. See the bundled LICENSE file for details.
