@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Requests;
 
 use SkeletonCore\BaseRequest;
 use Respect\Validation\Validator as v;
