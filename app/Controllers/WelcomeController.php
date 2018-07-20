@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Controllers;
 
 use SkeletonCore\BaseController;
 use Psr\Http\Message\ServerRequestInterface as Request;

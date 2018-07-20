@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Controllers;
 
-use App\Http\Requests\UserRequest;
+use App\Requests\UserRequest;
 use App\Models\User;
 use SkeletonCore\BaseController;
 use SkeletonCore\Utilities\DataTable;
