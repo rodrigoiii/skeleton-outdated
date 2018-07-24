@@ -36,6 +36,15 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/node_modules/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/node_modules/bootbox/bootbox.js"></script>
+<script type="text/javascript" src="/node_modules/underscore/underscore.js"></script>
+
+<!-- build:js /dist/js/datatable-pipeline.js -->
+<script type="text/javascript" src="/js/datatable-pipeline.js"></script>
+<!-- endbuild -->
+
 <script type="text/javascript">
 $(document).ready(function() {
     $('#user-table').on('click', '.delete-user', function(event) {

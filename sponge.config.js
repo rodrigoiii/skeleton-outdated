@@ -9,7 +9,10 @@ module.exports = {
     },
 
     scripts: {
-        src: "resources/assets/js/app.js",
+        src: [
+            "resources/assets/js/app.js",
+            "resources/assets/js/BuiltIn/lib/**/*.js"
+        ],
         dest: "public/js",
     },
 

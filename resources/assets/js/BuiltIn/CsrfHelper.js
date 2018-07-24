@@ -1,4 +1,10 @@
 var CsrfHelper = {
+
+    /**
+     * Ajax setup that changing token every sending request.
+     *
+     * @return void
+     */
     init: function() {
         $.ajaxSetup({
             complete: function (jqXHR)
@@ -12,8 +18,8 @@ var CsrfHelper = {
     /**
      * Helper function to use post request via ajax.
      *
-     * @param  json data
-     * @return json data with csrf token
+     * @param  object data
+     * @return object data with csrf token
      */
     postWithToken: function(data) {
         var csrf = {};
