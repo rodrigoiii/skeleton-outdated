@@ -8,7 +8,7 @@ class User extends Model
 {
     /**
      * Define fillable columns to avoid
-     * mass assignment exception
+     * mass assignment exception.
      *
      * @var array
      */
@@ -26,7 +26,7 @@ class User extends Model
 
     /**
      * Update the user info and return if data
-     * were modified
+     * were modified.
      *
      * @param  integer $id
      * @param  array $data
