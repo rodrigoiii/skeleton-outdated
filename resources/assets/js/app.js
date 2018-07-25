@@ -1,9 +1,9 @@
-var Bs3Defaults = require("./BuiltIn/Bs3Defaults");
+var Default = require("./Requests/Default");
 var UserRequest = require("./Requests/UserRequest");
 
 var App = {
     init: function() {
-        $.validator.setDefaults(Bs3Defaults);
+        $.validator.setDefaults(Default);
         $('form').validate(UserRequest.toJSON());
     }
 };

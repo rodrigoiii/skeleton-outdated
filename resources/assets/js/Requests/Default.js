@@ -1,9 +1,10 @@
 /**
- * Bootstrap3 template to be use as defaults in jQuery validation library.
+ * This default settings would be use of `setDefaults` function of jQuery validation library.
  *
  * @type object
+ * @template bootstrap 3
  */
-var Bs3Defaults = {
+var Default = {
     errorElement: "span",
     errorClass: "help-block",
 
