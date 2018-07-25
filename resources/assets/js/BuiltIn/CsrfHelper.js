@@ -1,5 +1,4 @@
 var CsrfHelper = {
-
     /**
      * Ajax setup that changing token every sending request.
      *

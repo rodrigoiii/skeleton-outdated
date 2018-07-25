@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
+    /**
+     * Define fillable columns to avoid
+     * mass assignment exception
+     *
+     * @var array
+     */
     protected $fillable = ["first_name", "last_name", "email"];
 
     /**
      * Return table id
+     *
      * @return integer
      */
     public function getId()
@@ -17,6 +24,14 @@ class User extends Model
         return $this->id;
     }
 
+    /**
+     * Update the user info and return if data
+     * were modified
+     *
+     * @param  integer $id
+     * @param  array $data
+     * @return boolean
+     */
     public static function _update($id, array $data)
     {
         $user = static::find($id);
