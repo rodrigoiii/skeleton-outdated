@@ -61,9 +61,9 @@ $(document).ready(function() {
     $('#user-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: $.fn.dataTable.pipeline({
+        ajax: {
             url: "{{ path_for('api.user.data') }}"
-        }),
+        },
         columns: [
             {data: "id"},
             {data: "first_name"},

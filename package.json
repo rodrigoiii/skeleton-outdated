@@ -42,7 +42,7 @@
   "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
     "fs-extra": "^7.0.0",
-    "sponge-rod": "^3.7.2"
+    "sponge-rod": "^3.8.0"
   },
   "dependencies": {
     "hoek": "^4.2.1"
