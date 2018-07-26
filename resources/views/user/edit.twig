@@ -13,7 +13,7 @@
 
                 <div class="form-group has-feedback {{ errors ? errors.first_name ? "has-error" : "has-success" }}">
                     <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" class="form-control" value="{{ oldInput.first_name ?: user.first_name }}" autofocus>
+                    <input type="text" name="first_name" class="form-control" value="{{ oldInput.first_name ?: user.first_name }}" autofocus />
                     {% if errors %}
                     <span class="glyphicon {{ errors.first_name ? "glyphicon-remove" : "glyphicon-ok" }} form-control-feedback"></span>
                     {% endif %}
@@ -22,7 +22,7 @@
 
                 <div class="form-group has-feedback {{ errors ? errors.last_name ? "has-error" : "has-success" }}">
                     <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name" class="form-control" value="{{ oldInput.last_name ?: user.last_name }}" autofocus>
+                    <input type="text" name="last_name" class="form-control" value="{{ oldInput.last_name ?: user.last_name }}" />
                     {% if errors %}
                     <span class="glyphicon {{ errors.last_name ? "glyphicon-remove" : "glyphicon-ok" }} form-control-feedback"></span>
                     {% endif %}
@@ -31,7 +31,7 @@
 
                 <div class="form-group has-feedback {{ errors ? errors.email ? "has-error" : "has-success" }}">
                     <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" value="{{ oldInput.email ?: user.email }}" autofocus>
+                    <input type="text" name="email" class="form-control" value="{{ oldInput.email ?: user.email }}" />
                     {% if errors %}
                     <span class="glyphicon {{ errors.email ? "glyphicon-remove" : "glyphicon-ok" }} form-control-feedback"></span>
                     {% endif %}
