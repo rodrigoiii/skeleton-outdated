@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "df2eaa5a8055cb83d2929dd0b4756d4f",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/CarbonDate/Carbon.git",
-                "reference": "1aeda6559fd581a9d9802f5b1eaed38a8b29a935"
+                "reference": "17b705138bea7ee973d433ba6790d42c7254ba06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CarbonDate/Carbon/zipball/1aeda6559fd581a9d9802f5b1eaed38a8b29a935",
-                "reference": "1aeda6559fd581a9d9802f5b1eaed38a8b29a935",
+                "url": "https://api.github.com/repos/CarbonDate/Carbon/zipball/17b705138bea7ee973d433ba6790d42c7254ba06",
+                "reference": "17b705138bea7ee973d433ba6790d42c7254ba06",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-02-08T15:32:32+00:00"
+            "time": "2018-02-08T08:46:43+00:00"
         },
         {
             "name": "container-interop/container-interop",

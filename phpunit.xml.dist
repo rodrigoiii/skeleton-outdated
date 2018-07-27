@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="./vendor/autoload.php"
+    colors="true">
+
+    <testsuites>
+        <testsuite name="Unit Testing">
+            <directory suffix="Test.php">./tests/Units</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <env name="DB_HOST" value="localhost" />
+        <env name="DB_PORT" value="3306" />
+        <env name="DB_USERNAME" value="root" />
+        <env name="DB_PASSWORD" value="" />
+        <env name="DB_NAME" value="" />
+    </php>
+</phpunit>
