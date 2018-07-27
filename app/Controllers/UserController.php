@@ -75,11 +75,11 @@ class UserController extends BaseController
         $result = User::create([
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
-            'email' => $input['email'],
+            'email' => $input['email']
         ]);
 
         flash($result instanceof User,
-            ['success' => "Successfully Created User"],
+            ['success' => "Successfully created user."],
             ['danger' => "Cannot create user this time."]
         );
 
