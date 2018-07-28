@@ -3,7 +3,7 @@
     "description": "Skeleton is a model view controller(mvc) pattern built on slim3.",
     "type": "project",
     "license": "MIT",
-    "keywords": ["micro framework", "framework", "slim", "php"],
+    "keywords": ["project", "micro framework", "framework", "slim", "php"],
     "authors": [
         {
             "name": "Rodrigo Galura III",
@@ -24,7 +24,6 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
-            ,"PageBlocker\\": "PageBlocker/"
         },
         "files": [
             "app/helpers.php"

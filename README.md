@@ -17,4 +17,4 @@ The docs is not yet available. I will make it if this project get 50 stars.
 * When you remove the Validation Rule, delete Validation Exception also.
 
 ## License
-My Framework is released under the MIT Licence. See the bundled LICENSE file for details.
+This project is released under the MIT Licence. See the bundled LICENSE file for details.
