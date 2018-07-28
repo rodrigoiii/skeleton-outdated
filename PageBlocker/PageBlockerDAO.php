@@ -11,7 +11,7 @@ class PageBlockerDAO
     private $block_time;
     private $attempt_length;
 
-    public function __construct($db_config, $table, $block_time=60*30, $attempt_length=5)
+    public function __construct($db_config, $table, $block_time, $attempt_length)
     {
         $this->db = new \mysqli(
             $db_config['host'],
@@ -38,7 +38,7 @@ class PageBlockerDAO
     public function createTableIfNotExist()
     {
         $table = $this->getTable();
-        $query = "CREATE TABLE IF NOT EXISTS `{$table}` (
+        $create_table_query = "CREATE TABLE IF NOT EXISTS `{$table}` (
                       `id` int(11) NOT NULL AUTO_INCREMENT,
                       `uri` tinytext NOT NULL,
                       `ip_address` varchar(20) NOT NULL,
@@ -47,13 +47,20 @@ class PageBlockerDAO
                     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
                     ";
 
-        $this->db->query($query);
+        $result = $this->db->query($create_table_query);
+
+        // invalid mysql query
+        if ($result === false) throw new \Exception("Invalid mysql query {$create_table_query}", 1);
     }
 
     public function getAll()
     {
         $table = $this->getTable();
-        $result = $this->db->query("SELECT * FROM {$table}");
+        $select_query = "SELECT * FROM {$table}";
+        $result = $this->db->query($select_query);
+
+        // invalid mysql query
+        if ($result === false) throw new \Exception("Invalid mysql query {$select_query}", 1);
 
         $rows = [];
         if ($result->num_rows > 0)
@@ -73,11 +80,14 @@ class PageBlockerDAO
         $table = $this->getTable();
 
         $parse_url = parse_url($_SERVER['REQUEST_URI']);
-        $uri = $parse_url['path'];
-        $ip = Helper::getUserIp();
+        $uri = Helper::getURI();
+        $ip = Helper::getUserIP();
 
-        $result = $this->db->query("SELECT * FROM {$table}
-                            WHERE `uri`='{$uri}' AND `ip_address`='{$ip}' {$chain_query}");
+        $select_query = "SELECT * FROM {$table} WHERE `uri`='{$uri}' AND `ip_address`='{$ip}' {$chain_query}";
+        $result = $this->db->query($select_query);
+
+        // invalid mysql query
+        if ($result === false) throw new \Exception("Invalid mysql query: {$select_query}'", 1);
 
         $rows = [];
         if ($result->num_rows > 0)
@@ -96,30 +106,30 @@ class PageBlockerDAO
     {
         $table = $this->getTable();
 
-        $parse_url = parse_url($_SERVER['REQUEST_URI']);
-        $uri = $parse_url['path'];
-        $ip = Helper::getUserIp();
+        $uri = Helper::getURI();
+        $ip = Helper::getUserIP();
 
         $insert_query = "INSERT INTO `{$table}`(`uri`, `ip_address`, `created_at`)
                         VALUES('{$uri}', '{$ip}', '".date('Y-m-d h:i:s')."')";
 
-        $is_inserted = $this->db->query($insert_query);
+        $result = $this->db->query($insert_query);
 
-        return $is_inserted;
+        // invalid mysql query
+        if ($result === false) throw new \Exception("Invalid mysql query {$insert_query}", 1);
     }
 
     public function reset()
     {
         $table = $this->getTable();
 
-        $parse_url = parse_url($_SERVER['REQUEST_URI']);
-        $uri = $parse_url['path'];
-        $ip = Helper::getUserIp();
+        $uri = Helper::getURI();
+        $ip = Helper::getUserIP();
 
         $delete_query = "DELETE FROM {$table} WHERE `uri`='{$uri}' AND `ip_address`='{$ip}'";
-        $is_deleted = $this->db->query($delete_query);
+        $result = $this->db->query($delete_query);
 
-        return $is_deleted;
+        // invalid mysql query
+        if ($result === false) throw new \Exception("Invalid mysql query {$delete_query}", 1);
     }
 
     public function isAuthorize()
@@ -127,12 +137,12 @@ class PageBlockerDAO
         $is_authorized = true;
         $table = $this->getTable();
 
-        $parse_url = parse_url($_SERVER['REQUEST_URI']);
-        $uri = $parse_url['path'];
-        $ip = Helper::getUserIp();
+        $uri = Helper::getURI();
+        $ip = Helper::getUserIP();
 
         $rows = $this->get("ORDER BY created_at DESC");
-        if (!is_null($rows))
+
+        if (!empty($rows))
         {
             $last_row = $rows[0];
 
@@ -144,17 +154,13 @@ class PageBlockerDAO
             if ($now >= $created_at)
             {
                 $this->reset();
-                goto authorized;
             }
-
-            dump_die(count($rows));
-
-            \Log::debug(count($rows) ." <= ". $this->attempt_length);
-
-            $is_authorized = count($rows) <= $this->attempt_length;
+            else
+            {
+                $is_authorized = count($rows) < $this->attempt_length;
+            }
         }
 
-        authorized:
         return $is_authorized;
     }
 }

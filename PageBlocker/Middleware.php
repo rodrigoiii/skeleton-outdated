@@ -8,11 +8,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Middleware
 {
+    protected $glob_uri;
     protected $settings;
+    protected $callback;
 
-    public function __construct($settings)
+    public function __construct($glob_uri, $settings, $callback)
     {
+        $this->glob_uri = $glob_uri;
         $this->settings = $settings;
+        $this->callback = $callback;
     }
 
     /**
@@ -25,15 +29,17 @@ class Middleware
      */
     public function __invoke(Request $request, Response $response, callable $next)
     {
-        $url = $request->getUri()->getPath();
+        $silent_error = isset($this->settings['silent_error']) ? $this->settings['silent_error'] : false;
+        $silent_callback = isset($this->callback['silent_callback']) ? $this->callback['silent_callback'] : function() { exit("PageBlocker not worked properly."); };
+        $block_time = isset($this->settings['block_time']) ? $this->settings['block_time'] : 60 * 30;
+        $attempt_length = isset($this->settings['attempt_length']) ? $this->settings['attempt_length'] : 5;
 
         try {
-            if (!isset($this->settings['db-config'])) throw new \Exception("PageBlocker Error: db-config key is missing.", 1);
+            if (!isset($this->settings['db_config'])) throw new \Exception("PageBlocker Error: db_config key is missing.", 1);
             if (!isset($this->settings['table'])) throw new \Exception("PageBlocker Error: table key is missing.", 1);
-            if (!isset($this->settings['glob-url'])) throw new \Exception("PageBlocker Error: glob-url key is missing.", 1);
-            if (!isset($this->settings['unauthorizedCallback'])) throw new \Exception("PageBlocker Error: unauthorizedCallback key is missing.", 1);
+            if (!isset($this->callback['unauthorized_callback'])) throw new \Exception("PageBlocker Error: unauthorized_callback key is missing.", 1);
 
-            $pageBlocker = new PageBlockerDAO($this->settings['db-config'], $this->settings['table']);
+            $pageBlocker = new PageBlockerDAO($this->settings['db_config'], $this->settings['table'], $block_time, $attempt_length);
 
             // throw error if not connected in database.
             if ($pageBlocker->getDB()->connect_errno !== 0) throw new \Exception($pageBlocker->getDB()->connect_error, 1);
@@ -41,19 +47,25 @@ class Middleware
             // create table for page blocker if not yet existing
             $pageBlocker->createTableIfNotExist($this->settings['table']);
 
-            if (strpos($url, $this->settings['glob-url']) === 0)
+            if (strpos(Helper::getURI(), $this->glob_uri) === 0)
             {
-                if ($pageBlocker->isAuthorize())
+                if (!$pageBlocker->isAuthorize())
                 {
-                    $pageBlocker->add();
+                    $this->callback['unauthorized_callback']();
+                    exit;
                 }
-                else
-                {
-                    $this->settings['unauthorizedCallback']();
-                }
+
+                $pageBlocker->add();
             }
         } catch (\Exception $e) {
-            exit("<pre>".$e);
+            if (!$silent_error)
+            {
+                exit("<pre>".$e);
+            }
+            else
+            {
+                $silent_callback();
+            }
         }
 
         return $next($request, $response);
