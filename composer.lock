@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "560ff80db3d3c863e6df58698fdc5e65ae214aca"
+                "reference": "a44622bb5a6f69151f1f2fbe34a37aac03923a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/560ff80db3d3c863e6df58698fdc5e65ae214aca",
-                "reference": "560ff80db3d3c863e6df58698fdc5e65ae214aca",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/a44622bb5a6f69151f1f2fbe34a37aac03923a3e",
+                "reference": "a44622bb5a6f69151f1f2fbe34a37aac03923a3e",
                 "shasum": ""
             },
             "require": {
@@ -1059,11 +1059,7 @@
             "autoload": {
                 "psr-4": {
                     "SkeletonCore\\": "src/classes"
-                },
-                "files": [
-                    "src/environment.php",
-                    "src/functions/function.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1082,7 +1078,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-07-27T12:02:47+00:00"
+            "time": "2018-07-29T15:15:02+00:00"
         },
         {
             "name": "slim/csrf",
