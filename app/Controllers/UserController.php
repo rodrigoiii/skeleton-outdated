@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-use App\Requests\UserRequest;
 use App\Models\User;
-use SkeletonCore\BaseController;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Requests\UserRequest;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use SkeletonCore\BaseController;
 
 class UserController extends BaseController
 {
