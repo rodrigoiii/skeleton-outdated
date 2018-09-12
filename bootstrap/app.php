@@ -1,6 +1,6 @@
 <?php
 
-SkeletonCore\Autoload::start();
+SkeletonCore\App::loadEnvironment();
 
 $app = new SkeletonCore\App([
     'settings.displayErrorDetails' => config('app.debug'),
