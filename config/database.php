@@ -3,8 +3,8 @@
 return [
     'database_connection' => [
         'mysql' => [
-            'host' => app_env('DB_HOSTNAME', "localhost"),
-            'port' => app_env('DB_PORT', "3306"),
+            'host'     => app_env('DB_HOSTNAME', "localhost"),
+            'port'     => app_env('DB_PORT', "3306"),
             'username' => app_env('DB_USERNAME', "root"),
             'password' => app_env('DB_PASSWORD'),
             'database' => app_env('DB_NAME'),

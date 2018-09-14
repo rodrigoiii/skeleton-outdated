@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0495ec260262687c78534bfe9d03a025",
+    "content-hash": "2adb8233d9b6ff2857bcd703d9b528ee",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -1027,16 +1027,16 @@
         },
         {
             "name": "rodrigoiii/skeleton-core",
-            "version": "v1.5.0",
+            "version": "dev-v1.6.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "eee9dd553758089dd0e7da0310a716b08ce91079"
+                "reference": "377461431c48fa1e8206268e3726786336e605c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/eee9dd553758089dd0e7da0310a716b08ce91079",
-                "reference": "eee9dd553758089dd0e7da0310a716b08ce91079",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/377461431c48fa1e8206268e3726786336e605c2",
+                "reference": "377461431c48fa1e8206268e3726786336e605c2",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-09-12T07:42:46+00:00"
+            "time": "2018-09-12T09:17:23+00:00"
         },
         {
             "name": "slim/csrf",
@@ -3478,7 +3478,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rodrigoiii/skeleton-core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
