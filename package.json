@@ -7,8 +7,8 @@
     "watch": "node node_modules/.bin/sponge watch",
     "build": "node node_modules/.bin/sponge build",
     "unbuild": "node node_modules/.bin/sponge unbuild",
-
-    "pretest": "phplint app/**/*.php && phplint bootstrap/app.php && phplint config/*.php && phplint routes/*.php && phplint system/*.php"
+    "pretest": "phplint app/**/*.php && phplint bootstrap/app.php && phplint config/*.php && phplint routes/*.php && phplint system/*.php",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -43,6 +43,7 @@
   "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
     "fs-extra": "^7.0.0",
+    "mocha": "^5.2.0",
     "phplint": "^2.0.0",
     "sponge-rod": "^3.8.0"
   },
