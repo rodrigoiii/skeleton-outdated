@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use SkeletonCore\BaseController;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use SkeletonCore\BaseController;
 
 class WelcomeController extends BaseController
 {
