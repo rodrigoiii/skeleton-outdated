@@ -24,6 +24,8 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/"
+
+            ,"SkeletonAuth\\": "app/Auth"
         },
         "files": [
             "app/helpers.php"
