@@ -1,2 +1,4 @@
-// import "jquery";
-// import "public/node_modules/bootstrap-sass/assets/javascripts/bootstrap/dropdown";
+window.jQuery = require("jquery");
+require("bootstrap/js/transition");
+require("bootstrap/js/collapse");
+require("bootstrap/js/dropdown");
