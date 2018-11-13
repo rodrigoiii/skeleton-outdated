@@ -14,22 +14,34 @@ class UserSeeder extends AbstractSeed
 
         for ($i = 1; $i <= $limit; $i++)
         {
-            $email = $faker->email;
+            $unique_email = $this->getUniqueEmail();
 
-            try {
-                $data[] = [
-                    'first_name' => $faker->firstName,
-                    'last_name' => $faker->lastName,
-                    'email' => $email,
-                    'password' => password_hash($email, PASSWORD_DEFAULT),
-                ];
+            $data = [
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+                'email' => $unique_email,
+                'password' => password_hash($unique_email, PASSWORD_DEFAULT),
+            ];
 
-                echo __CLASS__ . " => {$i}/{$limit}\n";
-            } catch (Exception $e) {
-                echo $e->getMessage() . PHP_EOL;
-            }
+            echo __CLASS__ . " => {$i}/{$limit}\n";
+
+            $this->insert('users', $data);
         }
+    }
 
-        $this->insert('users', $data);
+    private function getUniqueEmail()
+    {
+        $faker = Factory::create();
+
+        $result = $this->query("SELECT * FROM users");
+        $users = $result->fetchAll();
+        $result->closeCursor();
+        $user_emails = array_column($users, 'email');
+
+        do {
+            $unique_email = $faker->email;
+        } while (in_array($unique_email, $user_emails));
+
+        return $unique_email;
     }
 }
