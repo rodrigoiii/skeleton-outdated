@@ -2,6 +2,7 @@
 
 namespace SkeletonAuth;
 
+use App\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -12,8 +13,8 @@ trait RegisterTrait
         return $this->view->render($response, "auth/register.twig");
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(RegisterRequest $_request)
     {
-        !d($request->getParams());
+        !d($_request->getParams());
     }
 }

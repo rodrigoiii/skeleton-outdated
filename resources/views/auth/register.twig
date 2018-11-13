@@ -9,29 +9,51 @@
             <form method="POST" action="{{ path_for('auth.register') }}">
                 {{ csrf.field | raw }}
 
+                {{ errors | json_encode }}
+
                 <div class="form-group">
-                    <label for="first-name">First Name</label>
-                    <input type="text" name="first-name" class="form-control" />
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" class="form-control" value="{{ old_input.first_name }}" />
+
+                    {% if errors.first_name is not empty %}
+                        <span class="help-block">{{ errors.first_name | first }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
-                    <label for="last-name">Last Name</label>
-                    <input type="text" name="last-name" class="form-control" />
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" value="{{ old_input.last_name }}" />
+
+                    {% if errors.last_name is not empty %}
+                        <span class="help-block">{{ errors.last_name | first }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" />
+                    <input type="text" name="email" class="form-control" value="{{ old_input.email }}" />
+
+                    {% if errors.email is not empty %}
+                        <span class="help-block">{{ errors.email | first }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" autocomplete />
+
+                    {% if errors.password is not empty %}
+                        <span class="help-block">{{ errors.password | first }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
-                    <label for="confirm-password">Confirm Password</label>
-                    <input type="password" name="confirm-password" class="form-control" autocomplete />
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" class="form-control" autocomplete />
+
+                    {% if errors.confirm_password is not empty %}
+                        <span class="help-block">{{ errors.confirm_password | first }}</span>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
