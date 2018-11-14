@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h1 class="page-header">Register</h1>
 
-            <form method="POST" action="{{ path_for('auth.register') }}">
+            <form method="POST" action="{{ path_for('auth.register') }}" id="register-form">
                 {{ csrf.field | raw }}
 
                 {{ errors | json_encode }}
@@ -63,4 +63,9 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/js/register.js"></script>
+<script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
 {% endblock %}
