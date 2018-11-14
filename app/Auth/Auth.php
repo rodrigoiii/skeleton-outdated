@@ -20,4 +20,17 @@ class Auth
             return false;
         }
     }
+
+    public static function user()
+    {
+        return User::find(1); // assume user id 1 is authenticated
+
+
+        if (!is_null(\Session::get('auth_user_id')))
+        {
+            return User::find(\Session::get('auth_user_id'));
+        }
+
+        return null;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace SkeletonAuth;
 
+use App\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -12,8 +13,17 @@ trait ChangePasswordTrait
         return $this->view->render($response, "auth/change-password.twig");
     }
 
-    public function postChangePassword()
+    public function postChangePassword(ChangePasswordRequest $_request, Response $response)
     {
-        dump_die("hello world");
+        $input = $_request->getParams();
+
+        $user = Auth::user();
+
+        if (password_verify($input['current_password'], $user->password))
+        {
+            die("success");
+        }
+
+        return $response->withRedirect($this->router->pathFor('auth.change-password'));
     }
 }
