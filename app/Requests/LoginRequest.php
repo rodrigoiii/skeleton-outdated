@@ -5,7 +5,7 @@ namespace App\Requests;
 use Respect\Validation\Validator as v;
 use SkeletonCore\BaseRequest;
 
-class RegisterRequest extends BaseRequest
+class LoginRequest extends BaseRequest
 {
     /**
      * Create rules using Respect Validation Library
@@ -15,11 +15,8 @@ class RegisterRequest extends BaseRequest
     public function rules()
     {
         $rules = [
-            'first_name' => v::notEmpty()->stringType(),
-            'last_name' => v::notEmpty()->stringType(),
             'email' => v::notEmpty()->email(),
-            'password' => v::notEmpty()->passwordStrength(),
-            'confirm_password' => v::notEmpty()->passwordMatch($this->request->getParam('password'))
+            'password' => v::notEmpty()->passwordStrength()
         ];
 
         return $rules;

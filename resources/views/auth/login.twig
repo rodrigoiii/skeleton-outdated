@@ -9,6 +9,8 @@
             <form method="POST" action="{{ path_for('auth.login') }}">
                 {{ csrf.field | raw }}
 
+                {{ errors | json_encode }}
+
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="text" name="email" class="form-control" />

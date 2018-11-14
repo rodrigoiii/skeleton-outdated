@@ -2,6 +2,7 @@
 
 namespace SkeletonAuth;
 
+use App\Requests\LoginRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonAuth\Auth;
@@ -13,9 +14,9 @@ trait LoginTrait
         return $this->view->render($response, "auth/login.twig");
     }
 
-    public function postLogin(Request $request, Response $response)
+    public function postLogin(LoginRequest $_request, Response $response)
     {
-        $input = $request->getParams();
+        $input = $_request->getParams();
 
         if (Auth::check($input['email'], $input['password']))
         {
