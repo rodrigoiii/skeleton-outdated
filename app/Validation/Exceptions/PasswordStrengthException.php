@@ -27,24 +27,24 @@ class PasswordStrengthException extends ValidationException
         $input = $this->getParam('input');
 
         if (strlen($input) < $this->getParam('min_length'))
+        {
             return self::MIN_LENGTH;
-        if (preg_match_all("/[a-z]/", $input) < $this->getParam('lower'))
+        }
+        elseif (preg_match_all("/[a-z]/", $input) < $this->getParam('lower'))
+        {
             return self::LOWER;
-        if (preg_match_all("/[A-Z]/", $input) < $this->getParam('upper'))
+        }
+        elseif (preg_match_all("/[A-Z]/", $input) < $this->getParam('upper'))
+        {
             return self::UPPER;
-        if (preg_match_all("/[0-9]/", $input) < $this->getParam('number'))
+        }
+        elseif (preg_match_all("/[0-9]/", $input) < $this->getParam('number'))
+        {
             return self::NUMBER;
-        if ($this->filterSpecialCharacters($input) < $this->getParam('special_char'))
+        }
+        elseif (preg_match_all("/[^a-zA-Z0-9\s]/", $input) < $this->getParam('special_char'))
+        {
             return self::SPECIAL_CHAR;
-    }
-
-    private function filterSpecialCharacters($input)
-    {
-        preg_match_all("/\W/", $input, $matches);
-        $result = array_filter($matches[0], function ($char) {
-            return $char != " ";
-        });
-
-        return count($result);
+        }
     }
 }

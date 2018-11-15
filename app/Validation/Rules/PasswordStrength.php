@@ -26,17 +26,7 @@ class PasswordStrength extends AbstractRule
         return strlen($input) >= $this->min_length && // password length
         preg_match_all("/[a-z]/", $input) >= $this->lower && // lower case
         preg_match_all("/[A-Z]/", $input) >= $this->upper && // upper case
-        preg_match_all("/[0-9]/", $input) >= $this->number && // upper case
-        $this->filterSpecialCharacters($input) >= $this->special_char; // special characters
-    }
-
-    private function filterSpecialCharacters($input)
-    {
-        preg_match_all("/[^a-zA-Z0-9\s]/", $input, $matches);
-        $result = array_filter($matches[0], function ($char) {
-            return $char !== " ";
-        });
-
-        return count($result);
+        preg_match_all("/[0-9]/", $input) >= $this->number && // number
+        preg_match_all("/[^a-zA-Z0-9\s]/", $input) >= $this->special_char; // special characters
     }
 }
