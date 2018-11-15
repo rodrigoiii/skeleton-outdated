@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <h1 class="page-header">Login</h1>
 
-            <form method="POST" action="{{ path_for('auth.login') }}">
+            <form method="POST" action="{{ path_for('auth.login') }}" id="login-form">
                 {{ csrf.field | raw }}
 
                 {{ errors | json_encode }}
@@ -28,4 +28,10 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
 {% endblock %}

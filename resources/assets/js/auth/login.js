@@ -1,0 +1,19 @@
+require("./../app");
+
+var Register = {
+    init: function() {
+        $('#login-form').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true
+                }
+            }
+        });
+    }
+};
+
+$(document).ready(Register.init);
