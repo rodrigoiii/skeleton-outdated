@@ -2,12 +2,12 @@
 
 return [
     'translator' => [
-        'lang' => "it",
+        'lang' => "en", // default language
 
         'messages' => [
             '{{name}} must not be empty' => [
                 'en' => "{{name}} must not be empty",
-                'it' => "{{name}} must not be empty(italian)"
+                'fil_' => "{{name}} ay dapat may laman"
             ],
         ]
     ]
