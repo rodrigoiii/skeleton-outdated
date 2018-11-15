@@ -11,8 +11,12 @@ module.exports = {
     scripts: {
         watch_only: "resources/assets/js/**/*.js",
         src: [
+<<<<<<< Updated upstream
             "resources/assets/js/app.js",
             "resources/assets/js/BuiltIn/lib/**/*.js"
+=======
+            "resources/assets/js/auth/**/*.js"
+>>>>>>> Stashed changes
         ],
         dest: "public/js",
     },
