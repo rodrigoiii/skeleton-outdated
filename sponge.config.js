@@ -11,8 +11,7 @@ module.exports = {
     scripts: {
         watch_only: "resources/assets/js/**/*.js",
         src: [
-            "resources/assets/js/auth/**/*.js",
-            "resources/assets/js/BuiltIn/lib/**/*.js"
+            "resources/assets/js/auth/**/*.js"
         ],
         dest: "public/js",
     },
