@@ -65,7 +65,8 @@ var Register = {
                     password_strength: true
                 },
                 confirm_password: {
-                    required: true
+                    required: true,
+                    equalTo: '#register-form :input[name="password"]'
                 }
             }
         });
