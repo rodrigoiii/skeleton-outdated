@@ -15,6 +15,7 @@ class RegisterRequest extends BaseRequest
     public function rules()
     {
         return [
+            'picture_file' => v::validFile("image", 1000, true),
             'first_name' => v::notEmpty()->not(v::numeric()),
             'last_name' => v::notEmpty()->not(v::numeric()),
             'email' => v::notEmpty()->email(),

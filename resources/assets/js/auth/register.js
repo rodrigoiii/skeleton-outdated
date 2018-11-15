@@ -4,6 +4,10 @@ var Register = {
     init: function() {
         $('#register-form').validate({
             rules: {
+                picture_file: {
+                    required: true,
+                    accept: "image/gif,image/jpeg,image/png"
+                },
                 first_name: {
                     required: true,
                     alpha: true
