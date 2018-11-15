@@ -14,11 +14,9 @@ class LoginRequest extends BaseRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'email' => v::notEmpty()->email(),
             'password' => v::notEmpty()
         ];
-
-        return $rules;
     }
 }

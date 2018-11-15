@@ -14,10 +14,8 @@ class ForgotPasswordRequest extends BaseRequest
      */
     public function rules()
     {
-        $rules = [
+        return [
             'email' => v::notEmpty()->email()
         ];
-
-        return $rules;
     }
 }
