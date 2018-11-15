@@ -10,10 +10,8 @@ module.exports = {
 
     scripts: {
         watch_only: "resources/assets/js/**/*.js",
-        src: [
-            "resources/assets/js/auth/**/*.js"
-        ],
-        dest: "public/js",
+        src: "resources/assets/js/auth/**/*.js",
+        dest: "public/js"
     },
 
     build_views: {

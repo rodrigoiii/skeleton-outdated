@@ -8,6 +8,6 @@
   "dependencies": {
     "bootbox": "^4.4.0",
     "datatables.net-bs": "^1.10.16",
-    "jquery-validation": "^1.17.0"
+    "jquery-validation": "^1.18.0"
   }
 }

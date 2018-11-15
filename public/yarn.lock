@@ -19,9 +19,9 @@ datatables.net@1.10.16:
   dependencies:
     jquery ">=1.7"
 
-jquery-validation@^1.17.0:
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/jquery-validation/-/jquery-validation-1.17.0.tgz#ab66b6b583d7740b9bbd148993e50e8ac041f35b"
+jquery-validation@^1.18.0:
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/jquery-validation/-/jquery-validation-1.18.0.tgz#69898f6cddc3e8ef5811de84ff8b23fc24d93776"
   dependencies:
     jquery "^1.7 || ^2.0 || ^3.1"
 
