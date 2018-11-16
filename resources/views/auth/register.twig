@@ -1,0 +1,83 @@
+{% extends "auth/layout-auth.twig" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="page-header">Register</h1>
+
+            <form method="POST" action="{{ path_for('auth.register') }}" id="register-form" enctype="multipart/form-data">
+                {{ csrf.field | raw }}
+
+                {{ errors | json_encode }}
+
+                <div class="form-group">
+                    <label for="picture_file">Picture</label>
+                    <input type="file" name="picture_file" class="form-control" value="{{ old_input.picture_file }}" accept="image/gif,image/jpeg,image/png" />
+
+                    {% if errors.picture_file is not empty %}
+                        <span class="help-block">{{ errors.picture_file | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" class="form-control" value="{{ old_input.first_name }}" />
+
+                    {% if errors.first_name is not empty %}
+                        <span class="help-block">{{ errors.first_name | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" value="{{ old_input.last_name }}" />
+
+                    {% if errors.last_name is not empty %}
+                        <span class="help-block">{{ errors.last_name | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" class="form-control" value="{{ old_input.email }}" />
+
+                    {% if errors.email is not empty %}
+                        <span class="help-block">{{ errors.email | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" class="form-control" autocomplete />
+
+                    {% if errors.password is not empty %}
+                        <span class="help-block">{{ errors.password | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" class="form-control" autocomplete />
+
+                    {% if errors.confirm_password is not empty %}
+                        <span class="help-block">{{ errors.confirm_password | first }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+<script type="text/javascript" src="/node_modules/jquery-validation/dist/additional-methods.js"></script>
+<script type="text/javascript" src="/js/add-methods.js"></script>
+<script type="text/javascript" src="/js/register.js"></script>
+{% endblock %}

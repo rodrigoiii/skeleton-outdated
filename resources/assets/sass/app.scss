@@ -5,19 +5,25 @@
  */
 
 // Core variables and mixins
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 // Reset and dependencies
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/print";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
 
 // Core CSS
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
-@import "public/node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+// Component
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";

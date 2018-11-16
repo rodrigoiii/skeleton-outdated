@@ -1,2 +1,6 @@
 #!/usr/bin/env php
-<?php system("./vendor/bin/" . array_shift($argv) . " " . implode(" ", $argv) . " --ansi");
+<?php
+
+if (PHP_SAPI !== "cli") die; // abort if the usage not via command line
+
+system("./vendor/bin/" . array_shift($argv) . " " . implode(" ", $argv) . " --ansi");
