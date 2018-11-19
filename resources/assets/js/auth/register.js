@@ -6,7 +6,10 @@ var Register = {
             rules: {
                 picture_file: {
                     required: true,
-                    accept: "image/gif,image/jpeg,image/png"
+                    accept: "image/gif,image/jpeg,image/png",
+                    file_size: {
+                        max_size: 5000000, // 5mb
+                    }
                 },
                 first_name: {
                     required: true,
