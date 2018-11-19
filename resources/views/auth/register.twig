@@ -12,10 +12,11 @@
                 {{ errors | json_encode }}
 
                 <div class="form-group">
-                    <img class="img-responsive" alt="" id="ouput-img-element" width="100" />
+                    <!-- <img class="img-responsive" alt="" id="ouput-img-element" width="100" /> -->
+                    <img class="img-responsive ouput-img-element" alt="" width="100" />
 
                     <label for="picture_file">Picture</label>
-                    <input type="file" name="picture_file" class="form-control" value="{{ old_input.picture_file }}" accept="image/gif,image/jpeg,image/png" onchange="readURL(this, document.getElementById('ouput-img-element'))" multiple />
+                    <input type="file" name="picture_file" class="form-control" value="{{ old_input.picture_file }}" accept="image/gif,image/jpeg,image/png" onchange="quickImageLoad(this, document.getElementByClassName('.ouput-img-element'))" multiple />
 
                     {% if errors.picture_file is not empty %}
                         <span class="help-block">{{ errors.picture_file | first }}</span>
