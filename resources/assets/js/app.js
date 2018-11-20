@@ -7,33 +7,28 @@ require("bootstrap/js/transition");
 require("bootstrap/js/collapse");
 require("bootstrap/js/dropdown");
 
-function quickImageLoad(input, output_el) {
+function quickLoadImage(input, output_el) {
     var reader = new FileReader();
 
-    if (typeof(input.files) !== "undefined") {
-        if (input.files.length === 1) { // single file
-            if (/^image\/./g.test(input.files[0].type)) { // valid image
+    reader.onload = function(e) {
+        output_el.setAttribute('src', e.target.result);
+    };
 
+    if (typeof(input.files) !== "undefined") {
+        if (input.files.length < 1) {
+            output_el.setAttribute('src', "");
+        } else if (input.files.length === 1) {
+            if (/^image\/./g.test(input.files[0].type)) { // valid image
+                reader.readAsDataURL(input.files[0]);
             } else {
                 output_el.setAttribute('src', "");
+                console.error("Invalid file type! It must be image.");
             }
-
-            // if (input.files && input.files[0]) {
-            //     reader.readAsDataURL(input.files[0]);
-
-            //     reader.onload = function(e) {
-            //         output_el.setAttribute('src', e.target.result);
-            //     };
-            // } else {
-            //     output_el.setAttribute('src', "");
-            // }
-        } else if (input.files.length > 1) { // multiple files
-
+        } else {
+            output_el.setAttribute('src', "");
+            console.error("File must be one only.");
         }
     }
-
-
-    return null;
 }
 
-window.quickImageLoad = quickImageLoad;
+window.quickLoadImage = quickLoadImage;
