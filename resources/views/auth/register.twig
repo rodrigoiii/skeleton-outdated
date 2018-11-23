@@ -9,8 +9,6 @@
             <form method="POST" action="{{ path_for('auth.register') }}" id="register-form" enctype="multipart/form-data">
                 {{ csrf.field | raw }}
 
-                {{ errors | json_encode }}
-
                 <div class="form-group">
                     <img class="img-responsive" alt="" id="output-img-element" width="100" />
                     <label for="user_picture">Picture</label>
