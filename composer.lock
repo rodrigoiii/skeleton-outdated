@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "2adb8233d9b6ff2857bcd703d9b528ee",
@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "d447d81b3b162916c546fa4678b9119522006ab3"
+                "reference": "ec822e28396a60c2fabb2979243dbdecdc460555"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/d447d81b3b162916c546fa4678b9119522006ab3",
-                "reference": "d447d81b3b162916c546fa4678b9119522006ab3",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/ec822e28396a60c2fabb2979243dbdecdc460555",
+                "reference": "ec822e28396a60c2fabb2979243dbdecdc460555",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-11-22T09:03:54+00:00"
+            "time": "2018-11-22T16:46:01+00:00"
         },
         {
             "name": "slim/csrf",
