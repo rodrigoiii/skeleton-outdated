@@ -12,6 +12,7 @@ class CreateTableUsers extends AbstractMigration
     public function up()
     {
         $table = $this->table('users')
+            ->addColumn('picture', 'string', ['limit' => 13]) // uniqid without more_entropy
             ->addColumn('first_name', 'string', ['limit' => 50])
             ->addColumn('last_name', 'string', ['limit' => 50])
             ->addColumn('email', 'string', ['limit' => 50])
