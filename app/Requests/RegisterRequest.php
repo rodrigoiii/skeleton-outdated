@@ -15,21 +15,12 @@ class RegisterRequest extends BaseRequest
     public function rules()
     {
         return [
-            'picture' => "file|not:uploaded&image&size:null,5mb:",
-
-            // 'picture' => "uploaded|file|image|size:null,5mb",
+            'picture' => "uploaded|file|image|size:null,5mb",
             'first_name' => v::notEmpty()->not(v::numeric()),
             'last_name' => v::notEmpty()->not(v::numeric()),
             'email' => v::notEmpty()->email(),
             'password' => v::notEmpty()->passwordStrength(),
             'confirm_password' => v::notEmpty()->equals($this->request->getParam('password'))
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'uploaded' => "Hoy"
         ];
     }
 }

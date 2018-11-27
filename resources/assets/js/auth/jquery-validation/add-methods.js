@@ -1,5 +1,5 @@
-$.validator.addMethod("alpha", function(value, element) {
-    return this.optional(element) || /^[a-zA-Z]+$/i.test(value);
+$.validator.addMethod("alpha_including_space", function(value, element) {
+    return this.optional(element) || /^[a-zA-Z\s]+$/i.test(value);
 }, "Please enter only letters.");
 
 $.validator.addMethod("password_strength", function(value, element, params) {
@@ -24,7 +24,7 @@ $.validator.addMethod("password_strength", function(value, element, params) {
     var special_char = params.special_char || 0;
 
     var value = $(element).val();
-    var error_message = "";
+    var error_message = false;
 
     if (value.length < min_length) {
         error_message = "Password must be at least "+min_length+" character(s).";
@@ -72,7 +72,7 @@ $.validator.addMethod("file_size", function(value, element, params) {
     var max_size = params.max_size || MB * 5; // 5mb default
 
     var files = element.files;
-    var error_message = "";
+    var error_message = false;
 
     if (files.length === 1) { // single file
         if (files[0].size < min_size) {

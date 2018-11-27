@@ -17,9 +17,10 @@ trait RegisterTrait
     public function postRegister(RegisterRequest $_request)
     {
         $inputs = $_request->getParams();
+        $files = $_request->getUploadedFiles();
 
         $result = User::create([
-            'picture' => upload($inputs['picture']),
+            'picture' => upload($files['picture']),
             'first_name' => $inputs['first_name'],
             'last_name' => $inputs['last_name'],
             'email' => $inputs['email'],
