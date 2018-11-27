@@ -5,5 +5,5 @@
  */
 
 $app->group('/api', function() {
-
+    api_image_generator($this);
 });
