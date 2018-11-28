@@ -14,7 +14,7 @@ trait RegisterTrait
         return $this->view->render($response, "auth/register.twig");
     }
 
-    public function postRegister(RegisterRequest $_request)
+    public function postRegister(RegisterRequest $_request, Response $response)
     {
         $inputs = $_request->getParams();
         $files = $_request->getUploadedFiles();
@@ -27,6 +27,11 @@ trait RegisterTrait
             'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
         ]);
 
-        !d($result); die;
+        flash($result instanceof User,
+            ['success' => "Success registered!"],
+            ['danger' => "Registration not working properly this time. Please try again later."]
+        );
+
+        return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 }

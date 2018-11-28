@@ -6,6 +6,7 @@ if (typeof(jQuery) === "undefined") {
 require("bootstrap/js/transition");
 require("bootstrap/js/collapse");
 require("bootstrap/js/dropdown");
+require("bootstrap/js/alert");
 
 function quickLoadImage(input, output_el) {
     var reader = new FileReader();

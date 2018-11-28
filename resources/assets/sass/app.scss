@@ -6,6 +6,8 @@
 
 // Core variables and mixins
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+$icon-font-path: "/node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 
 // Reset and dependencies
@@ -16,9 +18,7 @@
 // Core CSS
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/type";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/code";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/grid";
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/forms";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
 
@@ -27,3 +27,5 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navbar";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/navs";
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/close";
