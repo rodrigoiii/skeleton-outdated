@@ -10,7 +10,7 @@ $.validator.addMethod("password_strength", function(value, element, params) {
     var special_char = params.special_char || 0;
 
     return this.optional(element) || (
-        value.length >= this.min_length && // password length
+        value.length >= min_length && // password length
         (value.match(/[a-z]/g) !== null ? value.match(/[a-z]/g).length : 0) >= lower && // lower case
         (value.match(/[A-Z]/g) !== null ? value.match(/[A-Z]/g).length : 0) >= upper && // upper case
         (value.match(/[0-9]/g) !== null ? value.match(/[0-9]/g).length : 0) >= number && // number
