@@ -9,6 +9,7 @@ $app->get('/', ["WelcomeController", "index"]);
 $app->group('/auth', function() {
     $this->get('/login', ["LoginController", "getLogin"])->setName('auth.login');
     $this->post('/login', ["LoginController", "postLogin"]);
+    $this->post('/logout', ["LoginController", "logout"])->setName('auth.logout');
 
     $this->post('/register/verify', ["RegisterController", "verify"]);
 
