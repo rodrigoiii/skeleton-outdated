@@ -45,7 +45,7 @@ $.validator.addMethod("file_size", function(value, element, params) {
     var KB = 1000;
     var MB = KB * 1000;
 
-    var min_size = params.min_size || KB; // 1kb default
+    var min_size = params.min_size || 0; // 0 default
     var max_size = params.max_size || MB * 5; // 5mb default
 
     var files = element.files;

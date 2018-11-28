@@ -24,7 +24,7 @@ trait RegisterTrait
             'first_name' => $inputs['first_name'],
             'last_name' => $inputs['last_name'],
             'email' => $inputs['email'],
-            'password' => $inputs['password']
+            'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
         ]);
 
         !d($result); die;

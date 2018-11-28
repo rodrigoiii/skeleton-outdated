@@ -12,7 +12,8 @@ return [
     # Default timezone
     'default_timezone' => "Asia/Manila",
 
-    # Where upload will be stored. The location is `public/uploads`
+    # Where upload will be stored. The location is `public/uploads`.
+    # The owner of this folder must be 'www-data'
     'uploads_path' => "uploads",
 
     # Determine route before application middleware
