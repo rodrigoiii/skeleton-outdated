@@ -1,3 +1,52 @@
+var Register = {
+    init: function() {
+        Register.initValidation();
+    },
+
+    initValidation: function() {
+        $('#register-form').validate({
+            rules: {
+                picture: {
+                    required: true,
+                    accept: "image/gif,image/jpeg,image/png",
+                    file_size: {
+                        max_size: 5000000, // 5mb
+                    }
+                },
+                first_name: {
+                    required: true,
+                    alpha_including_space: true
+                },
+                last_name: {
+                    required: true,
+                    alpha_including_space: true
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    remote: "/api/jv/email-not-exist"
+                },
+                password: {
+                    required: true,
+                    password_strength: true
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: '#register-form :input[name="password"]'
+                }
+            },
+
+            messages: {
+                email: {
+                    remote: "Email is already taken."
+                }
+            }
+        });
+    }
+};
+
+$(document).ready(Register.init);
+
 function quickLoadImage(input, output_el) {
     var reader = new FileReader();
 
