@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2adb8233d9b6ff2857bcd703d9b528ee",
+    "content-hash": "161b45d0a05a2cedc23abc54d455d42a",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "cdd0f8656cdb1521829ab295a72eda736243730a"
+                "reference": "ef16529927f90bdef57aaf02a07207d553542c09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/cdd0f8656cdb1521829ab295a72eda736243730a",
-                "reference": "cdd0f8656cdb1521829ab295a72eda736243730a",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/ef16529927f90bdef57aaf02a07207d553542c09",
+                "reference": "ef16529927f90bdef57aaf02a07207d553542c09",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-11-28T13:35:29+00:00"
+            "time": "2018-11-29T01:02:29+00:00"
         },
         {
             "name": "slim/csrf",
@@ -1834,64 +1834,6 @@
                 "fixtures"
             ],
             "time": "2018-07-12T10:23:15+00:00"
-        },
-        {
-            "name": "kint-php/kint",
-            "version": "2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kint-php/kint.git",
-                "reference": "b091715eadaf6e1a7ef927f3e81d1004611d2aea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kint-php/kint/zipball/b091715eadaf6e1a7ef927f3e81d1004611d2aea",
-                "reference": "b091715eadaf6e1a7ef927f3e81d1004611d2aea",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.1.2"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.0",
-                "phpunit/phpunit": "^4.0",
-                "symfony/finder": "^2.6"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "init.php"
-                ],
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rokas Šleinius",
-                    "homepage": "https://github.com/raveren"
-                },
-                {
-                    "name": "Jonathan Vollebregt",
-                    "homepage": "https://github.com/jnvsor"
-                },
-                {
-                    "name": "Contributors",
-                    "homepage": "https://github.com/kint-php/kint/graphs/contributors"
-                }
-            ],
-            "description": "Kint - debugging tool for PHP developers",
-            "homepage": "https://kint-php.github.io/kint/",
-            "keywords": [
-                "debug",
-                "kint",
-                "php"
-            ],
-            "time": "2017-09-06T17:46:03+00:00"
         },
         {
             "name": "myclabs/deep-copy",
