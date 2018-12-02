@@ -1,0 +1,13 @@
+<div class="form-group has-feedback {{ old_input is not empty ? (errors[field_name] is not empty ? "has-error" : "has-success") }}">
+    <label for="{{ field_name }}">{{ field_text is defined ?: str_title(field_name) }}</label>
+    <input type="text" name="{{ field_name }}" class="form-control" value="{{ old_input[field_name] }}" />
+
+    {% if old_input is not empty %}
+        {% if errors[field_name] is not empty %}
+            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+            <span class="help-block">{{ errors[field_name] | first }}</span>
+        {% else %}
+            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+        {% endif %}
+    {% endif %}
+</div>

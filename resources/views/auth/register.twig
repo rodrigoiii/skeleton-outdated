@@ -11,60 +11,12 @@
             <form method="POST" action="{{ path_for('auth.register') }}" id="register-form" enctype="multipart/form-data">
                 {{ csrf.field | raw }}
 
-                <div class="form-group">
-                    <img class="img-responsive" alt="" id="output-img-element" width="100" />
-                    <label for="picture">Picture</label>
-                    <input type="file" name="picture" class="form-control" value="{{ old_input.picture }}" accept="image/gif,image/jpeg,image/png" onchange="quickLoadImage(this, document.getElementById('output-img-element'))" />
-
-                    {% if errors.picture is not empty %}
-                        <span class="help-block">{{ errors.picture | first }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input type="text" name="first_name" class="form-control" value="{{ old_input.first_name }}" />
-
-                    {% if errors.first_name is not empty %}
-                        <span class="help-block">{{ errors.first_name | first }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input type="text" name="last_name" class="form-control" value="{{ old_input.last_name }}" />
-
-                    {% if errors.last_name is not empty %}
-                        <span class="help-block">{{ errors.last_name | first }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" value="{{ old_input.email }}" />
-
-                    {% if errors.email is not empty %}
-                        <span class="help-block">{{ errors.email | first }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" autocomplete />
-
-                    {% if errors.password is not empty %}
-                        <span class="help-block">{{ errors.password | first }}</span>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" class="form-control" autocomplete />
-
-                    {% if errors.confirm_password is not empty %}
-                        <span class="help-block">{{ errors.confirm_password | first }}</span>
-                    {% endif %}
-                </div>
+                {% include "templates/inputs/image.twig" with {field_name: "picture", enabledQuickLoadImage: true} %}
+                {% include "templates/inputs/field.twig" with {field_name: "first_name"} %}
+                {% include "templates/inputs/field.twig" with {field_name: "last_name"} %}
+                {% include "templates/inputs/field.twig" with {field_name: "email"} %}
+                {% include "templates/inputs/password.twig" with {field_name: "password"} %}
+                {% include "templates/inputs/password.twig" with {field_name: "confirm_password"} %}
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Register</button>
@@ -80,6 +32,7 @@
 <script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
 <script type="text/javascript" src="/node_modules/jquery-validation/dist/additional-methods.js"></script>
 
+<script type="text/javascript" src="/js/default-highlight-unhighlight.js"></script>
 <script type="text/javascript" src="/js/add-methods.js"></script>
 <script type="text/javascript" src="/js/register.js"></script>
 <script type="text/javascript" src="/js/app.js"></script>
