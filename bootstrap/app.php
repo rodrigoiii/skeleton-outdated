@@ -11,6 +11,4 @@ $app = new SkeletonCore\App([
     'settings.tracy' => config('debug-bar.tracy.settings')
 ]);
 
-$app->boot();
-
-return $app;
+$app->run();

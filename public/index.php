@@ -4,6 +4,4 @@
 require __DIR__ . "/../vendor/autoload.php";
 
 // our application
-$app = include __DIR__ . "/../bootstrap/app.php";
-
-$app->run();
+include __DIR__ . "/../bootstrap/app.php";
