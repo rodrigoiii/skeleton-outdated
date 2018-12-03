@@ -7,7 +7,7 @@ if (PHP_SAPI !== "cli") die; // abort if the usage not via command line
 require __DIR__ . "/vendor/autoload.php";
 
 $appCli = new SkeletonCore\AppCli([
-    'settings.db' => config('database.database_connection.mysql'),
+    'settings.db' => config('database.database_connection.mysql')
 ]);
 
 $appCli->run();

@@ -34,10 +34,9 @@ class UserSeeder extends AbstractSeed
     {
         $faker = Factory::create();
 
-        $result = $this->query("SELECT * FROM users");
-        $users = $result->fetchAll();
+        $result = $this->query("SELECT email FROM users");
+        $user_emails = $result->fetchAll();
         $result->closeCursor();
-        $user_emails = array_column($users, 'email');
 
         do {
             $unique_email = $faker->email;
