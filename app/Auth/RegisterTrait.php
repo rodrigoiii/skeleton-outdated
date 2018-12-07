@@ -32,6 +32,6 @@ trait RegisterTrait
             ['danger' => "Registration not working properly this time. Please try again later."]
         );
 
-        return $response->withRedirect($this->router->pathFor('auth.register'));
+        return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 }

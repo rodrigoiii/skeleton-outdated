@@ -12,6 +12,8 @@ module.exports = {
         entries: {
             "app": "resources/assets/js/app.js",
             "auth/register": "resources/assets/js/auth/register.js",
+            "auth/change-password": "resources/assets/js/auth/change-password.js",
+
             "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js",
             "jquery-validation/default-highlight-unhighlight": "resources/assets/js/auth/jquery-validation/default-highlight-unhighlight.js"
         },
