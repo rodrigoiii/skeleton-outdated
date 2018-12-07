@@ -6,10 +6,10 @@ if (typeof(jQuery) === "undefined") {
 
 var App = {
     init: function() {
-        require("bootstrap-sass/assets/javascripts/bootstrap/transition");
-        require("bootstrap-sass/assets/javascripts/bootstrap/collapse");
-        require("bootstrap-sass/assets/javascripts/bootstrap/dropdown");
-        require("bootstrap-sass/assets/javascripts/bootstrap/alert");
+        require("bootstrap/js/transition");
+        require("bootstrap/js/collapse");
+        require("bootstrap/js/dropdown");
+        require("bootstrap/js/alert");
     }
 };
 

@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^3.3.7",
     "jquery": "^3.3.1",
     "mocha": "^5.2.0",
     "phplint": "^2.0.0",
