@@ -9,12 +9,13 @@ module.exports = {
     },
 
     scripts: {
-        watch_only: "resources/assets/js/**/*.js",
-        src: [
-            "resources/assets/js/app.js",
-            "resources/assets/js/auth/**/*.js"
-        ],
-        dest: "public/js"
+        entries: {
+            "auth/register": "resources/assets/js/auth/register.js"
+        },
+        dest: "public/js",
+        options: {
+            base: "resources/assets/js"
+        }
     },
 
     build_views: {
@@ -48,17 +49,20 @@ module.exports = {
         use_flatten: true
     },
 
-    unbuild_dir: ["public/dist", "resources/dist-views"],
+    build: {
+        callback: function() {
+            fs.copy("resources/dist-views/dist", "public/dist", function(err) {
+                if (err) return console.error(err);
 
-    build_callback: function() {
-        fs.copy("resources/dist-views/dist", "public/dist", function(err) {
-            if (err) return console.error(err);
-
-            fs.remove("resources/dist-views/dist");
-        });
+                fs.remove("resources/dist-views/dist");
+            });
+        }
     },
 
-    unbuild_callback: function() {
-        console.log("unbuild callback");
+    unbuild: {
+        dir: ["public/dist", "resources/dist-views"],
+        callback: function() {
+            console.log("unbuild callback");
+        }
     }
 };

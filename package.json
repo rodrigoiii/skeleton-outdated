@@ -18,22 +18,7 @@
     "micro framework",
     "skeleton",
     "slim",
-    "php",
-    "webpack",
-    "gulp",
-    "gulp-autoprefixer",
-    "gulp-cache",
-    "gulp-csscomb",
-    "gulp-cssnano",
-    "gulp-flatten",
-    "gulp-if",
-    "gulp-load-plugins",
-    "gulp-merge-media-queries",
-    "gulp-plumber",
-    "gulp-uglify",
-    "gulp-useref",
-    "tools",
-    "optimize"
+    "php"
   ],
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
@@ -42,13 +27,11 @@
   },
   "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
-    "bootstrap": "^3.3.7",
     "bootstrap-sass": "^3.3.7",
-    "fs-extra": "^7.0.0",
     "jquery": "^3.3.1",
     "mocha": "^5.2.0",
     "phplint": "^2.0.0",
-    "sponge-rod": "^3.8.0",
+    "sponge-rod": "^3.9.0",
     "underscore": "^1.9.1"
   },
   "dependencies": {}
