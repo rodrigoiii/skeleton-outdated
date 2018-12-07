@@ -10,7 +10,10 @@ module.exports = {
 
     scripts: {
         entries: {
-            "auth/register": "resources/assets/js/auth/register.js"
+            "app": "resources/assets/js/app.js",
+            "auth/register": "resources/assets/js/auth/register.js",
+            "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js",
+            "jquery-validation/default-highlight-unhighlight": "resources/assets/js/auth/jquery-validation/default-highlight-unhighlight.js"
         },
         dest: "public/js",
         options: {
