@@ -5,7 +5,8 @@ module.exports = {
 
     sass: {
         src: "resources/assets/sass/**/*.scss",
-        dest: "public/css"
+        dest: "public/css",
+        notify: false
     },
 
     scripts: {
@@ -15,12 +16,13 @@ module.exports = {
             "auth/change-password": "resources/assets/js/auth/change-password.js",
 
             "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js",
-            "jquery-validation/default-highlight-unhighlight": "resources/assets/js/auth/jquery-validation/default-highlight-unhighlight.js"
+            "jquery-validation/bs3-defaults": "resources/assets/js/auth/jquery-validation/bs3-defaults.js"
         },
         dest: "public/js",
         options: {
             base: "resources/assets/js"
-        }
+        },
+        notify: false
     },
 
     build_views: {
