@@ -1,4 +1,6 @@
 var ChangePassword = {
+    CURRENT_PASSWORD: "current_password",
+
     init: function() {
         ChangePassword.initValidation();
     },
@@ -18,11 +20,9 @@ var ChangePassword = {
 
                 if (feedback.length === 0) {
                     $(element).after('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
-                } else if (feedback.hasClass('glyphicon-ok')) {
-                    feedback.removeClass('glyphicon-ok');
+                } else {
+                    feedback.addClass('glyphicon-remove');
                 }
-
-                feedback.addClass('glyphicon-remove');
             },
 
             // success
@@ -34,12 +34,19 @@ var ChangePassword = {
                     form_group.removeClass('has-error');
                 }
 
+                if ($(element).attr('name') !== ChangePassword.CURRENT_PASSWORD) {
+                    form_group.addClass('has-success');
+                }
+
                 if (feedback.length === 0) {
                     $(element).after('<span class="glyphicon form-control-feedback"></span>');
-                    feedback.removeClass('glyphicon-remove');
                 } else if (feedback.hasClass('glyphicon-remove')) {
-                    feedback.removeClass('glyphicon-remove');
+                    if ($(element).attr('name') !== ChangePassword.CURRENT_PASSWORD) {
+                        feedback.addClass('glyphicon-ok');
+                    }
                 }
+
+                feedback.removeClass('glyphicon-remove');
             },
 
             rules: {
