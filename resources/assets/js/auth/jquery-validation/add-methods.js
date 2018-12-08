@@ -1,6 +1,7 @@
-$.validator.addMethod("alpha_including_space", function(value, element) {
-    return this.optional(element) || /^[a-zA-Z\s]+$/i.test(value);
-}, "Please enter only letters.");
+$.validator.addMethod("regex", function(value, element, regexp) {
+    var re = new RegExp(regexp);
+    return this.optional(element) || re.test(value);
+}, "Please check your input.");
 
 $.validator.addMethod("password_strength", function(value, element, params) {
     var min_length = params.min_length || 8;

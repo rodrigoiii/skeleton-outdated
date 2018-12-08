@@ -15,11 +15,11 @@ var Register = {
                 },
                 first_name: {
                     required: true,
-                    alpha_including_space: true
+                    regex: /^[a-zA-Z\s]+$/i
                 },
                 last_name: {
                     required: true,
-                    alpha_including_space: true
+                    regex: /^[a-zA-Z\s]+$/i
                 },
                 email: {
                     required: true,
@@ -37,6 +37,12 @@ var Register = {
             },
 
             messages: {
+                first_name: {
+                    regex: "Please enter only letters."
+                },
+                last_name: {
+                    regex: "Please enter only letters."
+                },
                 email: {
                     remote: "Email is already taken."
                 }
