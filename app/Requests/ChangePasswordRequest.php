@@ -3,8 +3,13 @@
 namespace App\Requests;
 
 use Respect\Validation\Validator as v;
+use SkeletonAuth\Auth;
 use SkeletonCore\BaseRequest;
 
+/**
+ * Requirement before you use this rule:
+ * - UserMiddleware was used
+ */
 class ChangePasswordRequest extends BaseRequest
 {
     /**
@@ -14,8 +19,10 @@ class ChangePasswordRequest extends BaseRequest
      */
     public function rules()
     {
+        $user = Auth::user();
+
         return [
-            'current_password' => v::notEmpty(),
+            'current_password' => v::notEmpty()->passwordVerify($user->password),
             'new_password' => v::notEmpty()->passwordStrength(),
             'confirm_new_password' => v::notEmpty()->passwordMatch($this->request->getParam('new_password'))
         ];
