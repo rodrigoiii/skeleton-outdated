@@ -10,4 +10,6 @@ $appCli = new SkeletonCore\AppCli([
     'settings.db' => config('database.database_connection.mysql')
 ]);
 
+$appCli->enableMailer();
+
 $appCli->run();

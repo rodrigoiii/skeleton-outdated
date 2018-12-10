@@ -11,11 +11,9 @@ $app->group('/auth', function() {
     $this->post('/login', ["LoginController", "postLogin"]);
     $this->post('/logout', ["LoginController", "logout"])->setName('auth.logout');
 
-    $this->post('/register/verify', ["RegisterController", "verify"]);
-
     // reset password /reset-password?token=
-    $this->get('/register/reset-password', ["ResetPasswordController", "getResetPassword"]);
-    $this->post('/register/reset-password', ["ResetPasswordController", "postResetPassword"]);
+    $this->get('/reset-password', ["ResetPasswordController", "getResetPassword"]);
+    $this->post('/reset-password', ["ResetPasswordController", "postResetPassword"]);
     $this->get('/change-password', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
     $this->post('/change-password', ["ChangePasswordController", "postChangePassword"]);
 
@@ -24,4 +22,9 @@ $app->group('/auth', function() {
 
     $this->get('/register', ["RegisterController", "getRegister"])->setName('auth.register');
     $this->post('/register', ["RegisterController", "postRegister"]);
+    $this->post('/register/verify', ["RegisterController", "verify"]);
+
+    $this->get('/home', function() {
+        return "home";
+    })->setName('auth.home');
 });
