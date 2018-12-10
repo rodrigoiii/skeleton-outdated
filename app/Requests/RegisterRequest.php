@@ -20,7 +20,7 @@ class RegisterRequest extends BaseRequest
             'last_name' => v::notEmpty()->not(v::numeric()),
             'email' => v::notEmpty()->email()->not(v::emailExist()),
             'password' => v::notEmpty()->passwordStrength(),
-            'confirm_password' => v::notEmpty()->equals($this->request->getParam('password'))
+            'confirm_password' => v::notEmpty()->passwordMatch($this->request->getParam('password'))
         ];
     }
 }
