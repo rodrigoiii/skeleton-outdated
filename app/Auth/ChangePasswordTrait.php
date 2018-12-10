@@ -5,6 +5,7 @@ namespace SkeletonAuth;
 use App\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use SkeletonAuth\Auth;
 
 trait ChangePasswordTrait
 {
@@ -18,11 +19,12 @@ trait ChangePasswordTrait
         $input = $_request->getParams();
 
         $user = Auth::user();
+        $user->password = password_hash($input['new_password'], PASSWORD_DEFAULT);
 
-        if (password_verify($input['current_password'], $user->password))
-        {
-            die("success");
-        }
+        flash($user->save(),
+            ['success' => "Your password was successfully changed!"],
+            ['danger' => "Cannot change the password this time."]
+        );
 
         return $response->withRedirect($this->router->pathFor('auth.change-password'));
     }
