@@ -17,7 +17,7 @@ class ChangePasswordRequest extends BaseRequest
         return [
             'current_password' => v::notEmpty(),
             'new_password' => v::notEmpty()->passwordStrength(),
-            'confirm_new_password' => v::notEmpty()->equals($this->request->getParam('new_password'))
+            'confirm_new_password' => v::notEmpty()->passwordMatch($this->request->getParam('new_password'))
         ];
     }
 }

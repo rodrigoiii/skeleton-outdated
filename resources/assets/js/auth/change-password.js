@@ -30,23 +30,29 @@ var ChangePassword = {
                 var feedback = $(element).closest('.form-group').find('.form-control-feedback');
                 var form_group = $(element).closest('.form-group');
 
-                if (form_group.hasClass('has-error')) {
-                    form_group.removeClass('has-error');
-                }
+                if ($(element).attr('name') === ChangePassword.CURRENT_PASSWORD) {
+                    if (feedback.length > 0) {
+                        if (feedback.hasClass('glyphicon-remove')) {
+                            feedback.removeClass('glyphicon-remove');
+                        }
+                    }
 
-                if ($(element).attr('name') !== ChangePassword.CURRENT_PASSWORD) {
+                    if (form_group.hasClass('has-error')) {
+                        form_group.removeClass('has-error');
+                    }
+                } else {
+                    if (form_group.hasClass('has-error')) {
+                        form_group.removeClass('has-error');
+                    }
+
                     form_group.addClass('has-success');
-                }
 
-                if (feedback.length === 0) {
-                    $(element).after('<span class="glyphicon form-control-feedback"></span>');
-                } else if (feedback.hasClass('glyphicon-remove')) {
-                    if ($(element).attr('name') !== ChangePassword.CURRENT_PASSWORD) {
-                        feedback.addClass('glyphicon-ok');
+                    if (feedback.length === 0) {
+                        $(element).after('<span class="glyphicon glyphicon-ok form-control-feedback"></span>');
+                    } else if (feedback.hasClass('glyphicon-remove')) {
+                        feedback.removeClass('glyphicon-remove').addClass('glyphicon-ok');
                     }
                 }
-
-                feedback.removeClass('glyphicon-remove');
             },
 
             rules: {
@@ -60,6 +66,12 @@ var ChangePassword = {
                 confirm_new_password: {
                     required: true,
                     equalTo: '#change-password-form :input[name="new_password"]'
+                }
+            },
+
+            messages: {
+                confirm_new_password: {
+                    equalTo: "Password and confirm password do not match"
                 }
             }
         });

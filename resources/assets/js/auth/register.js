@@ -45,6 +45,9 @@ var Register = {
                 },
                 email: {
                     remote: "Email is already taken."
+                },
+                confirm_password: {
+                    equalTo: "Password and confirm password do not match"
                 }
             }
         });
