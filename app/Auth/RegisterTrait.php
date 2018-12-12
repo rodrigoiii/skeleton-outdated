@@ -42,39 +42,50 @@ trait RegisterTrait
         if (config('auth.registration.is_verification_enabled'))
         {
             $fullname = $inputs['first_name'] . " " . $inputs['last_name'];
+            $token = uniqid();
 
             $authToken = AuthToken::create([
-                'token' => "",
-                'is_used' => "",
-                'payload' => ""
+                'token' => $token,
+                'payload' => json_encode([
+                    'file' => json_encode([
+
+                    ]),
+                    'first_name' => $inputs['first_name'],
+                    'last_name' => $inputs['last_name'],
+                    'email' => $inputs['email'],
+                    'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
+                ])
             ]);
 
-            // $link = base_url("auth/register/verify?token=");
+            if ($authToken instanceof AuthToken)
+            {
+                $link = base_url("auth/register/verify/{$token}");
 
-            // send email contains link
-            $this->sendEmailLink($fullname, $inputs['email'], $link);
+                // send email contains link
+                $this->sendEmailLink($fullname, $inputs['email'], $link);
+            }
         }
         else
         {
             // save user info
             $user = $this->saveUserInfo($inputs, $files);
 
-            if (! ($user instanceof User))
+            if ($user instanceof User)
             {
-                $this->flash->addMessage('error', "Cannot register this time. Please try again later.");
-                return $response->withRedirect($this->router->pathFor('auth.register'));
-            }
-
-            if (config('auth.registration.is_log_in_after_register'))
-            {
-                Auth::loggedInByUserId($user->id);
-                return $response->withRedirect($this->router->pathFor('auth.home'));
-            }
-            else
-            {
-                return $response->withRedirect($this->router->pathFor('auth.login'));
+                if (config('auth.registration.is_log_in_after_register'))
+                {
+                    Auth::loggedInByUserId($user->id);
+                    return $response->withRedirect($this->router->pathFor('auth.home'));
+                }
+                else
+                {
+                    return $response->withRedirect($this->router->pathFor('auth.login'));
+                }
             }
         }
+
+        $this->flash->addMessage('error', "Cannot register this time. Please try again later.");
+        return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 
     public function sendEmailLink($name, $email, $link)
