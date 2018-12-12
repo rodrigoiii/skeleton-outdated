@@ -13,8 +13,8 @@ class CreateTableAuthTokens extends AbstractMigration
     {
         $table = $this->table('auth_tokens')
             ->addColumn('token', 'string', ['limit' => 20])
-            ->addColumn('is_used', 'boolean')
-            ->addColumn('payload', 'json')
+            ->addColumn('is_used', 'boolean', ['default' => 0])
+            ->addColumn('payload', 'json', ['null' => true])
             ->addTimestamps();
 
         $table->create();
