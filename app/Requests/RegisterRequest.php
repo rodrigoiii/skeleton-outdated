@@ -23,4 +23,11 @@ class RegisterRequest extends BaseRequest
             'confirm_password' => v::notEmpty()->passwordMatch($this->request->getParam('password'))
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'uploaded' => "Picture must not be empty"
+        ];
+    }
 }

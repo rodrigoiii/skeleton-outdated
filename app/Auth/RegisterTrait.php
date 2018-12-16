@@ -47,9 +47,6 @@ trait RegisterTrait
             $authToken = AuthToken::create([
                 'token' => $token,
                 'payload' => json_encode([
-                    'file' => json_encode([
-
-                    ]),
                     'first_name' => $inputs['first_name'],
                     'last_name' => $inputs['last_name'],
                     'email' => $inputs['email'],
@@ -63,6 +60,9 @@ trait RegisterTrait
 
                 // send email contains link
                 $this->sendEmailLink($fullname, $inputs['email'], $link);
+
+                $this->flash->addMessage('success', "Success! Check your email and click the link to verify your account.");
+                return $response->withRedirect($this->router->pathFor('auth.login'));
             }
         }
         else
@@ -72,6 +72,7 @@ trait RegisterTrait
 
             if ($user instanceof User)
             {
+                $this->flash->addMessage('success', "Successfully register!");
                 if (config('auth.registration.is_log_in_after_register'))
                 {
                     Auth::loggedInByUserId($user->id);
