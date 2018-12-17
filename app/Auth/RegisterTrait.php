@@ -27,8 +27,6 @@ trait RegisterTrait
 
         if (config('auth.registration.is_verification_enabled'))
         {
-            $fullname = $inputs['first_name'] . " " . $inputs['last_name'];
-
             $authToken = AuthToken::createRegisterType(json_encode([
                 'picture' => $picture,
                 'first_name' => $inputs['first_name'],
@@ -39,6 +37,7 @@ trait RegisterTrait
 
             if ($authToken instanceof AuthToken)
             {
+                $fullname = $inputs['first_name'] . " " . $inputs['last_name'];
                 $link = base_url("auth/register/verify/" . $authToken->token);
 
                 // send email contains link
