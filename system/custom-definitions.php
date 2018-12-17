@@ -1,6 +1,0 @@
-<?php
-
-# custom definitions
-return [
-    //
-];
