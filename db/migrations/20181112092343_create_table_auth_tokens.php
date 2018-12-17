@@ -14,7 +14,7 @@ class CreateTableAuthTokens extends AbstractMigration
         $table = $this->table('auth_tokens')
             ->addColumn('token', 'string', ['limit' => 13])
             ->addColumn('is_used', 'boolean', ['default' => 0])
-            ->addColumn('type', 'enum', ['values' => ["registration", "reset-password"]])
+            ->addColumn('type', 'enum', ['values' => ["register", "reset-password"]])
             ->addColumn('payload', 'json', ['null' => true])
             ->addTimestamps();
 

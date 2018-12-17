@@ -11,7 +11,7 @@ class RegisterVerification extends Mailer
         $this->subject("Register Verification");
         $this->from(['foo@bar.com' => "Skeleton Auth"]);
         $this->to([$receiver_email => $receiver_name]);
-        $this->message("Click this link to verify the account {$link}");
+        $this->message('Click this <a href="{$link}">link</a> to verify the account');
 
         /**
          * You can use the source file and make it template of the email

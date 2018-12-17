@@ -22,7 +22,7 @@ $app->group('/auth', function() {
 
     $this->get('/register', ["RegisterController", "getRegister"])->setName('auth.register');
     $this->post('/register', ["RegisterController", "postRegister"]);
-    $this->post('/register/verify/{token}', ["RegisterController", "verify"]);
+    $this->get('/register/verify/{token}', ["RegisterController", "verify"]);
 
     $this->get('/home', function() {
         return "home";

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class AuthToken extends Model
@@ -27,9 +28,35 @@ class AuthToken extends Model
         return $this->id;
     }
 
-    public function createRegisterType($payload)
+    public function isTokenExpired($seconds)
     {
-        $authToken = AuthToken::create([
+        return Carbon::now() >= Carbon::parse($this->created_at)->addSeconds($seconds);
+    }
+
+    public function isUsed()
+    {
+        return $this->is_used;
+    }
+
+    public function markTokenAsUsed()
+    {
+        $this->is_used = 1;
+        return $this->save();
+    }
+
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    public static function findByToken($token)
+    {
+        return static::where('token', $token)->get()->last();
+    }
+
+    public static function createRegisterType($payload)
+    {
+        $authToken = static::create([
             'token' => uniqid(),
             'type' => static::TYPE_REGISTER,
             'payload' => $payload
@@ -38,9 +65,9 @@ class AuthToken extends Model
         return $authToken;
     }
 
-    public function createResetPasswordType($payload)
+    public static function createResetPasswordType($payload)
     {
-        $authToken = AuthToken::create([
+        $authToken = static::create([
             'token' => uniqid(),
             'type' => static::TYPE_RESET_PASSWORD,
             'payload' => $payload
