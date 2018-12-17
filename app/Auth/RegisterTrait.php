@@ -42,21 +42,18 @@ trait RegisterTrait
         if (config('auth.registration.is_verification_enabled'))
         {
             $fullname = $inputs['first_name'] . " " . $inputs['last_name'];
-            $token = uniqid();
 
-            $authToken = AuthToken::create([
-                'token' => $token,
-                'payload' => json_encode([
-                    'first_name' => $inputs['first_name'],
-                    'last_name' => $inputs['last_name'],
-                    'email' => $inputs['email'],
-                    'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
-                ])
-            ]);
+            $authToken = AuthToken::createRegisterType(json_encode([
+                'picture' => upload($files['picture']),
+                'first_name' => $inputs['first_name'],
+                'last_name' => $inputs['last_name'],
+                'email' => $inputs['email'],
+                'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
+            ]));
 
             if ($authToken instanceof AuthToken)
             {
-                $link = base_url("auth/register/verify/{$token}");
+                $link = base_url("auth/register/verify/" . $authToken->token);
 
                 // send email contains link
                 $this->sendEmailLink($fullname, $inputs['email'], $link);
