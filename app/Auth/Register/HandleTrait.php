@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 trait HandleTrait
 {
-    public function verificationEnabled($inputs, Response $response)
+    public function verificationEnabled(array $inputs, Response $response)
     {
         $authToken = AuthToken::createRegisterType(json_encode($inputs));
 
@@ -19,61 +19,23 @@ trait HandleTrait
             // send email contains link
             $recipient_nums = $this->sendEmailLink($fullname, $inputs['email'], $link);
 
-            if ($recipient_nums > 0)
-            {
-                $this->flash->addMessage('success', "Success! Check your email and click the link to verify your account.");
-                return $response->withRedirect($this->router->pathFor('auth.login'));
-            }
-            else
-            {
-                \Log::error("Error: Sending email contains verification link not working properly.");
-            }
+            return $recipient_nums > 0 ? $this->sendEmailLinkSuccess($response) : $this->sendEmailLinkError($response);
         }
 
         $this->flash->addMessage('error', "Registration not working properly this time. Please try again later.");
         return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 
-    public function emailSentSucce
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function verificationDisabled()
+    public function verificationDisabled(array $inputs, Response $response)
     {
         // save user info
-        $user = $this->saveUserInfo([
-            'first_name' => $inputs['first_name'],
-            'last_name' => $inputs['last_name'],
-            'email' => $inputs['email'],
-            'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
-        ]);
+        $user = $this->saveUserInfo($inputs);
 
         if ($user instanceof User)
         {
             return config('auth.registration.is_log_in_after_register') ?
-                        $this->logInEnabled() :
-                        $this->logInDisabled();
+                        $this->logInEnabled($user->getId(), $response) :
+                        $this->logInDisabled($response);
         }
 
         \Log::error("Error: saveUserInfo method return not instance of User");
@@ -82,15 +44,15 @@ trait HandleTrait
         return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 
-    public function logInEnabled()
+    public function logInEnabled($user_id, Response $response)
     {
         $this->flash->addMessage('success', "Successfully register!");
 
-        $this->loginTheUser($user->id);
+        $this->loginTheUser($user_id);
         return $this->redirectToAuthenticatedPage($response);
     }
 
-    public function logInDisabled()
+    public function logInDisabled(Response $response)
     {
         $this->flash->addMessage('success', "Successfully register! Please login using your new account.");
         return $this->redirectToUnAuthenticatedPage($response);
@@ -107,5 +69,19 @@ trait HandleTrait
         }
 
         return $number_of_recipient;
+    }
+
+    public function sendEmailLinkSuccess(Response $response)
+    {
+        $this->flash->addMessage('success', "Success! Check your email and click the link to verify your account.");
+        return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
+    public function sendEmailLinkError(Response $response)
+    {
+        \Log::error("Error: Sending email contains verification link not working properly.");
+
+        $this->flash->addMessage('error', "Registration not working properly this time. Please try again later.");
+        return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 }

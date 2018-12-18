@@ -37,8 +37,8 @@ trait RegisterTrait
         ];
 
         return config('auth.registration.is_verification_enabled') ?
-                $this->handleVerificationEnabledLogic($data, $response) :
-                $this->handleVerificationUnEnabledLogic();
+                $this->verificationEnabled($data, $response) :
+                $this->verificationDisabled($data);
     }
 
     /**
