@@ -36,9 +36,36 @@ trait RegisterTrait
             'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
         ];
 
-        return config('auth.registration.is_verification_enabled') ?
-                $this->verificationEnabled($data, $response) :
-                $this->verificationDisabled($data);
+        if (! config('auth.registration.is_verification_enabled'))
+        {
+            $authToken = AuthToken::createRegisterType(json_encode($data));
+
+            if ($authToken instanceof AuthToken)
+            {
+                return $this->saveAuthTokenSuccess();
+            }
+
+            return $this->saveAuthTokenError();
+        }
+
+        // else
+        $user = $this->saveUserInfo($data);
+
+        if ($user instanceof User)
+        {
+            $this->saveUserInfoSuccess();
+
+            if (config('auth.is_log_in_after_register'))
+            {
+                Auth::loggedInByUserId($user_id);
+            }
+        }
+
+        return $this->saveUserInfoError();
+
+        // return config('auth.registration.is_verification_enabled') ?
+        //         $this->verificationEnabled($data, $response) :
+        //         $this->verificationDisabled($data);
     }
 
     /**
@@ -92,23 +119,6 @@ trait RegisterTrait
 
         throw new NotFoundException($request, $response);
         exit;
-    }
-
-    public function saveUserInfo(array $inputs)
-    {
-        $result = User::create([
-            'first_name' => $inputs['first_name'],
-            'last_name' => $inputs['last_name'],
-            'email' => $inputs['email'],
-            'password' => $inputs['password']
-        ]);
-
-        return $result;
-    }
-
-    public function loginTheUser($user_id)
-    {
-        Auth::loggedInByUserId($user_id);
     }
 
     public function redirectToAuthenticatedPage(Response $response)
