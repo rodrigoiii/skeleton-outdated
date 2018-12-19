@@ -2,8 +2,12 @@
 
 namespace SkeletonAuth\Register;
 
+use App\Mailers\RegisterVerification;
 use App\Models\AuthToken;
+use App\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\NotFoundException;
 
 trait HandleTrait
 {
@@ -30,7 +34,7 @@ trait HandleTrait
     {
         \Log::error("Error: Sending email contains verification link not working properly.");
 
-        return $this->registerErrorCallback($response);
+        return $this->registerError($response);
     }
 
     public function saveUserInfo(array $inputs)
@@ -39,13 +43,13 @@ trait HandleTrait
         return $user;
     }
 
-    public function registerErrorCallback(Response $response)
+    public function registerError(Response $response)
     {
         $this->flash->addMessage('error', "Registration not working properly this time. Please try again later.");
         return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 
-    public function registerSuccessCallback(Response $response)
+    public function registerSuccess(Response $response)
     {
         $this->flash->addMessage('success', "Successfully Register!");
         return $response->withRedirect($this->router->pathFor('auth.login'));
@@ -55,6 +59,18 @@ trait HandleTrait
     {
         \Log::error("Error: Saving Auth token fail!");
 
-        return $this->registerErrorCallback($response);
+        return $this->registerError($response);
+    }
+
+    public function verifySuccess(Response $response)
+    {
+        $this->flash->addMessage('success', "Your account has been verified. Please login using your new account.");
+        return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
+    public function verifyError(Request $request, Response $response)
+    {
+        throw new NotFoundException($request, $response);
+        exit;
     }
 }

@@ -2,14 +2,13 @@
 
 namespace SkeletonAuth\Register;
 
-use App\Mailers\RegisterVerification;
 use App\Models\AuthToken;
 use App\Models\User;
 use App\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use SkeletonAuth\Auth;
 use SkeletonAuth\Register\HandleTrait;
-use Slim\Exception\NotFoundException;
 
 trait RegisterTrait
 {
@@ -65,10 +64,10 @@ trait RegisterTrait
                 Auth::loggedInByUserId($user->getId());
             }
 
-            return $this->registerSuccessCallback($response);
+            return $this->registerSuccess($response);
         }
 
-        return $this->registerErrorCallback($response);
+        return $this->registerError($response);
     }
 
     /**
@@ -99,38 +98,34 @@ trait RegisterTrait
 
                     if ($user instanceof User)
                     {
-
                         if (config('auth.registration.is_log_in_after_register'))
                         {
-                            $this->loginTheUser($user->id);
-                            $this->flash->addMessage('success', "Success! Your account has been verified.");
-                            return $this->redirectToAuthenticatedPage($response);
+                            // login user automatically
+                            Auth::loggedInByUserId($user->getId());
                         }
-                        else
-                        {
-                            $this->flash->addMessage('success', "Success! Your account has been verified, please login using your new account.");
-                            return $this->redirectToUnAuthenticatedPage($response);
-                        }
+
+                        return $this->verifySuccess($response);
                     }
                     else
                     {
                         \Log::error("Error: saveUserInfo method return not instance of User");
                     }
                 }
+                else
+                {
+                    \Log::warning("Warning: Token " . $authToken->token . " is already used!");
+                }
+            }
+            else
+            {
+                \Log::warning("Warning: Token " . $authToken->token . " is already expired!");
             }
         }
+        else
+        {
+            \Log::warning("Warning: Token " . $authToken->token . " is not exist!");
+        }
 
-        throw new NotFoundException($request, $response);
-        exit;
-    }
-
-    public function redirectToAuthenticatedPage(Response $response)
-    {
-        return $response->withRedirect($this->router->pathFor('auth.home'));
-    }
-
-    public function redirectToUnAuthenticatedPage(Response $response)
-    {
-        return $response->withRedirect($this->router->pathFor('auth.login'));
+        return $this->verifyError($request, $response);
     }
 }
