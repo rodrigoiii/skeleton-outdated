@@ -2,9 +2,9 @@
 
 namespace SkeletonAuth\ChangePassword;
 
+use App\Auth\Auth;
 use App\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
-use SkeletonAuth\Auth;
 use SkeletonAuth\ChangePassword\HandleTrait;
 
 trait ChangePasswordTrait

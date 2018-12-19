@@ -4,7 +4,7 @@ namespace SkeletonAuth\ChangePassword;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class HandleTrait
+trait HandleTrait
 {
     public function changePasswordSuccess(Response $response)
     {

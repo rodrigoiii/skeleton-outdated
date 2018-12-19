@@ -2,12 +2,12 @@
 
 namespace SkeletonAuth\Register;
 
+use App\Auth\Auth;
 use App\Models\AuthToken;
 use App\Models\User;
 use App\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonAuth\Auth;
 use SkeletonAuth\Register\HandleTrait;
 
 trait RegisterTrait

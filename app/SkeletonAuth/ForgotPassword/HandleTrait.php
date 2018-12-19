@@ -6,7 +6,7 @@ use App\Mailers\ResetPasswordLink;
 use App\Models\AuthToken;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class HandleTrait
+trait HandleTrait
 {
     public function sendResetPasswordLink(AuthToken $authToken)
     {
