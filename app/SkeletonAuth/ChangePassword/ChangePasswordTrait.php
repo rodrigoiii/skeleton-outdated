@@ -5,11 +5,11 @@ namespace SkeletonAuth\ChangePassword;
 use App\Auth\Auth;
 use App\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
-use SkeletonAuth\ChangePassword\HandleTrait;
+use SkeletonAuth\ChangePassword\HandlerTrait;
 
 trait ChangePasswordTrait
 {
-    use HandleTrait;
+    use HandlerTrait;
 
     public function getChangePassword(Response $response)
     {

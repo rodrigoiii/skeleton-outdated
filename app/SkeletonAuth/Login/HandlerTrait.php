@@ -4,7 +4,7 @@ namespace SkeletonAuth\Login;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait HandleTrait
+trait HandlerTrait
 {
     public function loginSuccess(Response $response)
     {

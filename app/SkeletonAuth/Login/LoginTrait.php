@@ -6,11 +6,11 @@ use App\Auth\Auth;
 use App\Requests\LoginRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonAuth\Login\HandleTrait;
+use SkeletonAuth\Login\HandlerTrait;
 
 trait LoginTrait
 {
-    use HandleTrait;
+    use HandlerTrait;
 
     public function getLogin(Response $response)
     {

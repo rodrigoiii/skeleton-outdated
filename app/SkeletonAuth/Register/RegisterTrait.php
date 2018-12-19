@@ -8,17 +8,29 @@ use App\Models\User;
 use App\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonAuth\Register\HandleTrait;
+use SkeletonAuth\Register\HandlerTrait;
 
 trait RegisterTrait
 {
-    use HandleTrait;
+    use HandlerTrait;
 
+    /**
+     * Display registration page
+     *
+     * @param  Response $response
+     * @return Response
+     */
     public function getRegister(Response $response)
     {
         return $this->view->render($response, "auth/register.twig");
     }
 
+    /**
+     * Submit the form callback
+     *
+     * @param  Response $response
+     * @return Response
+     */
     public function postRegister(RegisterRequest $_request, Response $response)
     {
         $inputs = $_request->getParams();
@@ -71,7 +83,7 @@ trait RegisterTrait
     }
 
     /**
-     * Verify if the token is valid
+     * Save user info after the token verify
      *
      * @param  Request  $request
      * @param  Response $response

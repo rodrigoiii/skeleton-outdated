@@ -9,8 +9,14 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;
 
-trait HandleTrait
+trait HandlerTrait
 {
+    /**
+     * Handle send verification link
+     *
+     * @param  AuthToken $authToken
+     * @return integer
+     */
     public function sendVerificationLink(AuthToken $authToken)
     {
         $inputs = json_decode($authToken->getPayload());
@@ -24,12 +30,25 @@ trait HandleTrait
         return $recipient_nums;
     }
 
+    /**
+     * Handle send verification link
+     *
+     * @param  AuthToken $authToken
+     * @return integer
+     */
     public function sendEmailLinkSuccess(Response $response)
     {
         $this->flash->addMessage('success', "Success! Please check your email to verify your account.");
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
+    /**
+     *
+     *
+     * @param  Response $response      [description]
+     * @param  [type]   $error_message [description]
+     * @return [type]                  [description]
+     */
     public function sendEmailLinkError(Response $response, $error_message=null)
     {
         \Log::error($error_message);
