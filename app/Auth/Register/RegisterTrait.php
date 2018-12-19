@@ -38,14 +38,20 @@ trait RegisterTrait
 
         if (! config('auth.registration.is_verification_enabled'))
         {
+            // create token register type
             $authToken = AuthToken::createRegisterType(json_encode($data));
 
             if ($authToken instanceof AuthToken)
             {
-                return $this->saveAuthTokenSuccess();
+                // send verification link
+                $recipient_nums = $this->sendVerificationLink($authToken);
+
+                return $recipient_nums > 0 ?
+                        $this->sendEmailLinkSuccess($response) :
+                        $this->sendEmailLinkError($response);
             }
 
-            return $this->saveAuthTokenError();
+            return $this->saveAuthTokenError($response);
         }
 
         // else
@@ -53,19 +59,16 @@ trait RegisterTrait
 
         if ($user instanceof User)
         {
-            $this->saveUserInfoSuccess();
-
             if (config('auth.is_log_in_after_register'))
             {
-                Auth::loggedInByUserId($user_id);
+                // login user automatically
+                Auth::loggedInByUserId($user->getId());
             }
+
+            return $this->registerSuccessCallback($response);
         }
 
-        return $this->saveUserInfoError();
-
-        // return config('auth.registration.is_verification_enabled') ?
-        //         $this->verificationEnabled($data, $response) :
-        //         $this->verificationDisabled($data);
+        return $this->registerErrorCallback($response);
     }
 
     /**
