@@ -43,14 +43,14 @@ trait RegisterTrait
             if ($authToken instanceof AuthToken)
             {
                 // send verification link
-                $recipient_nums = $this->sendVerificationLink($authToken);
+                $recipient_num = $this->sendVerificationLink($authToken);
 
-                return $recipient_nums > 0 ?
+                return $recipient_num > 0 ?
                         $this->sendEmailLinkSuccess($response) :
-                        $this->sendEmailLinkError($response);
+                        $this->sendEmailLinkError($response, "Error: Sending email contains verification link fail.");
             }
 
-            return $this->saveAuthTokenError($response);
+            return $this->saveAuthTokenError($response, "Error: Saving Auth token fail!");
         }
 
         // else
@@ -67,7 +67,7 @@ trait RegisterTrait
             return $this->registerSuccess($response);
         }
 
-        return $this->registerError($response);
+        return $this->registerError($response, "Error: Saving user info fail!");
     }
 
     /**
@@ -81,6 +81,8 @@ trait RegisterTrait
     public function verify(Request $request, Response $response, $token)
     {
         $authToken = AuthToken::findByToken($token);
+
+        $error_message = "";
 
         // check if token exist
         if (! is_null($authToken))
@@ -106,26 +108,24 @@ trait RegisterTrait
 
                         return $this->verifySuccess($response);
                     }
-                    else
-                    {
-                        \Log::error("Error: saveUserInfo method return not instance of User");
-                    }
+
+                    $error_message = "Error: Saving user info fail!";
                 }
                 else
                 {
-                    \Log::warning("Warning: Token " . $authToken->token . " is already used!");
+                    $error_message = "Warning: Token " . $authToken->token . " is already used!";
                 }
             }
             else
             {
-                \Log::warning("Warning: Token " . $authToken->token . " is already expired!");
+                $error_message = "Warning: Token " . $authToken->token . " is already expired!";
             }
         }
         else
         {
-            \Log::warning("Warning: Token " . $authToken->token . " is not exist!");
+            $error_message = "Warning: Token " . $authToken->token . " is not exist!";
         }
 
-        return $this->verifyError($request, $response);
+        return $this->verifyError($request, $response, $error_message);
     }
 }

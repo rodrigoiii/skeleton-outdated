@@ -11,9 +11,9 @@ $app->group('/auth', function() {
     $this->post('/login', ["LoginController", "postLogin"]);
     $this->post('/logout', ["LoginController", "logout"])->setName('auth.logout');
 
-    // reset password /reset-password?token=
-    $this->get('/reset-password', ["ResetPasswordController", "getResetPassword"]);
-    $this->post('/reset-password', ["ResetPasswordController", "postResetPassword"]);
+    $this->get('/reset-password/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
+    $this->post('/reset-password/{token}', ["ResetPasswordController", "postResetPassword"]);
+
     $this->get('/change-password', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
     $this->post('/change-password', ["ChangePasswordController", "postChangePassword"]);
 

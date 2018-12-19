@@ -26,13 +26,13 @@ trait HandleTrait
 
     public function sendEmailLinkSuccess(Response $response)
     {
-        $this->flash->addMessage('success', "Success! Check your email and click the link to verify your account.");
+        $this->flash->addMessage('success', "Success! Please check your email to verify your account.");
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
-    public function sendEmailLinkError(Response $response)
+    public function sendEmailLinkError(Response $response, $error_message=null)
     {
-        \Log::error("Error: Sending email contains verification link not working properly.");
+        \Log::error($error_message);
 
         return $this->registerError($response);
     }
@@ -43,8 +43,10 @@ trait HandleTrait
         return $user;
     }
 
-    public function registerError(Response $response)
+    public function registerError(Response $response, $error_message=null)
     {
+        \Log::error($error_message);
+
         $this->flash->addMessage('error', "Registration not working properly this time. Please try again later.");
         return $response->withRedirect($this->router->pathFor('auth.register'));
     }
@@ -55,9 +57,9 @@ trait HandleTrait
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
-    public function saveAuthTokenError($response)
+    public function saveAuthTokenError(Response $response, $error_message=null)
     {
-        \Log::error("Error: Saving Auth token fail!");
+        \Log::error($error_message);
 
         return $this->registerError($response);
     }
@@ -68,8 +70,10 @@ trait HandleTrait
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
-    public function verifyError(Request $request, Response $response)
+    public function verifyError(Request $request, Response $response, $error_message=null)
     {
+        \Log::error($error_message);
+
         throw new NotFoundException($request, $response);
         exit;
     }
