@@ -10,19 +10,16 @@ class HandleTrait
 {
     public function sendResetPasswordLink(AuthToken $authToken)
     {
-        $user_id = json_decode($authToken->getPayload());
-        $user = User::find($user_id);
+        $payload = json_decode($authToken->getPayload());
+        $user = User::find($payload->user_id);
 
-        if (!is_null($user))
-        {
-            $fullname = $user->first_name . " " . $user->last_name;
-            $link = base_url("auth/reset-password/" . $authToken->token);
+        $fullname = $user->first_name . " " . $user->last_name;
+        $link = base_url("auth/reset-password/" . $authToken->token);
 
-            $registerVerification = new ResetPasswordLink($fullname, $user->email, $link);
-            $recipient_nums = $registerVerification->send();
+        $registerVerification = new ResetPasswordLink($fullname, $user->email, $link);
+        $recipient_nums = $registerVerification->send();
 
-            return $recipient_nums;
-        }
+        return $recipient_nums;
     }
 
     public function sendEmailLinkSuccess(Response $response)

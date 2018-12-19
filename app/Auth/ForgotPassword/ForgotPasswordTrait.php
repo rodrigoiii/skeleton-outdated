@@ -19,23 +19,15 @@ trait ForgotPasswordTrait
 
     public function postForgotPassword(ForgotPasswordRequest $_request, Response $response)
     {
-        $input = $_request->getParams();
+        $user = User::findByEmail($_request->getParam('email'));
 
-        $user = User::findByEmail($input['email']);
+        // create token register type
+        $authToken = AuthToken::createResetPasswordType(json_encode(['user_id' => $user->getId()]));
 
-        if (!is_null($user))
-        {
-            // create token register type
-            $authToken = AuthToken::createResetPasswordType(json_encode(['user_id' => $user->getId()]));
+        $recipient_num = $this->sendResetPasswordLink($authToken);
 
-            $recipient_num = $this->sendResetPasswordLink($authToken);
-
-            return $recipient_num > 0 ?
-                    $this->sendEmailLinkSuccess($response) :
-                    $this->sendEmailLinkError($response);
-        }
-
-        \Log::error("Error: Sending email contains reset password link fail.");
-        return $this->resetPasswordError($response);
+        return $recipient_num > 0 ?
+                $this->sendEmailLinkSuccess($response) :
+                $this->sendEmailLinkError($response);
     }
 }
