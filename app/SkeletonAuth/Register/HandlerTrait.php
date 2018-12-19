@@ -12,7 +12,7 @@ use Slim\Exception\NotFoundException;
 trait HandlerTrait
 {
     /**
-     * Handle send verification link
+     * Send verification link handler
      *
      * @param  AuthToken $authToken
      * @return integer
@@ -31,9 +31,9 @@ trait HandlerTrait
     }
 
     /**
-     * Handle send verification link
+     * Email successfully sent handler
      *
-     * @param  AuthToken $authToken
+     * @param  Response $response
      * @return integer
      */
     public function sendEmailLinkSuccess(Response $response)
@@ -43,11 +43,11 @@ trait HandlerTrait
     }
 
     /**
+     * Email not sent handler
      *
-     *
-     * @param  Response $response      [description]
-     * @param  [type]   $error_message [description]
-     * @return [type]                  [description]
+     * @param  Response $response
+     * @param  string   $error_message
+     * @return Response
      */
     public function sendEmailLinkError(Response $response, $error_message=null)
     {
@@ -56,12 +56,37 @@ trait HandlerTrait
         return $this->registerError($response);
     }
 
+    /**
+     * Save user info handler
+     *
+     * @param  array  $inputs
+     * @return User
+     */
     public function saveUserInfo(array $inputs)
     {
         $user = User::create($inputs);
         return $user;
     }
 
+    /**
+     * Success register handler
+     *
+     * @param  Response $response
+     * @return Response
+     */
+    public function registerSuccess(Response $response)
+    {
+        $this->flash->addMessage('success', "Successfully Register!");
+        return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
+    /**
+     * Error register handler
+     *
+     * @param  Response $response
+     * @param  string   $error_message
+     * @return Response
+     */
     public function registerError(Response $response, $error_message=null)
     {
         \Log::error($error_message);
@@ -70,12 +95,13 @@ trait HandlerTrait
         return $response->withRedirect($this->router->pathFor('auth.register'));
     }
 
-    public function registerSuccess(Response $response)
-    {
-        $this->flash->addMessage('success', "Successfully Register!");
-        return $response->withRedirect($this->router->pathFor('auth.login'));
-    }
-
+    /**
+     * Save auth token handler
+     *
+     * @param  Response $response
+     * @param  string   $error_message
+     * @return Response
+     */
     public function saveAuthTokenError(Response $response, $error_message=null)
     {
         \Log::error($error_message);
@@ -83,12 +109,26 @@ trait HandlerTrait
         return $this->registerError($response);
     }
 
+    /**
+     * Success verify account handler
+     *
+     * @param  Response $response
+     * @return Response
+     */
     public function verifySuccess(Response $response)
     {
         $this->flash->addMessage('success', "Your account has been verified. Please login using your new account.");
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
+    /**
+     * Error verify account handler
+     *
+     * @param  Request $request
+     * @param  Response $response
+     * @param  string   $error_message
+     * @return Response
+     */
     public function verifyError(Request $request, Response $response, $error_message=null)
     {
         \Log::error($error_message);

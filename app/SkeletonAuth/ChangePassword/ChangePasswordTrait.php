@@ -11,11 +11,24 @@ trait ChangePasswordTrait
 {
     use HandlerTrait;
 
+    /**
+     * Display change password page
+     *
+     * @param  Response $response
+     * @return Response
+     */
     public function getChangePassword(Response $response)
     {
         return $this->view->render($response, "auth/change-password.twig");
     }
 
+    /**
+     * Post data
+     *
+     * @param  ChangePasswordRequest $_request
+     * @param  Response $response
+     * @return Response
+     */
     public function postChangePassword(ChangePasswordRequest $_request, Response $response)
     {
         $input = $_request->getParams();

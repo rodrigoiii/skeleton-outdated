@@ -12,11 +12,23 @@ trait LoginTrait
 {
     use HandlerTrait;
 
+    /**
+     * Display login page
+     *
+     * @param  Response $response
+     * @return Response
+     */
     public function getLogin(Response $response)
     {
         return $this->view->render($response, "auth/login.twig");
     }
 
+    /**
+     * Post user credential
+     * @param  LoginRequest $_request
+     * @param  Response     $response
+     * @return Response
+     */
     public function postLogin(LoginRequest $_request, Response $response)
     {
         $inputs = $_request->getParams();
@@ -32,6 +44,12 @@ trait LoginTrait
         return $this->loginError($response);
     }
 
+    /**
+     * Logout user
+     *
+     * @param  Request $request
+     * @return Response
+     */
     public function logout(Request $request)
     {
         Auth::loggedOut();

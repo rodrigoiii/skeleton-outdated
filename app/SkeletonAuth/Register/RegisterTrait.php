@@ -26,8 +26,9 @@ trait RegisterTrait
     }
 
     /**
-     * Submit the form callback
+     * Post data
      *
+     * @param  RegisterRequest $_request
      * @param  Response $response
      * @return Response
      */
@@ -88,7 +89,7 @@ trait RegisterTrait
      * @param  Request  $request
      * @param  Response $response
      * @param  string   $token
-     * @return void|Response
+     * @return Response
      */
     public function verify(Request $request, Response $response, $token)
     {
