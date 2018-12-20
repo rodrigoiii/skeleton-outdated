@@ -31,10 +31,10 @@ trait ChangePasswordTrait
      */
     public function postChangePassword(ChangePasswordRequest $_request, Response $response)
     {
-        $input = $_request->getParams();
+        $new_password = $_request->getParam('new_password');
 
         $user = Auth::user();
-        $user->password = password_hash($input['new_password'], PASSWORD_DEFAULT);
+        $user->password = password_hash($new_password, PASSWORD_DEFAULT);
 
         return $user->save() ?
                 $this->changePasswordSuccess() :
