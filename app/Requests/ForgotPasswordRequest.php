@@ -8,7 +8,7 @@ use SkeletonCore\BaseRequest;
 class ForgotPasswordRequest extends BaseRequest
 {
     /**
-     * Create rules using Respect Validation Library
+     * Forgot password rules
      *
      * @return array
      */

@@ -8,7 +8,7 @@ use SkeletonCore\BaseRequest;
 class RegisterRequest extends BaseRequest
 {
     /**
-     * Create rules using Respect Validation Library
+     * Registration rules
      *
      * @return array
      */

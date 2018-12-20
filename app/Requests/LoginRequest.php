@@ -8,7 +8,7 @@ use SkeletonCore\BaseRequest;
 class LoginRequest extends BaseRequest
 {
     /**
-     * Create rules using Respect Validation Library
+     * Login rules
      *
      * @return array
      */
