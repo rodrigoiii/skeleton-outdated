@@ -7,24 +7,39 @@
 $app->get('/', ["WelcomeController", "index"]);
 
 $app->group('/auth', function() {
-    $this->get('/login', ["LoginController", "getLogin"])->setName('auth.login');
-    $this->post('/login', ["LoginController", "postLogin"]);
-    $this->post('/logout', ["LoginController", "logout"])->setName('auth.logout');
+    $this->group('/login', function() {
+        $this->get('', ["LoginController", "getLogin"])->setName('auth.login');
+        $this->post('', ["LoginController", "postLogin"]);
+    })->add(GuestMiddleware::class);
 
-    $this->get('/reset-password/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
-    $this->post('/reset-password/{token}', ["ResetPasswordController", "postResetPassword"]);
+    $this->post('/logout', ["LoginController", "logout"])
+        ->setName('auth.logout')
+        ->add(UserMiddleware::class);
 
-    $this->get('/change-password', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
-    $this->post('/change-password', ["ChangePasswordController", "postChangePassword"]);
+    $this->group('/register', function() {
+        $this->get('', ["RegisterController", "getRegister"])->setName('auth.register');
+        $this->post('', ["RegisterController", "postRegister"]);
+        $this->get('/verify/{token}', ["RegisterController", "verify"]);
+    })->add(GuestMiddleware::class);
 
-    $this->get('/forgot-password', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
-    $this->post('/forgot-password', ["ForgotPasswordController", "postForgotPassword"]);
+    $this->group('/forgot-password', function() {
+        $this->get('', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
+        $this->post('', ["ForgotPasswordController", "postForgotPassword"]);
+    })->add(GuestMiddleware::class);
 
-    $this->get('/register', ["RegisterController", "getRegister"])->setName('auth.register');
-    $this->post('/register', ["RegisterController", "postRegister"]);
-    $this->get('/register/verify/{token}', ["RegisterController", "verify"]);
+    $this->group('/reset-password', function() {
+        $this->get('/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
+        $this->post('/{token}', ["ResetPasswordController", "postResetPassword"]);
+    })->add(GuestMiddleware::class);
+
+    $this->group('/change-password', function() {
+        $this->get('', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
+        $this->post('', ["ChangePasswordController", "postChangePassword"]);
+    })->add(UserMiddleware::class);
 
     $this->get('/home', function() {
         return "home";
-    })->setName('auth.home');
+    })
+    ->setName('auth.home')
+    ->add(UserMiddleware::class);
 });

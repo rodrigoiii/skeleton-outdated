@@ -7,7 +7,7 @@ use SkeletonAuth\Auth;
 use SkeletonCore\BaseRequest;
 
 /**
- * Requirement before you use this rule:
+ * Requirements:
  * - UserMiddleware was used
  */
 class ChangePasswordRequest extends BaseRequest
