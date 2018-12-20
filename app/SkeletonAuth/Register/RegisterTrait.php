@@ -100,8 +100,10 @@ trait RegisterTrait
         // check if token exist
         if (! is_null($authToken))
         {
+            $is_token_expired = config('auth.registration.register_token_expiration') == false ? false : $authToken->isTokenExpired(config('auth.registration.register_token_expiration'));
+
             // check if token not expired
-            if (! $authToken->isTokenExpired(config('auth.registration.register_token_expiration')))
+            if (!$is_token_expired)
             {
                 // check if token is not already used
                 if (! $authToken->isUsed())
