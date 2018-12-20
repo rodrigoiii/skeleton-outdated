@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "9ad32510f0c9e908a25e20e0e3bcb3f1",
@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "fa8ff8c3c18370600a4d00a4d0a2f23eff1146f0"
+                "reference": "acc448787054ec478233162066a2cf654d3b9911"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/fa8ff8c3c18370600a4d00a4d0a2f23eff1146f0",
-                "reference": "fa8ff8c3c18370600a4d00a4d0a2f23eff1146f0",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/acc448787054ec478233162066a2cf654d3b9911",
+                "reference": "acc448787054ec478233162066a2cf654d3b9911",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-12-19T08:58:17+00:00"
+            "time": "2018-12-20T01:49:23+00:00"
         },
         {
             "name": "rodrigoiii/skeleton-mailer",
