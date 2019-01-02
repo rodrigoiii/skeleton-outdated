@@ -2,8 +2,6 @@
 
 namespace SkeletonAuth\AuthTrait;
 
-use App\Middlewares\GuestMiddleware;
-use App\Middlewares\UserMiddleware;
 use App\Models\User;
 use SkeletonCore\App;
 
@@ -131,38 +129,38 @@ trait AuthTrait
             $this->group('/login', function() {
                 $this->get('', ["LoginController", "getLogin"])->setName('auth.login');
                 $this->post('', ["LoginController", "postLogin"]);
-            })->add(new GuestMiddleware);
+            })->add("GuestMiddleware");
 
             $this->post('/logout', ["LoginController", "logout"])
                 ->setName('auth.logout')
-                ->add(new UserMiddleware);
+                ->add("UserMiddleware");
 
             $this->group('/register', function() {
                 $this->get('', ["RegisterController", "getRegister"])->setName('auth.register');
                 $this->post('', ["RegisterController", "postRegister"]);
                 $this->get('/verify/{token}', ["RegisterController", "verify"]);
-            })->add(new GuestMiddleware);
+            })->add("GuestMiddleware");
 
             $this->group('/forgot-password', function() {
                 $this->get('', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
                 $this->post('', ["ForgotPasswordController", "postForgotPassword"]);
-            })->add(new GuestMiddleware);
+            })->add("GuestMiddleware");
 
             $this->group('/reset-password', function() {
                 $this->get('/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
                 $this->post('/{token}', ["ResetPasswordController", "postResetPassword"]);
-            })->add(new GuestMiddleware);
+            })->add("GuestMiddleware");
 
             $this->group('/change-password', function() {
                 $this->get('', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
                 $this->post('', ["ChangePasswordController", "postChangePassword"]);
-            })->add(new UserMiddleware);
+            })->add("UserMiddleware");
 
             $this->get('/home', function() {
                 return "home";
             })
             ->setName('auth.home')
-            ->add(new UserMiddleware);
+            ->add("UserMiddleware");
         });
     }
 }

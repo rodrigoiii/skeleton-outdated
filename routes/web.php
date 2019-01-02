@@ -5,5 +5,4 @@
  */
 
 $app->get('/', ["WelcomeController", "index"]);
-
 (new App\Auth\Auth($app))->routes();
