@@ -15,8 +15,8 @@
                 {% include "templates/inputs/field.twig" with {field_name: "first_name"} %}
                 {% include "templates/inputs/field.twig" with {field_name: "last_name"} %}
                 {% include "templates/inputs/field.twig" with {field_name: "email"} %}
-                {% include "templates/inputs/password.twig" with {field_name: "password"} %}
-                {% include "templates/inputs/password.twig" with {field_name: "confirm_password"} %}
+                {% include "templates/inputs/field.twig" with {field_type: "password", field_name: "password", enabled_old_input: false, enabled_success: false} %}
+                {% include "templates/inputs/field.twig" with {field_type: "password", field_name: "confirm_password", enabled_old_input: false, enabled_success: false} %}
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Register</button>

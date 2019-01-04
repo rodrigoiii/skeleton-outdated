@@ -2,7 +2,8 @@
 
 return [
     'login' => [
-        'enabled' => true
+        'enabled' => true,
+        'session_expiration' => 60 * 30 // 30 minutes
     ],
 
     'register' => [
@@ -11,7 +12,7 @@ return [
         'is_verification_enabled' => true, // remove this after
 
         'is_log_in_after_register' => false,
-        'token_expiration' => 60 * 60 * 5 // 5 hours
+        'token_expiration' => 60 * 30 // 30 minutes
     ],
 
     'forgot_password' => [

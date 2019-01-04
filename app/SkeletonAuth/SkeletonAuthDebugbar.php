@@ -90,8 +90,8 @@ class SkeletonAuthDebugbar implements IBarPanel
                             <caption>Auth Session</caption>
                             <thead>
                                 <tr>
-                                    <th>Key</th>
-                                    <th>Value</th>
+                                    <th>Keys</th>
+                                    <th>Values</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -28,7 +28,7 @@ class AuthToken extends Model
         return $this->id;
     }
 
-    public function isTokenExpired($seconds)
+    public function isExpired($seconds)
     {
         return Carbon::now() >= Carbon::parse($this->created_at)->addSeconds($seconds);
     }
@@ -47,6 +47,64 @@ class AuthToken extends Model
     public function getPayload()
     {
         return $this->payload;
+    }
+
+    /**
+     * Token is valid if:
+     * - existed
+     * - not expired
+     * - not used
+     *
+     * @return boolean [description]
+     */
+    public function isValid($token, $seconds, $type)
+    {
+        $authToken = static::findRegisterToken($token);
+        $error_message = "";
+
+        // check if token exist
+        if (! is_null($authToken))
+        {
+            $is_token_expired = config('auth.register.token_expiration') == false ? false : $authToken->isExpired($seconds);
+
+            // check if token not expired
+            if (!$is_token_expired)
+            {
+                // check if token is not already used
+                if (! $authToken->isUsed())
+                {
+                    $authToken->markTokenAsUsed();
+
+                    // save user info
+                    $user = $this->saveUserInfo(json_decode($authToken->getPayload(), true));
+
+                    if ($user instanceof User)
+                    {
+                        if (config('auth.register.is_log_in_after_register'))
+                        {
+                            // login user automatically
+                            Auth::loggedInByUserId($user->getId());
+                        }
+
+                        return $this->verifySuccess($response);
+                    }
+
+                    $error_message = "Error: Saving user info fail!";
+                }
+                else
+                {
+                    $error_message = "Warning: Token " . $authToken->token . " is already used!";
+                }
+            }
+            else
+            {
+                $error_message = "Warning: Token " . $authToken->token . " is already expired!";
+            }
+        }
+        else
+        {
+            $error_message = "Warning: Token " . $authToken->token . " is not exist!";
+        }
     }
 
     public static function findRegisterToken($token)
@@ -85,5 +143,15 @@ class AuthToken extends Model
         ]);
 
         return $authToken;
+    }
+
+    public static function isRegisterTokenValid($token, $seconds)
+    {
+        return $this->isValid($token, $seconds, static::TYPE_REGISTER);
+    }
+
+    public static function isResetPasswordTokenValid($token, $seconds)
+    {
+        return $this->isValid($token, $seconds, static::TYPE_RESET_PASSWORD);
     }
 }
