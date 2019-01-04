@@ -66,7 +66,13 @@ trait ResetPasswordTrait
         exit;
     }
 
-    public function checkToken($token)
+    /**
+     * Check token if valid to use
+     *
+     * @param  string $token
+     * @return boolean
+     */
+    private function checkToken($token)
     {
         $authToken = AuthToken::findResetPasswordToken($token);
 
