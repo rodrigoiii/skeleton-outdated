@@ -156,9 +156,7 @@ trait AuthTrait
                 $this->post('', ["ChangePasswordController", "postChangePassword"]);
             })->add("UserMiddleware");
 
-            $this->get('/home', function() {
-                return "home";
-            })
+            $this->get('/home', ["HomeController", "index"])
             ->setName('auth.home')
             ->add("UserMiddleware");
         });

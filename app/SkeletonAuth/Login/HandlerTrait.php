@@ -26,7 +26,7 @@ trait HandlerTrait
      */
     public function loginError(Response $response)
     {
-        $this->flash->addMessage('error', "Invalid email or password!");
+        $this->flash->addMessage('danger', "Invalid email or password!");
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 }

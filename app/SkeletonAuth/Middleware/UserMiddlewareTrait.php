@@ -21,6 +21,7 @@ trait UserMiddlewareTrait
     {
         if (Auth::check())
         {
+            $this->view->getEnvironment()->addGlobal('auth_user', Auth::user());
             return $next($request, $response);
         }
 

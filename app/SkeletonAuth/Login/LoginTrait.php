@@ -47,10 +47,10 @@ trait LoginTrait
     /**
      * Logout user
      *
-     * @param  Request $request
+     * @param  Response $response
      * @return Response
      */
-    public function logout(Request $request)
+    public function logout(Response $response)
     {
         Auth::loggedOut();
         return $response->withRedirect($this->router->pathFor('auth.login'));

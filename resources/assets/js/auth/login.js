@@ -1,6 +1,6 @@
 var Login = {
     init: function() {
-        Login.initValidation();
+        // Login.initValidation();
     },
 
     initValidation: function() {
