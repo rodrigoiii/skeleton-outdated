@@ -13,15 +13,8 @@
 
                 {{ errors | json_encode }}
 
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" name="email" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" class="form-control" autocomplete />
-                </div>
+                {% include "templates/inputs/field.twig" with {field_name: "email"} %}
+                {% include "templates/inputs/password.twig" with {field_name: "password"} %}
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Login</button>
@@ -35,5 +28,7 @@
 {% block scripts %}
 <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<script type="text/javascript" src="/js/login.js"></script>
+
+<script type="text/javascript" src="/js/jquery-validation/bs3-defaults.js"></script>
+<script type="text/javascript" src="/js/auth/login.js"></script>
 {% endblock %}

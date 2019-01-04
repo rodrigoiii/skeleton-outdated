@@ -7,6 +7,9 @@ var ChangePassword = {
 
     initValidation: function() {
         $('#change-password-form').validate({
+            errorElement: "span",
+            errorClass: "help-block",
+
             // error
             highlight: function(element, errorClass, successClass) {
                 var feedback = $(element).closest('.form-group').find('.form-control-feedback');
