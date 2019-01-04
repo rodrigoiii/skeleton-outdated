@@ -24,6 +24,11 @@ class User extends Model
         return $this->id;
     }
 
+    public function getFullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
     public static function findByEmail($email)
     {
         return static::where('email', $email)->first();
