@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\MailerTrait;
+namespace SkeletonAuth\Mailer;
 
 trait RegisterVerificationTrait
 {

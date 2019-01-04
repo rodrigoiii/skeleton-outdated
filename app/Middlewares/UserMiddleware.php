@@ -2,7 +2,7 @@
 
 namespace App\Middlewares;
 
-use SkeletonAuth\MiddlewareTrait\UserMiddlewareTrait;
+use SkeletonAuth\Middleware\UserMiddlewareTrait;
 use SkeletonCore\BaseMiddleware;
 
 class UserMiddleware extends BaseMiddleware
