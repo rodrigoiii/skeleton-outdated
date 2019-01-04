@@ -126,35 +126,50 @@ trait AuthTrait
     public function routes()
     {
         $this->app->group('/auth', function() {
-            $this->group('/login', function() {
-                $this->get('', ["LoginController", "getLogin"])->setName('auth.login');
-                $this->post('', ["LoginController", "postLogin"]);
-            })->add("GuestMiddleware");
+            if (config('auth.register.enabled'))
+            {
+                $this->group('/register', function() {
+                    $this->get('', ["RegisterController", "getRegister"])->setName('auth.register');
+                    $this->post('', ["RegisterController", "postRegister"]);
+                    $this->get('/verify/{token}', ["RegisterController", "verify"]);
+                })->add("GuestMiddleware");
+            }
 
-            $this->post('/logout', ["LoginController", "logout"])
-                ->setName('auth.logout')
-                ->add("UserMiddleware");
+            if (config('auth.login.enabled'))
+            {
+                $this->group('/login', function() {
+                    $this->get('', ["LoginController", "getLogin"])->setName('auth.login');
+                    $this->post('', ["LoginController", "postLogin"]);
+                })->add("GuestMiddleware");
 
-            $this->group('/register', function() {
-                $this->get('', ["RegisterController", "getRegister"])->setName('auth.register');
-                $this->post('', ["RegisterController", "postRegister"]);
-                $this->get('/verify/{token}', ["RegisterController", "verify"]);
-            })->add("GuestMiddleware");
+                $this->post('/logout', ["LoginController", "logout"])
+                    ->setName('auth.logout')
+                    ->add("UserMiddleware");
+            }
 
-            $this->group('/forgot-password', function() {
-                $this->get('', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
-                $this->post('', ["ForgotPasswordController", "postForgotPassword"]);
-            })->add("GuestMiddleware");
+            if (config('auth.forgot_password.enabled'))
+            {
+                $this->group('/forgot-password', function() {
+                    $this->get('', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
+                    $this->post('', ["ForgotPasswordController", "postForgotPassword"]);
+                })->add("GuestMiddleware");
+            }
 
-            $this->group('/reset-password', function() {
-                $this->get('/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
-                $this->post('/{token}', ["ResetPasswordController", "postResetPassword"]);
-            })->add("GuestMiddleware");
+            if (config('auth.reset_password.enabled'))
+            {
+                $this->group('/reset-password', function() {
+                    $this->get('/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
+                    $this->post('/{token}', ["ResetPasswordController", "postResetPassword"]);
+                })->add("GuestMiddleware");
+            }
 
-            $this->group('/change-password', function() {
-                $this->get('', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
-                $this->post('', ["ChangePasswordController", "postChangePassword"]);
-            })->add("UserMiddleware");
+            if (config('auth.change_password.enabled'))
+            {
+                $this->group('/change-password', function() {
+                    $this->get('', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
+                    $this->post('', ["ChangePasswordController", "postChangePassword"]);
+                })->add("UserMiddleware");
+            }
 
             $this->get('/home', ["HomeController", "index"])
             ->setName('auth.home')
