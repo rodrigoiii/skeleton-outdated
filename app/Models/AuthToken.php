@@ -49,9 +49,20 @@ class AuthToken extends Model
         return $this->payload;
     }
 
-    public static function findByToken($token)
+    public static function findRegisterToken($token)
     {
-        return static::where('token', $token)->get()->last();
+        return static::where('token', $token)
+                ->where('type', static::TYPE_REGISTER)
+                ->get()
+                ->last();
+    }
+
+    public static function findResetPasswordToken($token)
+    {
+        return static::where('token', $token)
+                ->where('type', static::TYPE_RESET_PASSWORD)
+                ->get()
+                ->last();
     }
 
     public static function createRegisterType($payload)

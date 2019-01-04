@@ -2,7 +2,7 @@
 
 namespace SkeletonAuth\Mailer;
 
-class ResetPasswordLinkTrait
+trait ResetPasswordLinkTrait
 {
     public function __construct($receiver_name, $receiver_email, $link)
     {

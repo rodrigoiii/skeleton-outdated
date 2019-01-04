@@ -96,11 +96,11 @@ class SkeletonAuthDebugbar implements IBarPanel
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>auth_user_id</td>
+                                    <td>Auth User Id</td>
                                     <td>'.(!empty(\Session::get('auth_user_id')) ? \Session::get('auth_user_id') : "N/A").'</td>
                                 </tr>
                                 <tr>
-                                    <td>logged_in_token</td>
+                                    <td>Logged In Token</td>
                                     <td>'.(!empty(\Session::get('logged_in_token')) ? \Session::get('logged_in_token') : "N/A").'</td>
                                 </tr>
                                 <tr>

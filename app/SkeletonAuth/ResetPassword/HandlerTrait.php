@@ -15,7 +15,7 @@ trait HandlerTrait
     public function resetPasswordSuccess(Response $response)
     {
         $this->flash->addMessage('success', "Your password was successfully changed!");
-        return $response->withRedirect($this->router->pathFor('auth.reset-password'));
+        return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 
     /**
@@ -24,9 +24,9 @@ trait HandlerTrait
      * @param  Response $response
      * @return Response
      */
-    public function resetPasswordError(Response $response)
+    public function resetPasswordError(Response $response, $token)
     {
         $this->flash->addMessage('error', "Change password not working properly. Please try again later!");
-        return $response->withRedirect($this->router->pathFor('auth.reset-password'));
+        return $response->withRedirect($this->router->pathFor('auth.reset-password', ['token' => $token]));
     }
 }

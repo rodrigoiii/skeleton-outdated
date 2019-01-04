@@ -93,14 +93,14 @@ trait RegisterTrait
      */
     public function verify(Request $request, Response $response, $token)
     {
-        $authToken = AuthToken::findByToken($token);
+        $authToken = AuthToken::findRegisterToken($token);
 
         $error_message = "";
 
         // check if token exist
         if (! is_null($authToken))
         {
-            $is_token_expired = config('auth.registration.register_token_expiration') == false ? false : $authToken->isTokenExpired(config('auth.registration.register_token_expiration'));
+            $is_token_expired = config('auth.registration.token_expiration') == false ? false : $authToken->isTokenExpired(config('auth.registration.token_expiration'));
 
             // check if token not expired
             if (!$is_token_expired)

@@ -73,7 +73,7 @@ trait AuthTrait
 
         if (!is_null($user))
         {
-            \Log::info("Login: ". $user->first_name . " " . $user->last_name);
+            \Log::info("Login: ". $user->getFullName());
 
             \Session::set('auth_user_id', $user_id);
             \Session::set('logged_in_token', $logged_in_token);
@@ -96,7 +96,7 @@ trait AuthTrait
 
         if (!is_null($user))
         {
-            \Log::info("Logout: ". $user->first_name . " " . $user->last_name);
+            \Log::info("Logout: ". $user->getFullName());
             \Session::destroy(['auth_user_id', 'logged_in_token']);
         }
         else

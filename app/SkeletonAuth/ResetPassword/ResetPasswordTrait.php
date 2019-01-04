@@ -5,8 +5,10 @@ namespace SkeletonAuth\ResetPassword;
 use App\Models\AuthToken;
 use App\Models\User;
 use App\Requests\ResetPasswordRequest;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use SkeletonAuth\ResetPassword\HandlerTrait;
+use Slim\Exception\NotFoundException;
 
 trait ResetPasswordTrait
 {
@@ -18,9 +20,15 @@ trait ResetPasswordTrait
      * @param  Response $response
      * @return Response
      */
-    public function getResetPassword()
+    public function getResetPassword(Request $request, Response $response, $token)
     {
-        return $this->view->render($response, "auth/reset-password.twig");
+        if ($this->checkToken($token))
+        {
+            return $this->view->render($response, "auth/reset-password.twig", compact('token'));
+        }
+
+        throw new NotFoundException($request, $response);
+        exit;
     }
 
     /**
@@ -33,16 +41,68 @@ trait ResetPasswordTrait
      */
     public function postResetPassword(ResetPasswordRequest $_request, Response $response, $token)
     {
-        $new_password = $_request->getParam('new_password');
+        if ($this->checkToken($token))
+        {
+            $new_password = $_request->getParam('new_password');
 
-        $authToken = AuthToken::findByToken($token);
-        $payload = json_decode($authToken->getPayload());
+            $authToken = AuthToken::findResetPasswordToken($token);
+            $payload = json_decode($authToken->getPayload());
 
-        $user = User::find($payload->user_id);
-        $user->password = password_hash($new_password, PASSWORD_DEFAULT);
+            $user = User::find($payload->user_id);
+            $user->password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        return $user->save() ?
-                $this->resetPasswordSuccess() :
-                $this->resetPasswordError();
+            if ($user->save())
+            {
+                \Log::info("Info: " . $user->getFullName() . " successfully reset his/her password.");
+
+                $authToken->markTokenAsUsed();
+                return $this->resetPasswordSuccess($response);
+            }
+
+            return $this->resetPasswordError($response, $token);
+        }
+
+        throw new NotFoundException($_request, $response);
+        exit;
+    }
+
+    public function checkToken($token)
+    {
+        $authToken = AuthToken::findResetPasswordToken($token);
+
+        // check if token exist
+        if (! is_null($authToken))
+        {
+            $is_token_expired = config('auth.reset_password.token_expiration') == false ? false : $authToken->isTokenExpired(config('auth.reset_password.token_expiration'));
+
+            // check if token not expired
+            if (!$is_token_expired)
+            {
+                // check if token is not already used
+                if (! $authToken->isUsed())
+                {
+                    // save user info
+                    $payload = json_decode($authToken->getPayload());
+
+                    $user = User::find($payload->user_id);
+
+                    return $user instanceof User;
+                }
+                else
+                {
+                    \Log::error("Warning: Token " . $authToken->token . " is already used!");
+                }
+            }
+            else
+            {
+                \Log::error("Warning: Token " . $authToken->token . " is already expired!");
+            }
+        }
+        else
+        {
+            \Log::error("Warning: Token " . $authToken->token . " is not exist!");
+        }
+
+        return false;
     }
 }

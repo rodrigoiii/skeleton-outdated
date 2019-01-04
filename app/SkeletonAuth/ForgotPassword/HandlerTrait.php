@@ -4,6 +4,7 @@ namespace SkeletonAuth\ForgotPassword;
 
 use App\Mailers\ResetPasswordLink;
 use App\Models\AuthToken;
+use App\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait HandlerTrait
@@ -19,7 +20,7 @@ trait HandlerTrait
         $payload = json_decode($authToken->getPayload());
         $user = User::find($payload->user_id);
 
-        $fullname = $user->first_name . " " . $user->last_name;
+        $fullname = $user->getFullName();
         $link = base_url("auth/reset-password/" . $authToken->token);
 
         $registerVerification = new ResetPasswordLink($fullname, $user->email, $link);
