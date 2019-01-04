@@ -2,8 +2,8 @@
 
 namespace App\Requests;
 
+use App\Auth\Auth;
 use Respect\Validation\Validator as v;
-use SkeletonAuth\Auth;
 use SkeletonCore\BaseRequest;
 
 /**

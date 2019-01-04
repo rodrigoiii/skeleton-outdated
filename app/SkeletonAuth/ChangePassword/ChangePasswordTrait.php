@@ -37,7 +37,7 @@ trait ChangePasswordTrait
         $user->password = password_hash($new_password, PASSWORD_DEFAULT);
 
         return $user->save() ?
-                $this->changePasswordSuccess() :
-                $this->changePasswordError();
+                $this->changePasswordSuccess($response) :
+                $this->changePasswordError($response);
     }
 }
