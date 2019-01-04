@@ -8,7 +8,14 @@ var ForgotPassword = {
             rules: {
                 email: {
                     required: true,
-                    email: true
+                    email: true,
+                    remote: "/api/jv/email-exist?invert"
+                }
+            },
+
+            messages: {
+                email: {
+                    remote: "Email is not exist!"
                 }
             }
         });

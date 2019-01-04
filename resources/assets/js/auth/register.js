@@ -63,7 +63,7 @@ var Register = {
                 email: {
                     required: true,
                     email: true,
-                    remote: "/api/jv/email-not-exist"
+                    remote: "/api/jv/email-exist"
                 },
                 password: {
                     required: true,

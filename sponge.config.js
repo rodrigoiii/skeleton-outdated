@@ -13,8 +13,9 @@ module.exports = {
         entries: {
             "app": "resources/assets/js/app.js",
             "auth/register": "resources/assets/js/auth/register.js",
-            "auth/change-password": "resources/assets/js/auth/change-password.js",
             "auth/login": "resources/assets/js/auth/login.js",
+            "auth/change-password": "resources/assets/js/auth/change-password.js",
+            "auth/forgot-password": "resources/assets/js/auth/forgot-password.js",
 
             "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js"
         },
