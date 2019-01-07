@@ -25,7 +25,8 @@
         "psr-4": {
             "App\\": "app/"
 
-            ,"SkeletonAuth\\": "app/SkeletonAuth"
+            ,"SkeletonAuth\\": "app/SkeletonAuth/"
+            ,"SkeletonAuthTraits\\": "app/SkeletonAuthTraits/"
         },
         "files": [
             "app/helpers.php"

@@ -2,7 +2,6 @@
 
 return [
     'name'            => app_env('APP_NAME', "App Name"),
-    'namespace'       => app_env('APP_NAMESPACE', "App"),
     'app_environment' => app_env('APP_ENV', "development"),
     'key'             => app_env('APP_KEY'),
     'mode'            => filter_var(app_env('APP_MODE', false), FILTER_VALIDATE_BOOLEAN),
@@ -20,5 +19,17 @@ return [
         'Log'     => SkeletonCore\Utilities\Log::class,
         'Session' => SkeletonCore\Utilities\Session::class,
         'DB'      => Illuminate\Database\Capsule\Manager::class
+    ],
+
+    'controller_extension' => [
+        'SkeletonAuthApp\\' => "SkeletonAuthApp/Controllers"
+    ],
+
+    'middleware_extension' => [
+        'SkeletonAuthApp\\' => "SkeletonAuthApp/Middlewares"
+    ],
+
+    'request_extension' => [
+        'SkeletonAuthApp\\' => "SkeletonAuthApp/Requests"
     ]
 ];
