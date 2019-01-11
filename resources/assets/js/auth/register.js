@@ -1,6 +1,6 @@
 var Register = {
     init: function() {
-        // Register.initValidation();
+        Register.initValidation();
     },
 
     initValidation: function() {
@@ -63,7 +63,7 @@ var Register = {
                 email: {
                     required: true,
                     email: true,
-                    remote: "/api/jv/email-exist"
+                    remote: "/api/jv/email-exist?invert"
                 },
                 password: {
                     required: true,

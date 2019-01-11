@@ -79,7 +79,7 @@ trait ResetPasswordTrait
         // check if token exist
         if (! is_null($authToken))
         {
-            $is_token_expired = config('auth.reset_password.token_expiration') == false ? false : $authToken->isTokenExpired(config('auth.reset_password.token_expiration'));
+            $is_token_expired = config('auth.reset_password.token_expiration') == false ? false : $authToken->isExpired(config('auth.reset_password.token_expiration'));
 
             // check if token not expired
             if (!$is_token_expired)
@@ -96,17 +96,17 @@ trait ResetPasswordTrait
                 }
                 else
                 {
-                    \Log::error("Warning: Token " . $authToken->token . " is already used!");
+                    \Log::error("Warning: Token {$token} is already used!");
                 }
             }
             else
             {
-                \Log::error("Warning: Token " . $authToken->token . " is already expired!");
+                \Log::error("Warning: Token {$token} is already expired!");
             }
         }
         else
         {
-            \Log::error("Warning: Token " . $authToken->token . " is not exist!");
+            \Log::error("Warning: Token {$token} is not exist!");
         }
 
         return false;

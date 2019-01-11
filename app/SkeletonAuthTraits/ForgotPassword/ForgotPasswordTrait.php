@@ -2,9 +2,9 @@
 
 namespace SkeletonAuth\ForgotPassword;
 
-use App\Requests\ForgotPasswordRequest;
 use App\SkeletonAuth\Models\AuthToken;
 use App\SkeletonAuth\Models\User;
+use App\SkeletonAuth\Requests\ForgotPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use SkeletonAuth\ForgotPassword\HandlerTrait;
 
@@ -39,14 +39,8 @@ trait ForgotPasswordTrait
 
         $recipient_num = $this->sendResetPasswordLink($authToken);
 
-        if ($recipient_num > 0)
-        {
-            \Log::info("Info: " . $user->getFullName() . " attempt to reset his/her password.");
-            $this->sendEmailLinkSuccess($response);
-        }
-        else
-        {
+        return $recipient_num > 0 ?
+            $this->sendEmailLinkSuccess($response) :
             $this->sendEmailLinkError($response);
-        }
     }
 }

@@ -1,4 +1,4 @@
-{% extends "auth/layout-auth.twig" %}
+{% extends "auth/layout.twig" %}
 
 {% block content %}
 <div class="container">
@@ -13,8 +13,8 @@
 
                 {{ errors | json_encode }}
 
-                {% include "templates/inputs/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
-                {% include "templates/inputs/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
+                {% include "auth/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
+                {% include "auth/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Login</button>
