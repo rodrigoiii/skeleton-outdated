@@ -2,8 +2,8 @@
 
 namespace SkeletonAuth\ChangePassword;
 
-use App\Requests\ChangePasswordRequest;
 use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use SkeletonAuth\ChangePassword\HandlerTrait;
 

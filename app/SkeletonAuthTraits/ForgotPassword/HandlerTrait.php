@@ -26,6 +26,11 @@ trait HandlerTrait
         $registerVerification = new ResetPasswordLink($fullname, $user->email, $link);
         $recipient_nums = $registerVerification->send();
 
+        if ($recipient_nums > 0)
+        {
+            \Log::info("Info: Forgot password link for ". $user->getFullName() ." {$link}");
+        }
+
         return $recipient_nums;
     }
 

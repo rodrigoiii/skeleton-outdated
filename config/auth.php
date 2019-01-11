@@ -8,9 +8,7 @@ return [
 
     'register' => [
         'enabled' => true,
-        // 'is_verification_enabled' => false,
-        'is_verification_enabled' => true, // remove this after
-
+        'is_verification_enabled' => false,
         'is_log_in_after_register' => false,
         'token_expiration' => 60 * 30 // 30 minutes
     ],

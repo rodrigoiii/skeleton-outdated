@@ -27,6 +27,11 @@ trait HandlerTrait
         $registerVerification = new RegisterVerification($fullname, $inputs->email, $link);
         $recipient_nums = $registerVerification->send();
 
+        if ($recipient_nums > 0)
+        {
+            \Log::info("Info: Register user verification link {$link}");
+        }
+
         return $recipient_nums;
     }
 
@@ -78,6 +83,18 @@ trait HandlerTrait
     {
         $this->flash->addMessage('success', "Successfully Register!");
         return $response->withRedirect($this->router->pathFor('auth.login'));
+    }
+
+    /**
+     * Success register and redirect to home handler
+     *
+     * @param  Response $response
+     * @return Response
+     */
+    public function registerSuccessRedirectToHome(Response $response)
+    {
+        $this->flash->addMessage('success', "Successfully Register!");
+        return $response->withRedirect($this->router->pathFor('auth.home'));
     }
 
     /**

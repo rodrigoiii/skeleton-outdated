@@ -2,7 +2,7 @@
 
 namespace App\SkeletonAuth\Mailers;
 
-use SkeletonAuth\Mailer\ResetPasswordLinkTrait;
+use SkeletonAuth\Mailers\ResetPasswordLinkTrait;
 use SkeletonMailer\Mailer;
 
 class ResetPasswordLink extends Mailer
