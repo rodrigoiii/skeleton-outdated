@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Validation\Exceptions;
+namespace App\SkeletonAuth\Validation\Exceptions;
 
 use Respect\Validation\Exceptions\ValidationException;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Mailers;
+namespace App\SkeletonAuth\Mailers;
 
 use SkeletonAuth\Mailer\ResetPasswordLinkTrait;
 use SkeletonMailer\Mailer;

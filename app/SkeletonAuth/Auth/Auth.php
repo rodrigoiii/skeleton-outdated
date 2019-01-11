@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Auth;
+namespace App\SkeletonAuth\Auth;
 
 use SkeletonAuth\Auth\AuthTrait;
 

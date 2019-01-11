@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Controllers;
+namespace App\SkeletonAuth\Controllers;
 
 use SkeletonAuth\ChangePassword\ChangePasswordTrait;
 use SkeletonCore\BaseController;

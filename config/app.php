@@ -22,14 +22,16 @@ return [
     ],
 
     'controller_extension' => [
-        'SkeletonAuthApp\\' => "SkeletonAuthApp/Controllers"
+        'SkeletonAuth\\' => "app/SkeletonAuth/Controllers"
     ],
 
     'middleware_extension' => [
-        'SkeletonAuthApp\\' => "SkeletonAuthApp/Middlewares"
+        'SkeletonAuth\\' => "app/SkeletonAuth/Middlewares"
     ],
 
     'request_extension' => [
-        'SkeletonAuthApp\\' => "SkeletonAuthApp/Requests"
-    ]
+        'SkeletonAuth\\' => "app/SkeletonAuth/Requests"
+    ],
+
+    'validation_extension' => ["app/SkeletonAuth/Validation/Rules"]
 ];

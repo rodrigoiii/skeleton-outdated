@@ -2,13 +2,13 @@
 
 namespace SkeletonAuth\ForgotPassword;
 
-use App\Models\AuthToken;
-use App\Models\User;
 use App\Requests\ForgotPasswordRequest;
+use App\SkeletonAuth\Models\AuthToken;
+use App\SkeletonAuth\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use SkeletonAuth\ForgotPassword\HandlerTrait;
 
-trait ForgotPasswordTrait
+trait ForgotPassword
 {
     use HandlerTrait;
 

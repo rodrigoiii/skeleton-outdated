@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Models;
+namespace App\SkeletonAuth\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;

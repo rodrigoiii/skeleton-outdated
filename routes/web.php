@@ -4,4 +4,4 @@
  * Register your web routes on this file.
  */
 $app->get('/', ["WelcomeController", "index"]);
-(new App\SkeletonAuthApp\Auth\Auth($app))->routes();
+(new App\SkeletonAuth\Auth\Auth($app))->routes();

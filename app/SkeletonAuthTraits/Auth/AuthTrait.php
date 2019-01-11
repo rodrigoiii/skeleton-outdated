@@ -2,11 +2,14 @@
 
 namespace SkeletonAuth\Auth;
 
-use App\Models\User;
+use App\SkeletonAuth\Models\User;
+use SkeletonAuth\Auth\HandlerTrait;
 use SkeletonCore\App;
 
 trait AuthTrait
 {
+    use HandlerTrait;
+
     /**
      * @var App
      */
@@ -129,51 +132,51 @@ trait AuthTrait
             if (config('auth.register.enabled'))
             {
                 $this->group('/register', function() {
-                    $this->get('', ["RegisterController", "getRegister"])->setName('auth.register');
-                    $this->post('', ["RegisterController", "postRegister"]);
-                    $this->get('/verify/{token}', ["RegisterController", "verify"]);
-                })->add("SkeletonAuthApp\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuth\\RegisterController", "getRegister"])->setName('auth.register');
+                    $this->post('', ["SkeletonAuth\\RegisterController", "postRegister"]);
+                    $this->get('/verify/{token}', ["SkeletonAuth\\RegisterController", "verify"]);
+                })->add("SkeletonAuth\\GuestMiddleware");
             }
 
             if (config('auth.login.enabled'))
             {
                 $this->group('/login', function() {
-                    $this->get('', ["LoginController", "getLogin"])->setName('auth.login');
-                    $this->post('', ["LoginController", "postLogin"]);
-                })->add("SkeletonAuthApp\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuth\\LoginController", "getLogin"])->setName('auth.login');
+                    $this->post('', ["SkeletonAuth\\LoginController", "postLogin"]);
+                })->add("SkeletonAuth\\GuestMiddleware");
 
-                $this->post('/logout', ["LoginController", "logout"])
+                $this->post('/logout', ["SkeletonAuth\\LoginController", "logout"])
                     ->setName('auth.logout')
-                    ->add("SkeletonAuthApp\\UserMiddleware");
+                    ->add("SkeletonAuth\\UserMiddleware");
             }
 
             if (config('auth.forgot_password.enabled'))
             {
                 $this->group('/forgot-password', function() {
-                    $this->get('', ["ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
-                    $this->post('', ["ForgotPasswordController", "postForgotPassword"]);
-                })->add("SkeletonAuthApp\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuth\\ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
+                    $this->post('', ["SkeletonAuth\\ForgotPasswordController", "postForgotPassword"]);
+                })->add("SkeletonAuth\\GuestMiddleware");
             }
 
             if (config('auth.reset_password.enabled'))
             {
                 $this->group('/reset-password', function() {
-                    $this->get('/{token}', ["ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
-                    $this->post('/{token}', ["ResetPasswordController", "postResetPassword"]);
-                })->add("SkeletonAuthApp\\GuestMiddleware");
+                    $this->get('/{token}', ["SkeletonAuth\\ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
+                    $this->post('/{token}', ["SkeletonAuth\\ResetPasswordController", "postResetPassword"]);
+                })->add("SkeletonAuth\\GuestMiddleware");
             }
 
             if (config('auth.change_password.enabled'))
             {
                 $this->group('/change-password', function() {
-                    $this->get('', ["ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
-                    $this->post('', ["ChangePasswordController", "postChangePassword"]);
-                })->add("SkeletonAuthApp\\UserMiddleware");
+                    $this->get('', ["SkeletonAuth\\ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
+                    $this->post('', ["SkeletonAuth\\ChangePasswordController", "postChangePassword"]);
+                })->add("SkeletonAuth\\UserMiddleware");
             }
 
-            $this->get('/home', ["HomeController", "index"])
+            $this->get('/home', ["SkeletonAuth\\HomeController", "index"])
             ->setName('auth.home')
-            ->add("SkeletonAuthApp\\UserMiddleware");
+            ->add("SkeletonAuth\\UserMiddleware");
         });
     }
 }

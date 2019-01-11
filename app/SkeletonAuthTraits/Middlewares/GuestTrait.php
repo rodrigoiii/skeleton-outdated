@@ -1,13 +1,13 @@
 <?php
 
-namespace SkeletonAuth\Middleware;
+namespace SkeletonAuth\Middlewares;
 
-use App\SkeletonAuthApp\Auth\Auth;
+use App\SkeletonAuth\Auth\Auth;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonCore\BaseMiddleware;
 
-trait GuestMiddlewareTrait
+trait GuestTrait
 {
     /**
      * Block the request of logged in user

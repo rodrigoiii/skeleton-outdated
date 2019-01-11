@@ -2,9 +2,9 @@
 
 namespace SkeletonAuth\Register;
 
-use App\Mailers\RegisterVerification;
-use App\Models\AuthToken;
-use App\Models\User;
+use App\SkeletonAuth\Mailers\RegisterVerification;
+use App\SkeletonAuth\Models\AuthToken;
+use App\SkeletonAuth\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;

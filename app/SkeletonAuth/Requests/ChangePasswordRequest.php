@@ -1,6 +1,6 @@
 <?php
 
-namespace App\SkeletonAuthApp\Requests;
+namespace App\SkeletonAuth\Requests;
 
 use App\Auth\Auth;
 use Respect\Validation\Validator as v;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\SkeletonAuthApp\Middlewares;
+namespace App\SkeletonAuth\Middlewares;
 
-use SkeletonAuth\Middleware\UserMiddlewareTrait;
+use SkeletonAuth\Middlewares\UserTrait;
 use SkeletonCore\BaseMiddleware;
 
 class UserMiddleware extends BaseMiddleware
 {
-    use UserMiddlewareTrait;
+    use UserTrait;
 }

@@ -2,13 +2,13 @@
 
 namespace SkeletonAuth\Login;
 
-use App\Auth\Auth;
-use App\Requests\LoginRequest;
+use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Requests\LoginRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonAuth\Login\HandlerTrait;
 
-trait LoginTrait
+trait Login
 {
     use HandlerTrait;
 

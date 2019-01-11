@@ -2,9 +2,9 @@
 
 namespace SkeletonAuth\ForgotPassword;
 
-use App\Mailers\ResetPasswordLink;
-use App\Models\AuthToken;
-use App\Models\User;
+use App\SkeletonAuth\Mailers\ResetPasswordLink;
+use App\SkeletonAuth\Models\AuthToken;
+use App\SkeletonAuth\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait HandlerTrait

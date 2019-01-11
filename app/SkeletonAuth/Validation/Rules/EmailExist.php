@@ -1,8 +1,8 @@
 <?php
 
-namespace App\SkeletonAuthApp\Validation\Rules;
+namespace App\SkeletonAuth\Validation\Rules;
 
-use App\Models\User;
+use App\SkeletonAuth\Models\User;
 use Respect\Validation\Rules\AbstractRule;
 
 class EmailExist extends AbstractRule

@@ -2,10 +2,10 @@
 
 namespace SkeletonAuth\Register;
 
-use App\Auth\Auth;
-use App\Models\AuthToken;
-use App\Models\User;
-use App\Requests\RegisterRequest;
+use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Models\AuthToken;
+use App\SkeletonAuth\Models\User;
+use App\SkeletonAuth\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonAuth\Register\HandlerTrait;
