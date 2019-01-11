@@ -4,7 +4,7 @@ namespace SkeletonAuth\ChangePassword;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait Handler
+trait HandlerTrait
 {
     /**
      * Success change password handler

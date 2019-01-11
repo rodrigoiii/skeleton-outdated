@@ -8,7 +8,7 @@ use App\SkeletonAuth\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use SkeletonAuth\ForgotPassword\HandlerTrait;
 
-trait ForgotPassword
+trait ForgotPasswordTrait
 {
     use HandlerTrait;
 

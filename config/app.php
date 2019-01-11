@@ -22,16 +22,17 @@ return [
     ],
 
     'controller_extension' => [
-        'SkeletonAuth\\' => "app/SkeletonAuth/Controllers"
+        'SkeletonAuth\\' => "SkeletonAuth/Controllers" // values relative in 'app/' folder
     ],
 
     'middleware_extension' => [
-        'SkeletonAuth\\' => "app/SkeletonAuth/Middlewares"
+        'SkeletonAuth\\' => "SkeletonAuth/Middlewares" // values relative in 'app/' folder
     ],
 
     'request_extension' => [
-        'SkeletonAuth\\' => "app/SkeletonAuth/Requests"
+        'SkeletonAuth\\' => "SkeletonAuth/Requests" // values relative in 'app/' folder
     ],
 
-    'validation_extension' => ["app/SkeletonAuth/Validation/Rules"]
+    // values relative in 'app/' folder
+    'validation_extension' => ["SkeletonAuth/Validation/Rules"]
 ];
