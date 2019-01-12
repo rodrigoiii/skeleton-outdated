@@ -7,7 +7,6 @@ use App\SkeletonAuth\Models\User;
 use App\SkeletonAuth\Requests\ResetPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonAuth\ResetPassword\HandlerTrait;
 use Slim\Exception\NotFoundException;
 
 trait ResetPasswordTrait

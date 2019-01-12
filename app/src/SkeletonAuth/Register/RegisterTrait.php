@@ -8,7 +8,6 @@ use App\SkeletonAuth\Models\User;
 use App\SkeletonAuth\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonAuth\Register\HandlerTrait;
 
 trait RegisterTrait
 {

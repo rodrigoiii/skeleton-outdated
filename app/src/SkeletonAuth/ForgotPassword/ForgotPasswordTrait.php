@@ -6,7 +6,6 @@ use App\SkeletonAuth\Models\AuthToken;
 use App\SkeletonAuth\Models\User;
 use App\SkeletonAuth\Requests\ForgotPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
-use SkeletonAuth\ForgotPassword\HandlerTrait;
 
 trait ForgotPasswordTrait
 {

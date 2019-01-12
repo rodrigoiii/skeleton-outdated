@@ -9,7 +9,7 @@ var ForgotPassword = {
                 email: {
                     required: true,
                     email: true,
-                    remote: "/api/jv/email-exist?invert"
+                    remote: "/api/jv/email-exist"
                 }
             },
 

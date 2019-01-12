@@ -3,7 +3,6 @@
 namespace SkeletonAuth\Auth;
 
 use App\SkeletonAuth\Models\User;
-use SkeletonAuth\Auth\HandlerTrait;
 use SkeletonCore\App;
 
 trait AuthTrait
