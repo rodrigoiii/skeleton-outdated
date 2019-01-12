@@ -49,11 +49,11 @@
     {% block content %}
     {% endblock %}
 
-    {% block scripts %}
-    {% endblock %}
-
     <form method="POST" action="{{ path_for('auth.logout') }}" id="auth-logout-form" hidden>
         {{ csrf.field | raw }}
     </form>
+
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>
