@@ -17,7 +17,7 @@ trait AuthTrait
     /**
      * Create Auth instance
      *
-     * @param App $app [description]
+     * @param App $app
      */
     public function __construct(App $app)
     {

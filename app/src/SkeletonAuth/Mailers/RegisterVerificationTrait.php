@@ -4,6 +4,13 @@ namespace SkeletonAuth\Mailers;
 
 trait RegisterVerificationTrait
 {
+    /**
+     * Sending email for register verification configuration.
+     *
+     * @param string $receiver_name
+     * @param string $receiver_email
+     * @param string $link
+     */
     public function __construct($receiver_name, $receiver_email, $link)
     {
         $this->subject("Register Verification");

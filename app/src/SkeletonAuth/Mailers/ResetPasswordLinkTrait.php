@@ -4,6 +4,13 @@ namespace SkeletonAuth\Mailers;
 
 trait ResetPasswordLinkTrait
 {
+    /**
+     * Sending email for reset password configuration.
+     *
+     * @param string $receiver_name
+     * @param string $receiver_email
+     * @param string $link
+     */
     public function __construct($receiver_name, $receiver_email, $link)
     {
         $this->subject("Reset Password");
