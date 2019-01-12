@@ -2,7 +2,7 @@
 
 namespace SkeletonAuth\Middlewares;
 
-use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Auth;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonCore\BaseMiddleware;

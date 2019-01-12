@@ -2,10 +2,10 @@
 
 namespace App\SkeletonAuth;
 
-use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Auth;
 use Tracy\IBarPanel;
 
-class SkeletonAuthDebugbar implements IBarPanel
+class Debugbar implements IBarPanel
 {
     public function getTab()
     {

@@ -5,6 +5,6 @@ return [
 
     // values relative in the namespace of 'app/' folder
     'custom_panels' => [
-        "SkeletonAuth\\SkeletonAuthDebugbar"
+        "SkeletonAuth\\Debugbar"
     ]
 ];

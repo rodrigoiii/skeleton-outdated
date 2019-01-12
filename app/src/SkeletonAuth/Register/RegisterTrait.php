@@ -2,7 +2,7 @@
 
 namespace SkeletonAuth\Register;
 
-use App\SkeletonAuth\Auth\Auth;
+use App\SkeletonAuth\Auth;
 use App\SkeletonAuth\Models\AuthToken;
 use App\SkeletonAuth\Models\User;
 use App\SkeletonAuth\Requests\RegisterRequest;

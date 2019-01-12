@@ -1,14 +1,12 @@
 <?php
 
-namespace SkeletonAuth\Auth;
+namespace SkeletonAuth;
 
 use App\SkeletonAuth\Models\User;
 use SkeletonCore\App;
 
 trait AuthTrait
 {
-    use HandlerTrait;
-
     /**
      * @var App
      */
