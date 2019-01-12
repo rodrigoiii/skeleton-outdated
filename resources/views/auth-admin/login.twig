@@ -1,33 +1,37 @@
-{% extends "auth-admin/layout.twig" %}
+{% extends "auth-admin/admin-lte/layouts/guest-page.twig" %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="page-header">Login</h1>
+<div class="guest-box">
+    <div class="guest-logo">
+        <b>Skeleton Auth</b> Admin
+    </div>
+    <div class="guest-box-body">
+        <form method="POST" action="{{ path_for('auth-admin.login') }}" id="login-form">
+            {{ csrf.field | raw }}
 
-            {% include "templates/flash-message.twig" %}
+            {{ errors | json_encode }}
 
-            <form method="POST" action="{{ path_for('auth.login') }}" id="login-form">
-                {{ csrf.field | raw }}
-
-                {{ errors | json_encode }}
-
-                {% include "auth/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
-                {% include "auth/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
+            <div class="form-group has-feedback">
+                <input type="text" name="email" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+        <a href="#">I forgot my password</a><br>
+        <a href="register.html" class="text-center">Register a new membership</a>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
-<script type="text/javascript" src="/js/auth/login.js"></script>
+<script type="text/javascript" src="/js/auth-admin/login.js"></script>
 {% endblock %}
