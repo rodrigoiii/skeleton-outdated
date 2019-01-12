@@ -22,6 +22,7 @@ class UserSeeder extends AbstractSeed
                 'last_name' => $faker->lastName,
                 'email' => $unique_email,
                 'password' => password_hash($unique_email, PASSWORD_DEFAULT),
+                'is_admin' => $i === 1 ? 1 : 0 // only 1 admin
             ];
 
             echo __CLASS__ . " => {$i}/{$limit}\n";

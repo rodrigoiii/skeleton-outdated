@@ -21,18 +21,27 @@ return [
         'DB'      => Illuminate\Database\Capsule\Manager::class
     ],
 
+    // values relative in 'app/' folder
     'controller_extension' => [
-        'SkeletonAuth\\' => "SkeletonAuth/Controllers" // values relative in 'app/' folder
-    ],
-
-    'middleware_extension' => [
-        'SkeletonAuth\\' => "SkeletonAuth/Middlewares" // values relative in 'app/' folder
-    ],
-
-    'request_extension' => [
-        'SkeletonAuth\\' => "SkeletonAuth/Requests" // values relative in 'app/' folder
+        'SkeletonAuth\\' => "SkeletonAuth/Controllers"
+        ,'SkeletonAuthAdmin\\' => "SkeletonAuthAdmin/Controllers"
     ],
 
     // values relative in 'app/' folder
-    'validation_extension' => ["SkeletonAuth/Validation/Rules"]
+    'middleware_extension' => [
+        'SkeletonAuth\\' => "SkeletonAuth/Middlewares"
+        ,'SkeletonAuthAdmin\\' => "SkeletonAuthAdmin/Middlewares"
+    ],
+
+    // values relative in 'app/' folder
+    'request_extension' => [
+        'SkeletonAuth\\' => "SkeletonAuth/Requests"
+        ,'SkeletonAuthAdmin\\' => "SkeletonAuthAdmin/Requests"
+    ],
+
+    // values relative in 'app/' folder
+    'validation_extension' => [
+        "SkeletonAuth/Validation/Rules"
+        ,"SkeletonAuthAdmin/Validation/Rules"
+    ]
 ];

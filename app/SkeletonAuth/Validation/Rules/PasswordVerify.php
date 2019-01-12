@@ -8,9 +8,6 @@ class PasswordVerify extends AbstractRule
 {
     private $hash_password;
 
-    /**
-     * [__construct description]
-     */
     public function __construct($hash_password)
     {
         $this->hash_password = $hash_password;
