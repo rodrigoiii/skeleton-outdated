@@ -17,7 +17,7 @@ class CreateTableUsers extends AbstractMigration
             ->addColumn('last_name', 'string', ['limit' => 50])
             ->addColumn('email', 'string', ['limit' => 50])
             ->addColumn('password', 'string', ['limit' => 60])
-            ->addColumn('logged_in_token', 'string', ['limit' => 13, 'default' => ""]) // uniqid()
+            ->addColumn('login_token', 'string', ['limit' => 13, 'default' => ""]) // uniqid()
             ->addIndex('email', ['unique' => true])
             ->addTimestamps();
 

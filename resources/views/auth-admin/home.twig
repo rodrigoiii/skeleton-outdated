@@ -1,4 +1,7 @@
-{% extends "auth/layout.twig" %}
+{% extends "auth-admin/layouts/admin-page.twig" %}
+
+{% block page_header %}Home{% endblock %}
+{% block page_description %}Lorem Ipsum{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,9 +13,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts %}
-<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="/js/app.js"></script>
 {% endblock %}

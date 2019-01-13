@@ -23,7 +23,7 @@ trait LoginTrait
     }
 
     /**
-     * Post user credential
+     * Post admin credential
      * @param  LoginRequest $_request
      * @param  Response     $response
      * @return Response
@@ -32,10 +32,10 @@ trait LoginTrait
     {
         $inputs = $_request->getParams();
 
-        if ($user = Auth::validateCredential($inputs['email'], $inputs['password']))
+        if ($admin = Auth::validateCredential($inputs['email'], $inputs['password']))
         {
-            // login the user
-            Auth::loggedInByUserId($user->getId());
+            // login the admin
+            Auth::logInByAdminId($admin->getId());
 
             return $this->loginSuccess($response);
         }
@@ -44,14 +44,14 @@ trait LoginTrait
     }
 
     /**
-     * Logout user
+     * Logout admin
      *
      * @param  Response $response
      * @return Response
      */
     public function logout(Response $response)
     {
-        Auth::loggedOut();
+        Auth::logOut();
         return $response->withRedirect($this->router->pathFor('auth-admin.login'));
     }
 }

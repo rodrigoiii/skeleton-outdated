@@ -51,9 +51,9 @@ trait AuthTrait
      */
     public static function user()
     {
-        if (!is_null(\Session::get('auth_user_id')))
+        if (!is_null(\Session::get('user_auth_id')))
         {
-            return User::find(\Session::get('auth_user_id'));
+            return User::find(\Session::get('user_auth_id'));
         }
 
         return null;
@@ -65,9 +65,9 @@ trait AuthTrait
      * @param  id $user_id
      * @return void
      */
-    public static function loggedInByUserId($user_id)
+    public static function logInByUserId($user_id)
     {
-        $logged_in_token = uniqid();
+        $login_token = uniqid();
 
         $user = User::find($user_id);
 
@@ -75,8 +75,10 @@ trait AuthTrait
         {
             \Log::info("Login: ". $user->getFullName());
 
-            \Session::set('auth_user_id', $user_id);
-            \Session::set('logged_in_token', $logged_in_token);
+            \Session::set('user_auth_id', $user_id);
+            \Session::set('user_login_token', $login_token);
+
+            $user->setLoginToken($login_token);
         }
         else
         {
@@ -89,15 +91,15 @@ trait AuthTrait
      *
      * @return void
      */
-    public static function loggedOut()
+    public static function logOut()
     {
-        $user_id = \Session::get('auth_user_id');
+        $user_id = \Session::get('user_auth_id');
         $user = User::find($user_id);
 
         if (!is_null($user))
         {
             \Log::info("Logout: ". $user->getFullName());
-            \Session::destroy(['auth_user_id', 'logged_in_token']);
+            \Session::destroy(['user_auth_id', 'user_login_token']);
         }
         else
         {
@@ -112,10 +114,22 @@ trait AuthTrait
      */
     public static function check()
     {
-        $user_id = \Session::get('auth_user_id');
+        $user_id = \Session::get('user_auth_id');
         $user = User::find($user_id);
 
-        return !is_null($user);
+        if (!is_null($user))
+        {
+            $is_token_valid = $user->login_token === \Session::get('user_login_token');
+
+            if ($is_token_valid)
+            {
+                return true;
+            }
+
+            static::logout();
+        }
+
+        return false;
     }
 
     /**

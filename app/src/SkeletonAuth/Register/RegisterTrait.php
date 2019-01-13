@@ -73,7 +73,7 @@ trait RegisterTrait
             if (config('auth.register.is_log_in_after_register'))
             {
                 // login user automatically
-                Auth::loggedInByUserId($user->getId());
+                Auth::logInByUserId($user->getId());
                 return $this->registerSuccessRedirectToHome($response);
             }
 
@@ -118,7 +118,7 @@ trait RegisterTrait
                         if (config('auth.register.is_log_in_after_register'))
                         {
                             // login user automatically
-                            Auth::loggedInByUserId($user->getId());
+                            Auth::logInByUserId($user->getId());
                         }
 
                         return $this->verifySuccess($response);

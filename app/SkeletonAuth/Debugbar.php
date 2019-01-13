@@ -97,15 +97,15 @@ class Debugbar implements IBarPanel
                             <tbody>
                                 <tr>
                                     <td>Auth User Id</td>
-                                    <td>'.(!empty(\Session::get('auth_user_id')) ? \Session::get('auth_user_id') : "N/A").'</td>
+                                    <td>'.(!empty(\Session::get('user_auth_id')) ? \Session::get('user_auth_id') : "N/A").'</td>
                                 </tr>
                                 <tr>
                                     <td>Logged In Token</td>
-                                    <td>'.(!empty(\Session::get('logged_in_token')) ? \Session::get('logged_in_token') : "N/A").'</td>
+                                    <td>'.(!empty(\Session::get('user_login_token')) ? \Session::get('user_login_token') : "N/A").'</td>
                                 </tr>
                                 <tr>
                                     <td>Authenticated User</td>
-                                    <td>'.(Auth::check('logged_in_token') ? Auth::user()->getFullName() : "N/A").'</td>
+                                    <td>'.(Auth::check() ? Auth::user()->getFullName() : "N/A").'</td>
                                 </tr>
                             </tbody>
                         </table>

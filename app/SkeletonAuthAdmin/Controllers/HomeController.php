@@ -10,6 +10,6 @@ class HomeController extends BaseController
 {
     public function index(Response $response)
     {
-        return $this->view->render($response, "auth/home.twig");
+        return $this->view->render($response, "auth-admin/home.twig");
     }
 }

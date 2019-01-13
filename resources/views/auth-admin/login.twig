@@ -1,4 +1,4 @@
-{% extends "auth-admin/admin-lte/layouts/guest-page.twig" %}
+{% extends "auth-admin/layouts/guest-page.twig" %}
 
 {% block content %}
 <div class="guest-box">
@@ -11,14 +11,11 @@
 
             {{ errors | json_encode }}
 
-            <div class="form-group has-feedback">
-                <input type="text" name="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="Password">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
+            {% include "templates/flash-message.twig" %}
+
+            {% include "auth-admin/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
+            {% include "auth-admin/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
+
             <div class="row">
                 <div class="col-xs-4">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>

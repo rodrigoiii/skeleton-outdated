@@ -12,7 +12,13 @@ class User extends Model
      *
      * @var array
      */
-    protected $fillable = ["picture", "first_name", "last_name", "email", "password"];
+    protected $fillable = ["picture", "first_name", "last_name", "email", "password", "login_token"];
+
+    public function setLoginToken($login_token)
+    {
+        $this->login_token = $login_token;
+        return $this->save();
+    }
 
     /**
      * Return model id

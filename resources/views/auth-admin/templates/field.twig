@@ -5,8 +5,7 @@
 {% set enabled_old_input = (enabled_old_input is defined ? enabled_old_input : true) %}
 
 <div class="form-group has-feedback {{ old_input is not empty ? (errors[field_name] is not empty ? (enabled_error ? 'has-error' : '') : (enabled_success ? 'has-success' : '')) }}">
-    <label for="{{ field_name }}">{{ field_text }}</label>
-    <input type="{{ field_type }}" name="{{ field_name }}" class="form-control" value="{{ enabled_old_input ? old_input[field_name] : '' }}" />
+    <input type="{{ field_type }}" name="{{ field_name }}" class="form-control" value="{{ enabled_old_input ? old_input[field_name] : '' }}" placeholder="{{ field_text }}" />
 
     {% if old_input is not empty %}
         {% if errors[field_name] is not empty %}

@@ -51,9 +51,9 @@ trait AuthTrait
      */
     public static function admin()
     {
-        if (!is_null(\Session::get('auth_admin_id')))
+        if (!is_null(\Session::get('admin_auth_id')))
         {
-            return Admin::findById(\Session::get('auth_admin_id'));
+            return Admin::findById(\Session::get('admin_auth_id'));
         }
 
         return null;
@@ -65,9 +65,9 @@ trait AuthTrait
      * @param  id $admin_id
      * @return void
      */
-    public static function loggedInByAdminId($admin_id)
+    public static function logInByAdminId($admin_id)
     {
-        $logged_in_token = uniqid();
+        $login_token = uniqid();
 
         $admin = Admin::findById($admin_id);
 
@@ -75,8 +75,10 @@ trait AuthTrait
         {
             \Log::info("Login: ". $admin->getFullName());
 
-            \Session::set('auth_admin_id', $admin_id);
-            \Session::set('logged_in_token', $logged_in_token);
+            \Session::set('admin_auth_id', $admin_id);
+            \Session::set('admin_login_token', $login_token);
+
+            $admin->setLoginToken($login_token);
         }
         else
         {
@@ -89,15 +91,15 @@ trait AuthTrait
      *
      * @return void
      */
-    public static function loggedOut()
+    public static function logOut()
     {
-        $admin_id = \Session::get('auth_admin_id');
+        $admin_id = \Session::get('admin_auth_id');
         $admin = Admin::findById($admin_id);
 
         if (!is_null($admin))
         {
             \Log::info("Logout: ". $admin->getFullName());
-            \Session::destroy(['auth_admin_id', 'logged_in_token']);
+            \Session::destroy(['admin_auth_id', 'admin_login_token']);
         }
         else
         {
@@ -112,10 +114,22 @@ trait AuthTrait
      */
     public static function check()
     {
-        $admin_id = \Session::get('auth_admin_id');
+        $admin_id = \Session::get('admin_auth_id');
         $admin = Admin::findById($admin_id);
 
-        return !is_null($admin);
+        if (!is_null($admin))
+        {
+            $is_token_valid = $admin->login_token === \Session::get('admin_login_token');
+
+            if ($is_token_valid)
+            {
+                return true;
+            }
+
+            static::logout();
+        }
+
+        return false;
     }
 
     /**

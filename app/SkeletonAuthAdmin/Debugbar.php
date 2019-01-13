@@ -18,7 +18,7 @@ class Debugbar implements IBarPanel
 
     public function getPanel()
     {
-        $tmpl = "<h1>SkeletonAuth</h1>";
+        $tmpl = "<h1>SkeletonAuthAdmin</h1>";
         $tmpl .= $this->configuration();
         $tmpl .= $this->authSession();
 
@@ -97,15 +97,15 @@ class Debugbar implements IBarPanel
                             <tbody>
                                 <tr>
                                     <td>Auth User Id</td>
-                                    <td>'.(!empty(\Session::get('auth_user_id')) ? \Session::get('auth_user_id') : "N/A").'</td>
+                                    <td>'.(!empty(\Session::get('admin_auth_id')) ? \Session::get('admin_auth_id') : "N/A").'</td>
                                 </tr>
                                 <tr>
                                     <td>Logged In Token</td>
-                                    <td>'.(!empty(\Session::get('logged_in_token')) ? \Session::get('logged_in_token') : "N/A").'</td>
+                                    <td>'.(!empty(\Session::get('admin_login_token')) ? \Session::get('admin_login_token') : "N/A").'</td>
                                 </tr>
                                 <tr>
                                     <td>Authenticated User</td>
-                                    <td>'.(Auth::check('logged_in_token') ? Auth::user()->getFullName() : "N/A").'</td>
+                                    <td>'.(Auth::check() ? Auth::admin()->getFullName() : "N/A").'</td>
                                 </tr>
                             </tbody>
                         </table>

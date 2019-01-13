@@ -35,7 +35,7 @@ trait LoginTrait
         if ($user = Auth::validateCredential($inputs['email'], $inputs['password']))
         {
             // login the user
-            Auth::loggedInByUserId($user->getId());
+            Auth::logInByUserId($user->getId());
 
             return $this->loginSuccess($response);
         }
@@ -51,7 +51,7 @@ trait LoginTrait
      */
     public function logout(Response $response)
     {
-        Auth::loggedOut();
+        Auth::logOut();
         return $response->withRedirect($this->router->pathFor('auth.login'));
     }
 }
