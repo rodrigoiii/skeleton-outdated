@@ -210,7 +210,7 @@ desired effect
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="javascript:void(0)" class="btn btn-default btn-flat" onclick="document.getElementById('auth-admin-logout-form').submit()">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -370,6 +370,10 @@ desired effect
         <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
     </div>
+
+    <form method="POST" action="{{ path_for('auth-admin.logout') }}" id="auth-admin-logout-form" hidden>
+        {{ csrf.field | raw }}
+    </form>
 
     <!-- REQUIRED JS SCRIPTS -->
     <!-- jQuery 3 -->
