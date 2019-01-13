@@ -1,7 +1,8 @@
+{% set field_text = (field_text is defined ? field_text : str_title(field_name)) %}
+
 <div class="form-group has-feedback {{ old_input is not empty ? (errors[field_name] is not empty ? "has-error") }}">
     <img class="img-responsive" alt="" id="output-img-element" width="100" />
-    <label for="{{ field_name }}">{{ field_text is defined ?: str_title(field_name) }}</label>
-    <input type="file" name="{{ field_name }}" class="form-control" accept="image/gif,image/jpeg,image/png"
+    <input type="file" name="{{ field_name }}" class="form-control" accept="image/gif,image/jpeg,image/png" placeholder="{{ field_text }}"
         {% if enabledQuickLoadImage is defined %}
             {% if enabledQuickLoadImage %}
                 onchange="quickLoadImage(this, document.getElementById('output-img-element'))"

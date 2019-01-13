@@ -1,6 +1,6 @@
 var Register = {
     init: function() {
-        Register.initValidation();
+        // Register.initValidation();
     },
 
     initValidation: function() {

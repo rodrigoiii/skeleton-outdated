@@ -69,7 +69,7 @@ trait HandlerTrait
      */
     public function saveAdminInfo(array $inputs)
     {
-        $admin = Admin::create($inputs);
+        $admin = Admin::createAdmin($inputs);
         return $admin;
     }
 

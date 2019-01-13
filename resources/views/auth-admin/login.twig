@@ -11,7 +11,7 @@
 
             {{ errors | json_encode }}
 
-            {% include "templates/flash-message.twig" %}
+            {% include "auth-admin/templates/flash-message.twig" %}
 
             {% include "auth-admin/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
             {% include "auth-admin/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
@@ -22,8 +22,8 @@
                 </div>
             </div>
         </form>
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="{{ path_for('auth-admin.forgot-password') }}">I forgot my password</a><br>
+        <a href="{{ path_for('auth-admin.register') }}" class="text-center">Register a new membership</a>
     </div>
 </div>
 {% endblock %}

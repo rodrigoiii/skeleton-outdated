@@ -42,4 +42,9 @@ class Admin extends User
     {
         return static::admin()->where('email', $email)->first();
     }
+
+    public static function createAdmin($inputs)
+    {
+        return static::create(array_merge($inputs, ['is_admin' => 1]));
+    }
 }

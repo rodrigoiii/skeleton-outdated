@@ -4,13 +4,5 @@
 {% block page_description %}Lorem Ipsum{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="page-header">Home</h1>
-
-            {% include "templates/flash-message.twig" %}
-        </div>
-    </div>
-</div>
+{% include "auth-admin/templates/flash-message.twig" %}
 {% endblock %}

@@ -18,6 +18,7 @@ module.exports = {
             "auth/forgot-password": "resources/assets/js/auth/forgot-password.js",
             "auth/reset-password": "resources/assets/js/auth/reset-password.js",
 
+            "auth-admin/register": "resources/assets/js/auth-admin/register.js",
             "auth-admin/login": "resources/assets/js/auth-admin/login.js",
 
             "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js"

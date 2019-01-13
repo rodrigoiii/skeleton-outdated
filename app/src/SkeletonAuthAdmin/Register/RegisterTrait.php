@@ -119,6 +119,7 @@ trait RegisterTrait
                         {
                             // login user automatically
                             Auth::logInByAdminId($user->getId());
+                            return $this->registerSuccessRedirectToHome($response);
                         }
 
                         return $this->verifySuccess($response);
