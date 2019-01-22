@@ -185,6 +185,14 @@ trait AuthTrait
                 })->add("SkeletonAuth\\UserMiddleware");
             }
 
+            if (config('auth.account_setting.enabled'))
+            {
+                $this->group('/account-setting', function() {
+                    $this->get('', ["SkeletonAuth\\AccountSettingController", "getAccountSetting"])->setName('auth.account-setting');
+                    $this->post('', ["SkeletonAuth\\AccountSettingController", "postAccountSetting"]);
+                })->add("SkeletonAuth\\UserMiddleware");
+            }
+
             $this->get('/home', ["SkeletonAuth\\HomeController", "index"])
             ->setName('auth.home')
             ->add("SkeletonAuth\\UserMiddleware");

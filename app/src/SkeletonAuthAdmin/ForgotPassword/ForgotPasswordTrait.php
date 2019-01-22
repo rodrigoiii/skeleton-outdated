@@ -34,7 +34,7 @@ trait ForgotPasswordTrait
         $user = Admin::findByEmail($_request->getParam('email'));
 
         // create token register type
-        $authToken = AuthToken::createResetPasswordType(json_encode(['user_id' => $user->getId()]));
+        $authToken = AuthToken::createResetPasswordType(json_encode(['admin_id' => $user->getId()]));
 
         $recipient_num = $this->sendResetPasswordLink($authToken);
 

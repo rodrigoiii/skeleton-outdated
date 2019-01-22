@@ -8,6 +8,18 @@ use Respect\Validation\Rules\AbstractRule;
 class EmailExist extends AbstractRule
 {
     /**
+     * Email to be exclude before perform the emailExist rule.
+     *
+     * @var string
+     */
+    public $except;
+
+    function __construct($except = null)
+    {
+        $this->except = $except;
+    }
+
+    /**
      * Validate the email provided.
      *
      * @param  mixed $email
@@ -15,9 +27,16 @@ class EmailExist extends AbstractRule
      */
     public function validate($email)
     {
-        $user = User::findByEmail($email);
-        $is_user_exist = !is_null($user);
+        $emails = User::all()->pluck('email')->toArray();
+        if (!is_null($this->except))
+        {
+            if (in_array($this->except, $emails))
+            {
+                $index = array_search($this->except, $emails);
+                unset($emails[$index]);
+            }
+        }
 
-        return $is_user_exist;
+        return in_array($email, $emails);
     }
 }

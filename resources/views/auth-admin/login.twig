@@ -6,24 +6,21 @@
         <b>Skeleton Auth</b> Admin
     </div>
     <div class="guest-box-body">
+        <p class="guest-box-msg">Sign in to start your session</p>
         <form method="POST" action="{{ path_for('auth-admin.login') }}" id="login-form">
             {{ csrf.field | raw }}
-
-            {{ errors | json_encode }}
 
             {% include "auth-admin/templates/flash-message.twig" %}
 
             {% include "auth-admin/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
             {% include "auth-admin/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
 
-            <div class="row">
-                <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
         </form>
+
+        <br />
         <a href="{{ path_for('auth-admin.forgot-password') }}">I forgot my password</a><br>
-        <a href="{{ path_for('auth-admin.register') }}" class="text-center">Register a new membership</a>
+        <a href="{{ path_for('auth-admin.register') }}" class="text-center">Register a new admin</a>
     </div>
 </div>
 {% endblock %}

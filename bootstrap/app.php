@@ -7,7 +7,7 @@ $app = new SkeletonCore\App([
     'settings.addContentLengthHeader' => false, // disable the automatic addition of the Content-Length header in the response
     'settings.determineRouteBeforeAppMiddleware' => config('app.route_on'),
 
-    'settings.db' => config('database.database_connection.mysql')
+    'settings.db' => config('database')
 ]);
 
 $app->run();

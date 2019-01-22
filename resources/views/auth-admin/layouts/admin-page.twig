@@ -8,6 +8,8 @@
     {% block meta %}
     {% endblock %}
 
+    <link rel="icon" href="/favicon.png">
+
     <link rel="stylesheet" href="/node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css">
@@ -90,7 +92,7 @@ desired effect
                                             <a href="#">
                                                 <div class="pull-left">
                                                     <!-- User Image -->
-                                                    <img src="/node_modules/admin-lte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                                    <img src="{{ auth_admin.picture }}" class="img-circle" alt="User Image">
                                                 </div>
                                                 <!-- Message title and timestamp -->
                                                 <h4>
@@ -176,38 +178,23 @@ desired effect
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="/node_modules/admin-lte/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <img src="{{ auth_admin.picture }}" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Alexander Pierce</span>
+                                <span class="hidden-xs">{{ auth_admin.getFullName() }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="/node_modules/admin-lte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <img src="{{ auth_admin.picture }}" class="img-circle" alt="User Image">
                                     <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        {{ auth_admin.getFullName() }}
+                                        <small>Admin since {{ auth_admin.created_at | date('F d, Y') }}</small>
                                     </p>
-                                </li>
-                                <!-- Menu Body -->
-                                <li class="user-body">
-                                    <div class="row">
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-xs-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </div>
-                                    <!-- /.row -->
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="{{ path_for('auth-admin.change-password') }}" class="btn btn-default btn-flat">Change Password</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="javascript:void(0)" class="btn btn-default btn-flat" onclick="document.getElementById('auth-admin-logout-form').submit()">Sign out</a>
@@ -232,10 +219,10 @@ desired effect
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="/node_modules/admin-lte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="{{ auth_admin.picture }}" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Alexander Pierce</p>
+                        <p>{{ auth_admin.getFullName() }}</p>
                         <!-- Status -->
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
@@ -298,7 +285,7 @@ desired effect
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2017 <a href="#">Skeleton</a>.</strong> All rights reserved.
         </footer>
 
         {# control sidebar #}

@@ -6,12 +6,9 @@
         <b>Skeleton Auth</b> Admin
     </div>
     <div class="guest-box-body">
+        <p class="guest-box-msg">Register a new admin</p>
         <form method="POST" action="{{ path_for('auth-admin.register') }}" id="register-form" enctype="multipart/form-data">
             {{ csrf.field | raw }}
-
-            {{ errors | json_encode }}
-
-            {% include "auth-admin/templates/flash-message.twig" %}
 
             {% include "auth-admin/templates/image_field.twig" with {field_name: "picture", enabledQuickLoadImage: true} %}
             {% include "auth-admin/templates/field.twig" with {field_name: "first_name"} %}
@@ -26,8 +23,9 @@
                 </div>
             </div>
         </form>
+
         <br />
-        <a href="{{ path_for('auth-admin.login') }}" class="text-center">I already have a membership</a>
+        <a href="{{ path_for('auth-admin.login') }}" class="text-center">I already have account</a>
     </div>
 </div>
 {% endblock %}

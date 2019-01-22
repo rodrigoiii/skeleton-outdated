@@ -24,5 +24,9 @@ return [
 
     'change_password' => [
         'enabled' => true
+    ],
+
+    'account_setting' => [
+        'enabled' => true
     ]
 ];

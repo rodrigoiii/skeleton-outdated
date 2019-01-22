@@ -11,8 +11,6 @@
             <form method="POST" action="{{ path_for('auth.login') }}" id="login-form">
                 {{ csrf.field | raw }}
 
-                {{ errors | json_encode }}
-
                 {% include "auth/templates/field.twig" with {field_name: "email", enabled_success: false, enabled_old_input: false} %}
                 {% include "auth/templates/field.twig" with {field_name: "password", field_type: "password", enabled_success: false, enabled_old_input: false} %}
 
