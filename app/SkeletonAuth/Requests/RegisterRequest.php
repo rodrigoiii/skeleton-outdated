@@ -18,7 +18,7 @@ class RegisterRequest extends BaseRequest
             'picture' => "uploaded|file|image|size:null,5mb",
             'first_name' => v::notEmpty()->not(v::numeric()),
             'last_name' => v::notEmpty()->not(v::numeric()),
-            'email' => v::notEmpty()->email()->not(v::emailExist()),
+            'email' => v::notEmpty()->email()->not(v::emailExist())->not(v::adminEmailExist()),
             'password' => v::notEmpty()->passwordStrength(),
             'confirm_password' => v::notEmpty()->passwordMatch($this->request->getParam('password'))
         ];

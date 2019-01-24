@@ -139,8 +139,8 @@ trait AuthTrait
      */
     public function routes()
     {
-        $this->app->group('/auth-admin', function() {
-            if (config('auth-admin.register.enabled'))
+        $this->app->group('/' . config('auth-admin.url_prefix'), function() {
+            if (config('auth-admin.modules.register.enabled'))
             {
                 $this->group('/register', function() {
                     $this->get('', ["SkeletonAuthAdmin\\RegisterController", "getRegister"])->setName('auth-admin.register');
@@ -149,7 +149,7 @@ trait AuthTrait
                 })->add("SkeletonAuthAdmin\\GuestMiddleware");
             }
 
-            if (config('auth-admin.login.enabled'))
+            if (config('auth-admin.modules.login.enabled'))
             {
                 $this->group('/login', function() {
                     $this->get('', ["SkeletonAuthAdmin\\LoginController", "getLogin"])->setName('auth-admin.login');
@@ -161,7 +161,7 @@ trait AuthTrait
                     ->add("SkeletonAuthAdmin\\AdminMiddleware");
             }
 
-            if (config('auth-admin.forgot_password.enabled'))
+            if (config('auth-admin.modules.forgot_password.enabled'))
             {
                 $this->group('/forgot-password', function() {
                     $this->get('', ["SkeletonAuthAdmin\\ForgotPasswordController", "getForgotPassword"])->setName('auth-admin.forgot-password');
@@ -169,7 +169,7 @@ trait AuthTrait
                 })->add("SkeletonAuthAdmin\\GuestMiddleware");
             }
 
-            if (config('auth-admin.reset_password.enabled'))
+            if (config('auth-admin.modules.reset_password.enabled'))
             {
                 $this->group('/reset-password', function() {
                     $this->get('/{token}', ["SkeletonAuthAdmin\\ResetPasswordController", "getResetPassword"])->setName('auth-admin.reset-password');
@@ -177,7 +177,7 @@ trait AuthTrait
                 })->add("SkeletonAuthAdmin\\GuestMiddleware");
             }
 
-            if (config('auth-admin.change_password.enabled'))
+            if (config('auth-admin.modules.change_password.enabled'))
             {
                 $this->group('/change-password', function() {
                     $this->get('', ["SkeletonAuthAdmin\\ChangePasswordController", "getChangePassword"])->setName('auth-admin.change-password');

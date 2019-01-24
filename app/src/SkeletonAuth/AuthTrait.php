@@ -139,8 +139,8 @@ trait AuthTrait
      */
     public function routes()
     {
-        $this->app->group('/auth', function() {
-            if (config('auth.register.enabled'))
+        $this->app->group('/' . config('auth.url_prefix'), function() {
+            if (config('auth.modules.register.enabled'))
             {
                 $this->group('/register', function() {
                     $this->get('', ["SkeletonAuth\\RegisterController", "getRegister"])->setName('auth.register');
@@ -149,7 +149,7 @@ trait AuthTrait
                 })->add("SkeletonAuth\\GuestMiddleware");
             }
 
-            if (config('auth.login.enabled'))
+            if (config('auth.modules.login.enabled'))
             {
                 $this->group('/login', function() {
                     $this->get('', ["SkeletonAuth\\LoginController", "getLogin"])->setName('auth.login');
@@ -161,7 +161,7 @@ trait AuthTrait
                     ->add("SkeletonAuth\\UserMiddleware");
             }
 
-            if (config('auth.forgot_password.enabled'))
+            if (config('auth.modules.forgot_password.enabled'))
             {
                 $this->group('/forgot-password', function() {
                     $this->get('', ["SkeletonAuth\\ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
@@ -169,7 +169,7 @@ trait AuthTrait
                 })->add("SkeletonAuth\\GuestMiddleware");
             }
 
-            if (config('auth.reset_password.enabled'))
+            if (config('auth.modules.reset_password.enabled'))
             {
                 $this->group('/reset-password', function() {
                     $this->get('/{token}', ["SkeletonAuth\\ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
@@ -177,7 +177,7 @@ trait AuthTrait
                 })->add("SkeletonAuth\\GuestMiddleware");
             }
 
-            if (config('auth.change_password.enabled'))
+            if (config('auth.modules.change_password.enabled'))
             {
                 $this->group('/change-password', function() {
                     $this->get('', ["SkeletonAuth\\ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
@@ -185,7 +185,7 @@ trait AuthTrait
                 })->add("SkeletonAuth\\UserMiddleware");
             }
 
-            if (config('auth.account_setting.enabled'))
+            if (config('auth.modules.account_setting.enabled'))
             {
                 $this->group('/account-setting', function() {
                     $this->get('', ["SkeletonAuth\\AccountSettingController", "getAccountSetting"])->setName('auth.account-setting');

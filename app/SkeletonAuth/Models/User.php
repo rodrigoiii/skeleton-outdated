@@ -12,7 +12,18 @@ class User extends Model
      *
      * @var array
      */
-    protected $fillable = ["picture", "first_name", "last_name", "email", "password", "login_token"];
+    protected $fillable = ["picture", "first_name", "last_name", "email", "password"];
+
+    /**
+     * To filter all query for user only
+     *
+     * @param  $query
+     * @return Illuminate\Database\Eloquent\QueryBuilder
+     */
+    public function scopeUser($query)
+    {
+        return $query->where('is_admin', 0);
+    }
 
     public function setLoginToken($login_token)
     {
@@ -37,6 +48,6 @@ class User extends Model
 
     public static function findByEmail($email)
     {
-        return static::where('email', $email)->first();
+        return static::user()->where('email', $email)->first();
     }
 }

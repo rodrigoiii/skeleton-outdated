@@ -27,7 +27,7 @@ class Debugbar implements IBarPanel
 
     private function configuration()
     {
-        $auth = config('auth');
+        $auth = config('auth.modules');
 
         $tmpl = '<div class="tracy-inner">
                     <div class="tracy-inner-container">

@@ -65,7 +65,7 @@ class AuthToken extends Model
         // check if token exist
         if (! is_null($authToken))
         {
-            $is_token_expired = config('auth.register.token_expiration') == false ? false : $authToken->isExpired($seconds);
+            $is_token_expired = config('auth.modules.register.token_expiration') == false ? false : $authToken->isExpired($seconds);
 
             // check if token not expired
             if (!$is_token_expired)
@@ -80,7 +80,7 @@ class AuthToken extends Model
 
                     if ($user instanceof User)
                     {
-                        if (config('auth.register.is_log_in_after_register'))
+                        if (config('auth.modules.register.is_log_in_after_register'))
                         {
                             // login user automatically
                             Auth::logInByUserId($user->getId());

@@ -12,11 +12,11 @@ class EmailExist extends AbstractRule
      *
      * @var string
      */
-    public $except;
+    public $email_exception;
 
-    function __construct($except = null)
+    function __construct($email_exception = null)
     {
-        $this->except = $except;
+        $this->email_exception = $email_exception;
     }
 
     /**
@@ -27,16 +27,16 @@ class EmailExist extends AbstractRule
      */
     public function validate($email)
     {
-        $emails = User::all()->pluck('email')->toArray();
-        if (!is_null($this->except))
+        $user = User::findByEmail($email);
+
+        if (!is_null($user))
         {
-            if (in_array($this->except, $emails))
+            if ($user !== $this->email_exception)
             {
-                $index = array_search($this->except, $emails);
-                unset($emails[$index]);
+                return true;
             }
         }
 
-        return in_array($email, $emails);
+        return false;
     }
 }
