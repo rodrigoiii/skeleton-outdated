@@ -21,5 +21,12 @@ public static function findByEmail($email)
 
 ```php
 // 'email' => v::notEmpty()->email()->not(v::emailExist()), // before
-// 'email' => v::notEmpty()->email()->not(v::emailExist())->not(v::adminEmailExist()), // after
+'email' => v::notEmpty()->email()->not(v::emailExist())->not(v::adminEmailExist()), // after
+```
+
+3. In file `app/SkeletonAuth/Requests/AccountSettingRequest.php` chain the rule negation of `adminEmailExist`
+
+```php
+// 'email' => v::notEmpty()->email()->not(v::emailExist($user->email)), // before
+'email' => v::notEmpty()->email()->not(v::emailExist($user->email))->not(v::adminEmailExist($user->email)), // after
 ```

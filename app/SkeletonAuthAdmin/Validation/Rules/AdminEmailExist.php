@@ -31,10 +31,7 @@ class AdminEmailExist extends AbstractRule
 
         if (!is_null($admin))
         {
-            if ($admin !== $this->email_exception)
-            {
-                return true;
-            }
+            return $admin->email !== $this->email_exception;
         }
 
         return false;

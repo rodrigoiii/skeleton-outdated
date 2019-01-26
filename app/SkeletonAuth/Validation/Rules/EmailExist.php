@@ -31,10 +31,7 @@ class EmailExist extends AbstractRule
 
         if (!is_null($user))
         {
-            if ($user !== $this->email_exception)
-            {
-                return true;
-            }
+            return $user->email !== $this->email_exception;
         }
 
         return false;

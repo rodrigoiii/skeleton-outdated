@@ -22,13 +22,13 @@ class AccountSettingRequest extends BaseRequest
         $user = Auth::user();
 
         return [
-            'picture' => "uploaded|file|image|size:null,5mb",
+            // 'picture' => ["optional(uploaded,file,image,size(null,5mb))"],
             'first_name' => v::notEmpty()->not(v::numeric()),
             'last_name' => v::notEmpty()->not(v::numeric()),
-            'email' => v::notEmpty()->email()->not(v::emailExist($user->email)),
-            'current_password' => v::notEmpty()->passwordVerify($user->password),
-            'new_password' => v::notEmpty()->passwordStrength(),
-            'confirm_new_password' => v::notEmpty()->passwordMatch($this->request->getParam('new_password'))
+            'email' => v::notEmpty()->email()->not(v::emailExist($user->email))->not(v::adminEmailExist($user->email)),
+            'current_password' => v::optional(v::passwordVerify($user->password)),
+            'new_password' => v::optional(v::passwordStrength()),
+            'confirm_new_password' => v::optional(v::passwordMatch($this->request->getParam('new_password')))
         ];
     }
 }
