@@ -25,7 +25,7 @@ return [
             'token_expiration' => 60 * 30 // 30 minutes
         ],
 
-        'change_password' => [
+        'account_setting' => [
             'enabled' => true
         ]
     ]

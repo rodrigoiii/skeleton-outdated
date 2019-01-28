@@ -177,12 +177,12 @@ trait AuthTrait
                 })->add("SkeletonAuthAdmin\\GuestMiddleware");
             }
 
-            if (config('auth-admin.modules.change_password.enabled'))
+            if (config('auth-admin.modules.account_setting.enabled'))
             {
-                $this->group('/change-password', function() {
-                    $this->get('', ["SkeletonAuthAdmin\\ChangePasswordController", "getChangePassword"])->setName('auth-admin.change-password');
-                    $this->post('', ["SkeletonAuthAdmin\\ChangePasswordController", "postChangePassword"]);
-                })->add("SkeletonAuthAdmin\\AdminMiddleware");
+                $this->group('/account-setting', function() {
+                    $this->get('/{token}', ["SkeletonAuthAdmin\\AccountSettingController", "getAccountSetting"])->setName('auth-admin.account-setting');
+                    $this->post('/{token}', ["SkeletonAuthAdmin\\AccountSettingController", "postAccountSetting"]);
+                })->add("SkeletonAuthAdmin\\GuestMiddleware");
             }
 
             $this->get('/home', ["SkeletonAuthAdmin\\HomeController", "index"])

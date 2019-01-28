@@ -33,7 +33,6 @@
                             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">{{ auth_user.getFullName() }} <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path_for('auth.account-setting') }}">Account Setting</a></li>
-                                <li><a href="{{ path_for('auth.change-password') }}">Change Password</a></li>
                                 <li><a href="javascript:void(0)" onclick="document.getElementById('auth-logout-form').submit()">Log out</a></li>
                             </ul>
                         </li>

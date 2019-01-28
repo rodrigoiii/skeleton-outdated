@@ -78,7 +78,7 @@ trait ResetPasswordTrait
         // check if token exist
         if (! is_null($authToken))
         {
-            $is_token_expired = config('auth.reset_password.token_expiration') == false ? false : $authToken->isExpired(config('auth.reset_password.token_expiration'));
+            $is_token_expired = config('auth.modules.reset_password.token_expiration') == false ? false : $authToken->isExpired(config('auth.modules.reset_password.token_expiration'));
 
             // check if token not expired
             if (!$is_token_expired)

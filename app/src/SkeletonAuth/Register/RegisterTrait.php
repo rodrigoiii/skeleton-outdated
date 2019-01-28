@@ -47,7 +47,7 @@ trait RegisterTrait
             'password' => password_hash($inputs['password'], PASSWORD_DEFAULT)
         ];
 
-        if (config('auth.register.is_verification_enabled'))
+        if (config('auth.modules.register.is_verification_enabled'))
         {
             // create token register type
             $authToken = AuthToken::createRegisterType(json_encode($data));
@@ -70,7 +70,7 @@ trait RegisterTrait
 
         if ($user instanceof User)
         {
-            if (config('auth.register.is_log_in_after_register'))
+            if (config('auth.modules.register.is_log_in_after_register'))
             {
                 // login user automatically
                 Auth::logInByUserId($user->getId());
@@ -100,7 +100,7 @@ trait RegisterTrait
         // check if token exist
         if (! is_null($authToken))
         {
-            $is_token_expired = config('auth.register.token_expiration') == false ? false : $authToken->isExpired(config('auth.register.token_expiration'));
+            $is_token_expired = config('auth.modules.register.token_expiration') == false ? false : $authToken->isExpired(config('auth.modules.register.token_expiration'));
 
             // check if token not expired
             if (!$is_token_expired)
@@ -115,7 +115,7 @@ trait RegisterTrait
 
                     if ($user instanceof User)
                     {
-                        if (config('auth.register.is_log_in_after_register'))
+                        if (config('auth.modules.register.is_log_in_after_register'))
                         {
                             // login user automatically
                             Auth::logInByUserId($user->getId());

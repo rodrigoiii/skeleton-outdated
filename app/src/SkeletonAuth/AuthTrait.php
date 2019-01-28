@@ -177,14 +177,6 @@ trait AuthTrait
                 })->add("SkeletonAuth\\GuestMiddleware");
             }
 
-            if (config('auth.modules.change_password.enabled'))
-            {
-                $this->group('/change-password', function() {
-                    $this->get('', ["SkeletonAuth\\ChangePasswordController", "getChangePassword"])->setName('auth.change-password');
-                    $this->post('', ["SkeletonAuth\\ChangePasswordController", "postChangePassword"]);
-                })->add("SkeletonAuth\\UserMiddleware");
-            }
-
             if (config('auth.modules.account_setting.enabled'))
             {
                 $this->group('/account-setting', function() {
