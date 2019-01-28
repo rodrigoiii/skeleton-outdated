@@ -198,4 +198,14 @@ trait AuthTrait
             ->add("SkeletonAuth\\UserMiddleware");
         });
     }
+
+    public function apiRoutes()
+    {
+        $this->app->group('/api', function() {
+            // jquery validation
+            $this->group('/jv', function() {
+                $this->get('/email-exist', ["SkeletonAuth\\JqueryValidationController", "emailExist"]);
+            })->add("XhrMiddleware");
+        });
+    }
 }

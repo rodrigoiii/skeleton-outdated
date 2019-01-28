@@ -13,12 +13,13 @@ class JqueryValidationController extends BaseController
     {
         $params = $request->getParams();
         $invert = isset($params['invert']);
+        $email_exception = isset($params['except']) ? $params['except'] : null;
 
         if (isset($params['email']))
         {
             $result = !$invert ?
-                        v::emailExist($params['except'])->validate($params['email']) :
-                        v::not(v::emailExist($params['except']))->validate($params['email']);
+                        v::emailExist($email_exception)->adminEmailExist($email_exception)->validate($params['email']) :
+                        v::not(v::emailExist($email_exception))->not(v::adminEmailExist($email_exception))->validate($params['email']);
 
             return $result ? "true" : "false";
         }

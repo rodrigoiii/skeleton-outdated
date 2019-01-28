@@ -1031,12 +1031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "e57f94cb8526b9a6d9e4ef142e3ec7ea9c43f2a5"
+                "reference": "4320747a6bf62239f2f4154de9262da0c5f82ff2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/e57f94cb8526b9a6d9e4ef142e3ec7ea9c43f2a5",
-                "reference": "e57f94cb8526b9a6d9e4ef142e3ec7ea9c43f2a5",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/4320747a6bf62239f2f4154de9262da0c5f82ff2",
+                "reference": "4320747a6bf62239f2f4154de9262da0c5f82ff2",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2018-12-20T06:00:38+00:00"
+            "time": "2019-01-25T23:19:35+00:00"
         },
         {
             "name": "rodrigoiii/skeleton-mailer",

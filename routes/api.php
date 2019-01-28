@@ -6,11 +6,6 @@
 
 $app->group('/api', function() {
     api_image_generator($this);
-
-    // jquery validation
-    $this->group('/jv', function() {
-        $this->get('/email-exist', ["SkeletonAuth\\JqueryValidationController", "emailExist"]);
-    });
 });
 
-
+(new App\SkeletonAuth\Auth($app))->apiRoutes();
