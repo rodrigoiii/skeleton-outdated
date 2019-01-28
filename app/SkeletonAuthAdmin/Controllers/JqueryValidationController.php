@@ -9,16 +9,17 @@ use SkeletonCore\BaseController;
 
 class JqueryValidationController extends BaseController
 {
-    public function emailExist(Request $request)
+    public function adminEmailExist(Request $request)
     {
         $params = $request->getParams();
         $invert = isset($params['invert']);
+        $email_exception = isset($params['except']) ? $params['except'] : null;
 
         if (isset($params['email']))
         {
             $result = !$invert ?
-                        v::emailExist()->validate($params['email']) :
-                        v::not(v::emailExist())->validate($params['email']);
+                        v::adminEmailExist($email_exception)->validate($params['email']) :
+                        v::not(v::adminEmailExist($email_exception))->validate($params['email']);
 
             return $result ? "true" : "false";
         }

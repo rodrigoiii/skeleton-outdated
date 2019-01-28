@@ -190,4 +190,14 @@ trait AuthTrait
             ->add("SkeletonAuthAdmin\\AdminMiddleware");
         });
     }
+
+    public function apiRoutes()
+    {
+        $this->app->group('/api', function() {
+            // jquery validation
+            $this->group('/jv', function() {
+                $this->get('/admin-email-exist', ["SkeletonAuthAdmin\\JqueryValidationController", "adminEmailExist"]);
+            })->add("XhrMiddleware");
+        });
+    }
 }
