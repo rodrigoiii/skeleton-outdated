@@ -20,11 +20,12 @@ class ChangePasswordRequest extends BaseRequest
     public function rules()
     {
         $user = Auth::user();
+        $inputs = $this->request->getParams();
 
         return [
             'current_password' => v::notEmpty()->passwordVerify($user->password),
             'new_password' => v::notEmpty()->passwordStrength(),
-            'confirm_new_password' => v::notEmpty()->passwordMatch($this->request->getParam('new_password'))
+            'confirm_new_password' => v::notEmpty()->passwordMatch($inputs['new_password'])
         ];
     }
 }

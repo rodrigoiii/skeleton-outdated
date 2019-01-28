@@ -14,9 +14,11 @@ class ResetPasswordRequest extends BaseRequest
      */
     public function rules()
     {
+        $inputs = $this->request->getParams();
+
         return [
             'new_password' => v::notEmpty()->passwordStrength(),
-            'confirm_new_password' => v::notEmpty()->passwordMatch($this->request->getParam('new_password'))
+            'confirm_new_password' => v::notEmpty()->passwordMatch($inputs['new_password'])
         ];
     }
 }

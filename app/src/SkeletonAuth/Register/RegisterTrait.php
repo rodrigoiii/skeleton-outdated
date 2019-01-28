@@ -37,7 +37,7 @@ trait RegisterTrait
         $files = $_request->getUploadedFiles();
 
         // upload picture and pass the path
-        $picture = upload($files['picture']);
+        $picture = upload($files['picture'], config('auth.upload_path'));
 
         $data = [
             'picture' => $picture,

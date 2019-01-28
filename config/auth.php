@@ -2,6 +2,7 @@
 
 return [
     'url_prefix' => "auth",
+    'upload_path' => "auth",
 
     'modules' => [
         'login' => [

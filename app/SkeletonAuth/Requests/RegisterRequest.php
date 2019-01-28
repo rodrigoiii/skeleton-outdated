@@ -14,13 +14,15 @@ class RegisterRequest extends BaseRequest
      */
     public function rules()
     {
+        $inputs = $this->request->getParams();
+
         return [
-            'picture' => "uploaded|file|image|size:null,5mb",
+            'picture' => v::optional2(v::uploaded()->file()->image()->size(null, "5mb")),
             'first_name' => v::notEmpty()->not(v::numeric()),
             'last_name' => v::notEmpty()->not(v::numeric()),
             'email' => v::notEmpty()->email()->not(v::emailExist())->not(v::adminEmailExist()),
             'password' => v::notEmpty()->passwordStrength(),
-            'confirm_password' => v::notEmpty()->passwordMatch($this->request->getParam('password'))
+            'confirm_password' => v::notEmpty()->passwordMatch($inputs['password'])
         ];
     }
 
