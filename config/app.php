@@ -22,5 +22,5 @@ return [
     ],
 
     // relative to app/ folder
-    "libraries" => ["SkeletonAuth", "SkeletonAuthAdmin"]
+    "libraries" => ["SkeletonAuth"]
 ];
