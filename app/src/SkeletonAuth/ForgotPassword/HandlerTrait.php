@@ -28,7 +28,7 @@ trait HandlerTrait
 
         if ($recipient_nums > 0)
         {
-            \Log::info("Info: Forgot password link for ". $user->getFullName() ." {$link}");
+            \Log::info("Info: Forgot password link for ". $user->getFullName() ." {$link}", 1);
         }
 
         return $recipient_nums;

@@ -29,7 +29,7 @@ trait HandlerTrait
 
         if ($recipient_nums > 0)
         {
-            \Log::info("Info: Register user verification link {$link}");
+            \Log::info("Info: Register user verification link {$link}", 1);
         }
 
         return $recipient_nums;

@@ -24,7 +24,7 @@ class JqueryValidationController extends BaseController
             return $result ? "true" : "false";
         }
 
-        \Log::error("Error: Email must be define on '/jv/email-exist' api.");
+        \Log::error("Error: Email must be define on '/jv/email-exist' api.", 1);
         return "Parameter is missing!";
     }
 }
