@@ -1,6 +1,16 @@
 var Register = {
     init: function() {
-        // Register.initValidation();
+        Register.initValidation();
+
+        // ok icon
+        // incorrect icon
+
+        // allow ok in field
+        // allow incorrect in field
+        // allow ok only in field
+        // allow incorrect only in field
+        // allow ok for all // default
+        // allow incorrect for all // default
     },
 
     initValidation: function() {

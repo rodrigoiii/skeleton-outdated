@@ -1,4 +1,4 @@
-var CsrfHelper = {
+var Csrf = {
     /**
      * Ajax setup that changing token every sending request.
      *
@@ -36,4 +36,4 @@ var CsrfHelper = {
     }
 };
 
-module.exports = CsrfHelper;
+module.exports = Csrf;
