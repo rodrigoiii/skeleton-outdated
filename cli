@@ -6,6 +6,8 @@ if (PHP_SAPI !== "cli") die; // abort if the usage not via command line
 # composer autoload
 require __DIR__ . "/vendor/autoload.php";
 
+SkeletonCore\AppCli::loadEnvironment();
+
 $appCli = new SkeletonCore\AppCli([
     'db' => config('database')
 ]);
