@@ -18,8 +18,9 @@ module.exports = {
             "auth/account-setting": "resources/assets/js/auth/account-setting.js",
             "auth/forgot-password": "resources/assets/js/auth/forgot-password.js",
             "auth/reset-password": "resources/assets/js/auth/reset-password.js",
+            "auth/jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js",
 
-            "jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js"
+            "helpers/quick-load-image": "resources/assets/js/helpers/quick-load-image.js"
         },
         dest: "public/js",
         options: {
