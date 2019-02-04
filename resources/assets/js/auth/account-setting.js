@@ -6,7 +6,7 @@ var AccountSetting = {
     CURRENT_PASSWORD: "current_password",
 
     init: function() {
-        // AccountSetting.initValidation();
+        AccountSetting.initValidation();
     },
 
     initValidation: function() {
