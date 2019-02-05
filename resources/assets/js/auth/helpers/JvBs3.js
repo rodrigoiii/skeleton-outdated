@@ -110,69 +110,81 @@ JvBs3.prototype.setFieldsNotUnhighlight = function(fields) {
     this.fields_not_unhighlight = fields;
 };
 
+JvBs3.prototype.clearError = function(element) {
+    var form_group = $(element).closest('.form-group');
+
+    if (form_group.hasClass('has-error')) {
+        form_group.removeClass('has-error');
+    }
+
+    if ($("." + this.icon_error, form_group).length > 0) {
+        $("." + this.icon_error, form_group).remove();
+    }
+};
+
+JvBs3.prototype.clearOk = function(element) {
+    var form_group = $(element).closest('.form-group');
+
+    if (form_group.hasClass('has-success')) {
+        form_group.removeClass('has-success');
+    }
+
+    if ($("." + this.icon_success, form_group).length > 0) {
+        $("." + this.icon_success, form_group).remove();
+    }
+};
+
 JvBs3.prototype.getSettings = function() {
-    var icon_ok = this.icon_ok;
-    var icon_error = this.icon_error;
-    var fields_not_highlight = this.fields_not_highlight;
-    var fields_not_unhighlight = this.fields_not_unhighlight;
+    var _this = this;
 
     return {
-        // errorPlacement: function(error, element) {
-        //     var field_name = $(element).attr('name');
+        errorPlacement: function(error, element) {
+            var field_name = $(element).attr('name');
 
-        //     if (fields_not_highlight.indexOf(field_name) !== -1 && fields_not_unhighlight.indexOf(field_name) !== -1) {
-        //         return true;
-        //     }
+            // is field name not in fields_not_highlight property
+            var temp = _this.fields_not_highlight.indexOf(field_name) === -1;
 
-        //     return
-        // },
+            if (temp) error.insertAfter(element);
+        },
 
         highlight: function(element, errorClass, successClass) {
-            var field_name = $(element).attr('name');
-            var form_group = $(element).closest('.form-group');
-            var feedback = form_group.find('.form-control-feedback');
+            _this.clearOk(element);
 
-            console.log(fields_not_highlight);
-            console.log(field_name);
-
-            // if field_name is in fields_not_highlight
-            if (fields_not_highlight.indexOf(field_name) !== -1) {
-                if (feedback.length > 0) {
-                    // remove icon
-                    if (feedback.hasClass('glyphicon-remove')) {
-                        feedback.removeClass('glyphicon-remove');
-                    }
-                }
-
-                // remove has-error class
-                if (form_group.hasClass('has-error')) {
-                    form_group.removeClass('has-error');
-                }
-
-                // remove error message
-                if ($('.help-block', form_group).length > 0) {
-                    $('.help-block', form_group).remove();
-                }
-            } else {
-                // remove has-success class in form-group class if exists
-                if (form_group.hasClass('has-success')) {
-                    form_group.removeClass('has-success');
-                }
+            if (_this.fields_not_highlight.indexOf(element) === -1) {
+                var field_name = $(element).attr('name');
+                var form_group = $(element).closest('.form-group');
+                var feedback = form_group.find('.form-control-feedback');
 
                 // append has-error class in form-group class
                 form_group.addClass('has-error');
 
-                // add element span with form-control-feedback class after the input element if not exists
+                // if no feedback element
                 if (feedback.length === 0) {
-                    $(element).after('<span class="glyphicon '+icon_error+' form-control-feedback"></span>');
-                } else if (feedback.hasClass(JvBs3.icon_ok)) { // if form-control-feedback and icon for icon_ok are exist
-                    feedback.removeClass(JvBs3.icon_ok).addClass(icon_error);
+                    $(element).after('<span class="glyphicon '+_this.icon_error+' form-control-feedback"></span>');
+                } else if (!feedback.hasClass(_this.icon_error)) { // if no icon error
+                    feedback.addClass(_this.icon_error);
                 }
             }
         },
 
         unhighlight: function(element, errorClass, successClass) {
+            _this.clearError(element);
 
+            if (_this.fields_not_unhighlight.indexOf(element) === -1) {
+                var field_name = $(element).attr('name');
+                var form_group = $(element).closest('.form-group');
+                var feedback = form_group.find('.form-control-feedback');
+
+                // append has-success class in form-group class
+                form_group.addClass('has-success');
+
+                // if no feedback element
+                if (feedback.length === 0) {
+                    $(element).after('<span class="glyphicon '+_this.icon_ok+' form-control-feedback"></span>');
+                } else if (!feedback.hasClass(_this.icon_ok)) { // if no icon ok
+                    feedback.addClass(_this.icon_ok);
+                }
+            }
         }
     };
 };

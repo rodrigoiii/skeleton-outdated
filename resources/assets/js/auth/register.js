@@ -7,8 +7,8 @@ var Register = {
 
     initValidation: function() {
         var jvBs3 = new JvBs3();
-        jvBs3.setFieldsNotHighlight(["picture", "first_name", "last_name"]);
-        jvBs3.setFieldsNotUnhighlight(["email", "password", "confirm_password"]);
+        jvBs3.setFieldsNotHighlight(["picture", "first_name", "last_name", "email"]);
+        // jvBs3.setFieldsNotUnhighlight(["email", "password", "confirm_password"]);
 
         $('#register-form').validate(
             $.extend({
