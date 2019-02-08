@@ -6,62 +6,58 @@ var Register = {
     },
 
     initValidation: function() {
-        var jvBs3 = new JvBs3();
-        jvBs3.setFieldsNotHighlight(["picture", "first_name", "last_name", "email"]);
-        // jvBs3.setFieldsNotUnhighlight(["email", "password", "confirm_password"]);
+        var jvBs3 = new JvBs3("#register-form", {
+            errorElement: "span",
+            errorClass: "help-block",
 
-        $('#register-form').validate(
-            $.extend({
-                errorElement: "span",
-                errorClass: "help-block",
-
-                rules: {
-                    picture: {
-                        required: true,
-                        accept: "image/gif,image/jpeg,image/png",
-                        file_size: {
-                            max_size: 5000000, // 5mb
-                        }
-                    },
-                    first_name: {
-                        required: true,
-                        regex: /^[a-zA-Z\s]+$/i
-                    },
-                    last_name: {
-                        required: true,
-                        regex: /^[a-zA-Z\s]+$/i
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                        remote: "/api/jv/email-exist?invert"
-                    },
-                    password: {
-                        required: true,
-                        password_strength: true
-                    },
-                    confirm_password: {
-                        required: true,
-                        equalTo: '#register-form :input[name="password"]'
+            rules: {
+                picture: {
+                    required: true,
+                    accept: "image/gif,image/jpeg,image/png",
+                    file_size: {
+                        max_size: 5000000, // 5mb
                     }
                 },
-
-                messages: {
-                    first_name: {
-                        regex: "Please enter only letters."
-                    },
-                    last_name: {
-                        regex: "Please enter only letters."
-                    },
-                    email: {
-                        remote: "Email is already taken."
-                    },
-                    confirm_password: {
-                        equalTo: "Password and confirm password do not match"
-                    }
+                first_name: {
+                    required: true,
+                    regex: /^[a-zA-Z\s]+$/i
+                },
+                last_name: {
+                    required: true,
+                    regex: /^[a-zA-Z\s]+$/i
+                },
+                email: {
+                    required: true,
+                    email: true,
+                    remote: "/api/jv/email-exist?invert"
+                },
+                password: {
+                    required: true,
+                    password_strength: true
+                },
+                confirm_password: {
+                    required: true,
+                    equalTo: '#register-form :input[name="password"]'
                 }
-            }, jvBs3.getSettings())
-        );
+            },
+
+            messages: {
+                first_name: {
+                    regex: "Please enter only letters."
+                },
+                last_name: {
+                    regex: "Please enter only letters."
+                },
+                email: {
+                    remote: "Email is already taken."
+                },
+                confirm_password: {
+                    equalTo: "Password and confirm password do not match"
+                }
+            }
+        });
+
+        jvBs3.validate();
     }
 };
 

@@ -11,16 +11,16 @@ module.exports = {
 
     scripts: {
         entries: {
-            "auth": "resources/assets/js/auth/auth.js",
-            "auth/register": "resources/assets/js/auth/register.js",
-            "auth/login": "resources/assets/js/auth/login.js",
-            "auth/change-password": "resources/assets/js/auth/change-password.js",
-            "auth/account-setting": "resources/assets/js/auth/account-setting.js",
-            "auth/forgot-password": "resources/assets/js/auth/forgot-password.js",
-            "auth/reset-password": "resources/assets/js/auth/reset-password.js",
-            "auth/jquery-validation/add-methods": "resources/assets/js/auth/jquery-validation/add-methods.js",
+            "auth": "auth/auth.js",
+            "auth/register": "auth/register.js",
+            "auth/login": "auth/login.js",
+            "auth/change-password": "auth/change-password.js",
+            "auth/account-setting": "auth/account-setting.js",
+            "auth/forgot-password": "auth/forgot-password.js",
+            "auth/reset-password": "auth/reset-password.js",
+            "auth/jquery-validation/add-methods": "auth/jquery-validation/add-methods.js",
 
-            "helpers/quick-load-image": "resources/assets/js/helpers/quick-load-image.js"
+            "helpers/quick-load-image": "helpers/quick-load-image.js"
         },
         dest: "public/js",
         options: {
