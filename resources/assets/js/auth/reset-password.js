@@ -1,10 +1,15 @@
+var JvBs3 = require("./helpers/JvBs3");
+
 var ResetPassword = {
     init: function() {
         ResetPassword.initValidation();
     },
 
     initValidation: function() {
-        $('#reset-password-form').validate({
+        var jvBs3 = new JvBs3("#reset-password-form", {
+            errorElement: "span",
+            errorClass: "help-block",
+
             rules: {
                 new_password: {
                     required: true,
@@ -22,6 +27,8 @@ var ResetPassword = {
                 }
             }
         });
+
+        jvBs3.validate();
     }
 };
 
