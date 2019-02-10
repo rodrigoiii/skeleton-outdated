@@ -82,3 +82,7 @@ function handleOnLoadReader(e) {
 
   images_container.append(img);
 }
+
+window.quickLoadImage = quickLoadImage;
+window.quickLoadImages = quickLoadImages;
+window.handleOnLoadReader = handleOnLoadReader;

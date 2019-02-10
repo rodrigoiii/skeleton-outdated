@@ -1,6 +1,8 @@
 /**
- * Required global data
+ * global variable
  * - account_setting
+ *   - auth_user
+ *     - email
  */
 
 var JvBs3 = require("./helpers/JvBs3");
