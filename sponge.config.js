@@ -14,7 +14,6 @@ module.exports = {
             "auth": "auth/auth.js",
             "auth/register": "auth/register.js",
             "auth/login": "auth/login.js",
-            "auth/change-password": "auth/change-password.js",
             "auth/account-setting": "auth/account-setting.js",
             "auth/forgot-password": "auth/forgot-password.js",
             "auth/reset-password": "auth/reset-password.js",
