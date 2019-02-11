@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}}SkeletonAuth;
+
+use SkeletonAuth\AuthTrait;
+
+class Auth
+{
+    use AuthTrait;
+}
