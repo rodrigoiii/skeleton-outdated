@@ -18,13 +18,30 @@ The docs is not yet available. I will make it if this project get 50 stars.
 * The request class should has suffix 'Request'.
 * When you remove the Validation Rule, delete Validation Exception also.
 
-## Custom libraries
+## Module structure
 
-controllers /Controllers
-middlewares /Middlewares
-requests /Requests
-validation /Validation
-debug bar /Debugbar.php
+```
+[module-name]/
+|-- src/
+    |-- [module-name]/
+    |-- [module-name].php
+|-- templates/
+    |-- app/
+        |-- [module-name]/
+            |-- Controllers/
+            |-- Middlewares/
+            |-- Requests/
+            |-- Validation/
+            |-- Debugbar.php
+    |-- assets/
+        |-- sass/
+        |-- js/
+    |-- config/
+    |-- db/
+        |-- migrations/
+        |-- seeds/
+    |-- views/
+```
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.
