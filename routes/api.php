@@ -6,6 +6,4 @@
 
 $app->group('/api', function() {
     api_image_generator($this);
-
-    (new App\SkeletonAuth\Auth($this))->apiRoutes();
 });
