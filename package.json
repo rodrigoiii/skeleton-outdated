@@ -27,12 +27,9 @@
   },
   "homepage": "https://github.com/rodrigoiii/skeleton#readme",
   "devDependencies": {
-    "bootstrap": "^3.3.7",
-    "jquery": "^3.3.1",
     "mocha": "^5.2.0",
     "phplint": "^2.0.0",
-    "sponge-rod": "^3.9.2",
-    "underscore": "^1.9.1"
+    "sponge-rod": "^3.10.1"
   },
   "dependencies": {}
 }

@@ -5,11 +5,5 @@
   "main": "index.js",
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
-  "dependencies": {
-    "admin-lte": "^2.4.8",
-    "bootbox": "^4.4.0",
-    "bootstrap-sass": "^3.3.7",
-    "datatables.net-bs": "^1.10.16",
-    "jquery-validation": "^1.18.0"
-  }
+  "dependencies": {}
 }
