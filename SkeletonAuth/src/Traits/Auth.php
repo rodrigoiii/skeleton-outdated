@@ -143,51 +143,51 @@ trait Auth
             if (config('auth.modules.register.enabled'))
             {
                 $this->group('/register', function() {
-                    $this->get('', ["SkeletonAuth\\RegisterController", "getRegister"])->setName('auth.register');
-                    $this->post('', ["SkeletonAuth\\RegisterController", "postRegister"]);
-                    $this->get('/verify/{token}', ["SkeletonAuth\\RegisterController", "verify"]);
-                })->add("SkeletonAuth\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuthApp\\RegisterController", "getRegister"])->setName('auth.register');
+                    $this->post('', ["SkeletonAuthApp\\RegisterController", "postRegister"]);
+                    $this->get('/verify/{token}', ["SkeletonAuthApp\\RegisterController", "verify"]);
+                })->add("SkeletonAuthApp\\GuestMiddleware");
             }
 
             if (config('auth.modules.login.enabled'))
             {
                 $this->group('/login', function() {
-                    $this->get('', ["SkeletonAuth\\LoginController", "getLogin"])->setName('auth.login');
-                    $this->post('', ["SkeletonAuth\\LoginController", "postLogin"]);
-                })->add("SkeletonAuth\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuthApp\\LoginController", "getLogin"])->setName('auth.login');
+                    $this->post('', ["SkeletonAuthApp\\LoginController", "postLogin"]);
+                })->add("SkeletonAuthApp\\GuestMiddleware");
 
-                $this->post('/logout', ["SkeletonAuth\\LoginController", "logout"])
+                $this->post('/logout', ["SkeletonAuthApp\\LoginController", "logout"])
                     ->setName('auth.logout')
-                    ->add("SkeletonAuth\\UserMiddleware");
+                    ->add("SkeletonAuthApp\\UserMiddleware");
             }
 
             if (config('auth.modules.forgot_password.enabled'))
             {
                 $this->group('/forgot-password', function() {
-                    $this->get('', ["SkeletonAuth\\ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
-                    $this->post('', ["SkeletonAuth\\ForgotPasswordController", "postForgotPassword"]);
-                })->add("SkeletonAuth\\GuestMiddleware");
+                    $this->get('', ["SkeletonAuthApp\\ForgotPasswordController", "getForgotPassword"])->setName('auth.forgot-password');
+                    $this->post('', ["SkeletonAuthApp\\ForgotPasswordController", "postForgotPassword"]);
+                })->add("SkeletonAuthApp\\GuestMiddleware");
             }
 
             if (config('auth.modules.reset_password.enabled'))
             {
                 $this->group('/reset-password', function() {
-                    $this->get('/{token}', ["SkeletonAuth\\ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
-                    $this->post('/{token}', ["SkeletonAuth\\ResetPasswordController", "postResetPassword"]);
-                })->add("SkeletonAuth\\GuestMiddleware");
+                    $this->get('/{token}', ["SkeletonAuthApp\\ResetPasswordController", "getResetPassword"])->setName('auth.reset-password');
+                    $this->post('/{token}', ["SkeletonAuthApp\\ResetPasswordController", "postResetPassword"]);
+                })->add("SkeletonAuthApp\\GuestMiddleware");
             }
 
             if (config('auth.modules.account_setting.enabled'))
             {
                 $this->group('/account-setting', function() {
-                    $this->get('', ["SkeletonAuth\\AccountSettingController", "getAccountSetting"])->setName('auth.account-setting');
-                    $this->post('', ["SkeletonAuth\\AccountSettingController", "postAccountSetting"]);
-                })->add("SkeletonAuth\\UserMiddleware");
+                    $this->get('', ["SkeletonAuthApp\\AccountSettingController", "getAccountSetting"])->setName('auth.account-setting');
+                    $this->post('', ["SkeletonAuthApp\\AccountSettingController", "postAccountSetting"]);
+                })->add("SkeletonAuthApp\\UserMiddleware");
             }
 
-            $this->get('/home', ["SkeletonAuth\\HomeController", "index"])
+            $this->get('/home', ["SkeletonAuthApp\\HomeController", "index"])
             ->setName('auth.home')
-            ->add("SkeletonAuth\\UserMiddleware");
+            ->add("SkeletonAuthApp\\UserMiddleware");
         });
     }
 
@@ -195,7 +195,7 @@ trait Auth
     {
         // jquery validation
         $this->app->group('/jv', function() {
-            $this->get('/email-exist', ["SkeletonAuth\\JqueryValidationController", "emailExist"]);
+            $this->get('/email-exist', ["SkeletonAuthApp\\JqueryValidationController", "emailExist"]);
         })->add("XhrMiddleware");
     }
 }
