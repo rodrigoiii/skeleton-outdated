@@ -4,6 +4,8 @@ return [
     'url_prefix' => "auth",
     'upload_path' => "auth",
 
+    'user_model' => "{{namespace}}Models\User",
+
     'modules' => [
         'login' => [
             'enabled' => true,

@@ -5,5 +5,7 @@
   "main": "index.js",
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap-sass": "^3.4.1"
+  }
 }
