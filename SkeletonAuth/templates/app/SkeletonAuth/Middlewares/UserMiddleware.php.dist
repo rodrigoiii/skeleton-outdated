@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}SkeletonAuth\Middlewares;
+namespace SkeletonAuthApp\Middlewares;
 
 use SkeletonAuth\Traits\Middlewares\User as UserTrait;
 use SkeletonCore\BaseMiddleware;

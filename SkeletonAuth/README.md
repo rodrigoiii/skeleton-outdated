@@ -6,13 +6,13 @@ Rapid authentication for skeleton.
 
  - In the public folder, run `yarn add jquery-validation`.
  - In sponge.config.js, append the following in `scripts.entries_array`:
-   - "auth",
-   - "auth/register",
-   - "auth/login",
-   - "auth/account-setting",
-   - "auth/forgot-password",
-   - "auth/reset-password",
-   - "auth/jquery-validation/add-methods"
+   ["auth/auth",
+    "auth/register",
+    "auth/login",
+    "auth/account-setting",
+    "auth/forgot-password",
+    "auth/reset-password",
+    "auth/jquery-validation/add-methods"]
  - In composer.json, append `{"SkeletonAuthApp\\": "app/SkeletonAuth"}` in autoload.psr-4
  - In composer.json append `"SkeletonAuth/src/SkeletonAuth.php"` in autoload.classmap
 

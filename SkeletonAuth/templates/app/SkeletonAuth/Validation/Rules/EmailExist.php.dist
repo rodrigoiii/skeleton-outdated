@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}SkeletonAuth\Validation\Rules;
+namespace SkeletonAuthApp\Validation\Rules;
 
 use SkeletonAuth\User;
 use Respect\Validation\Rules\AbstractRule;

@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namespace}}SkeletonAuth;
+namespace SkeletonAuthApp;
 
 use SkeletonAuthApp\Auth;
 use Tracy\IBarPanel;
