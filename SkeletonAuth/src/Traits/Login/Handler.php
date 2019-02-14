@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\Login;
+namespace SkeletonAuth\Traits\Login;
 
 use Psr\Http\Message\ResponseInterface as Response;
 

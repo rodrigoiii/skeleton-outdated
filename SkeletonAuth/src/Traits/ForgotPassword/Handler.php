@@ -1,10 +1,10 @@
 <?php
 
-namespace SkeletonAuth\ForgotPassword;
+namespace SkeletonAuth\Traits\ForgotPassword;
 
-use App\SkeletonAuth\Mailers\ResetPasswordLink;
-use App\SkeletonAuth\Models\AuthToken;
-use App\SkeletonAuth\Models\User;
+use SkeletonAuthApp\Mailers\ResetPasswordLink;
+use SkeletonAuthApp\Models\AuthToken;
+use SkeletonAuth\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait Handler

@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\AccountSetting;
+namespace SkeletonAuth\Traits\AccountSetting;
 
 use Psr\Http\Message\ResponseInterface as Response;
 

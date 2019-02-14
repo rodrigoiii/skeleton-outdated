@@ -1,9 +1,9 @@
 <?php
 
-namespace SkeletonAuth\AccountSetting;
+namespace SkeletonAuth\Traits\AccountSetting;
 
-use App\SkeletonAuth\Auth;
-use App\SkeletonAuth\Requests\AccountSettingRequest;
+use SkeletonAuthApp\Auth;
+use SkeletonAuthApp\Requests\AccountSettingRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait AccountSetting

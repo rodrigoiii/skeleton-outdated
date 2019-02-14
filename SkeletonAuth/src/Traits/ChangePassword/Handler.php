@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\ChangePassword;
+namespace SkeletonAuth\Traits\ChangePassword;
 
 use Psr\Http\Message\ResponseInterface as Response;
 

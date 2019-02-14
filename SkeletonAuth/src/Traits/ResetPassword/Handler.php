@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\ResetPassword;
+namespace SkeletonAuth\Traits\ResetPassword;
 
 use Psr\Http\Message\ResponseInterface as Response;
 

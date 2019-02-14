@@ -1,9 +1,9 @@
 <?php
 
-namespace SkeletonAuth\Login;
+namespace SkeletonAuth\Traits\Login;
 
-use App\SkeletonAuth\Auth;
-use App\SkeletonAuth\Requests\LoginRequest;
+use SkeletonAuthApp\Auth;
+use SkeletonAuthApp\Requests\LoginRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 

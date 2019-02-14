@@ -1,9 +1,9 @@
 <?php
 
-namespace SkeletonAuth\ChangePassword;
+namespace SkeletonAuth\Traits\ChangePassword;
 
-use App\SkeletonAuth\Auth;
-use App\SkeletonAuth\Requests\ChangePasswordRequest;
+use SkeletonAuthApp\Auth;
+use SkeletonAuthApp\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait ChangePassword

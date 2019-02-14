@@ -1,10 +1,10 @@
 <?php
 
-namespace SkeletonAuth\Register;
+namespace SkeletonAuth\Traits\Register;
 
-use App\SkeletonAuth\Mailers\RegisterVerification;
-use App\SkeletonAuth\Models\AuthToken;
-use App\SkeletonAuth\Models\User;
+use SkeletonAuthApp\Mailers\RegisterVerification;
+use SkeletonAuthApp\Models\AuthToken;
+use SkeletonAuth\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;

@@ -1,8 +1,8 @@
 <?php
 
-namespace SkeletonAuth;
+namespace SkeletonAuth\Traits;
 
-use App\SkeletonAuth\Models\User;
+use SkeletonAuth\User;
 use SkeletonCore\App;
 
 trait Auth

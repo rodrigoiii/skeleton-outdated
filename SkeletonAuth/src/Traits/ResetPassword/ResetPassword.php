@@ -1,10 +1,10 @@
 <?php
 
-namespace SkeletonAuth\ResetPassword;
+namespace SkeletonAuth\Traits\ResetPassword;
 
-use App\SkeletonAuth\Models\AuthToken;
-use App\SkeletonAuth\Models\User;
-use App\SkeletonAuth\Requests\ResetPasswordRequest;
+use SkeletonAuthApp\Models\AuthToken;
+use SkeletonAuth\User;
+use SkeletonAuthApp\Requests\ResetPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;

@@ -1,8 +1,8 @@
 <?php
 
-namespace SkeletonAuth\Middlewares;
+namespace SkeletonAuth\Traits\Middlewares;
 
-use App\SkeletonAuth\Auth;
+use SkeletonAuthApp\Auth;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonCore\BaseMiddleware;

@@ -25,7 +25,8 @@
         "psr-4": {
             "App\\": "app/"
 
-            ,"SkeletonAuth\\": "SkeletonAuth/src/SkeletonAuth"
+            ,"SkeletonAuth\\": "SkeletonAuth/src"
+            ,"SkeletonAuthApp\\": "app/SkeletonAuth"
         },
 
         "classmap": ["SkeletonAuth/src/SkeletonAuth.php"],

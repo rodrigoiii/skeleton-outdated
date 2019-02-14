@@ -1,6 +1,6 @@
 <?php
 
-namespace SkeletonAuth\Mailers;
+namespace SkeletonAuth\Traits\Mailers;
 
 trait ResetPasswordLink
 {

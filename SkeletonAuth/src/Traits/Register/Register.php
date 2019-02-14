@@ -1,11 +1,11 @@
 <?php
 
-namespace SkeletonAuth\Register;
+namespace SkeletonAuth\Traits\Register;
 
-use App\SkeletonAuth\Auth;
-use App\SkeletonAuth\Models\AuthToken;
-use App\SkeletonAuth\Models\User;
-use App\SkeletonAuth\Requests\RegisterRequest;
+use SkeletonAuthApp\Auth;
+use SkeletonAuthApp\Models\AuthToken;
+use SkeletonAuth\User;
+use SkeletonAuthApp\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 

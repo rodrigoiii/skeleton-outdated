@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth;
 
-use App\SkeletonAuth\Auth;
+use SkeletonAuthApp\Auth;
 use Tracy\IBarPanel;
 
 class Debugbar implements IBarPanel

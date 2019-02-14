@@ -1,10 +1,10 @@
 <?php
 
-namespace SkeletonAuth\ForgotPassword;
+namespace SkeletonAuth\Traits\ForgotPassword;
 
-use App\SkeletonAuth\Models\AuthToken;
-use App\SkeletonAuth\Models\User;
-use App\SkeletonAuth\Requests\ForgotPasswordRequest;
+use SkeletonAuthApp\Models\AuthToken;
+use SkeletonAuth\User;
+use SkeletonAuthApp\Requests\ForgotPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
 trait ForgotPassword
