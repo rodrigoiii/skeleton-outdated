@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 trait AccountSetting
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display account setting page
