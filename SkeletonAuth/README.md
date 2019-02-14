@@ -13,6 +13,8 @@ Rapid authentication for skeleton.
    - "auth/forgot-password",
    - "auth/reset-password",
    - "auth/jquery-validation/add-methods"
+ - In composer.json, append `{"SkeletonAuthApp\\": "app/SkeletonAuth"}` in autoload.psr-4
+ - In composer.json append `"SkeletonAuth/src/SkeletonAuth.php"` in autoload.classmap
 
 ## Route
 
