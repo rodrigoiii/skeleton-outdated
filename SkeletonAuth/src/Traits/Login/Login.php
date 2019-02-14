@@ -7,9 +7,9 @@ use App\SkeletonAuth\Requests\LoginRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-trait LoginTrait
+trait Login
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display login page

@@ -4,7 +4,7 @@ namespace SkeletonAuth\Login;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait HandlerTrait
+trait Handler
 {
     /**
      * Success login handler

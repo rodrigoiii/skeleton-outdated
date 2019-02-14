@@ -7,9 +7,9 @@ use App\SkeletonAuth\Models\User;
 use App\SkeletonAuth\Requests\ForgotPasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait ForgotPasswordTrait
+trait ForgotPassword
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display forgot password page

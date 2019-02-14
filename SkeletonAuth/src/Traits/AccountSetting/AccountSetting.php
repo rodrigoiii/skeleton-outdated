@@ -6,7 +6,7 @@ use App\SkeletonAuth\Auth;
 use App\SkeletonAuth\Requests\AccountSettingRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait AccountSettingTrait
+trait AccountSetting
 {
     use HandlerTrait;
 

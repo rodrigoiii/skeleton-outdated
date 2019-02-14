@@ -5,7 +5,7 @@ namespace SkeletonAuth;
 use App\SkeletonAuth\Models\User;
 use SkeletonCore\App;
 
-trait AuthTrait
+trait Auth
 {
     /**
      * @var App

@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonCore\BaseMiddleware;
 
-trait GuestTrait
+trait Guest
 {
     /**
      * Block the request of logged in user

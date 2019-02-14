@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth;
 
-use SkeletonAuth\AuthTrait;
+use SkeletonAuth\Traits\Auth as AuthTrait;
 
 class Auth
 {

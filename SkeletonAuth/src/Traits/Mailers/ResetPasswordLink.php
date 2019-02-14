@@ -2,7 +2,7 @@
 
 namespace SkeletonAuth\Mailers;
 
-trait ResetPasswordLinkTrait
+trait ResetPasswordLink
 {
     /**
      * Sending email for reset password configuration.

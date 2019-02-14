@@ -6,9 +6,9 @@ use App\SkeletonAuth\Auth;
 use App\SkeletonAuth\Requests\ChangePasswordRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait ChangePasswordTrait
+trait ChangePassword
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display change password page

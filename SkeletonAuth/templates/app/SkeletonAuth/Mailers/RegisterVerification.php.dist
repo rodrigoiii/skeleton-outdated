@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Mailers;
 
-use SkeletonAuth\Mailers\RegisterVerificationTrait;
+use SkeletonAuth\Traits\Mailers\RegisterVerification as RegisterVerificationTrait;
 use SkeletonMailer\Mailer;
 
 class RegisterVerification extends Mailer

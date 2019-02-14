@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Controllers;
 
-use SkeletonAuth\Register\RegisterTrait;
+use SkeletonAuth\Traits\Register\Register as RegisterTrait;
 use SkeletonCore\BaseController;
 
 class RegisterController extends BaseController

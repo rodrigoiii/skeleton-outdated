@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Validation\Rules;
 
-use App\SkeletonAuth\Models\User;
+use SkeletonAuth\User;
 use Respect\Validation\Rules\AbstractRule;
 
 class EmailExist extends AbstractRule

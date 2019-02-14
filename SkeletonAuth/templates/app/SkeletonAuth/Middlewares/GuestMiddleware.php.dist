@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Middlewares;
 
-use SkeletonAuth\Middlewares\GuestTrait;
+use SkeletonAuth\Traits\Middlewares\Guest as GuestTrait;
 use SkeletonCore\BaseMiddleware;
 
 class GuestMiddleware extends BaseMiddleware

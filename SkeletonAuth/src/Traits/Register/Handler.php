@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;
 
-trait HandlerTrait
+trait Handler
 {
     /**
      * Send verification link handler

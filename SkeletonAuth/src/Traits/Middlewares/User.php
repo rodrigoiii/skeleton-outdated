@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonCore\BaseMiddleware;
 
-trait UserTrait
+trait User
 {
     /**
      * Block the request of non logged in user

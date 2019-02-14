@@ -7,7 +7,7 @@ use App\SkeletonAuth\Models\AuthToken;
 use App\SkeletonAuth\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait HandlerTrait
+trait Handler
 {
     /**
      * Send reset password link handler

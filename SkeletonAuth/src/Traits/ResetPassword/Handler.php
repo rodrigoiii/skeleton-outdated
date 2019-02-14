@@ -4,7 +4,7 @@ namespace SkeletonAuth\ResetPassword;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-trait HandlerTrait
+trait Handler
 {
     /**
      * Success reset password handler

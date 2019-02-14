@@ -2,7 +2,7 @@
 
 namespace SkeletonAuth\Mailers;
 
-trait RegisterVerificationTrait
+trait RegisterVerification
 {
     /**
      * Sending email for register verification configuration.

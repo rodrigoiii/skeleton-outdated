@@ -9,9 +9,9 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\NotFoundException;
 
-trait ResetPasswordTrait
+trait ResetPassword
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display reset password page

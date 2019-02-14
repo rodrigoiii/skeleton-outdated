@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Controllers;
 
-use SkeletonAuth\AccountSetting\AccountSettingTrait;
+use SkeletonAuth\Traits\AccountSetting\AccountSetting as AccountSettingTrait;
 use SkeletonCore\BaseController;
 
 class AccountSettingController extends BaseController

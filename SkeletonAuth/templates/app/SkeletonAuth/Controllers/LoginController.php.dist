@@ -2,7 +2,7 @@
 
 namespace {{namespace}}SkeletonAuth\Controllers;
 
-use SkeletonAuth\Login\LoginTrait;
+use SkeletonAuth\Traits\Login\Login as LoginTrait;
 use SkeletonCore\BaseController;
 
 class LoginController extends BaseController

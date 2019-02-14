@@ -9,9 +9,9 @@ use App\SkeletonAuth\Requests\RegisterRequest;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-trait RegisterTrait
+trait Register
 {
-    use HandlerTrait;
+    use Handler;
 
     /**
      * Display registration page
