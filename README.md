@@ -16,22 +16,27 @@ The docs is not yet available. I will make it if this project get 50 stars.
 * The controller class should has suffix 'Controller'.
 * The middleware class should has suffix 'Middleware'.
 * The request class should has suffix 'Request'.
+* The command class should has suffix 'Command'.
 * When you remove the Validation Rule, delete Validation Exception also.
 
-## Module structure
+## Creating module in skeleton
+
+The structure of your module must be like below:
 
 ```
 [module-name]/
 |-- src/
-    |-- [module-name]/
-    |-- [module-name].php
+    |-- [ModuleName].php (required)
 |-- templates/
     |-- app/
-        |-- [module-name]/
+        |-- [ModuleName]/
             |-- Controllers/
             |-- Middlewares/
             |-- Requests/
             |-- Validation/
+            |-- Console/
+                |-- Commands
+                |-- templates/
             |-- Debugbar.php
     |-- assets/
         |-- sass/
@@ -41,7 +46,11 @@ The docs is not yet available. I will make it if this project get 50 stars.
         |-- migrations/
         |-- seeds/
     |-- views/
+|-- composer.json
 ```
+
+- In `composer.json`, append `{"[ModuleName]App\\": "app/[ModuleName]"}` in autoload.psr-4
+- In `composer.json` append `"[ModuleName]/src/[ModuleName].php"` in autoload.classmap
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.
