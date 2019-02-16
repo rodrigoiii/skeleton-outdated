@@ -49,8 +49,18 @@ The structure of your module must be like below:
 |-- composer.json
 ```
 
-- In `composer.json`, append `{"[ModuleName]App\\": "app/[ModuleName]"}` in autoload.psr-4
-- In `composer.json` append `"[ModuleName]/src/[ModuleName].php"` in autoload.classmap
+- In `composer.json` append the necessary key value pair.
+```json
+{
+    "autoload": {
+        "psr-4": {
+            "[ModuleName]\\": "[module-name]/src/",
+            "[ModuleName]App\\": "app/[ModuleName]"
+        },
+        "classmap": ["[module-name]/src/[ModuleName].php"]
+    }
+}
+```
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.

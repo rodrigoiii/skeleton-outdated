@@ -28,9 +28,13 @@
             ,"SkeletonAuthApp\\": "app/SkeletonAuth/"
 
             ,"SkeletonMailer\\": "skeleton-mail/src/"
+            ,"SkeletonMailerApp\\": "app/SkeletonMailer"
         },
 
-        "classmap": ["skeleton-auth/src/SkeletonAuth.php"],
+        "classmap": [
+            "skeleton-auth/src/SkeletonAuth.php",
+            "skeleton-mailer/src/SkeletonMailer.php"
+        ],
 
         "files": [
             "app/helpers.php"
