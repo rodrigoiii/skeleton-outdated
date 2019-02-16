@@ -62,5 +62,7 @@ The structure of your module must be like below:
 }
 ```
 
+And then make sure you read the `README.md` file of the module.
+
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.

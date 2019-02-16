@@ -27,13 +27,13 @@
             ,"SkeletonAuth\\": "skeleton-auth/src/"
             ,"SkeletonAuthApp\\": "app/SkeletonAuth/"
 
-            ,"SkeletonMailer\\": "skeleton-mail/src/"
-            ,"SkeletonMailerApp\\": "app/SkeletonMailer"
+            ,"SkeletonMail\\": "skeleton-mailrc/"
+            ,"SkeletonMailApp\\": "app/SkeletonMail"
         },
 
         "classmap": [
-            "skeleton-auth/src/SkeletonAuth.php",
-            "skeleton-mailer/src/SkeletonMailer.php"
+            "skeleton-auth/src/SkeletonAuth.php"
+            ,"skeleton-mail/src/SkeletonMail.php"
         ],
 
         "files": [

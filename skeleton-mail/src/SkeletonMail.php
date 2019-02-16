@@ -1,8 +1,8 @@
 <?php
 
-namespace SkeletonMailer;
+namespace SkeletonMail;
 
-class Mailer
+class SkeletonMail
 {
     /**
      * Email subject

@@ -1,10 +1,10 @@
 <?php
 
-namespace {{namespace}}\Mailers;
+namespace SkeletonMailApp;
 
-use SkeletonMailer\Mailer;
+use SkeletonMail\SkeletonMail;
 
-class {{mail}} extends Mailer
+class {{mail}} extends SkeletonMail
 {
     public function __construct()
     {
