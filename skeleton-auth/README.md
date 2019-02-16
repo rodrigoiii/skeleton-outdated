@@ -13,8 +13,8 @@ Rapid authentication for skeleton.
     "auth/forgot-password",
     "auth/reset-password",
     "auth/jquery-validation/add-methods"]
- - In `composer.json`, append `{"SkeletonAuthApp\\": "app/SkeletonAuth"}` in autoload.psr-4
- - In `composer.json` append `"SkeletonAuth/src/SkeletonAuth.php"` in autoload.classmap
+ - In `composer.json`, append `{"SkeletonAuthApp\\": "app/SkeletonAuth"}` in autoload.psr-4 // remove this after
+ - In `composer.json` append `"SkeletonAuth/src/SkeletonAuth.php"` in autoload.classmap // remove this after
  - In `config/app.php` append "SkeletonAuth" in `modules` key. Create if `modules` key not exists and make sure it is array.
 
 ## Route
