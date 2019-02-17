@@ -17,7 +17,6 @@ class UserSeeder extends AbstractSeed
             $unique_email = $this->getUniqueEmail();
 
             $data = [
-                'picture' => "/api/image-generator?text=No Image Available",
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $unique_email,
