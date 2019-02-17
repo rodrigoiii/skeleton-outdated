@@ -2552,43 +2552,6 @@
             "time": "2017-12-23T06:48:51+00:00"
         },
         {
-            "name": "rodrigoiii/skeleton-mailer",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rodrigoiii/skeleton-mailer.git",
-                "reference": "1f86b74605d0490f92853dbca89d71f834b8f608"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-mailer/zipball/1f86b74605d0490f92853dbca89d71f834b8f608",
-                "reference": "1f86b74605d0490f92853dbca89d71f834b8f608",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6.30 || ^7.0 || ^7.1",
-                "swiftmailer/swiftmailer": "^5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "SkeletonMailer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rodrigo Galura III",
-                    "email": "rodrigogalura3rd@gmail.com"
-                }
-            ],
-            "description": "Skeleton Mailer Library",
-            "time": "2018-10-19T12:16:27+00:00"
-        },
-        {
             "name": "runcmf/runtracy",
             "version": "0.2.10",
             "source": {
@@ -3166,60 +3129,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
-        },
-        {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/181b89f18a90f8925ef805f950d47a7190e9b950",
-                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.1",
-                "symfony/phpunit-bridge": "~3.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.4-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Corbyn"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "https://swiftmailer.symfony.com",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer"
-            ],
-            "time": "2018-07-31T09:26:32+00:00"
         },
         {
             "name": "symfony/config",
