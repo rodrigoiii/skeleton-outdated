@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "161b45d0a05a2cedc23abc54d455d42a",
+    "content-hash": "96d23727b5664ce15c2293d1540faac9",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -1027,16 +1027,16 @@
         },
         {
             "name": "rodrigoiii/skeleton-core",
-            "version": "dev-v1.6.0-dev",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "daa70067146e46cfbc5438a1c265765c4ac46251"
+                "reference": "3fdba90341b19003e01c9f0fb68c077b6f80208c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/daa70067146e46cfbc5438a1c265765c4ac46251",
-                "reference": "daa70067146e46cfbc5438a1c265765c4ac46251",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/3fdba90341b19003e01c9f0fb68c077b6f80208c",
+                "reference": "3fdba90341b19003e01c9f0fb68c077b6f80208c",
                 "shasum": ""
             },
             "require": {
@@ -1081,7 +1081,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2019-02-17T06:57:05+00:00"
+            "time": "2019-02-17T17:25:54+00:00"
         },
         {
             "name": "slim/csrf",
@@ -3422,9 +3422,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rodrigoiii/skeleton-core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
