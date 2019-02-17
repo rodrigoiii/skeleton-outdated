@@ -26,15 +26,7 @@
 
             ,"SkeletonAuth\\": "skeleton-auth/src/"
             ,"SkeletonAuthApp\\": "app/SkeletonAuth/"
-
-            ,"SkeletonMail\\": "skeleton-mailrc/"
-            ,"SkeletonMailApp\\": "app/SkeletonMail"
         },
-
-        "classmap": [
-            "skeleton-auth/src/SkeletonAuth.php"
-            ,"skeleton-mail/src/SkeletonMail.php"
-        ],
 
         "files": [
             "app/helpers.php"

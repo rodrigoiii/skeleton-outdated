@@ -54,10 +54,9 @@ The structure of your module must be like below:
 {
     "autoload": {
         "psr-4": {
-            "[ModuleName]\\": "[module-name]/src/",
-            "[ModuleName]App\\": "app/[ModuleName]"
-        },
-        "classmap": ["[module-name]/src/[ModuleName].php"]
+            "[ModuleName]\\": "src/",
+            "[ModuleName]App\\": "../../../app/[ModuleName]/"
+        }
     }
 }
 ```
