@@ -18,6 +18,7 @@ The docs is not yet available. I will make it if this project get 50 stars.
 * The request class should has suffix 'Request'.
 * The command class should has suffix 'Command'.
 * When you remove the Validation Rule, delete Validation Exception also.
+* When publishing module, make sure you will add that module in `config/app.php` file at `modules` key.
 
 ## Creating module in skeleton
 
