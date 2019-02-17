@@ -67,7 +67,6 @@ class MakeMailCommand extends BaseCommand
         if (file_exists($file))
         {
             $template = strtr(file_get_contents($file), [
-                '{{namespace}}' => get_app_namespace(),
                 '{{mail}}' => $mail
             ]);
 
