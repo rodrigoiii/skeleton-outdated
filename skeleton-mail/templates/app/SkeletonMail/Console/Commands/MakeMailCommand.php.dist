@@ -62,7 +62,7 @@ class MakeMailCommand extends BaseCommand
      */
     private function makeTemplate($mail)
     {
-        $file = __DIR__ . "/../templates/mail.txt";
+        $file = __DIR__ . "/../templates/mail.php.dist";
 
         if (file_exists($file))
         {
