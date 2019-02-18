@@ -1,4 +1,4 @@
-# slim-rodrigo v2.0.0-dev
+# slim-rodrigo v2.2.0
 
 Build awesome application using this light but powerful micro framework.
 

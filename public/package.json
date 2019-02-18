@@ -1,8 +1,7 @@
 {
-  "name": "web-dependency",
-  "version": "1.0.0",
-  "description": "Web dependency of project",
-  "main": "index.js",
+  "name": "skeleton",
+  "version": "2.2.0",
+  "description": "Skeleton is a model view controller(mvc) pattern built on slim3.",
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
   "dependencies": {
