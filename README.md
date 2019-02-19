@@ -29,6 +29,7 @@ The structure of your module must be like below:
 |-- src/
     |-- [ModuleName].php (required)
 |-- templates/
+    |-- base/ -> template would be put to the root of project
     |-- app/
         |-- [ModuleName]/
             |-- Controllers/
