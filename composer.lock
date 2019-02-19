@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "96d23727b5664ce15c2293d1540faac9",
+    "content-hash": "c5299a05ae5d716299c67aca6c34ee77",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -349,70 +349,6 @@
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
             "time": "2017-08-15T13:25:41+00:00"
-        },
-        {
-            "name": "league/fractal",
-            "version": "0.17.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/fractal.git",
-                "reference": "a0b350824f22fc2fdde2500ce9d6851a3f275b0e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/fractal/zipball/a0b350824f22fc2fdde2500ce9d6851a3f275b0e",
-                "reference": "a0b350824f22fc2fdde2500ce9d6851a3f275b0e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "doctrine/orm": "^2.5",
-                "illuminate/contracts": "~5.0",
-                "mockery/mockery": "~0.9",
-                "pagerfanta/pagerfanta": "~1.0.0",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~1.5",
-                "zendframework/zend-paginator": "~2.3"
-            },
-            "suggest": {
-                "illuminate/pagination": "The Illuminate Pagination component.",
-                "pagerfanta/pagerfanta": "Pagerfanta Paginator",
-                "zendframework/zend-paginator": "Zend Framework Paginator"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.13-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Fractal\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Phil Sturgeon",
-                    "email": "me@philsturgeon.uk",
-                    "homepage": "http://philsturgeon.uk/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Handle the output of complex data structures ready for API output.",
-            "homepage": "http://fractal.thephpleague.com/",
-            "keywords": [
-                "api",
-                "json",
-                "league",
-                "rest"
-            ],
-            "time": "2017-06-12T11:04:56+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1027,21 +963,20 @@
         },
         {
             "name": "rodrigoiii/skeleton-core",
-            "version": "v1.6.0",
+            "version": "dev-v1.8.0-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rodrigoiii/skeleton-core.git",
-                "reference": "3fdba90341b19003e01c9f0fb68c077b6f80208c"
+                "reference": "e37bdd77fd0a8182562fecff47720355b05b7007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/3fdba90341b19003e01c9f0fb68c077b6f80208c",
-                "reference": "3fdba90341b19003e01c9f0fb68c077b6f80208c",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-core/zipball/e37bdd77fd0a8182562fecff47720355b05b7007",
+                "reference": "e37bdd77fd0a8182562fecff47720355b05b7007",
                 "shasum": ""
             },
             "require": {
                 "illuminate/database": "^5.4",
-                "league/fractal": "^0.17.0",
                 "monolog/monolog": "^1.23",
                 "php": "^5.6.30 || ^7.0 || ^7.1",
                 "php-di/slim-bridge": "^1.1",
@@ -1081,7 +1016,7 @@
                 "php",
                 "slim"
             ],
-            "time": "2019-02-17T17:25:54+00:00"
+            "time": "2019-02-19T09:56:01+00:00"
         },
         {
             "name": "slim/csrf",
@@ -3427,7 +3362,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rodrigoiii/skeleton-core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
