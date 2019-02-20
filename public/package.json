@@ -5,6 +5,7 @@
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "bootstrap-sass": "^3.4.1"
+    "bootstrap-sass": "^3.4.1",
+    "jquery-validation": "^1.19.0"
   }
 }

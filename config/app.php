@@ -19,5 +19,7 @@ return [
         'Log'     => SkeletonCore\Utilities\Log::class,
         'Session' => SkeletonCore\Utilities\Session::class,
         'DB'      => Illuminate\Database\Capsule\Manager::class
-    ]
+    ],
+
+    'modules' => ["SkeletonAuth", "SkeletonMail"]
 ];

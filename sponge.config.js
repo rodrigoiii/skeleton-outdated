@@ -11,7 +11,15 @@ module.exports = {
 
   scripts: {
     entries_array: [
-      "app", "helpers/quick-load-image"
+      "app", "helpers/quick-load-image",
+
+      "auth/auth",
+      "auth/register",
+      "auth/login",
+      "auth/account-setting",
+      "auth/forgot-password",
+      "auth/reset-password",
+      "auth/jquery-validation/add-methods"
     ],
     dest: "public/js",
     options: {

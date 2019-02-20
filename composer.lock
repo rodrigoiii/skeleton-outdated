@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5299a05ae5d716299c67aca6c34ee77",
+    "content-hash": "3dbab86126e81f7bee4950a5789e6f3d",
     "packages": [
         {
             "name": "carbondate/carbon",
@@ -962,6 +962,44 @@
             "time": "2018-11-04T21:58:45+00:00"
         },
         {
+            "name": "rodrigoiii/skeleton-auth",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rodrigoiii/skeleton-auth.git",
+                "reference": "8ad79523e2eb6d72e15587fde400903a6ba72366"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-auth/zipball/8ad79523e2eb6d72e15587fde400903a6ba72366",
+                "reference": "8ad79523e2eb6d72e15587fde400903a6ba72366",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6.30 || ^7.0 || ^7.1",
+                "rodrigoiii/skeleton-mail": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SkeletonAuth\\": "src/",
+                    "SkeletonAuthApp\\": "../../../app/SkeletonAuth/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rodrigo Galura III",
+                    "email": "rodrigogalura3rd@gmail.com"
+                }
+            ],
+            "description": "Rapid authentication for skeleton.",
+            "time": "2019-02-17T17:12:29+00:00"
+        },
+        {
             "name": "rodrigoiii/skeleton-core",
             "version": "dev-v1.8.0-dev",
             "source": {
@@ -1017,6 +1055,44 @@
                 "slim"
             ],
             "time": "2019-02-19T09:56:01+00:00"
+        },
+        {
+            "name": "rodrigoiii/skeleton-mail",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rodrigoiii/skeleton-mail.git",
+                "reference": "09c2379e6fbb945ddb3f77f94c37cc181fa61b6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rodrigoiii/skeleton-mail/zipball/09c2379e6fbb945ddb3f77f94c37cc181fa61b6a",
+                "reference": "09c2379e6fbb945ddb3f77f94c37cc181fa61b6a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6.30 || ^7.0 || ^7.1",
+                "swiftmailer/swiftmailer": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SkeletonMail\\": "src/",
+                    "SkeletonMailApp\\": "../../../app/SkeletonMail/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rodrigo Galura III",
+                    "email": "rodrigogalura3rd@gmail.com"
+                }
+            ],
+            "description": "Mail library for skeleton",
+            "time": "2019-02-17T10:37:13+00:00"
         },
         {
             "name": "slim/csrf",
@@ -1237,6 +1313,60 @@
                 "view"
             ],
             "time": "2018-05-07T10:54:29+00:00"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v5.4.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/181b89f18a90f8925ef805f950d47a7190e9b950",
+                "reference": "181b89f18a90f8925ef805f950d47a7190e9b950",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.1",
+                "symfony/phpunit-bridge": "~3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.4-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Corbyn"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "https://swiftmailer.symfony.com",
+            "keywords": [
+                "email",
+                "mail",
+                "mailer"
+            ],
+            "time": "2018-07-31T09:26:32+00:00"
         },
         {
             "name": "symfony/console",
@@ -2416,7 +2546,6 @@
                 "mock",
                 "xunit"
             ],
-            "abandoned": true,
             "time": "2017-06-30T09:13:00+00:00"
         },
         {
