@@ -21,5 +21,5 @@ return [
         'DB'      => Illuminate\Database\Capsule\Manager::class
     ],
 
-    'modules' => ["SkeletonAuth", "SkeletonMail"]
+    'modules' => ["SkeletonAuth", "SkeletonMail", "SkeletonChat"]
 ];

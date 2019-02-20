@@ -1,0 +1,144 @@
+{% extends "sklt-chat/layout.twig" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="/css/sklt-chat.css" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="frame">
+                <div id="sidepanel">
+                    <div id="profile">
+                        <div class="wrap">
+                            <img id="profile-img" src="{{ img(auth_user.picture) }}" class="online" alt="" />
+                            <p>{{ auth_user.getFullName() }}</p>
+                            <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                            <div id="expanded">
+                                <a href="javascript:void(0)" class="btn-signout" onclick="document.getElementById('logout-form').submit();">
+                                    Sign out <i class="fa fa-sign-out"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {# <div id="search">
+                        <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+                        <input type="text" placeholder="Search contacts..." />
+                    </div> #}
+                    <div id="contacts">
+                        <ul>
+                            {% for index, contact in contacts %}
+                                <li class="contact {{ index == 0 ? "active" }}" data-id="{{ contact.id }}">
+                                    <div class="wrap">
+                                        <span class="contact-status {{ contact.status == constant("SkeletonChatApp\\Models\\ChatStatus::ONLINE_STATUS") ? "online" }}"></span>
+                                        <img class="image" src="{{ contact.picture }}" alt="" />
+                                        <div class="meta">
+                                            <i class="badge">{{ contact.numberOfUnread(auth_user.id) }}</i>
+                                            <p class="name">{{ contact.getFullName() }}</p>
+                                            <p class="preview">
+                                                {% set conversation = ClassStaticMethod("SkeletonChatApp\\Models\\Message", "conversation", auth_user.id, contact.id).get() %}
+
+                                                {% if conversation.isNotEmpty() %}
+                                                    {{ conversation.last().sender_id == auth_user.id ? "<span>You: </span>" }}
+                                                    {{ conversation.last().message }}
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="contact-profile">
+                        <input type="hidden" name="selected-user-id" value="{{ contacts.first().id }}">
+                        <img src="{{ contacts.first().picture }}" alt="" />
+                        <p>{{ contacts.first().getFullName() }}</p>
+                    </div>
+                    <div class="messages">
+                        <ul>
+                            {% if initial_conversation.isNotEmpty() %}
+                                {% for convo in initial_conversation %}
+                                    <li class="{{ convo.sender.id == auth_user.id ? "sent" : "replies" }}">
+                                        <img src="{{ convo.sender.picture }}" alt="" />
+                                        <p>{{ convo.message }}</p>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="no-conversation">No conversation.</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="message-input">
+                        <div class="wrap">
+                            <input type="text" placeholder="Write your message..." id="input-message" autofocus />
+                            {# <i class="fa fa-paperclip attachment" aria-hidden="true"></i> #}
+                            <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+window.chat = {
+    hostname: "{{ config('sklt-chat.host') }}",
+    port: "{{ config('sklt-chat.port') }}",
+    auth_id: parseInt("{{ auth_user.id }}"),
+};
+</script>
+
+<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+<script type="text/javascript" src="/js/auth/auth.js"></script>
+<script type="text/javascript" src="/js/sklt-chat.js"></script>
+
+<script type="text/template" id="message-tmpl">
+    <div class="chat-box-single-line">
+        <abbr class="timestamp"><%= message_date %></abbr>
+    </div>
+    <div class="direct-chat-msg doted-border">
+        <div class="direct-chat-info clearfix">
+            <span class="direct-chat-name pull-left"><%= chat_name %></span>
+        </div>
+        <img alt="iamgurdeeposahan" src="<%= image %>" class="direct-chat-img">
+        <div class="direct-chat-text">
+            <%= message %>
+        </div>
+        <div class="direct-chat-info clearfix">
+            <span class="direct-chat-timestamp pull-right"><%= message_time %></span>
+        </div>
+        <div class="direct-chat-info clearfix">
+            <span class="direct-chat-img-reply-small pull-left"></span>
+            <span class="direct-chat-reply-name"><%= chat_lastname %></span>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="message-sent-tmpl">
+    <li class="sent">
+        <img src="<%= picture %>" alt="" />
+        <p><%= message %></p>
+    </li>
+</script>
+
+<script type="text/template" id="message-replied-tmpl">
+    <li class="replies">
+        <img src="<%= picture %>" alt="" />
+        <p><%= message %></p>
+    </li>
+</script>
+
+<script type="text/template" id="typing-tmpl">
+    <li class="replies typing">
+        <p>...</p>
+    </li>
+</script>
+{% endblock %}
