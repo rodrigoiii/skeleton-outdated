@@ -67,14 +67,16 @@
                         {% endfor %}
                     {% else %}
                         <li class="contact">
-                            <p>You have no contacts</p>
+                            <div class="wrap">
+                                <p>You have no contacts.</p>
+                            </div>
                         </li>
                     {% endif %}
 
                 </ul>
             </div>
             <div id="bottom-bar">
-                <button><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+                <button id="add-contact-btn"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
                 <button onclick="document.getElementById('auth-logout-form').submit()"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span>Logout</span></button>
             </div>
         </div>
@@ -143,6 +145,35 @@
     {% endif %}
 
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/node_modules/bootbox/bootbox.js"></script>
     <script type="text/javascript" src="/js/sklt-chat.js"></script>
+
+    <script type="text/template" id="add-contact-tmpl">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <input type="text" name="search_contact" class="form-control" placeholder="Search contacts..." />
+
+                <table class="table table-hover table-condensed table-striped">
+                    <tbody>
+                        <% _.each(_.range(10), function(i) { %>
+                            <tr>
+                                <td>
+                                    <img src="/api/image-generator?text=No Image" class="img-responsive" alt="" width="50" />
+                                </td>
+                                <td>
+                                    <p>Rodrigo Galura III</p>
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary btn-xs">
+                                        <span class="glyphicon glyphicon-plus-sign"></span> Add
+                                    </button>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
 </body>
 </html>

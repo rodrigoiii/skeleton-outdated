@@ -291,6 +291,16 @@
 
 // $(document).ready(Chat.init);
 
+if (typeof(jQuery) === "undefined") {
+  window.jQuery = require("jquery");
+  window.$ = window.jQuery;
+}
+
+require("bootstrap/js/transition");
+require("bootstrap/js/modal");
+
+var _ = require("underscore");
+
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
@@ -345,4 +355,13 @@ $(window).on('keydown', function(e) {
         newMessage();
         return false;
     }
+});
+
+var tmpl = _.template($('#add-contact-tmpl').html());
+
+bootbox.dialog({
+  title: "Add Contact",
+  message: tmpl()
+});
+$('#add-contact-btn').click(function(event) {
 });

@@ -31,7 +31,8 @@
     "jquery": "^3.3.1",
     "mocha": "^5.2.0",
     "phplint": "^2.0.0",
-    "sponge-rod": "^3.10.1"
+    "sponge-rod": "^3.10.1",
+    "underscore": "^1.9.1"
   },
   "dependencies": {}
 }

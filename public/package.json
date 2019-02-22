@@ -5,6 +5,7 @@
   "author": "rodrigogalura3rd@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "bootbox": "^4.4.0",
     "bootstrap-sass": "^3.4.1",
     "font-awesome": "^4.7.0",
     "jquery-validation": "^1.19.0"
