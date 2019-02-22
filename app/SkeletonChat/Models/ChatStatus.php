@@ -33,11 +33,6 @@ class ChatStatus extends Model
         return $this->status === static::OFFLINE_STATUS;
     }
 
-    public static function findByUserId($user_id)
-    {
-        return static::where('user_id', $user_id)->first();
-    }
-
     public static function createOnlineUser($user_id)
     {
         return static::create([

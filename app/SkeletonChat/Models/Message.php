@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $fillable = ['message', 'sender_id', 'receiver_id', 'is_read'];
+    protected $fillable = ["message", "sender_id", "receiver_id", "is_read"];
 
     const IS_READ = 1;
     const IS_UNREAD = 0;
 
     public function sender()
     {
-        return $this->belongsTo('SkeletonChatApp\Models\User', "sender_id");
+        return $this->belongsTo("SkeletonChatApp\Models\User", "sender_id");
     }
 
     public function receiver()
     {
-        return $this->belongsTo('SkeletonChatApp\Models\User', "receiver_id");
+        return $this->belongsTo("SkeletonChatApp\Models\User", "receiver_id");
     }
 
     /**

@@ -1,144 +1,148 @@
-{% extends "sklt-chat/layout.twig" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>{{ config('app.name') }}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" href="/favicon.png">
 
-{% block styles %}
-<link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="/css/sklt-chat.css" />
-{% endblock %}
-
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="frame">
-                <div id="sidepanel">
-                    <div id="profile">
-                        <div class="wrap">
-                            <img id="profile-img" src="{{ img(auth_user.picture) }}" class="online" alt="" />
-                            <p>{{ auth_user.getFullName() }}</p>
-                            <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                            <div id="expanded">
-                                <a href="javascript:void(0)" class="btn-signout" onclick="document.getElementById('logout-form').submit();">
-                                    Sign out <i class="fa fa-sign-out"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {# <div id="search">
-                        <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                        <input type="text" placeholder="Search contacts..." />
-                    </div> #}
-                    <div id="contacts">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sklt-chat.css" />
+</head>
+<body>
+    <div id="frame">
+        <div id="sidepanel">
+            <div id="profile">
+                <div class="wrap">
+                    <img id="profile-img" src="/api/image-generator?text=No Image" class="online" alt="" />
+                    <p>Mike Ross</p>
+                    <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                    <div id="status-options">
                         <ul>
-                            {% for index, contact in contacts %}
-                                <li class="contact {{ index == 0 ? "active" }}" data-id="{{ contact.id }}">
-                                    <div class="wrap">
-                                        <span class="contact-status {{ contact.status == constant("SkeletonChatApp\\Models\\ChatStatus::ONLINE_STATUS") ? "online" }}"></span>
-                                        <img class="image" src="{{ contact.picture }}" alt="" />
-                                        <div class="meta">
-                                            <i class="badge">{{ contact.numberOfUnread(auth_user.id) }}</i>
-                                            <p class="name">{{ contact.getFullName() }}</p>
-                                            <p class="preview">
-                                                {% set conversation = ClassStaticMethod("SkeletonChatApp\\Models\\Message", "conversation", auth_user.id, contact.id).get() %}
-
-                                                {% if conversation.isNotEmpty() %}
-                                                    {{ conversation.last().sender_id == auth_user.id ? "<span>You: </span>" }}
-                                                    {{ conversation.last().message }}
-                                                {% endif %}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endfor %}
+                            <li id="status-online" class="active"><span class="status-circle"></span>
+                                <p>Online</p>
+                            </li>
+                            <li id="status-away"><span class="status-circle"></span>
+                                <p>Away</p>
+                            </li>
+                            <li id="status-busy"><span class="status-circle"></span>
+                                <p>Busy</p>
+                            </li>
+                            <li id="status-offline"><span class="status-circle"></span>
+                                <p>Offline</p>
+                            </li>
                         </ul>
+                    </div>
+                    <div id="expanded">
+                        <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="mikeross" />
+                        <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="ross81" />
+                        <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                        <input name="twitter" type="text" value="mike.ross" />
                     </div>
                 </div>
-                <div class="content">
-                    <div class="contact-profile">
-                        <input type="hidden" name="selected-user-id" value="{{ contacts.first().id }}">
-                        <img src="{{ contacts.first().picture }}" alt="" />
-                        <p>{{ contacts.first().getFullName() }}</p>
-                    </div>
-                    <div class="messages">
-                        <ul>
-                            {% if initial_conversation.isNotEmpty() %}
-                                {% for convo in initial_conversation %}
-                                    <li class="{{ convo.sender.id == auth_user.id ? "sent" : "replies" }}">
-                                        <img src="{{ convo.sender.picture }}" alt="" />
-                                        <p>{{ convo.message }}</p>
-                                    </li>
-                                {% endfor %}
-                            {% else %}
-                                <li class="no-conversation">No conversation.</li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    <div class="message-input">
-                        <div class="wrap">
-                            <input type="text" placeholder="Write your message..." id="input-message" autofocus />
-                            {# <i class="fa fa-paperclip attachment" aria-hidden="true"></i> #}
-                            <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                        </div>
-                    </div>
+            </div>
+            {% if contacts.count() > 5 %}
+                <div id="search">
+                    <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+                    <input type="text" placeholder="Search contacts..." />
+                </div>
+            {% endif %}
+            <div id="contacts">
+                <ul>
+                    {% if contacts.isNotEmpty() %}
+                        {% for index, contact in contacts %}
+                            <li class="contact {{ index == 0 ? 'active' }}">
+                                <div class="wrap">
+                                    <span class="contact-status online"></span>
+                                    <img src="/api/image-generator?text=No Image" alt="" />
+                                    <div class="meta">
+                                        <p class="name">Louis Litt</p>
+                                        <p class="preview">You just got LITT up, Mike.</p>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="contact">
+                            <p>You have no contacts</p>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+            <div id="bottom-bar">
+                <button><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+                <button onclick="document.getElementById('auth-logout-form').submit()"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> <span>Logout</span></button>
+            </div>
+        </div>
+        <div class="content">
+            <div class="contact-profile">
+                <img src="/api/image-generator?text=No Image" alt="" />
+                <p>Harvey Specter</p>
+                <div class="social-media">
+                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                </div>
+            </div>
+            <div class="messages">
+                <ul>
+                    <li class="sent">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!</p>
+                    </li>
+                    <li class="replies">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>When you're backed against the wall, break the god damn thing down.</p>
+                    </li>
+                    <li class="replies">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>Excuses don't win championships.</p>
+                    </li>
+                    <li class="sent">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>Oh yeah, did Michael Jordan tell you that?</p>
+                    </li>
+                    <li class="replies">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>No, I told him that.</p>
+                    </li>
+                    <li class="replies">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>What are your choices when someone puts a gun to your head?</p>
+                    </li>
+                    <li class="sent">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>What are you talking about? You do what they say or they shoot you.</p>
+                    </li>
+                    <li class="replies">
+                        <img src="/api/image-generator?text=No Image" alt="" />
+                        <p>Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things.</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="message-input">
+                <div class="wrap">
+                    <input type="text" placeholder="Write your message..." />
+                    <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                    <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
 
-{% block scripts %}
-<script type="text/javascript">
-window.chat = {
-    hostname: "{{ config('sklt-chat.host') }}",
-    port: "{{ config('sklt-chat.port') }}",
-    auth_id: parseInt("{{ auth_user.id }}"),
-};
-</script>
+    {% if auth_user %}
+        {% if config('auth.modules.login.enabled') %}
+            <form method="POST" action="{{ path_for('auth.logout') }}" id="auth-logout-form" hidden>
+                {{ csrf.field | raw }}
+            </form>
+        {% endif %}
+    {% endif %}
 
-<script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-<script type="text/javascript" src="/js/auth/auth.js"></script>
-<script type="text/javascript" src="/js/sklt-chat.js"></script>
-
-<script type="text/template" id="message-tmpl">
-    <div class="chat-box-single-line">
-        <abbr class="timestamp"><%= message_date %></abbr>
-    </div>
-    <div class="direct-chat-msg doted-border">
-        <div class="direct-chat-info clearfix">
-            <span class="direct-chat-name pull-left"><%= chat_name %></span>
-        </div>
-        <img alt="iamgurdeeposahan" src="<%= image %>" class="direct-chat-img">
-        <div class="direct-chat-text">
-            <%= message %>
-        </div>
-        <div class="direct-chat-info clearfix">
-            <span class="direct-chat-timestamp pull-right"><%= message_time %></span>
-        </div>
-        <div class="direct-chat-info clearfix">
-            <span class="direct-chat-img-reply-small pull-left"></span>
-            <span class="direct-chat-reply-name"><%= chat_lastname %></span>
-        </div>
-    </div>
-</script>
-
-<script type="text/template" id="message-sent-tmpl">
-    <li class="sent">
-        <img src="<%= picture %>" alt="" />
-        <p><%= message %></p>
-    </li>
-</script>
-
-<script type="text/template" id="message-replied-tmpl">
-    <li class="replies">
-        <img src="<%= picture %>" alt="" />
-        <p><%= message %></p>
-    </li>
-</script>
-
-<script type="text/template" id="typing-tmpl">
-    <li class="replies typing">
-        <p>...</p>
-    </li>
-</script>
-{% endblock %}
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/js/sklt-chat.js"></script>
+</body>
+</html>

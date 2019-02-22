@@ -11,12 +11,17 @@ class User extends Model
 
     public function messages()
     {
-        return $this->hasMany('SkeletonChatApp\Models\Message', "sender_id");
+        return $this->hasMany("SkeletonChatApp\Models\Message", "sender_id");
     }
 
     public function chatStatus()
     {
-        return $this->hasOne('SkeletonChatApp\Models\ChatStatus');
+        return $this->hasOne("SkeletonChatApp\Models\ChatStatus");
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\Contact");
     }
 
     public function numberOfUnread($receiver_id)
@@ -28,21 +33,17 @@ class User extends Model
                     ->count();
     }
 
-    public static function contacts()
-    {
-        return static::where('id', "<>", Auth::user()->id);
-    }
-
-    public static function contactsOrderByOnlineStatus()
+    public static function contactsOrderByOnlineStatus($auth_id)
     {
         return static::select(\DB::raw("users.*, chat_statuses.status"))
                     ->leftJoin('chat_statuses', "users.id", "=", "chat_statuses.user_id")
+                    ->leftJoin('contacts', "users.id", "=", "contacts.contact_id")
                     ->leftJoin(\DB::raw("
                         (SELECT m.* FROM messages m
                             LEFT JOIN messages m2 ON m.sender_id = m2.sender_id AND m2.id > m.id
                             WHERE m2.id IS NULL
                         ) m"), "users.id", "=", "m.sender_id")
-                    ->where('users.id', "<>", Auth::user()->id)
+                    ->where('contacts.owner_id', $auth_id)
                     ->orderByRaw("FIELD(m.is_read, ".Message::IS_READ.", ".Message::IS_UNREAD.") DESC,
                                 FIELD(chat_statuses.status, '".ChatStatus::OFFLINE_STATUS."', '".ChatStatus::ONLINE_STATUS."') DESC,
                                 m.created_at DESC");
