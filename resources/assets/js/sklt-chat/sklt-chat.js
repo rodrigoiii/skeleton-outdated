@@ -303,119 +303,104 @@ require("bootstrap/js/button");
 var _ = require("underscore");
 var ChatApi = require("./ChatApi");
 
-var chatApi = new ChatApi(sklt_chat.auth_id);
+var SkltChat = {
+  chatApi: null,
 
-$(".messages").animate({ scrollTop: $(document).height() }, "fast");
+  init: function() {
+    SkltChat.chatApi = new ChatApi(sklt_chat.auth_id);
 
-$("#profile-img").click(function() {
-  $("#status-options").toggleClass("active");
-});
+    $('#add-contact-btn').click(SkltChat.onSearchContact);
+    $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(SkltChat.onSearchingContact, 800));
+    $('body').on('click', ".add-contact-modal .add-contact", SkltChat.onAddContact);
 
-$(".expand-button").click(function() {
-  $("#profile").toggleClass("expanded");
-  $("#contacts").toggleClass("expanded");
-});
+    $(window).on('keydown', SkltChat.onHitEnter);
+    $('.submit').click(SkltChat.onNewMessage);
+    SkltChat.scrollMessage();
+  },
 
-$("#status-options ul li").click(function() {
-  $("#profile-img").removeClass();
-  $("#status-online").removeClass("active");
-  $("#status-away").removeClass("active");
-  $("#status-busy").removeClass("active");
-  $("#status-offline").removeClass("active");
-  $(this).addClass("active");
+  onSearchContact: function() {
+    var tmpl = _.template($('#add-contact-tmpl').html());
+    console.log(tmpl);
 
-  if ($("#status-online").hasClass("active")) {
-    $("#profile-img").addClass("online");
-  } else if ($("#status-away").hasClass("active")) {
-    $("#profile-img").addClass("away");
-  } else if ($("#status-busy").hasClass("active")) {
-    $("#profile-img").addClass("busy");
-  } else if ($("#status-offline").hasClass("active")) {
-    $("#profile-img").addClass("offline");
-  } else {
-    $("#profile-img").removeClass();
-  };
+    bootbox.dialog({
+      title: "Add Contact",
+      className: "add-contact-modal",
+      message: tmpl()
+    });
+  },
 
-  $("#status-options").removeClass("active");
-});
+  onSearchingContact: function() {
+    var keyword = $(this).val();
 
-function newMessage() {
-  message = $(".message-input input").val();
-  if ($.trim(message) == '') {
-    return false;
+    SkltChat.chatApi.searchContacts(keyword, function(response) {
+      if (response.success) {
+        var tmpl = _.template($('#result-contacts-tmpl').html());
+
+        $('.add-contact-modal table tbody').html(tmpl({
+          result_contacts: response.data
+        }));
+      } else {
+        console.log(response.message);
+      }
+    });
+  },
+
+  onAddContact: function() {
+    var contact_id = $(this).data('id');
+    var tr_el = $(this).closest('tr');
+
+    $(this).prop('disabled', true);
+    $(this).button('loading');
+
+    SkltChat.chatApi.addContact(contact_id, function(response) {
+      if (response.success) {
+        var tmpl = _.template($('#contact-item-tmpl').html());
+        var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+
+        var template = tmpl({
+          picture: $('.contact-picture', tr_el).attr('src'),
+          fullname: $('.contact-fullname', tr_el).text()
+        });
+
+        if (is_contacts_empty) {
+          $('#contacts ul').html(template);
+        } else {
+          $('#contacts ul').prepend(template);
+        }
+
+        bootbox.hideAll();
+      } else {
+        console.log(response.message);
+      }
+    });
+  },
+
+  onHitEnter: function(e) {
+    var ENTER_KEYCODE = 13;
+
+    // is focused in input message
+    var is_focused = $('.message-input :input[name="message"]').is(':focus');
+
+    if (e.which == ENTER_KEYCODE && is_focused) {
+      SkltChat.onNewMessage();
+      return false;
+    }
+  },
+
+  onNewMessage: function() {
+    var message = $(".message-input input").val();
+    if ($.trim(message) == '') {
+      return false;
+    }
+    $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+    $('.message-input input').val(null);
+    $('.contact.active .preview').html('<span>You: </span>' + message);
+    SkltChat.scrollMessage();
+  },
+
+  scrollMessage: function() {
+    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
   }
-  $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
-  $('.message-input input').val(null);
-  $('.contact.active .preview').html('<span>You: </span>' + message);
-  $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 };
 
-$('.submit').click(function() {
-  newMessage();
-});
-
-$(window).on('keydown', function(e) {
-  if (e.which == 13) {
-    newMessage();
-    return false;
-  }
-});
-
-$('#add-contact-btn').click(function(event) {
-  var tmpl = _.template($('#add-contact-tmpl').html());
-
-  bootbox.dialog({
-    title: "Add Contact",
-    className: "add-contact-modal",
-    message: tmpl()
-  });
-});
-
-$('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(function(event) {
-  var keyword = $(this).val();
-
-  chatApi.searchContacts(keyword, function(response) {
-    if (response.success) {
-      var tmpl = _.template($('#result-contacts-tmpl').html());
-
-      $('.add-contact-modal table tbody').html(tmpl({
-        result_contacts: response.data
-      }));
-    } else {
-      console.log(response.message);
-    }
-  });
-}, 800));
-
-
-$('body').on('click', ".add-contact-modal .add-contact", function() {
-  var contact_id = $(this).data('id');
-  var tr_el = $(this).closest('tr');
-
-  $(this).prop('disabled', true);
-  $(this).button('loading');
-
-  console.log(contact_id);
-
-  chatApi.addContact(contact_id, function(response) {
-    if (response.success) {
-      var tmpl = _.template($('#contact-item-tmpl').html());
-      var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
-
-      var template = tmpl({
-        picture: $('.contact-picture', tr_el).attr('src'),
-        fullname: $('.contact-fullname', tr_el).text()
-      });
-
-      if (is_contacts_empty) {
-        $('#contacts ul').html(template);
-      } else {
-        $('#contacts ul').prepend(template);
-      }
-
-      bootbox.hideAll();
-    } else {
-      console.log(response.message);
-    }
-  });
-});
+$(document).ready(SkltChat.init);
