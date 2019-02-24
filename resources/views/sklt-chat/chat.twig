@@ -57,16 +57,16 @@
                             <li class="contact {{ index == 0 ? 'active' }}">
                                 <div class="wrap">
                                     <span class="contact-status online"></span>
-                                    <img src="/api/image-generator?text=No Image" alt="" />
+                                    <img src="{{ contact.picture }}" alt="" />
                                     <div class="meta">
-                                        <p class="name">Louis Litt</p>
+                                        <p class="name">{{ contact.getFullName() }}</p>
                                         <p class="preview">You just got LITT up, Mike.</p>
                                     </div>
                                 </div>
                             </li>
                         {% endfor %}
                     {% else %}
-                        <li class="contact">
+                        <li class="contact empty">
                             <div class="wrap">
                                 <p>You have no contacts.</p>
                             </div>
@@ -167,13 +167,13 @@
             <% _.each(result_contacts, function(contact) { %>
                 <tr>
                     <td>
-                        <img src="<%= contact.picture %>" class="img-responsive" alt="" width="50" />
+                        <img src="<%= contact.picture %>" class="img-responsive contact-picture" alt="" width="50" />
                     </td>
                     <td>
-                        <p><%= contact.first_name + " " + contact.last_name %></p>
+                        <p class="contact-fullname"><%= contact.first_name + " " + contact.last_name %></p>
                     </td>
                     <td>
-                        <button class="btn btn-primary btn-xs" data-id="<%= contact.id %>">
+                        <button class="btn btn-primary btn-xs add-contact" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-id="<%= contact.id %>">
                             <span class="glyphicon glyphicon-plus-sign"></span> Add
                         </button>
                     </td>
@@ -186,6 +186,19 @@
                 </td>
             </tr>
         <% } %>
+    </script>
+
+    <script type="text/template" id="contact-item-tmpl">
+        <li class="contact">
+            <div class="wrap">
+                <span class="contact-status online"></span>
+                <img src="<%= picture %>" alt="" />
+                <div class="meta">
+                    <p class="name"><%= fullname %></p>
+                    <p class="preview"></p>
+                </div>
+            </div>
+        </li>
     </script>
 
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>

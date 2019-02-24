@@ -298,6 +298,7 @@ if (typeof(jQuery) === "undefined") {
 
 require("bootstrap/js/transition");
 require("bootstrap/js/modal");
+require("bootstrap/js/button");
 
 var _ = require("underscore");
 var ChatApi = require("./ChatApi");
@@ -307,68 +308,62 @@ var chatApi = new ChatApi(sklt_chat.auth_id);
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
 $("#profile-img").click(function() {
-    $("#status-options").toggleClass("active");
+  $("#status-options").toggleClass("active");
 });
 
 $(".expand-button").click(function() {
-    $("#profile").toggleClass("expanded");
-    $("#contacts").toggleClass("expanded");
+  $("#profile").toggleClass("expanded");
+  $("#contacts").toggleClass("expanded");
 });
 
 $("#status-options ul li").click(function() {
+  $("#profile-img").removeClass();
+  $("#status-online").removeClass("active");
+  $("#status-away").removeClass("active");
+  $("#status-busy").removeClass("active");
+  $("#status-offline").removeClass("active");
+  $(this).addClass("active");
+
+  if ($("#status-online").hasClass("active")) {
+    $("#profile-img").addClass("online");
+  } else if ($("#status-away").hasClass("active")) {
+    $("#profile-img").addClass("away");
+  } else if ($("#status-busy").hasClass("active")) {
+    $("#profile-img").addClass("busy");
+  } else if ($("#status-offline").hasClass("active")) {
+    $("#profile-img").addClass("offline");
+  } else {
     $("#profile-img").removeClass();
-    $("#status-online").removeClass("active");
-    $("#status-away").removeClass("active");
-    $("#status-busy").removeClass("active");
-    $("#status-offline").removeClass("active");
-    $(this).addClass("active");
+  };
 
-    if ($("#status-online").hasClass("active")) {
-        $("#profile-img").addClass("online");
-    } else if ($("#status-away").hasClass("active")) {
-        $("#profile-img").addClass("away");
-    } else if ($("#status-busy").hasClass("active")) {
-        $("#profile-img").addClass("busy");
-    } else if ($("#status-offline").hasClass("active")) {
-        $("#profile-img").addClass("offline");
-    } else {
-        $("#profile-img").removeClass();
-    };
-
-    $("#status-options").removeClass("active");
+  $("#status-options").removeClass("active");
 });
 
 function newMessage() {
-    message = $(".message-input input").val();
-    if ($.trim(message) == '') {
-        return false;
-    }
-    $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
-    $('.message-input input').val(null);
-    $('.contact.active .preview').html('<span>You: </span>' + message);
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+  message = $(".message-input input").val();
+  if ($.trim(message) == '') {
+    return false;
+  }
+  $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+  $('.message-input input').val(null);
+  $('.contact.active .preview').html('<span>You: </span>' + message);
+  $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 };
 
 $('.submit').click(function() {
-    newMessage();
+  newMessage();
 });
 
 $(window).on('keydown', function(e) {
-    if (e.which == 13) {
-        newMessage();
-        return false;
-    }
-});
-
-var tmpl = _.template($('#add-contact-tmpl').html());
-
-bootbox.dialog({
-  title: "Add Contact",
-  className: "add-contact-modal",
-  message: tmpl()
+  if (e.which == 13) {
+    newMessage();
+    return false;
+  }
 });
 
 $('#add-contact-btn').click(function(event) {
+  var tmpl = _.template($('#add-contact-tmpl').html());
+
   bootbox.dialog({
     title: "Add Contact",
     className: "add-contact-modal",
@@ -379,17 +374,48 @@ $('#add-contact-btn').click(function(event) {
 $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(function(event) {
   var keyword = $(this).val();
 
-  chatApi.searchContact(keyword, function(response) {
+  chatApi.searchContacts(keyword, function(response) {
     if (response.success) {
-        var result_contacts_tmpl = _.template($('#result-contacts-tmpl').html());
+      var tmpl = _.template($('#result-contacts-tmpl').html());
 
-        console.log(response.data);
-
-        $('.add-contact-modal table tbody').html(result_contacts_tmpl({
-            result_contacts: response.data
-        }));
+      $('.add-contact-modal table tbody').html(tmpl({
+        result_contacts: response.data
+      }));
     } else {
-        console.log("Cannot fetch contacts");
+      console.log(response.message);
     }
   });
-}, 1500));
+}, 800));
+
+
+$('body').on('click', ".add-contact-modal .add-contact", function() {
+  var contact_id = $(this).data('id');
+  var tr_el = $(this).closest('tr');
+
+  $(this).prop('disabled', true);
+  $(this).button('loading');
+
+  console.log(contact_id);
+
+  chatApi.addContact(contact_id, function(response) {
+    if (response.success) {
+      var tmpl = _.template($('#contact-item-tmpl').html());
+      var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+
+      var template = tmpl({
+        picture: $('.contact-picture', tr_el).attr('src'),
+        fullname: $('.contact-fullname', tr_el).text()
+      });
+
+      if (is_contacts_empty) {
+        $('#contacts ul').html(template);
+      } else {
+        $('#contacts ul').prepend(template);
+      }
+
+      bootbox.hideAll();
+    } else {
+      console.log(response.message);
+    }
+  });
+});

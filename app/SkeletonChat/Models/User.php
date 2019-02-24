@@ -26,6 +26,11 @@ class User extends Model
         return $this->hasMany("SkeletonChatApp\Models\Contact");
     }
 
+    public function getFullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
     public function numberOfUnread($receiver_id)
     {
         return $this->messages()
@@ -45,7 +50,7 @@ class User extends Model
                             LEFT JOIN messages m2 ON m.sender_id = m2.sender_id AND m2.id > m.id
                             WHERE m2.id IS NULL
                         ) m"), "users.id", "=", "m.sender_id")
-                    ->where('contacts.owner_id', $auth_id)
+                    ->where('contacts.user_id', $auth_id)
                     ->orderByRaw("FIELD(m.is_read, ".Message::IS_READ.", ".Message::IS_UNREAD.") DESC,
                                 FIELD(chat_statuses.status, '".ChatStatus::OFFLINE_STATUS."', '".ChatStatus::ONLINE_STATUS."') DESC,
                                 m.created_at DESC");

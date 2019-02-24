@@ -13,7 +13,7 @@ class CreateTableContacts extends AbstractMigration
     {
         $table = $this->table('contacts')
             ->addColumn('contact_id', 'integer')
-            ->addColumn('owner_id', 'integer')
+            ->addColumn('user_id', 'integer')
             ->addTimestamps();
 
         $table->create();
