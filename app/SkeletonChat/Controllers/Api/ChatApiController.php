@@ -17,9 +17,12 @@ class ChatApiController extends BaseController
 
         $keyword = $request->getParam('keyword');
 
+        $exclude_contacts = $user->contacts->pluck('contact_id');
+        array_push($exclude_contacts, $user->id);
+
         $results = User::search($keyword)
                     ->select(\DB::raw("id, picture, first_name, last_name"))
-                    ->whereNotIn('id', [$user->id, $user->contacts->pluck('contact_id')])->get();
+                    ->whereNotIn('id', $exclude_contacts)->get();
 
         return $response->withJson([
             'success' => true,
