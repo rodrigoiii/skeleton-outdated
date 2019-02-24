@@ -3,11 +3,13 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use SkeletonAuthApp\Auth;
+use SkeletonChatApp\Traits\FullTextSearch;
 
 class User extends Model
 {
-    protected $fillable = ["picture", "first_name", "last_name", "email", "password", "auth_token"];
+    use FullTextSearch;
+
+    protected $searchable = ["first_name", "last_name"];
 
     public function messages()
     {
@@ -47,5 +49,10 @@ class User extends Model
                     ->orderByRaw("FIELD(m.is_read, ".Message::IS_READ.", ".Message::IS_UNREAD.") DESC,
                                 FIELD(chat_statuses.status, '".ChatStatus::OFFLINE_STATUS."', '".ChatStatus::ONLINE_STATUS."') DESC,
                                 m.created_at DESC");
+    }
+
+    public static function findByLoginToken($login_token)
+    {
+        return static::where('login_token', $login_token)->first();
     }
 }

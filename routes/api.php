@@ -7,3 +7,9 @@
  */
 api_image_generator($this);
 (new SkeletonAuthApp\Auth($this))->apiRoutes();
+
+$this->group('/chat-application', function() {
+    $this->get('/search-contacts', ["SkeletonChatApp\\Api\\ChatApiController", "searchContacts"]);
+})
+->add("SkeletonChatApp\\Api\\UserApiMiddleware")
+->add("XhrMiddleware");

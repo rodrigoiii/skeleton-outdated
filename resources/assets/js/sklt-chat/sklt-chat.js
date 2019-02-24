@@ -300,6 +300,9 @@ require("bootstrap/js/transition");
 require("bootstrap/js/modal");
 
 var _ = require("underscore");
+var ChatApi = require("./ChatApi");
+
+var chatApi = new ChatApi(sklt_chat.auth_id);
 
 $(".messages").animate({ scrollTop: $(document).height() }, "fast");
 
@@ -361,7 +364,32 @@ var tmpl = _.template($('#add-contact-tmpl').html());
 
 bootbox.dialog({
   title: "Add Contact",
+  className: "add-contact-modal",
   message: tmpl()
 });
+
 $('#add-contact-btn').click(function(event) {
+  bootbox.dialog({
+    title: "Add Contact",
+    className: "add-contact-modal",
+    message: tmpl()
+  });
 });
+
+$('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(function(event) {
+  var keyword = $(this).val();
+
+  chatApi.searchContact(keyword, function(response) {
+    if (response.success) {
+        var result_contacts_tmpl = _.template($('#result-contacts-tmpl').html());
+
+        console.log(response.data);
+
+        $('.add-contact-modal table tbody').html(result_contacts_tmpl({
+            result_contacts: response.data
+        }));
+    } else {
+        console.log("Cannot fetch contacts");
+    }
+  });
+}, 1500));

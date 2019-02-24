@@ -13,10 +13,10 @@ class ChatController extends BaseController
 {
     public function index(Response $response)
     {
-        $user = Auth::user();
-        $contacts = User::contactsOrderByOnlineStatus($user->id)->get();
+        $auth_user = Auth::user();
+        $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $initial_conversation = Message::conversation([$user->id, $contacts->isNotEmpty() ? $contacts[0]->id : null])
+        $initial_conversation = Message::conversation([$auth_user->id, $contacts->isNotEmpty() ? $contacts[0]->id : null])
                                 ->orderBy('id', "DESC")
                                 ->limit(config('sklt-chat.default_conversation_length'))
                                 ->get()

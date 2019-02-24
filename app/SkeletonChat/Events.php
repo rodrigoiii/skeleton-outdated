@@ -19,7 +19,7 @@ class Events
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
         $auth_id = $params['auth_id'];
-        $user = User::find($auth_id);
+        $auth_user = User::find($auth_id);
 
         $clients = $this->clients;
 
@@ -30,7 +30,7 @@ class Events
                 $return_data['user_id'] = $auth_id;
 
                 // if user have no chat status
-                $result = !is_null($user) ? $user->setAsOnline() : ChatStatus::createOnlineUser($auth_id);
+                $result = !is_null($auth_user) ? $auth_user->setAsOnline() : ChatStatus::createOnlineUser($auth_id);
 
                 $return_data['result'] = !is_null($result);
 
@@ -43,7 +43,7 @@ class Events
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
         $auth_id = $params['auth_id'];
-        $user = User::find($auth_id);
+        $auth_user = User::find($auth_id);
 
         $clients = $this->clients;
 
@@ -54,7 +54,7 @@ class Events
                 $return_data['user_id'] = $auth_id;
 
                 // if user have no chat status
-                $result = !is_null($$user) ? $$user->setAsOffline() : ChatStatus::createOnlineUser($auth_id);
+                $result = !is_null($auth_user) ? $auth_user->setAsOffline() : ChatStatus::createOnlineUser($auth_id);
 
                 $return_data['result'] = !is_null($result);
 
