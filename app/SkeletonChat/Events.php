@@ -30,8 +30,8 @@ class Events
                 $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOnline() : ChatStatus::createOnlineUser($auth_user->id);
 
                 $return_data['event'] = __FUNCTION__;
-                $return_data['user_id'] = $auth_user->id;
                 $return_data['success'] = !is_null($result);
+                $return_data['auth_user_id'] = $auth_user->id;
                 $return_data['token'] = User::find($user_id)->login_token;
 
                 $client->send(json_encode($return_data));
@@ -46,16 +46,16 @@ class Events
 
         $clients = $this->clients;
 
-        foreach ($clients as $client) {
+        foreach ($clients as $user_id => $client) {
             if ($client !== $from)
             {
-                $return_data['event'] = __FUNCTION__;
-                $return_data['user_id'] = $auth_user->id;
-
                 // if user have no chat status
                 $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOffline() : ChatStatus::createOnlineUser($auth_user->id);
 
+                $return_data['event'] = __FUNCTION__;
                 $return_data['success'] = !is_null($result);
+                $return_data['auth_user_id'] = $auth_user->id;
+                $return_data['token'] = User::find($user_id)->login_token;
 
                 $client->send(json_encode($return_data));
             }

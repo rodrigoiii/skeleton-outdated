@@ -302,32 +302,22 @@ var ChatEvents = {
    */
   onConnectionEstablish: function(data) {
     if (ChatEvents.isTokenValid(data.token) && data.success) {
-      var contact_status = $('.contact[data-id="' + data.user_id + '"]');
-      var tmpl = $('.contact[data-id="' + data.user_id + '"]').wrap("<div></div>").parent().html();
+      var contact_el = $('#contacts .contact[data-id="'+data.auth_user_id+'"]');
 
-      // remove div inside of ul
-      $('#contacts ul > div').remove();
-
-      // move new online to the last user's online
-      $('.contact[data-id="' + data.user_id + '"]').remove();
-      if ($('#contacts ul li .contact-status.online').length > 0) {
-        $('#contacts ul li .contact-status.online').last().closest('li').after(tmpl);
-      } else {
-        $('#contacts ul').html(tmpl);
+      if (!$('.contact-status', contact_el).hasClass("online")) {
+        $('.contact-status', contact_el).addClass("online");
       }
-
-      $('.contact[data-id="' + data.user_id + '"] .contact-status').addClass("online");
     }
   },
 
   onDisconnect: function(data) {
-    // if (data.result) {
-    //   var contact_status = $('.contact[data-id="' + data.user_id + '"] .contact-status');
+    if (ChatEvents.isTokenValid(data.token) && data.success) {
+      var contact_el = $('#contacts .contact[data-id="'+data.auth_user_id+'"]');
 
-    //   if (contact_status.hasClass('online')) {
-    //     $('.contact[data-id="' + data.user_id + '"] .contact-status').removeClass("online");
-    //   }
-    // }
+      if ($('.contact-status', contact_el).hasClass("online")) {
+        $('.contact-status', contact_el).removeClass("online");
+      }
+    }
   },
 
   onSendMessage: function(data) {
