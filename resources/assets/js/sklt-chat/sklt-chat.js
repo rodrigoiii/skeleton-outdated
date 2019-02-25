@@ -290,30 +290,34 @@ var ChatEvents = {
 
   // check if token is valid
   isTokenValid: function(token) {
-    return sklt_chat.login_token === token;
+    if (token !== null) {
+      return sklt_chat.login_token === token;
+    }
+
+    return false;
   },
 
   /**
    * Event Listener
    */
   onConnectionEstablish: function(data) {
-    // if (data.result) {
-    //   var contact_status = $('.contact[data-id="' + data.user_id + '"]');
-    //   var tmpl = $('.contact[data-id="' + data.user_id + '"]').wrap("<div></div>").parent().html();
+    if (ChatEvents.isTokenValid(data.token) && data.success) {
+      var contact_status = $('.contact[data-id="' + data.user_id + '"]');
+      var tmpl = $('.contact[data-id="' + data.user_id + '"]').wrap("<div></div>").parent().html();
 
-    //   // remove div inside of ul
-    //   $('#contacts ul > div').remove();
+      // remove div inside of ul
+      $('#contacts ul > div').remove();
 
-    //   // move new online to the last user's online
-    //   $('.contact[data-id="' + data.user_id + '"]').remove();
-    //   if ($('#contacts ul li .contact-status.online').length > 0) {
-    //     $('#contacts ul li .contact-status.online').last().closest('li').after(tmpl);
-    //   } else {
-    //     $('#contacts ul').html(tmpl);
-    //   }
+      // move new online to the last user's online
+      $('.contact[data-id="' + data.user_id + '"]').remove();
+      if ($('#contacts ul li .contact-status.online').length > 0) {
+        $('#contacts ul li .contact-status.online').last().closest('li').after(tmpl);
+      } else {
+        $('#contacts ul').html(tmpl);
+      }
 
-    //   $('.contact[data-id="' + data.user_id + '"] .contact-status').addClass("online");
-    // }
+      $('.contact[data-id="' + data.user_id + '"] .contact-status').addClass("online");
+    }
   },
 
   onDisconnect: function(data) {
@@ -348,8 +352,10 @@ var ChatEvents = {
         picture: message.sender.picture,
         message: message.message
       }));
-
       SkltChat.scrollMessage();
+
+      var contact_el = $('#contacts .contact[data-id="'+message.receiver.id+'"]');
+      $('.meta .preview', contact_el).text(message.message);
 
       SkltChat.webSocketChat.emitMessage(msg);
     }
@@ -402,6 +408,9 @@ var ChatEvents = {
           picture: message.receiver.picture,
           message: message.message
         }));
+
+        var contact_el = $('#contacts .contact[data-id="'+message.sender.id+'"]');
+        $('.meta .preview', contact_el).text(message.message);
 
         SkltChat.scrollMessage();
       }

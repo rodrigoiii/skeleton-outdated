@@ -44,7 +44,7 @@
                                     <img src="{{ contact.picture }}" alt="" />
                                     <div class="meta">
                                         <p class="name">{{ contact.getFullName() }}</p>
-                                        <p class="preview">You just got LITT up, Mike.</p>
+                                        <p class="preview">{{ contact.conversation(auth_user.id).get().last().message }}</p>
                                     </div>
                                 </div>
                             </li>

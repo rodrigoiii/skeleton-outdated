@@ -3,6 +3,7 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Traits\FullTextSearch;
 
 class User extends Model
@@ -19,6 +20,14 @@ class User extends Model
     public function received_messages()
     {
         return $this->hasMany("SkeletonChatApp\Models\Message", "receiver_id");
+    }
+
+    public function conversation($receiver_id)
+    {
+        return Message::where('sender_id', $this->id)
+                ->where('receiver_id', $receiver_id)
+                ->orWhere('sender_id', $receiver_id)
+                ->where('receiver_id', $this->id);
     }
 
     public function chatStatus()
