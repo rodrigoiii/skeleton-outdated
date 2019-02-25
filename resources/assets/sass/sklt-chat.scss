@@ -679,13 +679,18 @@ body {
   cursor: pointer;
   background: #32465a;
   color: #f5f5f5;
+
+  &:disabled {
+    cursor: default;
+    background-color: gray;
+  }
 }
 @media screen and (max-width: 735px) {
   #frame .content .message-input .wrap button {
     padding: 16px 0;
   }
 }
-#frame .content .message-input .wrap button:hover {
+#frame .content .message-input .wrap button:hover:not(:disabled) {
   background: #435f7a;
 }
 #frame .content .message-input .wrap button:focus {

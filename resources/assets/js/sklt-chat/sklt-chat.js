@@ -151,6 +151,12 @@ var SkltChat = {
     SkltChat.scrollMessage();
 
     $(window).on('beforeunload', SkltChat.onUnloadWindow);
+
+    $('#contacts').on('click', ".contact", SkltChat.onChangeActiveContact);
+  },
+
+  getActiveContact: function() {
+    return parseInt($('.contact-profile').data('id'));
   },
 
   onUnloadWindow: function() {
@@ -216,6 +222,14 @@ var SkltChat = {
     });
   },
 
+  onChangeActiveContact: function() {
+    var user_id = $(this).data('id');
+    $('.contact-profile').data('id', user_id);
+
+    $('#contacts .contact').removeClass("active");
+    $(this).addClass("active");
+  },
+
   onHitEnter: function(e) {
     var ENTER_KEYCODE = 13;
 
@@ -229,14 +243,25 @@ var SkltChat = {
   },
 
   onNewMessage: function() {
-    var message = $(".message-input input").val();
-    if ($.trim(message) == '') {
-      return false;
-    }
-    $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
-    $('.message-input input').val(null);
-    $('.contact.active .preview').html('<span>You: </span>' + message);
-    SkltChat.scrollMessage();
+    // $(this).prop('disabled', true);
+    // $(this).button('loading');
+
+    var msg = {
+      event: WebSocketChat.ON_SEND_MESSAGE,
+      receiver_id: SkltChat.getActiveContact(),
+      message: "Hello"
+    };
+
+    console.log(msg);
+
+    // var message = $(".message-input input").val();
+    // if ($.trim(message) == '') {
+    //   return false;
+    // }
+    // $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+    // $('.message-input input').val(null);
+    // $('.contact.active .preview').html('<span>You: </span>' + message);
+    // SkltChat.scrollMessage();
   },
 
   scrollMessage: function() {

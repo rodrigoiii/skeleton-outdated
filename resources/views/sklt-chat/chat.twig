@@ -38,7 +38,7 @@
                 <ul>
                     {% if contacts.isNotEmpty() %}
                         {% for index, contact in contacts %}
-                            <li class="contact {{ active_contact.id == contact.id ? 'active' }}">
+                            <li class="contact {{ active_contact.id == contact.id ? 'active' }}" data-id="{{ contact.id }}">
                                 <div class="wrap">
                                     <span class="contact-status online"></span>
                                     <img src="{{ contact.picture }}" alt="" />
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="content">
-            <div class="contact-profile">
+            <div class="contact-profile" data-id="{{ active_contact is not null ? active_contact.id }}">
                 {% if active_contact is not null %}
                     <img src="{{ active_contact.picture }}" alt="" />
                     <p>{{ active_contact.getFullName() }}</p>
@@ -88,7 +88,9 @@
             <div class="message-input">
                 <div class="wrap">
                     <input type="text" name="message" placeholder="Write your message..." />
-                    <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    <button class="submit" data-loading-text='<span class="fa fa-refresh fa-spin"></span>'>
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
         </div>
