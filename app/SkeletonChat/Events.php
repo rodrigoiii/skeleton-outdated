@@ -2,10 +2,11 @@
 
 namespace SkeletonChatApp;
 
+use Ratchet\ConnectionInterface;
 use SkeletonChatApp\Models\ChatStatus;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;
-use Ratchet\ConnectionInterface;
+use SkeletonChatApp\Transformers\SendMessageTransformer;
 
 class Events
 {
@@ -18,8 +19,7 @@ class Events
     public function onConnectionEstablish(ConnectionInterface $from, $data)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
-        $auth_id = $params['auth_id'];
-        $auth_user = User::find($auth_id);
+        $auth_user = User::findByLoginToken($params['login_token']);
 
         $clients = $this->clients;
 
@@ -27,12 +27,12 @@ class Events
             if ($client !== $from)
             {
                 $return_data['event'] = __FUNCTION__;
-                $return_data['user_id'] = $auth_id;
+                $return_data['user_id'] = $auth_user->id;
 
                 // if user have no chat status
-                $result = !is_null($auth_user) ? $auth_user->setAsOnline() : ChatStatus::createOnlineUser($auth_id);
+                $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOnline() : ChatStatus::createOnlineUser($auth_user->id);
 
-                $return_data['result'] = !is_null($result);
+                $return_data['success'] = !is_null($result);
 
                 $client->send(json_encode($return_data));
             }
@@ -42,8 +42,7 @@ class Events
     public function onDisconnect(ConnectionInterface $from, $data)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
-        $auth_id = $params['auth_id'];
-        $auth_user = User::find($auth_id);
+        $auth_user = User::findByLoginToken($params['login_token']);
 
         $clients = $this->clients;
 
@@ -51,12 +50,12 @@ class Events
             if ($client !== $from)
             {
                 $return_data['event'] = __FUNCTION__;
-                $return_data['user_id'] = $auth_id;
+                $return_data['user_id'] = $auth_user->id;
 
                 // if user have no chat status
-                $result = !is_null($auth_user) ? $auth_user->setAsOffline() : ChatStatus::createOnlineUser($auth_id);
+                $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOffline() : ChatStatus::createOnlineUser($auth_user->id);
 
-                $return_data['result'] = !is_null($result);
+                $return_data['success'] = !is_null($result);
 
                 $client->send(json_encode($return_data));
             }
@@ -67,40 +66,31 @@ class Events
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $sender_id = $params['auth_id'];
-        $receiver_id = $data->receiver_id;
+        $user_sender = User::findByLoginToken($params['login_token']);
+        $user_receiver = User::find($data->receiver_id);
 
-        $message = Message::sendMessage($data->message, $sender_id, $receiver_id);
-        $user_sender = User::find($sender_id);
-        $user_receiver = User::find($receiver_id);
+        $sent_message = $user_sender->sendMessage(new Message([
+            'message' => $data->message,
+            'receiver_id' => $user_receiver->id
+        ]));
 
-        if (!is_null($message))
+        if ($sent_message)
         {
-            $message = Message::messageWithSenderAndReceiver($message->id);
+            $message = sklt_transformer($sent_message, new SendMessageTransformer)->toArray();
 
             // self
             $return_data['event'] = __FUNCTION__;
-            $return_data['sender_id'] = $sender_id;
-
-            $return_data['sender'] = [
-                'message' => $message
-            ];
+            $return_data['message'] = $message['data'];
 
             $from->send(json_encode($return_data));
-            unset($return_data['sender']);
 
             // if receiver online
-            if (isset($this->clients[$receiver_id]))
+            if (isset($this->clients[$user_receiver->id]))
             {
-                $receiver = $this->clients[$receiver_id];
-
-                $return_data['receiver'] = [
-                    'message' => $message,
-                    'number_unread' => $user_sender->numberOfUnread($receiver_id)
-                ];
+                $receiver = $this->clients[$user_receiver->id];
+                $return_data['number_unread'] = $user_receiver->numberOfUnread($user_sender->id);
 
                 $receiver->send(json_encode($return_data));
-                unset($return_data['receiver']);
             }
         }
     }
@@ -108,6 +98,8 @@ class Events
     public function onTyping(ConnectionInterface $from, $data)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
+
+        $auth_user = User::findByLoginToken($params['login_token']);
 
         // mark unread as read
         $data->sender_id = $data->receiver_id;
@@ -118,7 +110,7 @@ class Events
         {
             $return_data = [
                 'event' => __FUNCTION__,
-                'sender_id' => $params['auth_id']
+                'sender_id' => $auth_user->id
             ];
 
             $receiver = $this->clients[$data->receiver_id];
@@ -142,10 +134,10 @@ class Events
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $receiver_id = $params['auth_id'];
+        $receiver = User::findByLoginToken($params['login_token']);
         $sender_id = $data->sender_id;
 
-        $is_marked = Message::markAsRead($sender_id, $receiver_id);
+        $is_marked = Message::markAsRead($sender_id, $receiver->id);
         if (!is_null($is_marked))
         {
             $return_data['event'] = __FUNCTION__;
@@ -161,10 +153,10 @@ class Events
 
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_id = $params['auth_id'];
+        $auth_user = User::findByLoginToken($params['login_token']);
         $sender_id = $data->sender_id;
 
-        $conversation = Message::conversation([$sender_id, $auth_id])
+        $conversation = Message::conversation([$sender_id, $auth_user->id])
                             ->with(['sender', 'receiver'])
                             ->orderBy('id', "DESC")
                             ->limit(config('sklt-chat.default_conversation_length'))
@@ -183,13 +175,13 @@ class Events
 
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_id = $params['auth_id'];
+        $auth_user = User::findByLoginToken($params['login_token']);
         $sender_id = $data->sender_id;
         $load_more_increment = $data->load_more_increment;
 
         $default_conversation_length = config('sklt-chat.default_conversation_length');
 
-        $conversation = Message::conversation([$sender_id, $auth_id])
+        $conversation = Message::conversation([$sender_id, $auth_user->id])
                             ->with(['sender', 'receiver'])
                             ->orderBy('id', "DESC")
                             ->offset($default_conversation_length * $load_more_increment)

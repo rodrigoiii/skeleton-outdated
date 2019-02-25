@@ -4,6 +4,7 @@ namespace SkeletonChatApp;
 
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
+use SkeletonChatApp\Models\User;
 
 class Chat extends Events implements MessageComponentInterface {
 
@@ -14,9 +15,18 @@ class Chat extends Events implements MessageComponentInterface {
     public function onOpen(ConnectionInterface $conn) {
         // Store the new connection to send messages to later
         parse_str($conn->httpRequest->getUri()->getQuery(), $params);
-        $this->clients[$params['auth_id']] = $conn;
 
-        echo "New connection! ({$conn->resourceId})\n";
+        $auth_user = User::findByLoginToken($params['login_token']);
+
+        if (!is_null($auth_user))
+        {
+            $this->clients[$auth_user->id] = $conn;
+            echo "New connection! ({$conn->resourceId})\n";
+        }
+        else
+        {
+            echo "Seems you are not authenticated!";
+        }
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {

@@ -11,9 +11,14 @@ class User extends Model
 
     protected $searchable = ["first_name", "last_name"];
 
-    public function messages()
+    public function sent_messages()
     {
         return $this->hasMany("SkeletonChatApp\Models\Message", "sender_id");
+    }
+
+    public function received_messages()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\Message", "receiver_id");
     }
 
     public function chatStatus()
@@ -31,13 +36,21 @@ class User extends Model
         return $this->first_name . " " . $this->last_name;
     }
 
-    public function numberOfUnread($receiver_id)
+    public function numberOfUnread($sender_id)
     {
-        return $this->messages()
-                    ->where('receiver_id', $receiver_id)
+        return $this->received_messages()
+                    ->where('sender_id', $sender_id)
                     ->where('is_read', 0)
                     ->get()
                     ->count();
+    }
+
+    public function sendMessage(Message $message)
+    {
+        $message->sender_id = $this->id;
+        $is_sent = $message->save();
+
+        return $is_sent ? $message : false;
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)

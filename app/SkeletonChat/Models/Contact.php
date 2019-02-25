@@ -17,4 +17,9 @@ class Contact extends Model
     {
         return $this->belongsTo("SkeletonChatApp\Models\User", "contact_id");
     }
+
+    public static function getByUserId($user_id)
+    {
+        return static::where('user_id', $user_id)->get();
+    }
 }

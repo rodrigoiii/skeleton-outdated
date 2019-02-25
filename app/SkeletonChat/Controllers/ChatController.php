@@ -2,12 +2,12 @@
 
 namespace SkeletonChatApp\Controllers;
 
-use SkeletonChatApp\Models\Message;
-use SkeletonChatApp\Models\User;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonCore\BaseController;
 use SkeletonAuthApp\Auth;
+use SkeletonChatApp\Models\Message;
+use SkeletonChatApp\Models\User;
+use SkeletonCore\BaseController;
 
 class ChatController extends BaseController
 {

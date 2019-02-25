@@ -16,7 +16,7 @@
             <div id="profile">
                 <div class="wrap">
                     <img id="profile-img" src="/api/image-generator?text=No Image" class="online" alt="" />
-                    <p>Mike Ross</p>
+                    <p>{{ auth_user.getFullName() }}</p>
 
                     <div id="expanded">
                         <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
@@ -113,7 +113,6 @@
             <div class="message-input">
                 <div class="wrap">
                     <input type="text" name="message" placeholder="Write your message..." />
-                    <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
                     <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                 </div>
             </div>
@@ -130,7 +129,9 @@
 
     <script type="text/javascript">
         window.sklt_chat = {
-            auth_id: "{{ auth_user.login_token }}"
+            host: "{{ config('sklt-chat.host') }}",
+            port: "{{ config('sklt-chat.port') }}",
+            login_token: "{{ auth_user.login_token }}"
         }
     </script>
 
