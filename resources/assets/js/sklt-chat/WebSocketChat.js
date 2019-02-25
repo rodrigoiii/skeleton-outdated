@@ -210,9 +210,9 @@ WebSocketChat.ON_FETCH_MESSAGES = "onFetchMessages";
 WebSocketChat.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
 
 WebSocketChat.prototype = {
-  emitMessage: function(data, errorCallback) {
+  emitMessage: function(msg, errorCallback) {
     if (this.webSocket.readyState === 1) { // open state
-      this.webSocket.send(JSON.stringify(data));
+      this.webSocket.send(JSON.stringify(msg));
     } else {
       if (typeof(errorCallback) !== "undefined") {
         errorCallback();

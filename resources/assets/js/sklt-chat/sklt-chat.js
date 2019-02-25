@@ -243,16 +243,25 @@ var SkltChat = {
   },
 
   onNewMessage: function() {
-    // $(this).prop('disabled', true);
-    // $(this).button('loading');
+    var message = $('.message-input :input[name="message"]').val().trim();
 
-    var msg = {
-      event: WebSocketChat.ON_SEND_MESSAGE,
-      receiver_id: SkltChat.getActiveContact(),
-      message: "Hello"
-    };
+    if (message.length > 0) {
+      $('.submit').prop('disabled', true);
+      $('.submit').button("loading");
+      $('.message-input :input[name="message"]').val("")
+      .attr('placeholder', "Sending...")
+      .prop('disabled', true);
 
-    console.log(msg);
+      var msg = {
+        event: WebSocketChat.ON_SEND_MESSAGE,
+        receiver_id: SkltChat.getActiveContact(),
+        message: message
+      };
+
+      SkltChat.webSocketChat.emitMessage(msg);
+    } else {
+      $('.message-input :input[name="message"]').val("");
+    }
 
     // var message = $(".message-input input").val();
     // if ($.trim(message) == '') {
@@ -265,7 +274,8 @@ var SkltChat = {
   },
 
   scrollMessage: function() {
-    $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    var bottom = $('.messages').prop('scrollHeight');
+    $('.messages').animate({ scrollTop: bottom });
   }
 };
 
@@ -318,10 +328,28 @@ var ChatEvents = {
 
   onSendMessage: function(data) {
     if (ChatEvents.isTokenValid(data.token)) {
+      $('.submit').prop('disabled', false);
+      $('.submit').button("reset");
+      $('.message-input :input[name="message"]')
+      .attr('placeholder', "Write your message...")
+      .prop('disabled', false)
+      .focus();
+
+      var message = data.message;
+
       var msg = {
         event: WebSocketChat.ON_RECEIVE_MESSAGE,
-        message: data.message
+        message: message
       };
+
+      var tmpl = _.template($('#message-item-tmpl').html());
+      $('.messages ul').append(tmpl({
+        is_sender: true,
+        picture: message.sender.picture,
+        message: message.message
+      }));
+
+      SkltChat.scrollMessage();
 
       SkltChat.webSocketChat.emitMessage(msg);
     }
@@ -363,7 +391,20 @@ var ChatEvents = {
 
   onReceiveMessage: function(data) {
     if (ChatEvents.isTokenValid(data.token)) {
+      var message = data.message;
 
+      var active_contact_id = $('#contacts .contact.active').data('id');
+
+      if (active_contact_id == message.sender.id) {
+        var tmpl = _.template($('#message-item-tmpl').html());
+        $('.messages ul').append(tmpl({
+          is_sender: false,
+          picture: message.receiver.picture,
+          message: message.message
+        }));
+
+        SkltChat.scrollMessage();
+      }
     }
   },
 

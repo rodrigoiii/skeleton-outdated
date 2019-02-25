@@ -163,6 +163,13 @@
         </li>
     </script>
 
+    <script type="text/template" id="message-item-tmpl">
+        <li class="<%= is_sender ? 'sent' : 'replies' %>">
+            <img src="<%= picture %>" alt="" />
+            <p><%= message %></p>
+        </li>
+    </script>
+
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/node_modules/bootbox/bootbox.js"></script>
     <script type="text/javascript" src="/js/sklt-chat/sklt-chat.js"></script>
