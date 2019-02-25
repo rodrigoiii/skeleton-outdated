@@ -3,6 +3,7 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use SkeletonChatApp\Models\User;
 
 class Message extends Model
 {
@@ -24,14 +25,12 @@ class Message extends Model
     /**
      * Conversation of two users
      *
-     * @param  array [0 => [$sender_id, $receiver_id]]
+     * @param  int $sender_id
+     * @param  int $sender_id
      * @return collection
      */
-    public static function conversation()
+    public static function conversation($sender_id=null, $receiver_id=null)
     {
-        $args = func_get_args();
-        list($sender_id, $receiver_id) = $args[0];
-
         return static::where('sender_id', $sender_id)
                 ->where('receiver_id', $receiver_id)
                 ->orWhere('sender_id', $receiver_id)

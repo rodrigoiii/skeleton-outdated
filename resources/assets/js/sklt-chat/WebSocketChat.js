@@ -202,6 +202,7 @@ function WebSocketChat(EventObject, host, port, login_token) {
 WebSocketChat.ON_CONNECTION_ESTABLISH = "onConnectionEstablish";
 WebSocketChat.ON_DISCONNECT = "onDisconnect";
 WebSocketChat.ON_SEND_MESSAGE = "onSendMessage";
+WebSocketChat.ON_RECEIVE_MESSAGE = "onReceiveMessage";
 WebSocketChat.ON_TYPING = "onTyping";
 WebSocketChat.ON_STOP_TYPING = "onStopTyping";
 WebSocketChat.ON_READ_MESSAGE = "onReadMessage";

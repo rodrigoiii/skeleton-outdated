@@ -16,12 +16,22 @@ class ChatController extends BaseController
         $auth_user = Auth::user();
         $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $initial_conversation = Message::conversation([$auth_user->id, $contacts->isNotEmpty() ? $contacts[0]->id : null])
-                                ->orderBy('id', "DESC")
+        $active_contact = null;
+        if ($contacts->isNotEmpty())
+        {
+            $active_contact = $contacts->first();
+            $conversation = Message::conversation($auth_user->id, $active_contact->id);
+        }
+        else
+        {
+            $conversation = Message::conversation($auth_user->id);
+        }
+
+        $initial_conversation = $conversation->orderBy('id', "DESC")
                                 ->limit(config('sklt-chat.default_conversation_length'))
                                 ->get()
                                 ->sortBy('id');
 
-        return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts', 'initial_conversation'));
+        return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts', 'active_contact', 'initial_conversation'));
     }
 }

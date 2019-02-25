@@ -253,6 +253,11 @@ var ChatEvents = {
   load_more_increment: 0,
   is_initial_typing: true,
 
+  // check if token is valid
+  isTokenValid: function(token) {
+    return sklt_chat.login_token === token;
+  },
+
   /**
    * Event Listener
    */
@@ -287,6 +292,14 @@ var ChatEvents = {
   },
 
   onSendMessage: function(data) {
+    if (ChatEvents.isTokenValid(data.token)) {
+      var msg = {
+        event: WebSocketChat.ON_RECEIVE_MESSAGE,
+        message: data.message
+      };
+
+      SkltChat.webSocketChat.emitMessage(msg);
+    }
     // var sent_tmpl = _.template($('#message-sent-tmpl').html());
     // var replied_tmpl = _.template($('#message-replied-tmpl').html());
     // var message;
@@ -321,6 +334,12 @@ var ChatEvents = {
     //     Chat.scrollDown();
     //   }
     // }
+  },
+
+  onReceiveMessage: function(data) {
+    if (ChatEvents.isTokenValid(data.token)) {
+
+    }
   },
 
   onTyping: function(data) {

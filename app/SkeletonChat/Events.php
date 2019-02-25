@@ -16,7 +16,7 @@ class Events
         $this->clients = [];
     }
 
-    public function onConnectionEstablish(ConnectionInterface $from, $data)
+    public function onConnectionEstablish(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
         $auth_user = User::findByLoginToken($params['login_token']);
@@ -39,7 +39,7 @@ class Events
         }
     }
 
-    public function onDisconnect(ConnectionInterface $from, $data)
+    public function onDisconnect(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
         $auth_user = User::findByLoginToken($params['login_token']);
@@ -62,15 +62,15 @@ class Events
         }
     }
 
-    public function onSendMessage(ConnectionInterface $from, $data)
+    public function onSendMessage(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $user_sender = User::findByLoginToken($params['login_token']);
-        $user_receiver = User::find($data->receiver_id);
+        $user_receiver = User::find($msg->receiver_id);
 
         $sent_message = $user_sender->sendMessage(new Message([
-            'message' => $data->message,
+            'message' => $msg->message,
             'receiver_id' => $user_receiver->id
         ]));
 
@@ -81,61 +81,73 @@ class Events
             // self
             $return_data['event'] = __FUNCTION__;
             $return_data['message'] = $message['data'];
+            $return_data['token'] = $user_sender->login_token;
 
             $from->send(json_encode($return_data));
-
-            // if receiver online
-            if (isset($this->clients[$user_receiver->id]))
-            {
-                $receiver = $this->clients[$user_receiver->id];
-                $return_data['number_unread'] = $user_receiver->numberOfUnread($user_sender->id);
-
-                $receiver->send(json_encode($return_data));
-            }
         }
     }
 
-    public function onTyping(ConnectionInterface $from, $data)
+    public function onReceiveMessage(ConnectionInterface $from, $msg)
+    {
+        $message = $msg->message;
+        $user_sender = User::find($message->sender->id);
+        $user_receiver = User::find($message->receiver->id);
+
+        // if receiver online
+        if (isset($this->clients[$user_receiver->id]))
+        {
+            $receiver = $this->clients[$user_receiver->id];
+
+            $return_data['event'] = __FUNCTION__;
+            $return_data['message'] = $message;
+            $return_data['number_unread'] = $user_receiver->numberOfUnread($user_sender->id);
+            $return_data['token'] = $user_receiver->login_token;
+
+            $receiver->send(json_encode($return_data));
+        }
+    }
+
+    public function onTyping(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
 
         // mark unread as read
-        $data->sender_id = $data->receiver_id;
-        $this->onReadMessage($from, $data);
+        $msg->sender_id = $msg->receiver_id;
+        $this->onReadMessage($from, $msg);
 
         // if receiver online
-        if (isset($this->clients[$data->receiver_id]))
+        if (isset($this->clients[$msg->receiver_id]))
         {
             $return_data = [
                 'event' => __FUNCTION__,
                 'sender_id' => $auth_user->id
             ];
 
-            $receiver = $this->clients[$data->receiver_id];
+            $receiver = $this->clients[$msg->receiver_id];
             $receiver->send(json_encode($return_data));
         }
     }
 
-    public function onStopTyping(ConnectionInterface $from, $data)
+    public function onStopTyping(ConnectionInterface $from, $msg)
     {
         // if receiver online
-        if (isset($this->clients[$data->receiver_id]))
+        if (isset($this->clients[$msg->receiver_id]))
         {
             $return_data['event'] = __FUNCTION__;
 
-            $receiver = $this->clients[$data->receiver_id];
+            $receiver = $this->clients[$msg->receiver_id];
             $receiver->send(json_encode($return_data));
         }
     }
 
-    public function onReadMessage(ConnectionInterface $from, $data)
+    public function onReadMessage(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $receiver = User::findByLoginToken($params['login_token']);
-        $sender_id = $data->sender_id;
+        $sender_id = $msg->sender_id;
 
         $is_marked = Message::markAsRead($sender_id, $receiver->id);
         if (!is_null($is_marked))
@@ -147,14 +159,14 @@ class Events
         }
     }
 
-    public function onFetchMessages(ConnectionInterface $from, $data)
+    public function onFetchMessages(ConnectionInterface $from, $msg)
     {
-        $this->onReadMessage($from, $data);
+        $this->onReadMessage($from, $msg);
 
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
-        $sender_id = $data->sender_id;
+        $sender_id = $msg->sender_id;
 
         $conversation = Message::conversation([$sender_id, $auth_user->id])
                             ->with(['sender', 'receiver'])
@@ -169,15 +181,15 @@ class Events
         $from->send(json_encode($return_data));
     }
 
-    public function onLoadMoreMessages(ConnectionInterface $from, $data)
+    public function onLoadMoreMessages(ConnectionInterface $from, $msg)
     {
-        $this->onReadMessage($from, $data);
+        $this->onReadMessage($from, $msg);
 
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
-        $sender_id = $data->sender_id;
-        $load_more_increment = $data->load_more_increment;
+        $sender_id = $msg->sender_id;
+        $load_more_increment = $msg->load_more_increment;
 
         $default_conversation_length = config('sklt-chat.default_conversation_length');
 

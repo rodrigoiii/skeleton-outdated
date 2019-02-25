@@ -34,11 +34,11 @@ class Chat extends Events implements MessageComponentInterface {
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
-        $data = json_decode($msg);
-        $event = $data->event;
-        unset($data->event);
+        $msg = json_decode($msg);
+        $event = $msg->event;
+        unset($msg->event);
 
-        $this->{$event}($from, $data);
+        $this->{$event}($from, $msg);
     }
 
     public function onClose(ConnectionInterface $conn) {
