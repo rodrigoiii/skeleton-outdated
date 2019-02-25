@@ -21,7 +21,8 @@ module.exports = {
       "auth/reset-password",
       "auth/jquery-validation/add-methods",
 
-      "sklt-chat/sklt-chat"
+      "sklt-chat/chat",
+      "sklt-chat/emitter-receiver"
     ],
     dest: "public/js",
     options: {
