@@ -105,7 +105,7 @@ class Emitter
             $return_data = [
                 'event' => __FUNCTION__,
                 'message' => $message,
-                'number_unread' => $receiver->numberOfUnread($sender->id),
+                'unread_number' => $receiver->numberOfUnread($sender->id),
                 'token' => $receiver->login_token
             ];
 

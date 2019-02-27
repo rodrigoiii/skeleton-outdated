@@ -182,6 +182,7 @@ var Receiver = {
   onReceiveMessage: function(data) {
     if (Helper.isTokenValid(data.token)) {
       var message = data.message;
+      var unread_number = data.unread_number;
 
       var active_contact_id = $('#contacts .contact.active').data('id');
 
@@ -202,6 +203,7 @@ var Receiver = {
         }));
 
         var contact_el = $('#contacts .contact[data-id="'+message.sender.id+'"]');
+        $('.meta .name .unread-number', contact_el).text("(" + unread_number + ")");
         $('.meta .preview', contact_el).text(message.message);
 
         Helper.scrollMessage();

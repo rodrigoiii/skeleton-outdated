@@ -48,9 +48,11 @@
                                         <p class="name">
                                             {{ contact.getFullName() }}
 
-                                            {% if authUserChat.numberOfUnread(contact.id) > 0 %}
-                                                ({{ authUserChat.numberOfUnread(contact.id) }})
-                                            {% endif %}
+                                            <b class="unread-number">
+                                                {% if authUserChat.numberOfUnread(contact.id) > 0 %}
+                                                    ({{ authUserChat.numberOfUnread(contact.id) }})
+                                                {% endif %}
+                                            </b>
                                         </p>
                                         <p class="preview">{{ contact.conversation(auth_user.id).get().last().message }}</p>
                                     </div>
