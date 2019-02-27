@@ -156,6 +156,14 @@ var Receiver = {
         message: message
       };
 
+      if ($('.messages ul').length === 0) {
+        $('.messages').html('<ul></ul>');
+      }
+
+      if ($('.messages').hasClass('no-message')) {
+        $('.messages').removeClass('no-message');
+      }
+
       var tmpl = _.template($('#message-item-tmpl').html());
       $('.messages ul').append(tmpl({
         is_sender: true,
@@ -178,6 +186,14 @@ var Receiver = {
       var active_contact_id = $('#contacts .contact.active').data('id');
 
       if (active_contact_id == message.sender.id) {
+        if ($('.messages ul').length === 0) {
+          $('.messages').html('<ul></ul>');
+        }
+
+        if ($('.messages').hasClass('no-message')) {
+          $('.messages').removeClass('no-message');
+        }
+
         var tmpl = _.template($('#message-item-tmpl').html());
         $('.messages ul').append(tmpl({
           is_sender: false,

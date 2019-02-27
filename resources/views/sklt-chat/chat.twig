@@ -75,16 +75,22 @@
                     <i class="fa fa-instagram" aria-hidden="true"></i>
                 </div>
             </div>
-            <div class="messages">
-                <ul>
-                    {% for message in initial_conversation %}
-                        <li class="{{ message.sender.id == auth_user.id ? "sent" : "replies" }}">
-                            <img src="{{ message.sender.picture }}" alt="" />
-                            <p>{{ message.message }}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% if initial_conversation.isNotEmpty() %}
+                <div class="messages">
+                    <ul>
+                        {% for message in initial_conversation %}
+                            <li class="{{ message.sender.id == auth_user.id ? "sent" : "replies" }}">
+                                <img src="{{ message.sender.picture }}" alt="" />
+                                <p>{{ message.message }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div class="messages no-message">
+                    <p>No conversation yet</p>
+                </div>
+            {% endif %}
             <div class="message-input">
                 <div class="wrap">
                     <input type="text" name="message" placeholder="Write your message..." />
