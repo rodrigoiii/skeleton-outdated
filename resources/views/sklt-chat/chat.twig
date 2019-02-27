@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/css/sklt-chat.css" />
 </head>
 <body>
+    {% set authUserChat = call_user_func_array(["SkeletonChatApp\\Models\\User", "find"], [auth_user.id]) %}
+
     <div id="frame">
         <div id="sidepanel">
             <div id="profile">
@@ -43,7 +45,13 @@
                                     <span class="contact-status online"></span>
                                     <img src="{{ contact.picture }}" alt="" />
                                     <div class="meta">
-                                        <p class="name">{{ contact.getFullName() }}</p>
+                                        <p class="name">
+                                            {{ contact.getFullName() }}
+
+                                            {% if authUserChat.numberOfUnread(contact.id) > 0 %}
+                                                ({{ authUserChat.numberOfUnread(contact.id) }})
+                                            {% endif %}
+                                        </p>
                                         <p class="preview">{{ contact.conversation(auth_user.id).get().last().message }}</p>
                                     </div>
                                 </div>
