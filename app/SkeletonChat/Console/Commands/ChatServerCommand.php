@@ -17,7 +17,7 @@ class ChatServerCommand extends BaseCommand
      *
      * @var string
      */
-    private $signature = "serve:chat {--host= : Chat host name} {--port= : Chat port}";
+    private $signature = "serve:chat";
 
     /**
      * The command description.
@@ -43,8 +43,10 @@ class ChatServerCommand extends BaseCommand
      */
     public function handle(Input $input, Output $output)
     {
-        $host = !is_null($input->getOption('host')) ? $input->getOption('host') : config('sklt-chat.host');
-        $port = !is_null($input->getOption('port')) ? $input->getOption('port') : config('sklt-chat.port');
+        $config = config('sklt-chat');
+
+        $host = $config['host'];
+        $port = $config['port'];
 
         $server = IoServer::factory(
             new HttpServer(
@@ -55,6 +57,8 @@ class ChatServerCommand extends BaseCommand
             $port,
             $host
         );
+
+        $output->writeln("Listening ...");
 
         $server->run();
     }

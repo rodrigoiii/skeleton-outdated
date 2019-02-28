@@ -62,6 +62,13 @@ class User extends Model
         return $is_sent ? $message : false;
     }
 
+    public function markUnreadMessageAsRead($sender_id)
+    {
+        return $this->received_messages()
+            ->where('sender_id', $sender_id)
+            ->update(['is_read' => 1]);
+    }
+
     public static function contactsOrderByOnlineStatus($auth_id)
     {
         return static::select(\DB::raw("users.*, chat_statuses.status"))

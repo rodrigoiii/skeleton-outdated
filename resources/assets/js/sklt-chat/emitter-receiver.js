@@ -35,32 +35,9 @@ var Emitter = {
 
       Emitter.webSocketChat.emitMessage({
         event: WebSocketChat.ON_TYPING,
-        receiver_id: Helper.getActiveContactId()
+        chatting_to_id: Helper.getActiveContactId()
       });
     }
-
-    // var receiver_id = $('#contacts .contact.active').data('id');
-    //     var key_code = e.which;
-    //     var data = { receiver_id: receiver_id };
-
-    //     // initial typing
-    //     if (ChatEvents.is_initial_typing) {
-    //       ChatEvents.is_initial_typing = false;
-
-    //       ChatEvents.send($.extend({ event: ChatEvents.ON_TYPING }, data));
-    //     }
-
-    //     // when stop typing
-    //     clearTimeout(ChatEvents.typing_delay);
-    //     ChatEvents.typing_delay = _.delay(function() {
-    //       ChatEvents.is_initial_typing = true;
-
-    //       ChatEvents.send($.extend({ event: ChatEvents.ON_STOP_TYPING }, data));
-    //     }, ChatEvents.typing_delay_time);
-
-    //     if (key_code === 13) { // hit enter
-    //       Chat.send();
-    //     }
   },
 
   onStopTyping: function() {
@@ -68,7 +45,7 @@ var Emitter = {
 
     Emitter.webSocketChat.emitMessage({
       event: WebSocketChat.ON_STOP_TYPING,
-      receiver_id: Helper.getActiveContactId()
+      chatting_to_id: Helper.getActiveContactId()
     });
   },
 
@@ -84,7 +61,7 @@ var Emitter = {
 
       var msg = {
         event: WebSocketChat.ON_SEND_MESSAGE,
-        receiver_id: Helper.getActiveContactId(),
+        chatting_to_id: Helper.getActiveContactId(),
         message: message
       };
 
@@ -93,6 +70,13 @@ var Emitter = {
     } else {
       $('.message-input :input[name="message"]').val("");
     }
+  },
+
+  onReadMessage: function() {
+    Emitter.webSocketChat.emitMessage({
+      event: WebSocketChat.ON_READ_MESSAGE,
+      chatting_to_id: Helper.getActiveContactId()
+    });
   },
 
   onHitEnter: function(e) {
@@ -215,32 +199,31 @@ var Receiver = {
     if (Helper.isTokenValid(data.token)) {
       var active_contact_id = $('#contacts .contact.active').data('id');
 
-      if (active_contact_id == data.sender_id) {
+      if (active_contact_id == data.chatting_from_id) {
         var tmpl = _.template($('#typing-tmpl').html());
         $('.messages ul').append(tmpl());
 
         Helper.scrollMessage();
       }
 
-      $('#contacts .contact[data-id="'+data.sender_id+'"] .meta .preview').text("...");
+      $('#contacts .contact[data-id="'+data.chatting_from_id+'"] .meta .preview').text("...");
     }
-
-    // if ($('#contacts .contact.active').data('id') == data.sender_id && $('.messages ul li.typing').length === 0) {
-    //   $('.messages ul').append(typing_tmpl());
-    //   Chat.scrollDown();
-    // }
   },
 
   onStopTyping: function(data) {
-    $('.messages ul li.typing').remove();
+    if (Helper.isTokenValid(data.token)) {
+      $('.messages ul li.typing').remove();
 
-    var last_message = $('.messages li:last-child p').text();
-    $('#contacts .contact[data-id="'+data.sender_id+'"] .meta .preview').text(last_message);
+      var last_message = $('.messages li:last-child p').text();
+      $('#contacts .contact[data-id="'+data.chatting_from_id+'"] .meta .preview').text(last_message);
+    }
   },
 
   onReadMessage: function(data) {
-    // var sender_id = data.sender_id;
-    // $('.contact[data-id="' + sender_id + '"] .badge').text("0");
+    if (Helper.isTokenValid(data.token)) {
+      var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
+      $('.meta .name .unread-number', contact_el).text("");
+    }
   },
 
   onFetchMessages: function(data) {

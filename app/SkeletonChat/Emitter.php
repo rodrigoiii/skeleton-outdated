@@ -70,23 +70,23 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $sender = User::findByLoginToken($params['login_token']);
-        $receiver = User::find($msg->receiver_id);
+        $chattingFrom = User::findByLoginToken($params['login_token']);
+        $chattingTo = User::find($msg->chatting_to_id);
 
-        $sent_message = $sender->sendMessage(new Message([
+        $sentMessage = $chattingFrom->sendMessage(new Message([
             'message' => $msg->message,
-            'receiver_id' => $receiver->id
+            'receiver_id' => $chattingTo->id
         ]));
 
-        if ($sent_message)
+        if ($sentMessage)
         {
-            $message = sklt_transformer($sent_message, new SendMessageTransformer)->toArray();
+            $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
 
             // self
             $return_data = [
                 'event' => __FUNCTION__,
                 'message' => $message['data'],
-                'token' => $sender->login_token
+                'token' => $chattingFrom->login_token
             ];
 
             $from->send(json_encode($return_data));
@@ -119,24 +119,20 @@ class Emitter
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
-        $receiver = User::find($msg->receiver_id);
+        $chattingTo = User::find($msg->chatting_to_id);
 
-        // // mark unread as read
-        // $msg->sender_id = $msg->receiver_id;
-        // $this->onReadMessage($from, $msg);
-
-        // if receiver online
-        if (isset($this->clients[$msg->receiver_id]))
+        // if chatting to is online
+        if (isset($this->clients[$msg->chatting_to_id]))
         {
             $return_data = [
                 'event' => __FUNCTION__,
-                'sender_id' => $auth_user->id,
-                'receiver_id' => $msg->receiver_id,
-                'token' => $receiver->login_token
+                'chatting_from_id' => $auth_user->id,
+                'chatting_to_id' => $msg->chatting_to_id,
+                'token' => $chattingTo->login_token
             ];
 
-            $receiverSocket = $this->clients[$msg->receiver_id];
-            $receiverSocket->send(json_encode($return_data));
+            $chattingToSocket = $this->clients[$msg->chatting_to_id];
+            $chattingToSocket->send(json_encode($return_data));
         }
     }
 
@@ -145,17 +141,19 @@ class Emitter
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
+        $chattingTo = User::find($msg->chatting_to_id);
 
-        // if receiver online
-        if (isset($this->clients[$msg->receiver_id]))
+        // if chatting to is online
+        if (isset($this->clients[$msg->chatting_to_id]))
         {
             $return_data['event'] = __FUNCTION__;
             $return_data = [
                 'event' => __FUNCTION__,
-                'sender_id' => $auth_user->id
+                'chatting_from_id' => $auth_user->id,
+                'token' => $chattingTo->login_token
             ];
 
-            $receiverSocket = $this->clients[$msg->receiver_id];
+            $receiverSocket = $this->clients[$msg->chatting_to_id];
             $receiverSocket->send(json_encode($return_data));
         }
     }
@@ -164,15 +162,19 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $receiver = User::findByLoginToken($params['login_token']);
-        $sender_id = $msg->sender_id;
+        $auth_user = User::findByLoginToken($params['login_token']);
 
-        $is_marked = Message::markAsRead($sender_id, $receiver->id);
-        if (!is_null($is_marked))
+        $is_read = $auth_user->markUnreadMessageAsRead($msg->chatting_to_id);
+
+        // $receiver = User::findByLoginToken($params['login_token']);
+
+        // $is_marked = Message::markAsRead($sender_id, $receiver->id);
+
+        if (!is_null($is_read))
         {
             $return_data = [
                 'event' => __FUNCTION__,
-                'sender_id' => $sender_id
+                'chatting_to_id' => $msg->chatting_to_id
             ];
 
             $from->send(json_encode($return_data));
