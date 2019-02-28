@@ -20,6 +20,13 @@ var Emitter = {
     $('.message-input :input[name="message"]').on('keyup', Emitter.onTyping);
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Emitter.onStopTyping, 1500));
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
+    $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
+
+    _.delay(function() {
+      if ($('#contacts .contact').length > 0) {
+        $('#contacts .contact:first').click();
+      }
+    }, 100);
   },
 
   onTyping: function(e) {
@@ -73,9 +80,10 @@ var Emitter = {
   },
 
   onReadMessage: function() {
+    var user_id = $(this).data('id');
     Emitter.webSocketChat.emitMessage({
       event: WebSocketChat.ON_READ_MESSAGE,
-      chatting_to_id: Helper.getActiveContactId()
+      chatting_to_id: user_id
     });
   },
 
@@ -94,6 +102,8 @@ var Emitter = {
     });
   },
 };
+
+window.Emitter = Emitter;
 
 var Receiver = {
   typing_delay: "",
@@ -156,7 +166,7 @@ var Receiver = {
       }));
       Helper.scrollMessage();
 
-      var contact_el = $('#contacts .contact[data-id="'+message.receiver.id+'"]');
+      var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
       $('.meta .preview', contact_el).text(message.message);
 
       Emitter.webSocketChat.emitMessage(msg);
@@ -223,6 +233,23 @@ var Receiver = {
     if (Helper.isTokenValid(data.token)) {
       var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
       $('.meta .name .unread-number', contact_el).text("");
+
+      if (data.conversation.length > 0) {
+        if ($('.messages').hasClass("no-message")) {
+          $('.messages').removeClass("no-message");
+        }
+
+        var tmpl = _.template($('#messages-item-tmpl').html());
+        $('.messages').html(tmpl({conversation: data.conversation}));
+
+        Helper.scrollMessage();
+      } else {
+        if (!$('.messages').hasClass("no-message")) {
+          $('.messages').addClass("no-message");
+        }
+
+        $('.messages').html('<p>No conversation yet</p>');
+      }
     }
   },
 

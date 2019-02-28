@@ -136,7 +136,7 @@ var Chat = {
     $('#contacts').on('click', ".contact", Chat.onChangeActiveContact);
     $(window).on('beforeunload', Chat.onUnloadWindow);
 
-    Chat.scrollMessage();
+    // Chat.scrollMessage();
   },
 
   scrollMessage: function() {
@@ -203,10 +203,18 @@ var Chat = {
 
   onChangeActiveContact: function() {
     var user_id = $(this).data('id');
+    var user_picture = $(this).data('picture');
+    var user_fullname = $(this).data('fullname');
+
     $('.contact-profile').data('id', user_id);
 
     $('#contacts .contact').removeClass("active");
     $(this).addClass("active");
+
+    var tmpl = '<img src="'+user_picture+'" alt="" />';
+      tmpl += '<p>'+user_fullname+'</p>';
+
+    $('.contact-profile .image-fullname').html(tmpl);
   }
 };
 

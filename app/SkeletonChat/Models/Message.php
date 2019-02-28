@@ -36,27 +36,4 @@ class Message extends Model
                 ->orWhere('sender_id', $receiver_id)
                 ->where('receiver_id', $sender_id);
     }
-
-    public static function sendMessage($message, $sender_id, $receiver_id)
-    {
-        return static::create([
-            'message' => $message,
-            'sender_id' => $sender_id,
-            'receiver_id' => $receiver_id
-        ]);
-    }
-
-    public static function markAsRead($sender_id, $receiver_id)
-    {
-        return static::where('sender_id', $sender_id)
-                    ->where('receiver_id', $receiver_id)
-                    ->update(['is_read' => 1]);
-    }
-
-    public static function messageWithSenderAndReceiver($id)
-    {
-        return static::with(['sender', 'receiver'])
-                    ->where('id', $id)
-                    ->first();
-    }
 }

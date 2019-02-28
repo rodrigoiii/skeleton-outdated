@@ -40,10 +40,14 @@
                 <ul>
                     {% if contacts.isNotEmpty() %}
                         {% for index, contact in contacts %}
-                            <li class="contact {{ active_contact.id == contact.id ? 'active' }}" data-id="{{ contact.id }}">
+                            <li class="contact"
+                                data-id="{{ contact.id }}"
+                                data-picture="{{ contact.picture }}"
+                                data-fullname="{{ contact.getFullName() }}"
+                                >
                                 <div class="wrap">
                                     <span class="contact-status online"></span>
-                                    <img src="{{ contact.picture }}" alt="" />
+                                    <img class="picture" src="{{ contact.picture }}" alt="" />
                                     <div class="meta">
                                         <p class="name">
                                             {{ contact.getFullName() }}
@@ -74,33 +78,21 @@
             </div>
         </div>
         <div class="content">
-            <div class="contact-profile" data-id="{{ active_contact is not null ? active_contact.id }}">
-                {% if active_contact is not null %}
-                    <img src="{{ active_contact.picture }}" alt="" />
-                    <p>{{ active_contact.getFullName() }}</p>
-                {% endif %}
+            <div class="contact-profile">
+                <div class="image-fullname">
+                    <!-- to be load of js -->
+                </div>
                 <div class="social-media">
                     <i class="fa fa-facebook" aria-hidden="true"></i>
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                     <i class="fa fa-instagram" aria-hidden="true"></i>
                 </div>
             </div>
-            {% if initial_conversation.isNotEmpty() %}
-                <div class="messages">
-                    <ul>
-                        {% for message in initial_conversation %}
-                            <li class="{{ message.sender.id == auth_user.id ? "sent" : "replies" }}">
-                                <img src="{{ message.sender.picture }}" alt="" />
-                                <p>{{ message.message }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% else %}
-                <div class="messages no-message">
-                    <p>No conversation yet</p>
-                </div>
-            {% endif %}
+
+            <div class="messages">
+                <!-- to be load of js -->
+            </div>
+
             <div class="message-input">
                 <div class="wrap">
                     <input type="text" name="message" placeholder="Write your message..." />
@@ -124,6 +116,7 @@
         window.sklt_chat = {
             host: "{{ config('sklt-chat.host') }}",
             port: "{{ config('sklt-chat.port') }}",
+            auth_id: "{{ auth_user.id }}",
             login_token: "{{ auth_user.login_token }}"
         }
     </script>
@@ -177,6 +170,19 @@
                 </div>
             </div>
         </li>
+    </script>
+
+    <script type="text/template" id="messages-item-tmpl">
+        <% if (!_.isEmpty(conversation)) { %>
+            <ul>
+                <% _.each(conversation, function(convo) { %>
+                    <li class="<%= convo.sender.id == sklt_chat.auth_id ? 'sent' : 'replies' %>">
+                        <img src="<%= convo.sender.picture %>" alt="" />
+                        <p><%= convo.message %></p>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
     </script>
 
     <script type="text/template" id="message-item-tmpl">

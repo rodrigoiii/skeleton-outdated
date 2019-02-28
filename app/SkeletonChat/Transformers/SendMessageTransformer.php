@@ -25,12 +25,6 @@ class SendMessageTransformer extends TransformerAbstract
                 'picture' => $sender->picture,
                 'full_name' => $sender->getFullName(),
                 'sent_at' => $message->created_at
-            ],
-            'receiver' => [
-                'id' => $receiver->id,
-                'picture' => $receiver->picture,
-                'full_name' => $receiver->getFullName(),
-                'received_at' => $message->created_at
             ]
         ];
     }
