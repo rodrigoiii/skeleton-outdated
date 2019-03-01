@@ -98,7 +98,7 @@ class Emitter
     {
         $message = $msg->message;
         $sender = User::find($message->sender->id);
-        $receiver = User::find($message->receiver->id);
+        $receiver = User::find($msg->chatting_to_id);
 
         // if receiver online
         if (isset($this->clients[$receiver->id]))

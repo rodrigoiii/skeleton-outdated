@@ -24,6 +24,7 @@ var Emitter = {
 
     _.delay(function() {
       if ($('#contacts .contact').length > 0) {
+        // activate first contact
         $('#contacts .contact:first').click();
       }
     }, 100);
@@ -147,6 +148,7 @@ var Receiver = {
 
       var msg = {
         event: WebSocketChat.ON_RECEIVE_MESSAGE,
+        chatting_to_id: Helper.getActiveContactId(),
         message: message
       };
 
