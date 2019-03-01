@@ -133,14 +133,14 @@
         </div>
     </script>
 
-    <script type="text/template" id="adding-contact-request-tmpl">
+    <script type="text/template" id="contact-request-tmpl">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
 
-                <% if (!_.isEmpty(pending_requests)) { %>
+                <% if (!_.isEmpty(user_requests)) { %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Pending Request</h1>
+                            <h1 class="panel-title">My Request</h1>
                         </div>
                         <table class="table table-hover table-condensed table-striped table-bordered">
                             <thead>
@@ -151,7 +151,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% _.each(pending_requests, function(request) { %>
+                                <% _.each(user_requests, function(request) { %>
                                     <tr>
                                         <td>
                                             <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
@@ -172,10 +172,10 @@
                     </div>
                 <% } %>
 
-                <% if (!_.isEmpty(contacts_pending_requests)) { %>
+                <% if (!_.isEmpty(contact_requests)) { %>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Contacts Pending Request</h1>
+                            <h1 class="panel-title">Contacts Request</h1>
                         </div>
                         <table class="table table-hover table-condensed table-striped table-bordered">
                             <thead>
@@ -186,7 +186,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% _.each(contacts_pending_requests, function(request) { %>
+                                <% _.each(contact_requests, function(request) { %>
                                     <tr>
                                         <td>
                                             <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />

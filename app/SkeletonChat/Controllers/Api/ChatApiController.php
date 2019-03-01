@@ -19,13 +19,14 @@ class ChatApiController extends BaseController
 
         $keyword = $request->getParam('keyword');
 
-        $exclude_contacts = $user->contacts->pluck('contact_id')->toArray();
+        $office_contact_ids = $user->officialContacts->pluck('contact_id')->toArray();
+        $user_requests_ids = $user->userRequests->pluck('contact_id')->toArray();
 
-        array_push($exclude_contacts, $user->id);
+        $ignore_user_ids = array_flatten([$office_contact_ids, $user_requests_ids, $user->id]);
 
         $results = User::search($keyword)
                     ->select(\DB::raw("id, picture, first_name, last_name"))
-                    ->whereNotIn('id', $exclude_contacts)->get();
+                    ->whereNotIn('id', $ignore_user_ids)->get();
 
         return $response->withJson([
             'success' => true,
@@ -38,13 +39,13 @@ class ChatApiController extends BaseController
         $login_token = $request->getParam('login_token');
         $user = User::findByLoginToken($login_token);
 
-        $user_pending_requests = sklt_transformer($user->pendingRequests()->get(), new PendingRequestTransformer)->toArray();
-        $contacts_pending_requests = sklt_transformer($user->contactsPendingRequests()->get(), new ContactsPendingRequestTransformer)->toArray();
+        $user_requests = sklt_transformer($user->userRequests()->get(), new PendingRequestTransformer)->toArray();
+        $contact_requests = sklt_transformer($user->contactRequests()->get(), new ContactsPendingRequestTransformer)->toArray();
 
         return $response->withJson([
             'success' => true,
-            'user_pending_requests' => $user_pending_requests['data'],
-            'contacts_pending_requests' => $contacts_pending_requests['data']
+            'user_requests' => $user_requests['data'],
+            'contact_requests' => $contact_requests['data']
         ]);
     }
 
@@ -53,25 +54,33 @@ class ChatApiController extends BaseController
         $login_token = $request->getParam('login_token');
         $user = User::findByLoginToken($login_token);
 
-        $is_saved = $user->addContact($contact_id);
+        $contact_type = $user->addContact($contact_id);
 
-        // $user_contact = User::find($contact_id);
-        // $user_contact->addContact($user->id);
+        switch ($contact_type) {
+            case Contact::TYPE_ACCEPTED:
+                $data = [
+                    'success' => true,
+                    'message' => "Successfully add contact.",
+                    'type' => Contact::TYPE_ACCEPTED
+                ];
+                break;
 
-        // $contact = Contact::create([
-        //     'contact_id' => $contact_id,
-        //     'user_id' => $user->id
-        // ]);
+            case Contact::TYPE_REQUESTED:
+                $data = [
+                    'success' => true,
+                    'message' => "Successfully send request.",
+                    'type' => Contact::TYPE_REQUESTED
+                ];
+                break;
 
-        return $response->withJson($is_saved ?
-            [
-                'success' => true,
-                'message' => "Successfully add contact."
-            ] :
-            [
-                'success' => false,
-                'message' => "Cannot add contact this time. Please try again later."
-            ]
-        );
+            default:
+                $data = [
+                    'success' => false,
+                    'message' => "Cannot add contact this time. Please try again later."
+                ];
+                break;
+        }
+
+        return $response->withJson($data);
     }
 }

@@ -9,7 +9,10 @@ class Contact extends Model
     protected $fillable = ["contact_id", "user_id", "is_accepted"];
 
     const IS_ACCEPTED = 1;
-    const IS_NOT_ACCEPTED = 0;
+    const IS_NOT_YET_ACCEPTED = 0;
+
+    const TYPE_ACCEPTED = "accepted";
+    const TYPE_REQUESTED = "requested";
 
     public function user()
     {
@@ -21,9 +24,14 @@ class Contact extends Model
         return $this->belongsTo("SkeletonChatApp\Models\User", "contact_id");
     }
 
-    public function scopeTypeIsAccepted($query, $is_accepted)
+    public function scopeAccepted($query)
     {
-        return $query->where('is_accepted', $is_accepted);
+        return $query->where('is_accepted', static::IS_ACCEPTED);
+    }
+
+    public function scopeNotYetAccepted($query)
+    {
+        return $query->where('is_accepted', static::IS_NOT_YET_ACCEPTED);
     }
 
     public function accepted()

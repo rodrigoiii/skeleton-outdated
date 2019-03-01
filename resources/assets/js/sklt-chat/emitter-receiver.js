@@ -7,15 +7,21 @@
  */
 var _ = require("underscore");
 var WebSocketChat = require("./functions/WebSocketChat");
+var ChatApi = require("./functions/ChatApi");
 
 var Emitter = {
   webSocketChat: null,
+  chatApi: null,
 
   is_user_typing: false,
   load_more_counter: 0,
 
+  TYPE_ACCEPTED: "accepted",
+  TYPE_REQUESTED: "requested",
+
   init: function() {
     Emitter.webSocketChat = new WebSocketChat(Receiver, sklt_chat.host, sklt_chat.port, sklt_chat.login_token);
+    Emitter.chatApi = new ChatApi(sklt_chat.login_token);
 
     $('body').on('click', ".add-contact-modal .add-contact", Emitter.onAddContact);
 
@@ -27,7 +33,7 @@ var Emitter = {
     $('.messages').scroll(Emitter.onLoadMoreMessages);
 
     _.delay(function() {
-      if ($('#contacts .contact').length > 0) {
+      if ($('#contacts .contact.empty').length === 0) {
         // activate first contact
         $('#contacts .contact:first').click();
       }
@@ -41,27 +47,37 @@ var Emitter = {
     $(this).prop('disabled', true);
     $(this).button('loading');
 
-    // Chat.chatApi.addContact(contact_id, function(response) {
-    //   if (response.success) {
-    //     var tmpl = _.template($('#contact-item-tmpl').html());
-    //     var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+    Emitter.chatApi.addContact(contact_id, function(response) {
+      if (response.success) {
+        switch(response.type) {
+          case Emitter.TYPE_ACCEPTED:
+            console.log("accepted");
+            break;
 
-    //     var template = tmpl({
-    //       picture: $('.contact-picture', tr_el).attr('src'),
-    //       fullname: $('.contact-fullname', tr_el).text()
-    //     });
+          case Emitter.TYPE_REQUESTED:
+            console.log("requested");
+            break;
+        }
 
-    //     if (is_contacts_empty) {
-    //       $('#contacts ul').html(template);
-    //     } else {
-    //       $('#contacts ul').prepend(template);
-    //     }
+        // var tmpl = _.template($('#contact-item-tmpl').html());
+        // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
 
-    //     bootbox.hideAll();
-    //   } else {
-    //     console.log(response.message);
-    //   }
-    // });
+        // var template = tmpl({
+        //   picture: $('.contact-picture', tr_el).attr('src'),
+        //   fullname: $('.contact-fullname', tr_el).text()
+        // });
+
+        // if (is_contacts_empty) {
+        //   $('#contacts ul').html(template);
+        // } else {
+        //   $('#contacts ul').prepend(template);
+        // }
+
+        // bootbox.hideAll();
+      } else {
+        console.log(response.message);
+      }
+    });
   },
 
   onTyping: function(e) {

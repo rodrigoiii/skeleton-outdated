@@ -41,10 +41,14 @@ var Chat = {
   onSearchContact: function() {
     var tmpl = _.template($('#add-contact-tmpl').html());
 
-    bootbox.dialog({
+    var box = bootbox.dialog({
       title: "Add Contact",
-      className: "add-contact-modal",
-      message: tmpl()
+      message: tmpl(),
+      className: "add-contact-modal"
+    });
+
+    box.on("shown.bs.modal", function() {
+      $('.add-contact-modal :input[name="search_contact"]').focus();
     });
   },
 
@@ -83,14 +87,14 @@ var Chat = {
   showPendingRequest: function() {
     Chat.chatApi.getPendingRequest(function(response) {
       if (response.success) {
-        var tmpl = _.template($('#adding-contact-request-tmpl').html());
+        var tmpl = _.template($('#contact-request-tmpl').html());
 
         console.log(response);
         bootbox.dialog({
-          title: "Adding contact requests",
+          title: "Contact requests",
           message: tmpl({
-            pending_requests: response.user_pending_requests,
-            contacts_pending_requests: response.contacts_pending_requests
+            user_requests: response.user_requests,
+            contact_requests: response.contact_requests
           })
         });
       }

@@ -7,14 +7,24 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonAuthApp\Auth;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;
+use SkeletonChatApp\Transformers\OfficialContactsTransformer;
 use SkeletonCore\BaseController;
 
 class ChatController extends BaseController
 {
     public function index(Response $response)
     {
-        $auth_user = Auth::user();
-        $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
+        $user = User::find(Auth::user()->id);
+        // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
+
+        $contacts = $user->officialContacts()
+                        ->get();
+
+        $contacts = sklt_transformer($contacts, new OfficialContactsTransformer)->toArray();
+
+        // \Tracy\Debugger::$maxDepth = 10;
+        // dump($contacts);
+        // die;
 
         return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts'));
     }

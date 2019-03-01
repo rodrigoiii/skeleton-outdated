@@ -72,16 +72,14 @@ class User extends Model
 
     public function addContact($contact_id)
     {
-        $contact = static::find($contact_id);
-
-        $pending_request = $contact->pendingRequests()
-                                ->where('contact_id', $this->id)
+        $pending_request = $this->contactRequests()
+                                ->where('user_id', $contact_id)
                                 ->first();
 
         // if contact to be add has pending request
-        if ($pending_request->isNotEmpty())
+        if (!is_null($pending_request))
         {
-            $contact_added = $pending_request->accepted();
+            $result = $pending_request->accepted() ? Contact::TYPE_ACCEPTED : false;
         }
         else
         {
@@ -90,22 +88,25 @@ class User extends Model
                 'user_id' => $this->id
             ]);
 
-            $contact_added = $contact instanceof Contact;
+            $result = $contact instanceof Contact ? Contact::TYPE_REQUESTED : false;
         }
 
-        return $contact_added;
+        return $result;
     }
 
-    public function pendingRequests()
+    public function officialContacts()
     {
-        return $this->contacts()
-                    ->typeIsAccepted(Contact::IS_NOT_ACCEPTED);
+        return $this->contacts()->accepted();
     }
 
-    public function contactsPendingRequests()
+    public function userRequests()
     {
-        return Contact::where('contact_id', $this->id)
-                    ->where('is_accepted', Contact::IS_NOT_ACCEPTED);
+        return $this->contacts()->notYetAccepted();
+    }
+
+    public function contactRequests()
+    {
+        return Contact::where('contact_id', $this->id)->notYetAccepted();
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)
