@@ -192,27 +192,26 @@ class Emitter
 
     public function onLoadMoreMessages(ConnectionInterface $from, $msg)
     {
-        $this->onReadMessage($from, $msg);
-
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
         $auth_user = User::findByLoginToken($params['login_token']);
-        $sender_id = $msg->sender_id;
-        $load_more_increment = $msg->load_more_increment;
 
-        $default_conversation_length = config('sklt-chat.default_conversation_length');
+        $default_convo_length = config('sklt-chat.default_conversation_length');
 
-        $conversation = Message::conversation([$sender_id, $auth_user->id])
-                            ->with(['sender', 'receiver'])
+        $conversation = $auth_user->conversation($msg->chatting_to_id)
+                            ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                             ->orderBy('id', "DESC")
-                            ->offset($default_conversation_length * $load_more_increment)
-                            ->limit($default_conversation_length)
+                            ->offset($default_convo_length * $msg->load_more_counter)
+                            ->limit($default_convo_length)
                             ->get()
                             ->sortBy('id');
 
+        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+
         $return_data = [
             'event' => __FUNCTION__,
-            'conversation' => $conversation
+            'conversation' => $conversation['data'],
+            'token' => $auth_user->login_token
         ];
 
         $from->send(json_encode($return_data));

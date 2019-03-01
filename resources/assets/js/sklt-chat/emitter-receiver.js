@@ -12,6 +12,7 @@ var Emitter = {
   webSocketChat: null,
 
   is_user_typing: false,
+  load_more_counter: 0,
 
   init: function() {
     Emitter.webSocketChat = new WebSocketChat(Receiver, sklt_chat.host, sklt_chat.port, sklt_chat.login_token);
@@ -21,7 +22,7 @@ var Emitter = {
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Emitter.onStopTyping, 1500));
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
     $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
-    // $('.messages').scroll(Chat.onLoadMoreMessages);
+    $('.messages').scroll(Emitter.onLoadMoreMessages);
 
     _.delay(function() {
       if ($('#contacts .contact').length > 0) {
@@ -85,6 +86,7 @@ var Emitter = {
     var user_id = $(this).data('id');
 
     $('.messages').addClass("invisible");
+    Emitter.load_more_counter = 0;
 
     Emitter.webSocketChat.emitMessage({
       event: WebSocketChat.ON_READ_MESSAGE,
@@ -98,6 +100,26 @@ var Emitter = {
     if (e.which == ENTER_KEYCODE) {
       Emitter.onSendMessage();
       return false;
+    }
+  },
+
+  onLoadMoreMessages: function() {
+    if ($(this).scrollTop() === 0) {
+      // if messages not show all yet
+      if ($('ul li:first-child.no-more', $(this)).length === 0) {
+        // if still loading
+        if ($('ul li:first-child.load-more', $(this)).length === 0) {
+          Emitter.load_more_counter++;
+
+          $('ul', $(this)).prepend('<li class="load-more text-center">Loading...</li>');
+
+          Emitter.webSocketChat.emitMessage({
+            event: WebSocketChat.ON_LOAD_MORE_MESSAGES,
+            load_more_counter: Emitter.load_more_counter,
+            chatting_to_id: Helper.getActiveContactId()
+          });
+        }
+      }
     }
   }
 };
@@ -240,11 +262,7 @@ var Receiver = {
         }
 
         var tmpl = _.template($('#messages-item-tmpl').html());
-        $('.messages').html(tmpl({conversation: data.conversation}));
-
-        Helper.scrollMessage(function() {
-          $('.messages').removeClass("invisible");
-        });
+        $('.messages').html('<ul>'+tmpl({conversation: data.conversation})+'</ul>');
       } else {
         if (!$('.messages').hasClass("no-message")) {
           $('.messages').addClass("no-message");
@@ -252,24 +270,24 @@ var Receiver = {
 
         $('.messages').html('<p>No conversation yet</p>');
       }
+
+      Helper.scrollMessage(function() {
+        $('.messages').removeClass("invisible");
+      });
     }
   },
 
   onLoadMoreMessages: function(data) {
-    // var conversation = data.conversation;
+    if (Helper.isTokenValid(data.token)) {
+      $('.messages ul li:first-child.load-more').remove();
 
-    // if (Object.keys(conversation).length > 0) {
-    //   for (var i in conversation) {
-    //     var message = conversation[i],
-    //       tmpl_func = message.sender.id == chat.auth_id ?
-    //       _.template($('#message-sent-tmpl').html()) :
-    //       _.template($('#message-replied-tmpl').html());
+      var tmpl = _.template($('#messages-item-tmpl').html());
+      $('.messages ul').prepend(tmpl({conversation: data.conversation}));
 
-    //     $('.messages ul').prepend(tmpl_func({ 'message': message.message, 'picture': message.sender.picture }));
-    //   }
-    // } else {
-    //   Receiver.load_more_increment = -1;
-    // }
+      if (data.conversation.length === 0) {
+        $('.messages ul').prepend('<li class="no-more text-center">No more message.</li>');
+      }
+    }
   }
 };
 

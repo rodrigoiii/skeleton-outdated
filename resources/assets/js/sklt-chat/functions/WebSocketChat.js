@@ -25,7 +25,6 @@ WebSocketChat.ON_RECEIVE_MESSAGE = "onReceiveMessage";
 WebSocketChat.ON_TYPING = "onTyping";
 WebSocketChat.ON_STOP_TYPING = "onStopTyping";
 WebSocketChat.ON_READ_MESSAGE = "onReadMessage";
-WebSocketChat.ON_FETCH_MESSAGES = "onFetchMessages";
 WebSocketChat.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
 
 WebSocketChat.prototype = {

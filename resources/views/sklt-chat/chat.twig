@@ -174,14 +174,12 @@
 
     <script type="text/template" id="messages-item-tmpl">
         <% if (!_.isEmpty(conversation)) { %>
-            <ul>
-                <% _.each(conversation, function(convo) { %>
-                    <li class="<%= convo.sender.id == sklt_chat.auth_id ? 'sent' : 'replies' %>">
-                        <img src="<%= convo.sender.picture %>" alt="" />
-                        <p><%= convo.message %></p>
-                    </li>
-                <% }); %>
-            </ul>
+            <% _.each(conversation, function(convo) { %>
+                <li class="<%= convo.sender.id == sklt_chat.auth_id ? 'sent' : 'replies' %>">
+                    <img src="<%= convo.sender.picture %>" alt="" />
+                    <p><%= convo.message %></p>
+                </li>
+            <% }); %>
         <% } %>
     </script>
 
