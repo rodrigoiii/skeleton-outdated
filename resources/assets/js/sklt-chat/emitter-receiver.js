@@ -43,6 +43,16 @@ var Emitter = {
     if (!Emitter.is_user_typing) {
       Emitter.is_user_typing = true;
 
+      var has_unread_message = $('#contacts .contact.active .wrap .name .unread-number').text() !== "";
+
+      if (has_unread_message) {
+        console.log("fdsa");
+        Emitter.webSocketChat.emitMessage({
+          event: WebSocketChat.ON_READ_MESSAGE,
+          chatting_to_id: Helper.getActiveContactId()
+        });
+      }
+
       Emitter.webSocketChat.emitMessage({
         event: WebSocketChat.ON_TYPING,
         chatting_to_id: Helper.getActiveContactId()
@@ -90,6 +100,11 @@ var Emitter = {
 
     Emitter.webSocketChat.emitMessage({
       event: WebSocketChat.ON_READ_MESSAGE,
+      chatting_to_id: user_id
+    });
+
+    Emitter.webSocketChat.emitMessage({
+      event: WebSocketChat.ON_FETCH_MESSAGE,
       chatting_to_id: user_id
     });
   },
@@ -255,7 +270,11 @@ var Receiver = {
     if (Helper.isTokenValid(data.token)) {
       var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
       $('.meta .name .unread-number', contact_el).text("");
+    }
+  },
 
+  onFetchMessage: function(data) {
+    if (Helper.isTokenValid(data.token)) {
       if (data.conversation.length > 0) {
         if ($('.messages').hasClass("no-message")) {
           $('.messages').removeClass("no-message");
