@@ -20,14 +20,15 @@ class OfficialContactsTransformer extends TransformerAbstract
      */
     public function transform(Contact $contact)
     {
-        $user_contact = User::find($contact->contact_id);
+        $auth_user = Auth::user();
+        $user_contact = User::find($contact->contact_id === $auth_user->id ? $contact->user_id : $contact->contact_id);
 
         return [
             'user' => [
                 'id' => $user_contact->id,
                 'picture' => $user_contact->picture,
                 'full_name' => $user_contact->getFullName(),
-                'conversation' => $user_contact->conversation(Auth::user()->id)
+                'conversation' => $user_contact->conversation($auth_user->id)
                                         ->get()
                                         ->last()
             ]

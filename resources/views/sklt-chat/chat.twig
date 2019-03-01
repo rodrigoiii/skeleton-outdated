@@ -38,27 +38,27 @@
             {% endif %}
             <div id="contacts">
                 <ul>
-                    {% if contacts.isNotEmpty() %}
+                    {% if contacts is not empty %}
                         {% for index, contact in contacts %}
                             <li class="contact"
-                                data-id="{{ contact.id }}"
-                                data-picture="{{ contact.picture }}"
-                                data-fullname="{{ contact.getFullName() }}"
+                                data-id="{{ contact.user.id }}"
+                                data-picture="{{ contact.user.picture }}"
+                                data-fullname="{{ contact.user.full_name }}"
                                 >
                                 <div class="wrap">
                                     <span class="contact-status online"></span>
-                                    <img class="picture" src="{{ contact.picture }}" alt="" />
+                                    <img class="picture" src="{{ contact.user.picture }}" alt="" />
                                     <div class="meta">
                                         <p class="name">
-                                            {{ contact.getFullName() }}
+                                            {{ contact.user.full_name }}
 
                                             <b class="unread-number">
-                                                {% if authUserChat.numberOfUnread(contact.id) > 0 %}
-                                                    ({{ authUserChat.numberOfUnread(contact.id) }})
+                                                {% if authUserChat.numberOfUnread(contact.user.id) > 0 %}
+                                                    ({{ authUserChat.numberOfUnread(contact.user.id) }})
                                                 {% endif %}
                                             </b>
                                         </p>
-                                        <p class="preview">{{ contact.conversation(auth_user.id).get().last().message }}</p>
+                                        <p class="preview">{{ contact.user.conversation is not null ? contact.user.conversation.message }}</p>
                                     </div>
                                 </div>
                             </li>

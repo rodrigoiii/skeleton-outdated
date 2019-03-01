@@ -94,6 +94,13 @@ class User extends Model
         return $result;
     }
 
+    public function officialContactsOfEachOther()
+    {
+        return Contact::where('contact_id', $this->id)
+                ->orWhere('user_id', $this->id)
+                ->accepted();
+    }
+
     public function officialContacts()
     {
         return $this->contacts()->accepted();

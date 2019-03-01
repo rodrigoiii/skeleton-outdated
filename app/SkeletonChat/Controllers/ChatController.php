@@ -17,14 +17,10 @@ class ChatController extends BaseController
         $user = User::find(Auth::user()->id);
         // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $contacts = $user->officialContacts()
+        $contacts = $user->officialContactsOfEachOther()
                         ->get();
 
-        $contacts = sklt_transformer($contacts, new OfficialContactsTransformer)->toArray();
-
-        // \Tracy\Debugger::$maxDepth = 10;
-        // dump($contacts);
-        // die;
+        $contacts = sklt_transformer($contacts, new OfficialContactsTransformer)->toArray()['data'];
 
         return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts'));
     }
