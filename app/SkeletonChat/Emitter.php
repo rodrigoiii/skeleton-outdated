@@ -171,7 +171,7 @@ class Emitter
         if (!is_null($is_read))
         {
             $conversation = $auth_user->conversation($msg->chatting_to_id)
-                                ->select(["message", "sender_id", "receiver_id", "created_at"])
+                                ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                                 ->orderBy('id', "DESC")
                                 ->limit(config('sklt-chat.default_conversation_length'))
                                 ->get()
