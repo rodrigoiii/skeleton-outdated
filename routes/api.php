@@ -10,6 +10,7 @@ api_image_generator($this);
 
 $this->group('/chat-application', function() {
     $this->get('/search-contacts', ["SkeletonChatApp\\Api\\ChatApiController", "searchContacts"]);
+    $this->get('/pending-requests', ["SkeletonChatApp\\Api\\ChatApiController", "pendingRequests"]);
     $this->post('/add-contact/{contact_id}', ["SkeletonChatApp\\Api\\ChatApiController", "addContact"]);
 })
 ->add("SkeletonChatApp\\Api\\UserApiMiddleware")

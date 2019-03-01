@@ -17,6 +17,8 @@ var Emitter = {
   init: function() {
     Emitter.webSocketChat = new WebSocketChat(Receiver, sklt_chat.host, sklt_chat.port, sklt_chat.login_token);
 
+    $('body').on('click', ".add-contact-modal .add-contact", Emitter.onAddContact);
+
     $('.submit').click(Emitter.onSendMessage);
     $('.message-input :input[name="message"]').on('keyup', Emitter.onTyping);
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Emitter.onStopTyping, 1500));
@@ -30,6 +32,36 @@ var Emitter = {
         $('#contacts .contact:first').click();
       }
     }, 100);
+  },
+
+  onAddContact: function() {
+    var contact_id = $(this).data('id');
+    var tr_el = $(this).closest('tr');
+
+    $(this).prop('disabled', true);
+    $(this).button('loading');
+
+    // Chat.chatApi.addContact(contact_id, function(response) {
+    //   if (response.success) {
+    //     var tmpl = _.template($('#contact-item-tmpl').html());
+    //     var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+
+    //     var template = tmpl({
+    //       picture: $('.contact-picture', tr_el).attr('src'),
+    //       fullname: $('.contact-fullname', tr_el).text()
+    //     });
+
+    //     if (is_contacts_empty) {
+    //       $('#contacts ul').html(template);
+    //     } else {
+    //       $('#contacts ul').prepend(template);
+    //     }
+
+    //     bootbox.hideAll();
+    //   } else {
+    //     console.log(response.message);
+    //   }
+    // });
   },
 
   onTyping: function(e) {

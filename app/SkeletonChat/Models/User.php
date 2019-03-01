@@ -3,6 +3,7 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Traits\FullTextSearch;
 
@@ -20,14 +21,6 @@ class User extends Model
     public function received_messages()
     {
         return $this->hasMany("SkeletonChatApp\Models\Message", "receiver_id");
-    }
-
-    public function conversation($receiver_id)
-    {
-        return Message::where('sender_id', $this->id)
-                ->where('receiver_id', $receiver_id)
-                ->orWhere('sender_id', $receiver_id)
-                ->where('receiver_id', $this->id);
     }
 
     public function chatStatus()
@@ -54,6 +47,14 @@ class User extends Model
                     ->count();
     }
 
+    public function conversation($receiver_id)
+    {
+        return Message::where('sender_id', $this->id)
+                ->where('receiver_id', $receiver_id)
+                ->orWhere('sender_id', $receiver_id)
+                ->where('receiver_id', $this->id);
+    }
+
     public function sendMessage(Message $message)
     {
         $message->sender_id = $this->id;
@@ -67,6 +68,44 @@ class User extends Model
         return $this->received_messages()
             ->where('sender_id', $sender_id)
             ->update(['is_read' => 1]);
+    }
+
+    public function addContact($contact_id)
+    {
+        $contact = static::find($contact_id);
+
+        $pending_request = $contact->pendingRequests()
+                                ->where('contact_id', $this->id)
+                                ->first();
+
+        // if contact to be add has pending request
+        if ($pending_request->isNotEmpty())
+        {
+            $contact_added = $pending_request->accepted();
+        }
+        else
+        {
+            $contact = Contact::create([
+                'contact_id' => $contact_id,
+                'user_id' => $this->id
+            ]);
+
+            $contact_added = $contact instanceof Contact;
+        }
+
+        return $contact_added;
+    }
+
+    public function pendingRequests()
+    {
+        return $this->contacts()
+                    ->typeIsAccepted(Contact::IS_NOT_ACCEPTED);
+    }
+
+    public function contactsPendingRequests()
+    {
+        return Contact::where('contact_id', $this->id)
+                    ->where('is_accepted', Contact::IS_NOT_ACCEPTED);
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)

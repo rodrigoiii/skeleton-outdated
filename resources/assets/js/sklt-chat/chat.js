@@ -25,8 +25,10 @@ var Chat = {
 
     $('#add-contact-btn').click(Chat.onSearchContact);
     $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
-    $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
+    // $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
     $('#contacts').on('click', ".contact", Chat.onChangeActiveContact);
+
+    $('#notification-btn').click(Chat.showPendingRequest);
 
     // Chat.scrollMessage();
   },
@@ -38,7 +40,6 @@ var Chat = {
 
   onSearchContact: function() {
     var tmpl = _.template($('#add-contact-tmpl').html());
-    console.log(tmpl);
 
     bootbox.dialog({
       title: "Add Contact",
@@ -63,36 +64,6 @@ var Chat = {
     });
   },
 
-  onAddContact: function() {
-    var contact_id = $(this).data('id');
-    var tr_el = $(this).closest('tr');
-
-    $(this).prop('disabled', true);
-    $(this).button('loading');
-
-    Chat.chatApi.addContact(contact_id, function(response) {
-      if (response.success) {
-        var tmpl = _.template($('#contact-item-tmpl').html());
-        var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
-
-        var template = tmpl({
-          picture: $('.contact-picture', tr_el).attr('src'),
-          fullname: $('.contact-fullname', tr_el).text()
-        });
-
-        if (is_contacts_empty) {
-          $('#contacts ul').html(template);
-        } else {
-          $('#contacts ul').prepend(template);
-        }
-
-        bootbox.hideAll();
-      } else {
-        console.log(response.message);
-      }
-    });
-  },
-
   onChangeActiveContact: function() {
     var user_id = $(this).data('id');
     var user_picture = $(this).data('picture');
@@ -107,6 +78,23 @@ var Chat = {
       tmpl += '<p>'+user_fullname+'</p>';
 
     $('.contact-profile .image-fullname').html(tmpl);
+  },
+
+  showPendingRequest: function() {
+    Chat.chatApi.getPendingRequest(function(response) {
+      if (response.success) {
+        var tmpl = _.template($('#adding-contact-request-tmpl').html());
+
+        console.log(response);
+        bootbox.dialog({
+          title: "Adding contact requests",
+          message: tmpl({
+            pending_requests: response.user_pending_requests,
+            contacts_pending_requests: response.contacts_pending_requests
+          })
+        });
+      }
+    });
   }
 };
 

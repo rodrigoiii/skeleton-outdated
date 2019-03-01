@@ -83,9 +83,9 @@
                     <!-- to be load of js -->
                 </div>
                 <div class="social-media">
-                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                    <i class="fa fa-bell" aria-hidden="true" id="notification-btn">
+                        <span class="badge">2</span>
+                    </i>
                 </div>
             </div>
 
@@ -129,6 +129,83 @@
                 <table class="table table-hover table-condensed table-striped">
                     <tbody></tbody>
                 </table>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/template" id="adding-contact-request-tmpl">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+
+                <% if (!_.isEmpty(pending_requests)) { %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Pending Request</h1>
+                        </div>
+                        <table class="table table-hover table-condensed table-striped table-bordered">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th colspan="2" class="text-center">Info</th>
+                                    <th>Request At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% _.each(pending_requests, function(request) { %>
+                                    <tr>
+                                        <td>
+                                            <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
+                                        </td>
+                                        <td>
+                                            <p class="contact-fullname"><%= request.user.full_name %></p>
+                                        </td>
+                                        <td>
+                                            <span class="badge"><%= request.requested_at.date %></span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning btn-xs" data-id="<%= request.id %>">Remove</button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+
+                <% if (!_.isEmpty(contacts_pending_requests)) { %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">Contacts Pending Request</h1>
+                        </div>
+                        <table class="table table-hover table-condensed table-striped table-bordered">
+                            <thead>
+                                <tr class="bg-info">
+                                    <th colspan="2" class="text-center">Info</th>
+                                    <th>Request At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% _.each(contacts_pending_requests, function(request) { %>
+                                    <tr>
+                                        <td>
+                                            <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
+                                        </td>
+                                        <td>
+                                            <p class="contact-fullname"><%= request.user.full_name %></p>
+                                        </td>
+                                        <td>
+                                            <span class="badge"><%= request.requested_at.date %></span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-xs" data-id="<%= request.id %>">Accept</button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
             </div>
         </div>
     </script>
