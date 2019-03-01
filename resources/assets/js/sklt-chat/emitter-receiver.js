@@ -21,6 +21,7 @@ var Emitter = {
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Emitter.onStopTyping, 1500));
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
     $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
+    // $('.messages').scroll(Chat.onLoadMoreMessages);
 
     _.delay(function() {
       if ($('#contacts .contact').length > 0) {
@@ -82,6 +83,9 @@ var Emitter = {
 
   onReadMessage: function() {
     var user_id = $(this).data('id');
+
+    $('.messages').addClass("invisible");
+
     Emitter.webSocketChat.emitMessage({
       event: WebSocketChat.ON_READ_MESSAGE,
       chatting_to_id: user_id
@@ -95,13 +99,7 @@ var Emitter = {
       Emitter.onSendMessage();
       return false;
     }
-  },
-
-  onUnloadWindow: function() {
-    Emitter.webSocketChat.emitMessage({
-      event: WebSocketChat.ON_DISCONNECT
-    });
-  },
+  }
 };
 
 window.Emitter = Emitter;
@@ -244,7 +242,9 @@ var Receiver = {
         var tmpl = _.template($('#messages-item-tmpl').html());
         $('.messages').html(tmpl({conversation: data.conversation}));
 
-        Helper.scrollMessage();
+        Helper.scrollMessage(function() {
+          $('.messages').removeClass("invisible");
+        });
       } else {
         if (!$('.messages').hasClass("no-message")) {
           $('.messages').addClass("no-message");
@@ -253,29 +253,6 @@ var Receiver = {
         $('.messages').html('<p>No conversation yet</p>');
       }
     }
-  },
-
-  onFetchMessages: function(data) {
-    // var conversation = data.conversation;
-    // console.log(conversation);
-
-    // $('.messages ul').html("");
-
-    // if (Object.keys(conversation).length > 0) {
-    //   for (var i in conversation) {
-    //     var message = conversation[i],
-    //       tmpl_func = message.sender.id == chat.auth_id ?
-    //       _.template($('#message-sent-tmpl').html()) :
-    //       _.template($('#message-replied-tmpl').html());
-
-    //     $('.messages ul').prepend(tmpl_func({ 'message': message.message, 'picture': message.sender.picture }));
-    //   }
-
-    //   Chat.scrollDown();
-    //   Receiver.load_more_increment = 0;
-    // } else {
-    //   $('.messages ul').html('<li class="no-conversation">No conversation.</li>');
-    // }
   },
 
   onLoadMoreMessages: function(data) {
@@ -306,9 +283,9 @@ var Helper = {
     return false;
   },
 
-  scrollMessage: function() {
+  scrollMessage: function(callback) {
     var bottom = $('.messages').prop('scrollHeight');
-    $('.messages').animate({ scrollTop: bottom });
+    $('.messages').animate({ scrollTop: bottom }, "fast", callback);
   },
 
   getActiveContactId: function() {

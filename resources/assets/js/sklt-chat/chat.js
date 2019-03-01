@@ -134,7 +134,6 @@ var Chat = {
     $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
     $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
     $('#contacts').on('click', ".contact", Chat.onChangeActiveContact);
-    $(window).on('beforeunload', Chat.onUnloadWindow);
 
     // Chat.scrollMessage();
   },

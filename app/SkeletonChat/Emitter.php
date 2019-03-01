@@ -190,30 +190,6 @@ class Emitter
         }
     }
 
-    public function onFetchMessages(ConnectionInterface $from, $msg)
-    {
-        $this->onReadMessage($from, $msg);
-
-        parse_str($from->httpRequest->getUri()->getQuery(), $params);
-
-        $auth_user = User::findByLoginToken($params['login_token']);
-        $sender_id = $msg->sender_id;
-
-        $conversation = Message::conversation([$sender_id, $auth_user->id])
-                            ->with(['sender', 'receiver'])
-                            ->orderBy('id', "DESC")
-                            ->limit(config('sklt-chat.default_conversation_length'))
-                            ->get()
-                            ->sortBy('id');
-
-        $return_data = [
-            'event' => __FUNCTION__,
-            'conversation' => $conversation
-        ];
-
-        $from->send(json_encode($return_data));
-    }
-
     public function onLoadMoreMessages(ConnectionInterface $from, $msg)
     {
         $this->onReadMessage($from, $msg);
