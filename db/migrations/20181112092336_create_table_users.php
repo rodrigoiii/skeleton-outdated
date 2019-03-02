@@ -11,12 +11,12 @@ class CreateTableUsers extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('users')
-            ->addColumn('first_name', 'string', ['limit' => 50])
-            ->addColumn('last_name', 'string', ['limit' => 50])
-            ->addColumn('email', 'string', ['limit' => 50])
-            ->addColumn('password', 'string', ['limit' => 60])
-            ->addIndex('email', ['unique' => true])
+        $table = $this->table("users")
+            ->addColumn("first_name", "string", ['limit' => 50])
+            ->addColumn("last_name", "string", ['limit' => 50])
+            ->addColumn("email", "string", ['limit' => 50])
+            ->addColumn("password", "string", ['limit' => 60])
+            ->addIndex("email", ['unique' => true])
             ->addTimestamps();
 
         $table->create();
@@ -29,10 +29,10 @@ class CreateTableUsers extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable('users');
+        $table_exist = $this->hasTable("users");
         if ($table_exist)
         {
-            $this->dropTable('users');
+            $this->dropTable("users");
         }
     }
 }

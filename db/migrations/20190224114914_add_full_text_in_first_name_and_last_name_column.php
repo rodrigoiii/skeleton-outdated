@@ -11,7 +11,7 @@ class AddFullTextInFirstNameAndLastNameColumn extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('users')
+        $table = $this->table("users")
             ->addIndex(["first_name", "last_name"], ['type' => "fulltext"]);
 
         $table->save();
@@ -24,11 +24,11 @@ class AddFullTextInFirstNameAndLastNameColumn extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable('users');
+        $table_exist = $this->hasTable("users");
         if ($table_exist)
         {
-            $table = $this->table('users');
-            $columns_exist = $table->hasColumn('first_name') && $table->hasColumn('last_name');
+            $table = $this->table("users");
+            $columns_exist = $table->hasColumn("first_name") && $table->hasColumn("last_name");
 
             if ($columns_exist)
             {

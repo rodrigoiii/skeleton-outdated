@@ -12,14 +12,18 @@ class CreateTableMessages extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('messages')
-            ->addColumn('message', 'text', ['limit' => MysqlAdapter::TEXT_TINY])
-            ->addColumn('sender_id', 'integer')
-            ->addColumn('receiver_id', 'integer')
-            ->addColumn('is_read', 'boolean', ['default' => 0])
+        $table = $this->table("messages")
+            ->addColumn("message", "text", ['limit' => MysqlAdapter::TEXT_TINY])
+            ->addColumn("sender_id", "integer")
+            ->addColumn("receiver_id", "integer")
+            ->addColumn("is_read", "boolean", ['default' => 0])
             ->addTimestamps();
 
         $table->create();
+
+        $table->addForeignKey("sender_id", "users", "id")
+            ->addForeignKey("receiver_id", "users", "id")
+            ->save();
     }
 
     /**
@@ -29,10 +33,14 @@ class CreateTableMessages extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable('messages');
+        $table_exist = $this->hasTable("messages");
         if ($table_exist)
         {
-            $this->dropTable('messages');
+            $table = $this->table("messages")
+                ->dropForeignKey(["sender_id", "receiver_id"])
+                ->save();
+
+            $this->dropTable("messages");
         }
     }
 }

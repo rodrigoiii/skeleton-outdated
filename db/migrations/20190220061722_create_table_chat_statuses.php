@@ -11,12 +11,14 @@ class CreateTableChatStatuses extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('chat_statuses')
-            ->addColumn('status', 'enum', ['values' => ["online", "offline"]])
-            ->addColumn('user_id', 'integer')
+        $table = $this->table("chat_statuses")
+            ->addColumn("status", "enum", ['values' => ["online", "offline"]])
+            ->addColumn("user_id", "integer")
             ->addTimestamps();
 
         $table->create();
+
+        $table->addForeignKey('user_id', "users", "id")->save();
     }
 
     /**
@@ -26,10 +28,14 @@ class CreateTableChatStatuses extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable('chat_statuses');
+        $table_exist = $this->hasTable("chat_statuses");
         if ($table_exist)
         {
-            $this->dropTable('chat_statuses');
+            $table = $this->table("chat_statuses");
+            $table->dropForeignKey("user_id")
+                ->save();
+
+            $this->dropTable("chat_statuses");
         }
     }
 }

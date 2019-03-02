@@ -11,11 +11,11 @@ class CreateTableAuthTokens extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('auth_tokens')
-            ->addColumn('token', 'string', ['limit' => 13])
-            ->addColumn('is_used', 'boolean', ['default' => 0])
-            ->addColumn('type', 'enum', ['values' => ["register", "reset-password"]])
-            ->addColumn('payload', 'json', ['null' => true])
+        $table = $this->table("auth_tokens")
+            ->addColumn("token", "string", ['limit' => 13])
+            ->addColumn("is_used", "boolean", ['default' => 0])
+            ->addColumn("type", "enum", ['values' => ["register", "reset-password"]])
+            ->addColumn("payload", "json", ['null' => true])
             ->addTimestamps();
 
         $table->create();
@@ -28,10 +28,10 @@ class CreateTableAuthTokens extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable('auth_tokens');
+        $table_exist = $this->hasTable("auth_tokens");
         if ($table_exist)
         {
-            $this->dropTable('auth_tokens');
+            $this->dropTable("auth_tokens");
         }
     }
 }
