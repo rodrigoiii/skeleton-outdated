@@ -17,11 +17,11 @@ class ChatController extends BaseController
         $user = User::find(Auth::user()->id);
         // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $contacts = $user->officialContactsOfEachOther()
-                        ->get();
-
+        $contacts = $user->officialContactsOfEachOther()->get();
         $contacts = sklt_transformer($contacts, new OfficialContactsTransformer)->toArray()['data'];
 
-        return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts'));
+        $notifications = $user->userNotification()->get();
+
+        return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts', 'notifications'));
     }
 }

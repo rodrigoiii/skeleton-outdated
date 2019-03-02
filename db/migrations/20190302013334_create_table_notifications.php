@@ -13,14 +13,15 @@ class CreateTableNotifications extends AbstractMigration
     {
         $table = $this->table("notifications")
             ->addColumn("type", "enum", ['values' => ["accepted", "requested"]])
-            ->addColumn("from_id", "integer")
+            ->addColumn("by_id", "integer")
             ->addColumn("to_id", "integer")
-            ->addColumn("is_read", "boolean", ['default' => 0])
+            ->addColumn("is_read_by", "boolean", ['default' => 0])
+            ->addColumn("is_read_to", "boolean", ['default' => 0])
             ->addTimestamps();
 
         $table->create();
 
-        $table->addForeignKey("from_id", "users", "id")
+        $table->addForeignKey("by_id", "users", "id")
             ->addForeignKey("to_id", "users", "id")
             ->save();
     }
@@ -36,7 +37,7 @@ class CreateTableNotifications extends AbstractMigration
         if ($table_exist)
         {
             $table = $this->table("notifications")
-                ->dropForeignKey(["from_id", "to_id"])
+                ->dropForeignKey(["by_id", "to_id"])
                 ->save();
 
             $this->dropTable("notifications");

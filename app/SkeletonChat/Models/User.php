@@ -77,10 +77,18 @@ class User extends Model
                                 ->where('user_id', $contact_id)
                                 ->first();
 
+        $result = false;
+
         // if contact to be add has pending request
         if (!is_null($pending_request))
         {
             $result = $pending_request->accepted() ? Notification::TYPE_ACCEPTED : false;
+
+            if ($pending_request->accepted())
+            {
+                Notification::createAcceptedNotification($this->id, $contact_id);
+                $result = Notification::TYPE_ACCEPTED;
+            }
         }
         else
         {
@@ -89,7 +97,11 @@ class User extends Model
                 'user_id' => $this->id
             ]);
 
-            $result = $contact instanceof Contact ? Notification::TYPE_REQUESTED : false;
+            if ($contact instanceof Contact)
+            {
+                Notification::createRequestedNotification($this->id, $contact_id);
+                $result = Notification::TYPE_REQUESTED;
+            }
         }
 
         return $result;
@@ -115,6 +127,14 @@ class User extends Model
     public function contactRequests()
     {
         return Contact::where('contact_id', $this->id)->notYetAccepted();
+    }
+
+    public function userNotification()
+    {
+        return Notification::where('by_id', $this->id)
+                ->where('is_read_by', Notification::IS_NOT_YET_READ)
+                ->orWhere('to_id', $this->id)
+                ->where('is_read_to', Notification::IS_NOT_YET_READ);
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)

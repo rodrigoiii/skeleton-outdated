@@ -84,7 +84,9 @@
                 </div>
                 <div class="social-media">
                     <i class="fa fa-bell" aria-hidden="true" id="notification-btn">
-                        <span class="badge">2</span>
+                        {% if notifications.count() > 0 %}
+                            <span class="badge">{{ notifications.count() }}</span>
+                        {% endif %}
                     </i>
                 </div>
             </div>
