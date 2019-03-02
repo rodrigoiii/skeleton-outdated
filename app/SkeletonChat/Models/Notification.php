@@ -13,6 +13,16 @@ class Notification extends Model
     const IS_READ = 1;
     const IS_NOT_YET_READ = 0;
 
+    public function scopeRequested($query)
+    {
+        return $query->where('type', static::TYPE_REQUESTED);
+    }
+
+    public function scopeAccepted($query)
+    {
+        return $query->where('type', static::TYPE_ACCEPTED);
+    }
+
     public static function createAcceptedNotification($by_id, $to_id)
     {
         return static::create([

@@ -28,7 +28,7 @@ var Chat = {
     // $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
     $('#contacts').on('click', ".contact", Chat.onChangeActiveContact);
 
-    $('#notification-btn').click(Chat.showPendingRequest);
+    $('#notification-btn').click(Chat.showContactRequest);
 
     // Chat.scrollMessage();
   },
@@ -84,7 +84,7 @@ var Chat = {
     $('.contact-profile .image-fullname').html(tmpl);
   },
 
-  showPendingRequest: function() {
+  showContactRequest: function() {
     Chat.chatApi.getContactRequest(function(response) {
       if (response.success) {
         var tmpl = _.template($('#contact-request-tmpl').html());

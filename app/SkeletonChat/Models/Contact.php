@@ -31,7 +31,17 @@ class Contact extends Model
         return $query->where('is_accepted', static::IS_NOT_YET_ACCEPTED);
     }
 
-    public function accepted()
+    public function isAccepted()
+    {
+        return $this->is_accepted == static::IS_ACCEPTED;
+    }
+
+    public function isNotAccepted()
+    {
+        return $this->is_accepted == static::IS_NOT_YET_ACCEPTED;
+    }
+
+    public function markAsAccepted()
     {
         $this->is_accepted = static::IS_ACCEPTED;
         return $this->save();

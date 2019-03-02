@@ -82,9 +82,7 @@ class User extends Model
         // if contact to be add has pending request
         if (!is_null($pending_request))
         {
-            $result = $pending_request->accepted() ? Notification::TYPE_ACCEPTED : false;
-
-            if ($pending_request->accepted())
+            if ($pending_request->markAsAccepted())
             {
                 Notification::createAcceptedNotification($this->id, $contact_id);
                 $result = Notification::TYPE_ACCEPTED;
@@ -135,6 +133,48 @@ class User extends Model
                 ->where('is_read_by', Notification::IS_NOT_YET_READ)
                 ->orWhere('to_id', $this->id)
                 ->where('is_read_to', Notification::IS_NOT_YET_READ);
+    }
+
+    public function removeUserRequest($contact_id)
+    {
+        $user_request = Contact::where('user_id', $this->id)
+                            ->where('contact_id', $contact_id)
+                            ->first();
+
+        if (!is_null($user_request))
+        {
+            if ($user_request->isNotAccepted())
+            {
+                $notification = Notification::requested()
+                                    ->where('by_id', $this->id)
+                                    ->where('to_id', $contact_id)
+                                    ->first();
+
+                $request_deleted = $user_request->delete();
+
+                if ($request_deleted)
+                {
+                    $notification_deleted = $notification->delete();
+
+                    if (!$notification_deleted)
+                    {
+                        \Log::error("Error: User contact request has no notification.");
+                    }
+
+                    return true;
+                }
+            }
+            else
+            {
+                \Log::error("Error: Cannot remove user request. Request is already accepted.");
+            }
+        }
+        else
+        {
+            \Log::error("Error: User contact request is not exist.");
+        }
+
+        return false;
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)

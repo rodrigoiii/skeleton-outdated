@@ -4,8 +4,9 @@ namespace SkeletonChatApp\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use SkeletonChatApp\Models\Contact;
+use SkeletonChatApp\Models\User;
 
-class ContactsPendingRequestTransformer extends TransformerAbstract
+class UserRequestTransformer extends TransformerAbstract
 {
     /**
      * [transform description]
@@ -15,7 +16,7 @@ class ContactsPendingRequestTransformer extends TransformerAbstract
      */
     public function transform(Contact $contact)
     {
-        $user = $contact->user;
+        $user = User::find($contact->contact_id);
 
         return [
             'id' => $contact->id,

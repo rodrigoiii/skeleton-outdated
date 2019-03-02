@@ -6,8 +6,9 @@
  - Auto add number of unread after the message successfully send of the sender. - ok
  - Reset number of unread when the reader start typing, change active contact to sender message. - ok
  - Load more message - ok
- - Accept contact request.
- - Remove user request
+ - Remove user request then
+    - remove user request notification
+    - decrease notification number
  - notification number - ok
  - send contact request then add notification
  - accept contact request then
