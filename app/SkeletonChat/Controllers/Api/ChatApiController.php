@@ -121,6 +121,25 @@ class ChatApiController extends BaseController
         ]);
     }
 
+    public function readNotification(Request $request, Response $response)
+    {
+        $login_token = $request->getParam('login_token');
+        $user = User::findByLoginToken($login_token);
+
+        $is_read = $user->markAsReadNotification();
+
+        return $response->withJson(
+        $is_read ?
+        [
+            'success' => true,
+            'message' => "Successfully read notification.",
+        ] :
+        [
+            'success' => false,
+            'message' => "Cannot read notification this time. Please try again later."
+        ]);
+    }
+
     public function removeNotification(Request $request, Response $response, $notification_id)
     {
         $login_token = $request->getParam('login_token');

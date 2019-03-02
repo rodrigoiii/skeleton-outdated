@@ -168,6 +168,19 @@ class User extends Model
                 ->first();
     }
 
+    public function markAsReadNotification()
+    {
+        $read_notification_by = Notification::where('by_id', $this->id)
+                                ->IsNotReadBy()
+                                ->update(['is_read_by' => Notification::IS_READ]);
+
+        $read_notification_to = Notification::where('to_id', $this->id)
+                                ->IsNotReadTo()
+                                ->update(['is_read_to' => Notification::IS_READ]);
+
+        return $read_notification_by || $read_notification_to;
+    }
+
     public static function contactsOrderByOnlineStatus($auth_id)
     {
         return static::select(\DB::raw("users.*, chat_statuses.status"))

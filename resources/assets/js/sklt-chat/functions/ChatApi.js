@@ -28,6 +28,15 @@ ChatApi.prototype.removeRequest = function(contact_id, callback) {
   $.post("/api/chat-application/remove-request/" + contact_id, params, callback);
 };
 
+ChatApi.prototype.readNotification = function(callback) {
+  var params = {
+    login_token: this.login_token,
+    _METHOD: "PUT"
+  };
+
+  $.post("/api/chat-application/read-notification", params, callback);
+};
+
 ChatApi.prototype.removeNotification = function(contact_id, callback) {
   var params = {
     contact_id: contact_id,

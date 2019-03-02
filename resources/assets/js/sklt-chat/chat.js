@@ -28,7 +28,7 @@ var Chat = {
     // $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
     $('#contacts').on('click', ".contact", Chat.onChangeActiveContact);
 
-    $('#notification-btn').click(Chat.showContactRequest);
+    $('#notification-btn').click(Chat.onShowContactRequest);
 
     // Chat.scrollMessage();
   },
@@ -84,12 +84,13 @@ var Chat = {
     $('.contact-profile .image-fullname').html(tmpl);
   },
 
-  showContactRequest: function() {
+  onShowContactRequest: function() {
+    var _this = this;
+
     Chat.chatApi.getContactRequest(function(response) {
       if (response.success) {
         var tmpl = _.template($('#contact-request-tmpl').html());
 
-        console.log(response);
         bootbox.dialog({
           title: "Contact requests",
           message: tmpl({
@@ -98,6 +99,20 @@ var Chat = {
           }),
           className: "show-contact-requests"
         });
+
+        var badge = $(_this).find('.badge');
+        if (badge.length > 0) {
+          if (parseInt(badge.data('count')) > 0) {
+            // mark as read
+            Chat.chatApi.readNotification(function(response) {
+              if (response.success) {
+                console.log(response.message);
+
+                badge.remove();
+              }
+            });
+          }
+        }
       }
     });
   }

@@ -23,6 +23,16 @@ class Notification extends Model
         return $query->where('type', static::TYPE_ACCEPTED);
     }
 
+    public function scopeIsNotReadBy($query)
+    {
+        return $query->where('is_read_by', static::IS_NOT_YET_READ);
+    }
+
+    public function scopeIsNotReadTo($query)
+    {
+        return $query->where('is_read_to', static::IS_NOT_YET_READ);
+    }
+
     public static function createAcceptedNotification($by_id, $to_id)
     {
         return static::create([

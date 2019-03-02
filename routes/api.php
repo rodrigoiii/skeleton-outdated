@@ -13,6 +13,8 @@ $this->group('/chat-application', function() {
     $this->get('/contact-requests', ["SkeletonChatApp\\Api\\ChatApiController", "contactRequests"]);
     $this->post('/add-contact', ["SkeletonChatApp\\Api\\ChatApiController", "addContact"]);
     $this->delete('/remove-request/{contact_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeRequest"]);
+
+    $this->put('/read-notification', ["SkeletonChatApp\\Api\\ChatApiController", "readNotification"]);
     $this->delete('/remove-notification/{notification_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeNotification"]);
 })
 ->add("SkeletonChatApp\\Api\\UserApiMiddleware")
