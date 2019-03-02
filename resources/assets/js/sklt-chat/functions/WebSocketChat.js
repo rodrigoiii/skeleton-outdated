@@ -28,6 +28,7 @@ WebSocketChat.ON_READ_MESSAGE = "onReadMessage";
 WebSocketChat.ON_FETCH_MESSAGE = "onFetchMessage";
 WebSocketChat.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
 WebSocketChat.ON_REQUEST_CONTACT = "onRequestContact";
+WebSocketChat.ON_ACCEPT_CONTACT = "onAcceptContact";
 
 WebSocketChat.prototype = {
   emitMessage: function(msg, errorCallback) {

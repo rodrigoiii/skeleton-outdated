@@ -202,7 +202,7 @@
                                                 <span class="badge"><%= request.requested_at.date %></span>
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary btn-xs" data-id="<%= request.id %>">Accept</button>
+                                                <button class="btn btn-primary btn-xs accept-request" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-id="<%= request.id %>">Accept</button>
                                             </td>
                                         </tr>
                                     <% }); %>
@@ -249,6 +249,25 @@
                 <div class="meta">
                     <p class="name"><%= fullname %></p>
                     <p class="preview"></p>
+                </div>
+            </div>
+        </li>
+
+        <li class="contact"
+            data-id="<%= user.id %>"
+            data-picture="<%= user.picture %>"
+            data-fullname="<%= user.full_name %>"
+            >
+            <div class="wrap">
+                <span class="contact-status online"></span>
+                <img class="picture" src="<%= user.picture %>" alt="" />
+                <div class="meta">
+                    <p class="name">
+                        <%= user.full_name %>
+
+                        <b class="unread-number"><%= typeof(unread_number) !== "undefined" ? unread_number : "" %></b>
+                    </p>
+                    <p class="preview"><%= typeof(message) !== "undefined" ? message : "" %></p>
                 </div>
             </div>
         </li>

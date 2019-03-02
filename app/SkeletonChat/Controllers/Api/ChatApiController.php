@@ -62,10 +62,16 @@ class ChatApiController extends BaseController
 
         switch ($contact_type) {
             case Notification::TYPE_ACCEPTED:
+                $contact = User::find($contact_id);
+
                 $data = [
                     'success' => true,
                     'message' => "Successfully add contact.",
-                    'type' => Notification::TYPE_ACCEPTED
+                    'type' => Notification::TYPE_ACCEPTED,
+                    'user' => [
+                        'picture' => $contact->picture,
+                        'full_name' => $contact->getFullName()
+                    ]
                 ];
                 break;
 

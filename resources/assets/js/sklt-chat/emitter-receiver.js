@@ -30,7 +30,7 @@ var Emitter = {
     $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
     $('.messages').scroll(Emitter.onLoadMoreMessages);
 
-    $('body').on('click', ".add-contact-modal .add-contact", Emitter.onAddContact);
+    $('body').on('click', ".add-contact-modal .add-contact, .show-contact-requests .accept-request", Emitter.onAddContact);
     $('body').on('click', ".show-contact-requests .remove-request-btn", Emitter.onRemoveRequestContact);
 
     _.delay(function() {
@@ -161,6 +161,16 @@ var Emitter = {
         switch(response.type) {
           case Emitter.TYPE_ACCEPTED:
             console.log("accepted");
+
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
+
+            Helper.addContactItem({
+              'user': _.extend(response.user, {id: contact_id})
+            });
+
+            // Emitter.onAcceptContact(contact_id);
             break;
 
           case Emitter.TYPE_REQUESTED:
@@ -199,6 +209,15 @@ var Emitter = {
   onRequestContact: function(contact_id) {
     var msg = {
       event: WebSocketChat.ON_REQUEST_CONTACT,
+      contact_id: contact_id
+    };
+
+    Emitter.webSocketChat.emitMessage(msg);
+  },
+
+  onAcceptContact: function(contact_id) {
+    var msg = {
+      event: WebSocketChat.ON_ACCEPT_CONTACT,
       contact_id: contact_id
     };
 
@@ -429,6 +448,19 @@ var Helper = {
       $('.badge', notification_el).text(number);
     } else {
       notification_el.html('<span class="badge" data-count="'+number+'">'+number+'</span>');
+    }
+  },
+
+  addContactItem: function(data) {
+    var tmpl = _.template($('#contact-item-tmpl').html());
+    var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+
+    var template = tmpl(data);
+
+    if (is_contacts_empty) {
+      $('#contacts ul').html(template);
+    } else {
+      $('#contacts ul').prepend(template);
     }
   }
 };

@@ -73,17 +73,20 @@ class User extends Model
 
     public function addContact($contact_id)
     {
-        $pending_request = $this->contactRequests()
+        $contact_request = $this->contactRequests()
                                 ->where('user_id', $contact_id)
                                 ->first();
+
+        var_dump($contact_request);
+        die;
 
         $result = false;
 
         // if contact to be add has pending request
-        if (!is_null($pending_request))
+        if (!is_null($contact_request))
         {
             // accept the contact request
-            if ($pending_request->markAsAccepted())
+            if ($contact_request->markAsAccepted())
             {
                 Notification::createAcceptedNotification($this->id, $contact_id);
                 $result = Notification::TYPE_ACCEPTED;
