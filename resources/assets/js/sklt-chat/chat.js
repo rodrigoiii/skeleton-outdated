@@ -95,7 +95,8 @@ var Chat = {
           message: tmpl({
             user_requests: response.user_requests,
             contact_requests: response.contact_requests
-          })
+          }),
+          className: "show-contact-requests"
         });
       }
     });

@@ -4,6 +4,7 @@ namespace SkeletonChatApp\Controllers\Api;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsRequestTransformer;
@@ -50,9 +51,11 @@ class ChatApiController extends BaseController
         ]);
     }
 
-    public function addContact(Request $request, Response $response, $contact_id)
+    public function addContact(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
+        $contact_id = $request->getParam('contact_id'); // Column contact_id of contacts table
+
         $user = User::findByLoginToken($login_token);
 
         $contact_type = $user->addContact($contact_id);
@@ -83,5 +86,59 @@ class ChatApiController extends BaseController
         }
 
         return $response->withJson($data);
+    }
+
+    /**
+     * @param Request  $request
+     * @param Response $response
+     * @param integer   $contact_id id of table contacts
+     */
+    public function removeRequest(Request $request, Response $response, $contact_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $user = User::findByLoginToken($login_token);
+        $contact = Contact::find($contact_id);
+
+        if (!is_null($contact))
+        {
+            $is_deleted = $user->removeUserRequest($contact->contact_id);
+
+            if ($is_deleted)
+            {
+                $notification = $user->findNotification($contact->contact_id);
+
+                return $response->withJson([
+                    'success' => true,
+                    'message' => "Successfully remove user request.",
+                    'notification_id' => !is_null($notification) ? $notification->id : null
+                ]);
+            }
+        }
+
+        return $response->withJson([
+            'success' => false,
+            'message' => "Cannot remove user request this time. Please try again later."
+        ]);
+    }
+
+    public function removeNotification(Request $request, Response $response, $notification_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $user = User::findByLoginToken($login_token);
+
+        $notification = Notification::find($notification_id);
+        $is_deleted = !is_null($notification) ? $notification->delete() : false;
+
+        return $response->withJson(
+            $is_deleted ?
+            [
+                'success' => true,
+                'message' => "Successfully remove request notification."
+            ] :
+            [
+                'success' => false,
+                'message' => "Cannot remove user request this time. Please try again later."
+            ]
+        );
     }
 }

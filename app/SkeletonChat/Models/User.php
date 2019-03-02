@@ -145,24 +145,7 @@ class User extends Model
         {
             if ($user_request->isNotAccepted())
             {
-                $notification = Notification::requested()
-                                    ->where('by_id', $this->id)
-                                    ->where('to_id', $contact_id)
-                                    ->first();
-
-                $request_deleted = $user_request->delete();
-
-                if ($request_deleted)
-                {
-                    $notification_deleted = $notification->delete();
-
-                    if (!$notification_deleted)
-                    {
-                        \Log::error("Error: User contact request has no notification.");
-                    }
-
-                    return true;
-                }
+                return $user_request->delete();
             }
             else
             {
@@ -175,6 +158,14 @@ class User extends Model
         }
 
         return false;
+    }
+
+    public function findNotification($contact_id)
+    {
+        return Notification::requested()
+                ->where('by_id', $this->id)
+                ->where('to_id', $contact_id)
+                ->first();
     }
 
     public static function contactsOrderByOnlineStatus($auth_id)
