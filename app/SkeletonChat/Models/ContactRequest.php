@@ -4,7 +4,7 @@ namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class ContactRequest extends Model
 {
     protected $fillable = ["type", "by_id", "to_id", "is_read_by", "is_read_to"];
 
@@ -33,16 +33,16 @@ class Notification extends Model
         return $query->where('is_read_to', static::IS_NOT_YET_READ);
     }
 
-    public static function createAcceptedNotification($by_id, $to_id)
-    {
-        return static::create([
-            'type' => static::TYPE_ACCEPTED,
-            'by_id' => $by_id,
-            'to_id' => $to_id
-        ]);
-    }
+    // public static function createAcceptedNotification($by_id, $to_id)
+    // {
+    //     return static::create([
+    //         'type' => static::TYPE_ACCEPTED,
+    //         'by_id' => $by_id,
+    //         'to_id' => $to_id
+    //     ]);
+    // }
 
-    public static function createRequestedNotification($by_id, $to_id)
+    public static function createRequested($by_id, $to_id)
     {
         return static::create([
             'type' => static::TYPE_REQUESTED,

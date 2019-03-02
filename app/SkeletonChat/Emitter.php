@@ -82,7 +82,7 @@ class Emitter
 
         if ($sentMessage)
         {
-            $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
+            // $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
 
             // self
             $return_data = [
@@ -194,7 +194,7 @@ class Emitter
                             ->get()
                             ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        // $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
         $return_data = [
             'event' => __FUNCTION__,
@@ -221,7 +221,7 @@ class Emitter
                             ->get()
                             ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        // $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
         $return_data = [
             'event' => __FUNCTION__,

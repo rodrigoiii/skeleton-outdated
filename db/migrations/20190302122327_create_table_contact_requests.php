@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateTableNotifications extends AbstractMigration
+class CreateTableContactRequests extends AbstractMigration
 {
     /**
      * [up description]
@@ -11,7 +11,7 @@ class CreateTableNotifications extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table("notifications")
+        $table = $this->table("contact_requests")
             ->addColumn("type", "enum", ['values' => ["accepted", "requested"]])
             ->addColumn("by_id", "integer")
             ->addColumn("to_id", "integer")
@@ -33,14 +33,14 @@ class CreateTableNotifications extends AbstractMigration
      */
     public function down()
     {
-        $table_exist = $this->hasTable("notifications");
+        $table_exist = $this->hasTable("contact_requests");
         if ($table_exist)
         {
-            $table = $this->table("notifications")
+            $table = $this->table("contact_requests")
                 ->dropForeignKey(["by_id", "to_id"])
                 ->save();
 
-            $this->dropTable("notifications");
+            $this->dropTable("contact_requests");
         }
     }
 }

@@ -12,15 +12,14 @@ class CreateTableContacts extends AbstractMigration
     public function up()
     {
         $table = $this->table("contacts")
-            ->addColumn("contact_id", "integer")
             ->addColumn("user_id", "integer")
-            ->addColumn("is_accepted", "boolean", ['default' => 0])
+            ->addColumn("owner_id", "integer")
             ->addTimestamps();
 
         $table->create();
 
-        $table->addForeignKey("contact_id", "users", "id")
-            ->addForeignKey("user_id", "users", "id")
+        $table->addForeignKey("user_id", "users", "id")
+            ->addForeignKey("owner_id", "users", "id")
             ->save();
     }
 
@@ -35,7 +34,7 @@ class CreateTableContacts extends AbstractMigration
         if ($table_exist)
         {
             $table = $this->table("contacts")
-                ->dropForeignKey(["contact_id", "user_id"])
+                ->dropForeignKey(["user_id", "owner_id"])
                 ->save();
 
             $this->dropTable("contacts");
