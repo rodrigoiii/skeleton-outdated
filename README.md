@@ -13,12 +13,12 @@
     - (ui) decrease notification number of both side
     - (ui) close contact request modal of other side if open
  - send contact request then
-    - (ui) add notification of both side
+    - (ui) add notification of both side - ok
  - accept contact request then
     - (ui) add notification of both side
     - (ui) add contact of both side
     - (ui) close contact request modal of other side if open
- - Read notification
+ - Read notification - ok
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.

@@ -19,7 +19,8 @@ class Emitter
     public function onConnectionEstablish(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
-        $auth_user = User::findByLoginToken($params['login_token']);
+
+        $authUser = User::findByLoginToken($params['login_token']);
 
         $clients = $this->clients;
 
@@ -27,12 +28,12 @@ class Emitter
             if ($client !== $from)
             {
                 // if user have no chat status
-                $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOnline() : ChatStatus::createOnlineUser($auth_user->id);
+                $result = !is_null($authUser->chatStatus) ? $authUser->chatStatus->setAsOnline() : ChatStatus::createOnlineUser($authUser->id);
 
                 $return_data = [
                     'event' => __FUNCTION__,
                     'success' => !is_null($result),
-                    'auth_user_id' => $auth_user->id,
+                    'auth_user_id' => $authUser->id,
                     'token' => User::find($user_id)->login_token
                 ];
 
@@ -44,7 +45,8 @@ class Emitter
     public function onDisconnect(ConnectionInterface $from, $msg)
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
-        $auth_user = User::findByLoginToken($params['login_token']);
+
+        $authUser = User::findByLoginToken($params['login_token']);
 
         $clients = $this->clients;
 
@@ -52,12 +54,12 @@ class Emitter
             if ($client !== $from)
             {
                 // if user have no chat status
-                $result = !is_null($auth_user->chatStatus) ? $auth_user->chatStatus->setAsOffline() : ChatStatus::createOnlineUser($auth_user->id);
+                $result = !is_null($authUser->chatStatus) ? $authUser->chatStatus->setAsOffline() : ChatStatus::createOnlineUser($authUser->id);
 
                 $return_data = [
                     'event' => __FUNCTION__,
                     'success' => !is_null($result),
-                    'auth_user_id' => $auth_user->id,
+                    'auth_user_id' => $authUser->id,
                     'token' => User::find($user_id)->login_token
                 ];
 
@@ -119,7 +121,7 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_user = User::findByLoginToken($params['login_token']);
+        $authUser = User::findByLoginToken($params['login_token']);
         $chattingTo = User::find($msg->chatting_to_id);
 
         // if chatting to is online
@@ -127,7 +129,7 @@ class Emitter
         {
             $return_data = [
                 'event' => __FUNCTION__,
-                'chatting_from_id' => $auth_user->id,
+                'chatting_from_id' => $authUser->id,
                 'chatting_to_id' => $msg->chatting_to_id,
                 'token' => $chattingTo->login_token
             ];
@@ -141,16 +143,15 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_user = User::findByLoginToken($params['login_token']);
+        $authUser = User::findByLoginToken($params['login_token']);
         $chattingTo = User::find($msg->chatting_to_id);
 
         // if chatting to is online
         if (isset($this->clients[$msg->chatting_to_id]))
         {
-            $return_data['event'] = __FUNCTION__;
             $return_data = [
                 'event' => __FUNCTION__,
-                'chatting_from_id' => $auth_user->id,
+                'chatting_from_id' => $authUser->id,
                 'token' => $chattingTo->login_token
             ];
 
@@ -163,16 +164,17 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_user = User::findByLoginToken($params['login_token']);
 
-        $is_read = $auth_user->markUnreadMessageAsRead($msg->chatting_to_id);
+        $authUser = User::findByLoginToken($params['login_token']);
+
+        $is_read = $authUser->markUnreadMessageAsRead($msg->chatting_to_id);
 
         if (!is_null($is_read))
         {
             $return_data = [
                 'event' => __FUNCTION__,
                 'chatting_to_id' => $msg->chatting_to_id,
-                'token' => $auth_user->login_token
+                'token' => $authUser->login_token
             ];
 
             $from->send(json_encode($return_data));
@@ -183,9 +185,9 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_user = User::findByLoginToken($params['login_token']);
+        $authUser = User::findByLoginToken($params['login_token']);
 
-        $conversation = $auth_user->conversation($msg->chatting_to_id)
+        $conversation = $authUser->conversation($msg->chatting_to_id)
                             ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                             ->orderBy('id', "DESC")
                             ->limit(config('sklt-chat.default_conversation_length'))
@@ -197,7 +199,7 @@ class Emitter
         $return_data = [
             'event' => __FUNCTION__,
             'conversation' => $conversation['data'],
-            'token' => $auth_user->login_token
+            'token' => $authUser->login_token
         ];
 
         $from->send(json_encode($return_data));
@@ -207,11 +209,11 @@ class Emitter
     {
         parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $auth_user = User::findByLoginToken($params['login_token']);
+        $authUser = User::findByLoginToken($params['login_token']);
 
         $default_convo_length = config('sklt-chat.default_conversation_length');
 
-        $conversation = $auth_user->conversation($msg->chatting_to_id)
+        $conversation = $authUser->conversation($msg->chatting_to_id)
                             ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                             ->orderBy('id', "DESC")
                             ->offset($default_convo_length * $msg->load_more_counter)
@@ -224,9 +226,43 @@ class Emitter
         $return_data = [
             'event' => __FUNCTION__,
             'conversation' => $conversation['data'],
-            'token' => $auth_user->login_token
+            'token' => $authUser->login_token
         ];
 
         $from->send(json_encode($return_data));
+    }
+
+    public function onRequestContact(ConnectionInterface $from, $msg)
+    {
+        parse_str($from->httpRequest->getUri()->getQuery(), $params);
+
+        $authUser = User::findByLoginToken($params['login_token']);
+        // $chattingTo = User::find($msg->chatting_to_id);
+
+        $authUserNotifications = $authUser->userNotifications()->get();
+
+        $return_data = [
+            'event' => __FUNCTION__,
+            'token' => $authUser->login_token,
+            'notification_num' => $authUserNotifications->count()
+        ];
+
+        $from->send(json_encode($return_data));
+
+        unset($return_data['token']);
+        unset($return_data['notification_num']);
+
+        // if the soon to be contact is online
+        if (isset($this->clients[$msg->contact_id]))
+        {
+            $contact = User::find($msg->contact_id);
+            $contactNotifications = $contact->userNotifications()->get();
+
+            $return_data['token'] = $contact->login_token;
+            $return_data['notification_num'] = $authUserNotifications->count();
+
+            $contactSocket = $this->clients[$msg->contact_id];
+            $contactSocket->send(json_encode($return_data));
+        }
     }
 }

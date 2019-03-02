@@ -20,7 +20,7 @@ class ChatController extends BaseController
         $contacts = $user->officialContactsOfEachOther()->get();
         $contacts = sklt_transformer($contacts, new OfficialContactsTransformer)->toArray()['data'];
 
-        $notifications = $user->userNotification()->get();
+        $notifications = $user->userNotifications()->get();
 
         return $this->view->render($response, "sklt-chat/chat.twig", compact('contacts', 'notifications'));
     }

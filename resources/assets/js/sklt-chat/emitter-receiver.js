@@ -148,6 +148,8 @@ var Emitter = {
   },
 
   onAddContact: function() {
+    var _this = this;
+
     var contact_id = $(this).data('id');
     var tr_el = $(this).closest('tr');
 
@@ -163,6 +165,13 @@ var Emitter = {
 
           case Emitter.TYPE_REQUESTED:
             console.log("requested");
+
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
+
+            Emitter.onRequestContact(contact_id);
+
             break;
         }
 
@@ -185,6 +194,15 @@ var Emitter = {
         console.log(response.message);
       }
     });
+  },
+
+  onRequestContact: function(contact_id) {
+    var msg = {
+      event: WebSocketChat.ON_REQUEST_CONTACT,
+      contact_id: contact_id
+    };
+
+    Emitter.webSocketChat.emitMessage(msg);
   },
 
   onRemoveRequestContact: function() {
@@ -375,6 +393,12 @@ var Receiver = {
         $('.messages ul').prepend('<li class="no-more text-center">No more message.</li>');
       }
     }
+  },
+
+  onRequestContact: function(data) {
+    if (Helper.isTokenValid(data.token)) {
+      Helper.updateNotificationNumber(data.notification_num);
+    }
   }
 };
 
@@ -395,6 +419,17 @@ var Helper = {
 
   getActiveContactId: function() {
     return parseInt($('.contact-profile').data('id'));
+  },
+
+  updateNotificationNumber: function(number) {
+    var notification_el = $('#notification-btn');
+
+    if ($('.badge', notification_el).length > 0) {
+      $('.badge', notification_el).data('count', number);
+      $('.badge', notification_el).text(number);
+    } else {
+      notification_el.html('<span class="badge" data-count="'+number+'">'+number+'</span>');
+    }
   }
 };
 

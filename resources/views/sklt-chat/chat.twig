@@ -138,75 +138,78 @@
     <script type="text/template" id="contact-request-tmpl">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-
-                <% if (!_.isEmpty(user_requests)) { %>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">My Request</h1>
-                        </div>
-                        <table class="table table-hover table-condensed table-striped table-bordered">
-                            <thead>
-                                <tr class="bg-info">
-                                    <th colspan="2" class="text-center">Info</th>
-                                    <th>Request At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% _.each(user_requests, function(request) { %>
-                                    <tr>
-                                        <td>
-                                            <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
-                                        </td>
-                                        <td>
-                                            <p class="contact-fullname"><%= request.user.full_name %></p>
-                                        </td>
-                                        <td>
-                                            <span class="badge"><%= request.requested_at.date %></span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-warning btn-xs remove-request-btn" data-id="<%= request.id %>">Remove</button>
-                                        </td>
+                <% if (_.isEmpty(user_requests) && _.isEmpty(contact_requests)) { %>
+                    <p>No contact requests</p>
+                <% } else { %>
+                    <% if (!_.isEmpty(user_requests)) { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">My Request</h1>
+                            </div>
+                            <table class="table table-hover table-condensed table-striped table-bordered">
+                                <thead>
+                                    <tr class="bg-info">
+                                        <th colspan="2" class="text-center">Info</th>
+                                        <th>Request At</th>
+                                        <th>Action</th>
                                     </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                <% } %>
-
-                <% if (!_.isEmpty(contact_requests)) { %>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h1 class="panel-title">Contacts Request</h1>
+                                </thead>
+                                <tbody>
+                                    <% _.each(user_requests, function(request) { %>
+                                        <tr>
+                                            <td>
+                                                <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
+                                            </td>
+                                            <td>
+                                                <p class="contact-fullname"><%= request.user.full_name %></p>
+                                            </td>
+                                            <td>
+                                                <span class="badge"><%= request.requested_at.date %></span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-warning btn-xs remove-request-btn" data-id="<%= request.id %>">Remove</button>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
                         </div>
-                        <table class="table table-hover table-condensed table-striped table-bordered">
-                            <thead>
-                                <tr class="bg-info">
-                                    <th colspan="2" class="text-center">Info</th>
-                                    <th>Request At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% _.each(contact_requests, function(request) { %>
-                                    <tr>
-                                        <td>
-                                            <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
-                                        </td>
-                                        <td>
-                                            <p class="contact-fullname"><%= request.user.full_name %></p>
-                                        </td>
-                                        <td>
-                                            <span class="badge"><%= request.requested_at.date %></span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary btn-xs" data-id="<%= request.id %>">Accept</button>
-                                        </td>
+                    <% } %>
+
+                    <% if (!_.isEmpty(contact_requests)) { %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title">Contacts Request</h1>
+                            </div>
+                            <table class="table table-hover table-condensed table-striped table-bordered">
+                                <thead>
+                                    <tr class="bg-info">
+                                        <th colspan="2" class="text-center">Info</th>
+                                        <th>Request At</th>
+                                        <th>Action</th>
                                     </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    <% _.each(contact_requests, function(request) { %>
+                                        <tr>
+                                            <td>
+                                                <img src="<%= request.user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
+                                            </td>
+                                            <td>
+                                                <p class="contact-fullname"><%= request.user.full_name %></p>
+                                            </td>
+                                            <td>
+                                                <span class="badge"><%= request.requested_at.date %></span>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary btn-xs" data-id="<%= request.id %>">Accept</button>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } %>
                 <% } %>
             </div>
         </div>
@@ -224,7 +227,7 @@
                     </td>
                     <td>
                         <button class="btn btn-primary btn-xs add-contact" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-id="<%= contact.id %>">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Add
+                            <span class="glyphicon glyphicon-plus-sign"></span> Add Contact
                         </button>
                     </td>
                 </tr>

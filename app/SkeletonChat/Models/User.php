@@ -82,6 +82,7 @@ class User extends Model
         // if contact to be add has pending request
         if (!is_null($pending_request))
         {
+            // accept the contact request
             if ($pending_request->markAsAccepted())
             {
                 Notification::createAcceptedNotification($this->id, $contact_id);
@@ -90,6 +91,7 @@ class User extends Model
         }
         else
         {
+            // send contact request
             $contact = Contact::create([
                 'contact_id' => $contact_id,
                 'user_id' => $this->id
@@ -127,7 +129,7 @@ class User extends Model
         return Contact::where('contact_id', $this->id)->notYetAccepted();
     }
 
-    public function userNotification()
+    public function userNotifications()
     {
         return Notification::where('by_id', $this->id)
                 ->where('is_read_by', Notification::IS_NOT_YET_READ)
