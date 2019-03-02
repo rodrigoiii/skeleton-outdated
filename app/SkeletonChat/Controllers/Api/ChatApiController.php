@@ -19,14 +19,15 @@ class ChatApiController extends BaseController
 
         $keyword = $request->getParam('keyword');
 
-        $office_contact_ids = $user->officialContacts->pluck('contact_id')->toArray();
-        $user_requests_ids = $user->userRequests->pluck('contact_id')->toArray();
+        $official_contact_ids = $user->officialContactsOfEachOther()->pluck('contact_id')->toArray();
+        $user_requests_ids = $user->userRequests()->pluck('contact_id')->toArray();
 
-        $ignore_user_ids = array_flatten([$office_contact_ids, $user_requests_ids, $user->id]);
+        $ignore_user_ids = array_flatten([$official_contact_ids, $user_requests_ids, $user->id]);
 
         $results = User::search($keyword)
                     ->select(\DB::raw("id, picture, first_name, last_name"))
-                    ->whereNotIn('id', $ignore_user_ids)->get();
+                    ->whereNotIn('id', $ignore_user_ids)
+                    ->get();
 
         return $response->withJson([
             'success' => true,
