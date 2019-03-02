@@ -85,7 +85,7 @@ var Chat = {
   },
 
   showPendingRequest: function() {
-    Chat.chatApi.getPendingRequest(function(response) {
+    Chat.chatApi.getContactRequest(function(response) {
       if (response.success) {
         var tmpl = _.template($('#contact-request-tmpl').html());
 

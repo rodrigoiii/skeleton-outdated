@@ -8,7 +8,11 @@
  - Load more message - ok
  - Accept contact request.
  - Remove user request
- - notification number
+ - notification number - ok
+ - send contact request then add notification
+ - accept contact request then
+    - add notification
+    - add contact
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.

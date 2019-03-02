@@ -8,8 +8,8 @@ ChatApi.prototype.searchContacts = function(keyword, callback) {
   $.get("/api/chat-application/search-contacts?keyword=" + keyword + "&login_token=" + this.login_token, callback);
 };
 
-ChatApi.prototype.getPendingRequest = function(callback) {
-  $.get("/api/chat-application/pending-requests?login_token=" + this.login_token, callback);
+ChatApi.prototype.getContactRequest = function(callback) {
+  $.get("/api/chat-application/contact-requests?login_token=" + this.login_token, callback);
 };
 
 ChatApi.prototype.addContact = function(contact_id, callback) {

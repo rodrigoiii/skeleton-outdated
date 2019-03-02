@@ -35,7 +35,7 @@ class ChatApiController extends BaseController
         ]);
     }
 
-    public function pendingRequests(Request $request, Response $response)
+    public function contactRequests(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
         $user = User::findByLoginToken($login_token);
