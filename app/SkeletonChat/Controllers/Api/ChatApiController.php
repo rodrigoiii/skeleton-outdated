@@ -4,7 +4,7 @@ namespace SkeletonChatApp\Controllers\Api;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use SkeletonChatApp\Models\Contact;
+use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsPendingRequestTransformer;
 use SkeletonChatApp\Transformers\PendingRequestTransformer;
@@ -58,19 +58,19 @@ class ChatApiController extends BaseController
         $contact_type = $user->addContact($contact_id);
 
         switch ($contact_type) {
-            case Contact::TYPE_ACCEPTED:
+            case Notification::TYPE_ACCEPTED:
                 $data = [
                     'success' => true,
                     'message' => "Successfully add contact.",
-                    'type' => Contact::TYPE_ACCEPTED
+                    'type' => Notification::TYPE_ACCEPTED
                 ];
                 break;
 
-            case Contact::TYPE_REQUESTED:
+            case Notification::TYPE_REQUESTED:
                 $data = [
                     'success' => true,
                     'message' => "Successfully send request.",
-                    'type' => Contact::TYPE_REQUESTED
+                    'type' => Notification::TYPE_REQUESTED
                 ];
                 break;
 

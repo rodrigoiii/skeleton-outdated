@@ -11,9 +11,6 @@ class Contact extends Model
     const IS_ACCEPTED = 1;
     const IS_NOT_YET_ACCEPTED = 0;
 
-    const TYPE_ACCEPTED = "accepted";
-    const TYPE_REQUESTED = "requested";
-
     public function user()
     {
         return $this->belongsTo("SkeletonChatApp\Models\User");

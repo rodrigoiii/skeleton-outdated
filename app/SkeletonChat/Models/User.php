@@ -5,6 +5,7 @@ namespace SkeletonChatApp\Models;
 use Illuminate\Database\Eloquent\Model;
 use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\Message;
+use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Traits\FullTextSearch;
 
 class User extends Model
@@ -79,7 +80,7 @@ class User extends Model
         // if contact to be add has pending request
         if (!is_null($pending_request))
         {
-            $result = $pending_request->accepted() ? Contact::TYPE_ACCEPTED : false;
+            $result = $pending_request->accepted() ? Notification::TYPE_ACCEPTED : false;
         }
         else
         {
@@ -88,7 +89,7 @@ class User extends Model
                 'user_id' => $this->id
             ]);
 
-            $result = $contact instanceof Contact ? Contact::TYPE_REQUESTED : false;
+            $result = $contact instanceof Contact ? Notification::TYPE_REQUESTED : false;
         }
 
         return $result;
