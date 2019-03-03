@@ -8,7 +8,7 @@ use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\SendMessageTransformer;
 
-class Emitter
+class EventHandler
 {
     protected $clients;
 

@@ -6,7 +6,7 @@ use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use SkeletonChatApp\Models\User;
 
-class Chat extends Emitter implements MessageComponentInterface {
+class Chat extends EventHandler implements MessageComponentInterface {
 
     public function __construct() {
         parent::__construct();
