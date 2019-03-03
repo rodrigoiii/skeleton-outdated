@@ -194,7 +194,7 @@ class Emitter
                             ->get()
                             ->sortBy('id');
 
-        // $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
         $return_data = [
             'event' => __FUNCTION__,
