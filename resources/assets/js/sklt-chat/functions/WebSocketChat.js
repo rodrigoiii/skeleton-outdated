@@ -1,4 +1,4 @@
-function WebSocketChat(Receiver, host, port, login_token) {
+function WebSocketChat(EventHandler, host, port, login_token) {
   var webSocket = new WebSocket("ws://" + host + ":" + port + "?login_token=" + login_token);
 
   webSocket.onopen = function(e) {
@@ -12,7 +12,7 @@ function WebSocketChat(Receiver, host, port, login_token) {
     delete parse_data.event;
 
     console.log(event, parse_data);
-    Receiver[event](parse_data);
+    EventHandler[event](parse_data);
   };
 
   this.webSocket = webSocket;
