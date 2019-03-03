@@ -48,23 +48,12 @@ var Chat = {
 
   onReadMessage: function() {
     var chatting_to_id = $(this).data('id');
+    var contact_el = $('#contacts .contact[data-id="'+chatting_to_id+'"]');
+    var unread_number_el = $('.meta .name .unread-number', contact_el);
 
     $('.messages').addClass("invisible");
 
-    // Chat.webSocketChat.emitMessage({
-    //   event: WebSocketChat.ON_READ_MESSAGE,
-    //   chatting_to_id: user_id
-    // });
-
-    // Chat.webSocketChat.emitMessage({
-    //   event: WebSocketChat.ON_FETCH_MESSAGE,
-    //   chatting_to_id: user_id
-    // });
-
     Chat.resetLoadMorePage();
-
-    var contact_el = $('#contacts .contact[data-id="'+chatting_to_id+'"]');
-    var unread_number_el = $('.meta .name .unread-number', contact_el);
 
     if (parseInt(unread_number_el.data('unread-number')) > 0) {
       Chat.chatApi.readMessages(chatting_to_id, function(response) {
