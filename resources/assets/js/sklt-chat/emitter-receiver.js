@@ -150,59 +150,60 @@ var Emitter = {
   onAddContact: function() {
     var _this = this;
 
-    var contact_id = $(this).data('id');
+    var user_id = $(this).data('user-id');
     var tr_el = $(this).closest('tr');
 
-    $(this).prop('disabled', true);
-    $(this).button('loading');
+    // $(this).prop('disabled', true);
+    // $(this).button('loading');
 
-    Emitter.chatApi.addContact(contact_id, function(response) {
-      if (response.success) {
-        switch(response.type) {
-          case Emitter.TYPE_ACCEPTED:
-            console.log("accepted");
+    Emitter.chatApi.addContact(user_id, function(response) {
+      console.log(response);
+      // if (response.success) {
+      //   switch(response.type) {
+      //     case Emitter.TYPE_ACCEPTED:
+      //       console.log("accepted");
 
-            $(_this).prop('disabled', false);
-            $(_this).button('reset');
-            bootbox.hideAll();
+      //       $(_this).prop('disabled', false);
+      //       $(_this).button('reset');
+      //       bootbox.hideAll();
 
-            Helper.addContactItem({
-              'user': _.extend(response.user, {id: contact_id})
-            });
+      //       Helper.addContactItem({
+      //         'user': _.extend(response.user, {id: contact_id})
+      //       });
 
-            // Emitter.onAcceptContact(contact_id);
-            break;
+      //       // Emitter.onAcceptContact(contact_id);
+      //       break;
 
-          case Emitter.TYPE_REQUESTED:
-            console.log("requested");
+      //     case Emitter.TYPE_REQUESTED:
+      //       console.log("requested");
 
-            $(_this).prop('disabled', false);
-            $(_this).button('reset');
-            bootbox.hideAll();
+      //       $(_this).prop('disabled', false);
+      //       $(_this).button('reset');
+      //       bootbox.hideAll();
 
-            Emitter.onRequestContact(contact_id);
+      //       Emitter.onRequestContact(contact_id);
 
-            break;
-        }
+      //       break;
+      //   }
 
-        // var tmpl = _.template($('#contact-item-tmpl').html());
-        // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+      //   // var tmpl = _.template($('#contact-item-tmpl').html());
+      //   // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
 
-        // var template = tmpl({
-        //   picture: $('.contact-picture', tr_el).attr('src'),
-        //   fullname: $('.contact-fullname', tr_el).text()
-        // });
+      //   // var template = tmpl({
+      //   //   picture: $('.contact-picture', tr_el).attr('src'),
+      //   //   fullname: $('.contact-fullname', tr_el).text()
+      //   // });
 
-        // if (is_contacts_empty) {
-        //   $('#contacts ul').html(template);
-        // } else {
-        //   $('#contacts ul').prepend(template);
-        // }
+      //   // if (is_contacts_empty) {
+      //   //   $('#contacts ul').html(template);
+      //   // } else {
+      //   //   $('#contacts ul').prepend(template);
+      //   // }
 
-        // bootbox.hideAll();
-      } else {
-        console.log(response.message);
-      }
+      //   // bootbox.hideAll();
+      // } else {
+      //   console.log(response.message);
+      // }
     });
   },
 

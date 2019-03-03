@@ -60,7 +60,7 @@ var Chat = {
         var tmpl = _.template($('#result-contacts-tmpl').html());
 
         $('.add-contact-modal table tbody').html(tmpl({
-          result_contacts: response.data
+          result_users: response.data
         }));
       } else {
         console.log(response.message);

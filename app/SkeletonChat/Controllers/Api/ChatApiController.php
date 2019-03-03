@@ -5,6 +5,7 @@ namespace SkeletonChatApp\Controllers\Api;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonChatApp\Models\Contact;
+use SkeletonChatApp\Models\ContactRequest;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsRequestTransformer;
@@ -20,10 +21,11 @@ class ChatApiController extends BaseController
 
         $keyword = $request->getParam('keyword');
 
-        $official_contact_ids = $user->officialContactsOfEachOther()->pluck('contact_id')->toArray();
-        $user_requests_ids = $user->userRequests()->pluck('contact_id')->toArray();
+        $contact_ids = $user->contactsBothUser()->pluck('user_id')->toArray();
+        $contact_requests_ids = $user->contact_requests()->pluck('to_id')->toArray();
 
-        $ignore_user_ids = array_flatten([$official_contact_ids, $user_requests_ids, $user->id]);
+        // make it unsearchable
+        $ignore_user_ids = array_flatten([$contact_ids, $contact_requests_ids, $user->id]);
 
         $results = User::search($keyword)
                     ->select(\DB::raw("id, picture, first_name, last_name"))
@@ -36,50 +38,50 @@ class ChatApiController extends BaseController
         ]);
     }
 
-    public function contactRequests(Request $request, Response $response)
-    {
-        $login_token = $request->getParam('login_token');
-        $user = User::findByLoginToken($login_token);
+    // public function contactRequests(Request $request, Response $response)
+    // {
+    //     $login_token = $request->getParam('login_token');
+    //     $user = User::findByLoginToken($login_token);
 
-        // $user_requests = sklt_transformer($user->userRequests()->get(), new UserRequestTransformer)->toArray();
-        // $contact_requests = sklt_transformer($user->contactRequests()->get(), new ContactsRequestTransformer)->toArray();
+    //     // $user_requests = sklt_transformer($user->userRequests()->get(), new UserRequestTransformer)->toArray();
+    //     // $contact_requests = sklt_transformer($user->contactRequests()->get(), new ContactsRequestTransformer)->toArray();
 
-        return $response->withJson([
-            'success' => true,
-            'user_requests' => $user_requests['data'],
-            'contact_requests' => $contact_requests['data']
-        ]);
-    }
+    //     return $response->withJson([
+    //         'success' => true,
+    //         'user_requests' => $user_requests['data'],
+    //         'contact_requests' => $contact_requests['data']
+    //     ]);
+    // }
 
     public function addContact(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
-        $contact_id = $request->getParam('contact_id'); // Column contact_id of contacts table
+        $user_id = $request->getParam('user_id');
 
         $user = User::findByLoginToken($login_token);
 
-        $contact_type = $user->addContact($contact_id);
+        $contact_type = $user->addContact($user_id);
 
         switch ($contact_type) {
-            case Notification::TYPE_ACCEPTED:
-                $contact = User::find($contact_id);
+            case ContactRequest::TYPE_ACCEPTED:
+                $user = User::find($user_id);
 
                 $data = [
                     'success' => true,
                     'message' => "Successfully add contact.",
-                    'type' => Notification::TYPE_ACCEPTED,
+                    'type' => ContactRequest::TYPE_ACCEPTED,
                     'user' => [
-                        'picture' => $contact->picture,
-                        'full_name' => $contact->getFullName()
+                        'picture' => $user->picture,
+                        'full_name' => $user->getFullName()
                     ]
                 ];
                 break;
 
-            case Notification::TYPE_REQUESTED:
+            case ContactRequest::TYPE_REQUESTED:
                 $data = [
                     'success' => true,
                     'message' => "Successfully send request.",
-                    'type' => Notification::TYPE_REQUESTED
+                    'type' => ContactRequest::TYPE_REQUESTED
                 ];
                 break;
 

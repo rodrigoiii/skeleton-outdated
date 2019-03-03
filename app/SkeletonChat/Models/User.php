@@ -29,6 +29,11 @@ class User extends Model
         return $this->hasOne("SkeletonChatApp\Models\ChatStatus");
     }
 
+    public function contact_requests()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id");
+    }
+
     // public function contacts()
     // {
     //     return $this->hasMany("SkeletonChatApp\Models\Contact");
@@ -71,18 +76,51 @@ class User extends Model
             ->update(['is_read' => 1]);
     }
 
-    public function contactsBothOfUser()
+    public function contactsBothUser()
     {
         return Contact::where('user_id', $this->id)
                 ->orWhere('owner_id', $this->id);
     }
 
-    public function contactRequestsBothOfUser()
+    public function contactRequestsBothUser()
     {
         return ContactRequest::where('by_id', $this->id)
                 ->where('is_read_by', ContactRequest::IS_NOT_YET_READ)
                 ->orWhere('to_id', $this->id)
                 ->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
+    }
+
+    public function addContact($user_id)
+    {
+        $contact_request = $this->contact_requests()
+                                ->notYetAccepted()
+                                ->where('to_id', $user_id)
+                                ->first();
+
+        $result = false;
+
+        // if contact to be add has pending request
+        if (!is_null($contact_request))
+        {
+            // accept the contact request
+            if ($contact_request->markAsAccepted())
+            {
+                // Notification::createAcceptedNotification($this->id, $user_id);
+                $result = ContactRequest::TYPE_ACCEPTED;
+            }
+        }
+        else
+        {
+            // send contact request
+            $contactRequest = ContactRequest::create([
+                'by_id' => $this->id,
+                'to_id' => $user_id
+            ]);
+
+            $result = ContactRequest::TYPE_REQUESTED;
+        }
+
+        return $result;
     }
 
     // public function addContact($contact_id)

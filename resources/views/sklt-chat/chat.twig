@@ -19,15 +19,6 @@
                 <div class="wrap">
                     <img id="profile-img" src="{{ authUserChat.picture }}" class="online" alt="" />
                     <p>{{ authUserChat.getFullName() }}</p>
-
-                    <!-- <div id="expanded">
-                        <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mikeross" />
-                        <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="ross81" />
-                        <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                        <input name="twitter" type="text" value="mike.ross" />
-                    </div> -->
                 </div>
             </div>
             {% if contacts.count() > 5 %}
@@ -138,6 +129,32 @@
         </div>
     </script>
 
+    <script type="text/template" id="result-contacts-tmpl">
+        <% if (!_.isEmpty(result_users)) { %>
+            <% _.each(result_users, function(user) { %>
+                <tr>
+                    <td>
+                        <img src="<%= user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
+                    </td>
+                    <td>
+                        <p class="contact-fullname"><%= user.first_name + " " + user.last_name %></p>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-xs add-contact" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-user-id="<%= user.id %>">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Add Contact
+                        </button>
+                    </td>
+                </tr>
+            <% }); %>
+        <% } else { %>
+            <tr>
+                <td>
+                    <p>No contact found</p>
+                </td>
+            </tr>
+        <% } %>
+    </script>
+
     <script type="text/template" id="contact-request-tmpl">
         <div class="row">
             <div class="col-md-12">
@@ -216,32 +233,6 @@
                 <% } %>
             </div>
         </div>
-    </script>
-
-    <script type="text/template" id="result-contacts-tmpl">
-        <% if (!_.isEmpty(result_contacts)) { %>
-            <% _.each(result_contacts, function(contact) { %>
-                <tr>
-                    <td>
-                        <img src="<%= contact.picture %>" class="img-responsive contact-picture" alt="" width="50" />
-                    </td>
-                    <td>
-                        <p class="contact-fullname"><%= contact.first_name + " " + contact.last_name %></p>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-xs add-contact" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-id="<%= contact.id %>">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Add Contact
-                        </button>
-                    </td>
-                </tr>
-            <% }); %>
-        <% } else { %>
-            <tr>
-                <td>
-                    <p>No contact found</p>
-                </td>
-            </tr>
-        <% } %>
     </script>
 
     <script type="text/template" id="contact-item-tmpl">
