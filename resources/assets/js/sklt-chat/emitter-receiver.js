@@ -55,7 +55,6 @@ var Emitter = {
       var has_unread_message = $('#contacts .contact.active .wrap .name .unread-number').text() !== "";
 
       if (has_unread_message) {
-        console.log("fdsa");
         Emitter.webSocketChat.emitMessage({
           event: WebSocketChat.ON_READ_MESSAGE,
           chatting_to_id: Helper.getActiveContactId()

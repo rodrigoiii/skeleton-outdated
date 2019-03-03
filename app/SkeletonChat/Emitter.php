@@ -82,7 +82,7 @@ class Emitter
 
         if ($sentMessage)
         {
-            // $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
+            $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
 
             // self
             $return_data = [

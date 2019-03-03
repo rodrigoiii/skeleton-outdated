@@ -14,6 +14,7 @@ use SkeletonCore\BaseController;
 
 class ChatApiController extends BaseController
 {
+    // ok
     public function searchContacts(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
@@ -53,6 +54,7 @@ class ChatApiController extends BaseController
     //     ]);
     // }
 
+    // ok
     public function addContactRequest(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
