@@ -156,7 +156,7 @@ var Emitter = {
     $(this).prop('disabled', true);
     $(this).button('loading');
 
-    Emitter.chatApi.addContact(user_id, function(response) {
+    Emitter.chatApi.addContactRequest(user_id, function(response) {
       console.log(response);
       if (response.success) {
         switch(response.type) {

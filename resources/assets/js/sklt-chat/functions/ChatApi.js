@@ -12,12 +12,12 @@ ChatApi.prototype.getContactRequest = function(callback) {
   $.get("/api/chat-application/contact-requests?login_token=" + this.login_token, callback);
 };
 
-ChatApi.prototype.addContact = function(user_id, callback) {
+ChatApi.prototype.addContactRequest = function(user_id, callback) {
   var params = {
     user_id: user_id,
     login_token: this.login_token
   };
-  $.post("/api/chat-application/add-contact", params, callback);
+  $.post("/api/chat-application/add-contact-request", params, callback);
 };
 
 ChatApi.prototype.removeRequest = function(contact_id, callback) {

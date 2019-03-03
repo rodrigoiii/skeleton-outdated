@@ -95,7 +95,7 @@ class User extends Model
                 ->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
     }
 
-    public function addContact($user_id)
+    public function addContactRequest($user_id)
     {
         $contactRequest = $this->contact_requests_from()
                                 ->notYetAccepted()
@@ -110,7 +110,8 @@ class User extends Model
             // accept the contact request
             if ($contactRequest->markAsAccepted())
             {
-                // Notification::createAcceptedNotification($this->id, $user_id);
+                $this->addContact($user_id);
+
                 $contactRequest->markAsUnread();
                 $result = ContactRequest::TYPE_ACCEPTED;
             }
@@ -127,6 +128,14 @@ class User extends Model
         }
 
         return $result;
+    }
+
+    public function addContact($user_id)
+    {
+        return Contact::create([
+            'user_id' => $user_id,
+            'owner_id' => $this->id
+        ]);
     }
 
     // public function addContact($contact_id)

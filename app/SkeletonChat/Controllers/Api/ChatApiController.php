@@ -53,14 +53,14 @@ class ChatApiController extends BaseController
     //     ]);
     // }
 
-    public function addContact(Request $request, Response $response)
+    public function addContactRequest(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
         $user_id = $request->getParam('user_id');
 
         $user = User::findByLoginToken($login_token);
 
-        $contact_type = $user->addContact($user_id);
+        $contact_type = $user->addContactRequest($user_id);
 
         switch ($contact_type) {
             case ContactRequest::TYPE_ACCEPTED:
