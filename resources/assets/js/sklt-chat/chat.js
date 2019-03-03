@@ -20,8 +20,12 @@ var Chat = {
   webSocketChat: null,
   chatApi: null,
 
+  load_more_page: 0,
+
   init: function() {
     Chat.chatApi = new ChatApi(sklt_chat.login_token);
+
+    $('#contacts').on('click', '.contact:not(".active")', Chat.onReadMessage);
 
     $('#add-contact-btn').click(Chat.onSearchContact);
     $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
@@ -33,9 +37,65 @@ var Chat = {
     // Chat.scrollMessage();
   },
 
-  scrollMessage: function() {
+  resetLoadMorePage: function() {
+    Chat.load_more_page = 0;
+  },
+
+  scrollMessage: function(callback) {
     var bottom = $('.messages').prop('scrollHeight');
-    $('.messages').animate({ scrollTop: bottom });
+    $('.messages').animate({ scrollTop: bottom }, "fast", callback);
+  },
+
+  onReadMessage: function() {
+    var chatting_to_id = $(this).data('id');
+
+    $('.messages').addClass("invisible");
+
+    // Chat.webSocketChat.emitMessage({
+    //   event: WebSocketChat.ON_READ_MESSAGE,
+    //   chatting_to_id: user_id
+    // });
+
+    // Chat.webSocketChat.emitMessage({
+    //   event: WebSocketChat.ON_FETCH_MESSAGE,
+    //   chatting_to_id: user_id
+    // });
+
+    Chat.resetLoadMorePage();
+
+    var contact_el = $('#contacts .contact[data-id="'+chatting_to_id+'"]');
+    var unread_number_el = $('.meta .name .unread-number', contact_el);
+
+    if (parseInt(unread_number_el.data('unread-number')) > 0) {
+      Chat.chatApi.readMessages(chatting_to_id, function(response) {
+        if (response.success) {
+          unread_number_el.text("");
+        }
+      });
+    }
+
+    Chat.chatApi.fetchMessages(chatting_to_id, function(response) {
+      if (response.success) {
+        if (response.conversation.length > 0) {
+          if ($('.messages').hasClass("no-message")) {
+            $('.messages').removeClass("no-message");
+          }
+
+          var tmpl = _.template($('#messages-item-tmpl').html());
+          $('.messages').html('<ul>'+tmpl({conversation: response.conversation})+'</ul>');
+        } else {
+          if (!$('.messages').hasClass("no-message")) {
+            $('.messages').addClass("no-message");
+          }
+
+          $('.messages').html('<p>No conversation yet</p>');
+        }
+
+        Chat.scrollMessage(function() {
+          $('.messages').removeClass("invisible");
+        });
+      }
+    });
   },
 
   onSearchContact: function() {

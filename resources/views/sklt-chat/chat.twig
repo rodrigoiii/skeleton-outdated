@@ -43,7 +43,7 @@
                                         <p class="name">
                                             {{ contact.user.full_name }}
 
-                                            <b class="unread-number">
+                                            <b class="unread-number" data-unread-number="{{ authUserChat.numberOfUnread(contact.user.id) }}">
                                                 {% if authUserChat.numberOfUnread(contact.user.id) > 0 %}
                                                     ({{ authUserChat.numberOfUnread(contact.user.id) }})
                                                 {% endif %}

@@ -9,13 +9,16 @@ api_image_generator($this);
 (new SkeletonAuthApp\Auth($this))->apiRoutes();
 
 $this->group('/chat-application', function() {
+    $this->put('/read-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "readMessages"]);
+    $this->get('/fetch-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "fetchMessages"]);
+
     $this->get('/search-contacts', ["SkeletonChatApp\\Api\\ChatApiController", "searchContacts"]);
     $this->get('/contact-requests', ["SkeletonChatApp\\Api\\ChatApiController", "contactRequests"]);
     $this->post('/add-contact-request', ["SkeletonChatApp\\Api\\ChatApiController", "addContactRequest"]);
-    $this->delete('/remove-request/{contact_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeRequest"]);
+    // $this->delete('/remove-request/{contact_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeRequest"]);
 
-    $this->put('/read-notification', ["SkeletonChatApp\\Api\\ChatApiController", "readNotification"]);
-    $this->delete('/remove-notification/{notification_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeNotification"]);
+    // $this->put('/read-notification', ["SkeletonChatApp\\Api\\ChatApiController", "readNotification"]);
+    // $this->delete('/remove-notification/{notification_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeNotification"]);
 })
 ->add("SkeletonChatApp\\Api\\UserApiMiddleware")
 ->add("XhrMiddleware");

@@ -160,50 +160,50 @@ class Emitter
         }
     }
 
-    public function onReadMessage(ConnectionInterface $from, $msg)
-    {
-        parse_str($from->httpRequest->getUri()->getQuery(), $params);
+    // public function onReadMessage(ConnectionInterface $from, $msg)
+    // {
+    //     parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
 
-        $authUser = User::findByLoginToken($params['login_token']);
+    //     $authUser = User::findByLoginToken($params['login_token']);
 
-        $is_read = $authUser->markUnreadMessageAsRead($msg->chatting_to_id);
+    //     $is_read = $authUser->markUnreadMessageAsRead($msg->chatting_to_id);
 
-        if (!is_null($is_read))
-        {
-            $return_data = [
-                'event' => __FUNCTION__,
-                'chatting_to_id' => $msg->chatting_to_id,
-                'token' => $authUser->login_token
-            ];
+    //     if (!is_null($is_read))
+    //     {
+    //         $return_data = [
+    //             'event' => __FUNCTION__,
+    //             'chatting_to_id' => $msg->chatting_to_id,
+    //             'token' => $authUser->login_token
+    //         ];
 
-            $from->send(json_encode($return_data));
-        }
-    }
+    //         $from->send(json_encode($return_data));
+    //     }
+    // }
 
-    public function onFetchMessage(ConnectionInterface $from, $msg)
-    {
-        parse_str($from->httpRequest->getUri()->getQuery(), $params);
+    // public function onFetchMessage(ConnectionInterface $from, $msg)
+    // {
+    //     parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $authUser = User::findByLoginToken($params['login_token']);
+    //     $authUser = User::findByLoginToken($params['login_token']);
 
-        $conversation = $authUser->conversation($msg->chatting_to_id)
-                            ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
-                            ->orderBy('id', "DESC")
-                            ->limit(config('sklt-chat.default_conversation_length'))
-                            ->get()
-                            ->sortBy('id');
+    //     $conversation = $authUser->conversation($msg->chatting_to_id)
+    //                         ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
+    //                         ->orderBy('id', "DESC")
+    //                         ->limit(config('sklt-chat.default_conversation_length'))
+    //                         ->get()
+    //                         ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+    //     $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
-        $return_data = [
-            'event' => __FUNCTION__,
-            'conversation' => $conversation['data'],
-            'token' => $authUser->login_token
-        ];
+    //     $return_data = [
+    //         'event' => __FUNCTION__,
+    //         'conversation' => $conversation['data'],
+    //         'token' => $authUser->login_token
+    //     ];
 
-        $from->send(json_encode($return_data));
-    }
+    //     $from->send(json_encode($return_data));
+    // }
 
     public function onLoadMoreMessages(ConnectionInterface $from, $msg)
     {
@@ -221,7 +221,7 @@ class Emitter
                             ->get()
                             ->sortBy('id');
 
-        // $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
         $return_data = [
             'event' => __FUNCTION__,

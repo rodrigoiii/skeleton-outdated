@@ -27,7 +27,7 @@ var Emitter = {
     $('.message-input :input[name="message"]').on('keyup', Emitter.onTyping);
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Emitter.onStopTyping, 1500));
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
-    $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
+    // $('#contacts').on('click', '.contact:not(".active")', Emitter.onReadMessage);
     $('.messages').scroll(Emitter.onLoadMoreMessages);
 
     $('body').on('click', ".add-contact-modal .add-contact, .show-contact-requests .accept-request", Emitter.onAddContact);
@@ -100,22 +100,22 @@ var Emitter = {
     }
   },
 
-  onReadMessage: function() {
-    var user_id = $(this).data('id');
+  // onReadMessage: function() {
+  //   var user_id = $(this).data('id');
 
-    $('.messages').addClass("invisible");
-    Emitter.load_more_counter = 0;
+  //   $('.messages').addClass("invisible");
+  //   Emitter.load_more_counter = 0;
 
-    Emitter.webSocketChat.emitMessage({
-      event: WebSocketChat.ON_READ_MESSAGE,
-      chatting_to_id: user_id
-    });
+  //   Emitter.webSocketChat.emitMessage({
+  //     event: WebSocketChat.ON_READ_MESSAGE,
+  //     chatting_to_id: user_id
+  //   });
 
-    Emitter.webSocketChat.emitMessage({
-      event: WebSocketChat.ON_FETCH_MESSAGE,
-      chatting_to_id: user_id
-    });
-  },
+  //   Emitter.webSocketChat.emitMessage({
+  //     event: WebSocketChat.ON_FETCH_MESSAGE,
+  //     chatting_to_id: user_id
+  //   });
+  // },
 
   onHitEnter: function(e) {
     var ENTER_KEYCODE = 13;
@@ -374,35 +374,35 @@ var Receiver = {
     }
   },
 
-  onReadMessage: function(data) {
-    if (Helper.isTokenValid(data.token)) {
-      var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
-      $('.meta .name .unread-number', contact_el).text("");
-    }
-  },
+  // onReadMessage: function(data) {
+  //   if (Helper.isTokenValid(data.token)) {
+  //     var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
+  //     $('.meta .name .unread-number', contact_el).text("");
+  //   }
+  // },
 
-  onFetchMessage: function(data) {
-    if (Helper.isTokenValid(data.token)) {
-      if (data.conversation.length > 0) {
-        if ($('.messages').hasClass("no-message")) {
-          $('.messages').removeClass("no-message");
-        }
+  // onFetchMessage: function(data) {
+  //   if (Helper.isTokenValid(data.token)) {
+  //     if (data.conversation.length > 0) {
+  //       if ($('.messages').hasClass("no-message")) {
+  //         $('.messages').removeClass("no-message");
+  //       }
 
-        var tmpl = _.template($('#messages-item-tmpl').html());
-        $('.messages').html('<ul>'+tmpl({conversation: data.conversation})+'</ul>');
-      } else {
-        if (!$('.messages').hasClass("no-message")) {
-          $('.messages').addClass("no-message");
-        }
+  //       var tmpl = _.template($('#messages-item-tmpl').html());
+  //       $('.messages').html('<ul>'+tmpl({conversation: data.conversation})+'</ul>');
+  //     } else {
+  //       if (!$('.messages').hasClass("no-message")) {
+  //         $('.messages').addClass("no-message");
+  //       }
 
-        $('.messages').html('<p>No conversation yet</p>');
-      }
+  //       $('.messages').html('<p>No conversation yet</p>');
+  //     }
 
-      Helper.scrollMessage(function() {
-        $('.messages').removeClass("invisible");
-      });
-    }
-  },
+  //     Helper.scrollMessage(function() {
+  //       $('.messages').removeClass("invisible");
+  //     });
+  //   }
+  // },
 
   onLoadMoreMessages: function(data) {
     if (Helper.isTokenValid(data.token)) {

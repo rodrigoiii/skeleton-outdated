@@ -9,24 +9,66 @@ use SkeletonChatApp\Models\ContactRequest;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsRequestTransformer;
+use SkeletonChatApp\Transformers\SendMessageTransformer;
 use SkeletonChatApp\Transformers\UserRequestTransformer;
 use SkeletonCore\BaseController;
 
 class ChatApiController extends BaseController
 {
+    public function readMessages(Request $request, Response $response, $chatting_to_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $is_read = $authUser->markUnreadMessageAsRead($chatting_to_id);
+
+        return $response->withJson(
+            $is_read ?
+            [
+                'success' => true,
+                'message' => "Successfully read message."
+            ] :
+            [
+                'success' => false,
+                'message' => "Cannot read message this time. Please try again later."
+            ]
+        );
+    }
+
+    public function fetchMessages(Request $request, Response $response, $chatting_to_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $conversation = $authUser->conversation($chatting_to_id)
+                            ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
+                            ->orderBy('id', "DESC")
+                            ->limit(config('sklt-chat.default_conversation_length'))
+                            ->get()
+                            ->sortBy('id');
+
+        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+
+        return $response->withJson([
+            'success' => true,
+            'message' => "Successfully fetch message.",
+            'conversation' => $conversation['data']
+        ]);
+    }
+
     // ok
     public function searchContacts(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
-        $user = User::findByLoginToken($login_token);
+        $authUser = User::findByLoginToken($login_token);
 
         $keyword = $request->getParam('keyword');
 
-        $contact_ids = $user->contacts()->pluck('user_id')->toArray();
-        $contact_requests_ids = $user->contact_requests()->pluck('to_id')->toArray();
+        $contact_ids = $authUser->contacts()->pluck('user_id')->toArray();
+        $contact_requests_ids = $authUser->contact_requests()->pluck('to_id')->toArray();
 
         // unsearchable ids
-        $ignore_user_ids = array_flatten([$contact_ids, $contact_requests_ids, $user->id]);
+        $ignore_user_ids = array_flatten([$contact_ids, $contact_requests_ids, $authUser->id]);
 
         $results = User::search($keyword)
                     ->select(\DB::raw("id, picture, first_name, last_name"))
@@ -60,21 +102,21 @@ class ChatApiController extends BaseController
         $login_token = $request->getParam('login_token');
         $user_id = $request->getParam('user_id');
 
-        $user = User::findByLoginToken($login_token);
+        $authUser = User::findByLoginToken($login_token);
 
-        $contact_type = $user->addContactRequest($user_id);
+        $contact_type = $authUser->addContactRequest($user_id);
 
         switch ($contact_type) {
             case ContactRequest::TYPE_ACCEPTED:
-                $user = User::find($user_id);
+                $authUser = User::find($user_id);
 
                 $data = [
                     'success' => true,
                     'message' => "Successfully add contact.",
                     'type' => ContactRequest::TYPE_ACCEPTED,
                     'user' => [
-                        'picture' => $user->picture,
-                        'full_name' => $user->getFullName()
+                        'picture' => $authUser->picture,
+                        'full_name' => $authUser->getFullName()
                     ]
                 ];
                 break;
@@ -103,71 +145,71 @@ class ChatApiController extends BaseController
      * @param Response $response
      * @param integer   $contact_id id of table contacts
      */
-    public function removeRequest(Request $request, Response $response, $contact_id)
-    {
-        $login_token = $request->getParam('login_token');
-        $user = User::findByLoginToken($login_token);
-        $contact = Contact::find($contact_id);
+    // public function removeRequest(Request $request, Response $response, $contact_id)
+    // {
+    //     $login_token = $request->getParam('login_token');
+    //     $user = User::findByLoginToken($login_token);
+    //     $contact = Contact::find($contact_id);
 
-        if (!is_null($contact))
-        {
-            $is_deleted = $user->removeUserRequest($contact->contact_id);
+    //     if (!is_null($contact))
+    //     {
+    //         $is_deleted = $user->removeUserRequest($contact->contact_id);
 
-            if ($is_deleted)
-            {
-                $notification = $user->findNotification($contact->contact_id);
+    //         if ($is_deleted)
+    //         {
+    //             $notification = $user->findNotification($contact->contact_id);
 
-                return $response->withJson([
-                    'success' => true,
-                    'message' => "Successfully remove user request.",
-                    'notification_id' => !is_null($notification) ? $notification->id : null
-                ]);
-            }
-        }
+    //             return $response->withJson([
+    //                 'success' => true,
+    //                 'message' => "Successfully remove user request.",
+    //                 'notification_id' => !is_null($notification) ? $notification->id : null
+    //             ]);
+    //         }
+    //     }
 
-        return $response->withJson([
-            'success' => false,
-            'message' => "Cannot remove user request this time. Please try again later."
-        ]);
-    }
+    //     return $response->withJson([
+    //         'success' => false,
+    //         'message' => "Cannot remove user request this time. Please try again later."
+    //     ]);
+    // }
 
-    public function readNotification(Request $request, Response $response)
-    {
-        $login_token = $request->getParam('login_token');
-        $user = User::findByLoginToken($login_token);
+    // public function readNotification(Request $request, Response $response)
+    // {
+    //     $login_token = $request->getParam('login_token');
+    //     $user = User::findByLoginToken($login_token);
 
-        $is_read = $user->markAsReadNotification();
+    //     $is_read = $user->markAsReadNotification();
 
-        return $response->withJson(
-        $is_read ?
-        [
-            'success' => true,
-            'message' => "Successfully read notification.",
-        ] :
-        [
-            'success' => false,
-            'message' => "Cannot read notification this time. Please try again later."
-        ]);
-    }
+    //     return $response->withJson(
+    //     $is_read ?
+    //     [
+    //         'success' => true,
+    //         'message' => "Successfully read notification.",
+    //     ] :
+    //     [
+    //         'success' => false,
+    //         'message' => "Cannot read notification this time. Please try again later."
+    //     ]);
+    // }
 
-    public function removeNotification(Request $request, Response $response, $notification_id)
-    {
-        $login_token = $request->getParam('login_token');
-        $user = User::findByLoginToken($login_token);
+    // public function removeNotification(Request $request, Response $response, $notification_id)
+    // {
+    //     $login_token = $request->getParam('login_token');
+    //     $user = User::findByLoginToken($login_token);
 
-        $notification = Notification::find($notification_id);
-        $is_deleted = !is_null($notification) ? $notification->delete() : false;
+    //     $notification = Notification::find($notification_id);
+    //     $is_deleted = !is_null($notification) ? $notification->delete() : false;
 
-        return $response->withJson(
-            $is_deleted ?
-            [
-                'success' => true,
-                'message' => "Successfully remove request notification."
-            ] :
-            [
-                'success' => false,
-                'message' => "Cannot remove user request this time. Please try again later."
-            ]
-        );
-    }
+    //     return $response->withJson(
+    //         $is_deleted ?
+    //         [
+    //             'success' => true,
+    //             'message' => "Successfully remove request notification."
+    //         ] :
+    //         [
+    //             'success' => false,
+    //             'message' => "Cannot remove user request this time. Please try again later."
+    //         ]
+    //     );
+    // }
 }
