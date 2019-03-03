@@ -75,24 +75,25 @@ class Emitter
         $chattingFrom = User::findByLoginToken($params['login_token']);
         $chattingTo = User::find($msg->chatting_to_id);
 
-        $sentMessage = $chattingFrom->sendMessage(new Message([
-            'message' => $msg->message,
-            'receiver_id' => $chattingTo->id
-        ]));
+        $message = Message::find($msg->message_id);
 
-        if ($sentMessage)
+        if (!is_null($message))
         {
-            $message = sklt_transformer($sentMessage, new SendMessageTransformer)->toArray();
+            $message = sklt_transformer($message, new SendMessageTransformer)->toArray();
 
-            // self
-            $return_data = [
-                'event' => __FUNCTION__,
-                'message' => $message['data'],
-                'chatting_to_id' => $chattingTo->id,
-                'token' => $chattingFrom->login_token
-            ];
+            // if receiver online
+            if (isset($this->clients[$chattingTo->id]))
+            {
+                $return_data = [
+                    'event' => __FUNCTION__,
+                    'message' => $message['data'],
+                    'unread_number' => $chattingTo->numberOfUnread($chattingFrom->id),
+                    'token' => $chattingTo->login_token
+                ];
 
-            $from->send(json_encode($return_data));
+                $chattingToSocket = $this->clients[$chattingTo->id];
+                $chattingToSocket->send(json_encode($return_data));
+            }
         }
     }
 
@@ -129,8 +130,10 @@ class Emitter
         {
             $return_data = [
                 'event' => __FUNCTION__,
-                'chatting_from_id' => $authUser->id,
-                'chatting_to_id' => $msg->chatting_to_id,
+                'chatting_from' => [
+                    'id' => $authUser->id,
+                    'picture' => $authUser->picture
+                ],
                 'token' => $chattingTo->login_token
             ];
 
@@ -163,7 +166,6 @@ class Emitter
     // public function onReadMessage(ConnectionInterface $from, $msg)
     // {
     //     parse_str($from->httpRequest->getUri()->getQuery(), $params);
-
 
     //     $authUser = User::findByLoginToken($params['login_token']);
 

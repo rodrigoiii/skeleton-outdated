@@ -15,7 +15,7 @@
 
     <div id="frame">
         <div id="sidepanel">
-            <div id="profile">
+            <div id="profile" data-picture="{{ authUserChat.picture }}" data-full-name="{{ authUserChat.getFullName() }}">
                 <div class="wrap">
                     <img id="profile-img" src="{{ authUserChat.picture }}" class="online" alt="" />
                     <p>{{ authUserChat.getFullName() }}</p>
@@ -276,13 +276,13 @@
 
     <script type="text/template" id="typing-tmpl">
         <li class="replies typing">
+            <img src="<%= picture %>" alt="" />
             <p>...</p>
         </li>
     </script>
 
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/node_modules/bootbox/bootbox.js"></script>
-    <script type="text/javascript" src="/js/sklt-chat/emitter-receiver.js"></script>
     <script type="text/javascript" src="/js/sklt-chat/chat.js"></script>
 </body>
 </html>

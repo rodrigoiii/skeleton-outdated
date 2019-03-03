@@ -52,18 +52,19 @@ var Emitter = {
     if (!Emitter.is_user_typing) {
       Emitter.is_user_typing = true;
 
-      var has_unread_message = $('#contacts .contact.active .wrap .name .unread-number').text() !== "";
+      var active_contact_id = Helper.getActiveContactId();
 
-      if (has_unread_message) {
-        Emitter.webSocketChat.emitMessage({
-          event: WebSocketChat.ON_READ_MESSAGE,
-          chatting_to_id: Helper.getActiveContactId()
+      if (Helper.hasUnreadMessage(active_contact_id)) {
+        Chat.chatApi.readMessages(active_contact_id, function(response) {
+          if (response.success) {
+            Helper.setUnreadNumber(active_contact_id, 0);
+          }
         });
       }
 
       Emitter.webSocketChat.emitMessage({
         event: WebSocketChat.ON_TYPING,
-        chatting_to_id: Helper.getActiveContactId()
+        chatting_to_id: active_contact_id
       });
     }
   },
@@ -87,35 +88,64 @@ var Emitter = {
       .attr('placeholder', "Sending...")
       .prop('disabled', true);
 
-      var msg = {
-        event: WebSocketChat.ON_SEND_MESSAGE,
-        chatting_to_id: Helper.getActiveContactId(),
-        message: message
-      };
+      var chatting_to_id = Helper.getActiveContactId();
 
-      Emitter.onStopTyping();
-      Emitter.webSocketChat.emitMessage(msg);
+      Emitter.chatApi.sendMessage(chatting_to_id, message, function(response) {
+        console.log(response);
+        if (response.success) {
+          var sent_message = response.sent_message;
+
+          $('.submit').prop('disabled', false);
+          $('.submit').button("reset");
+          $('.message-input :input[name="message"]')
+          .attr('placeholder', "Write your message...")
+          .prop('disabled', false)
+          .focus();
+
+          // var msg = {
+          //   event: WebSocketChat.ON_RECEIVE_MESSAGE,
+          //   chatting_to_id: Helper.getActiveContactId(),
+          //   message: message
+          // };
+
+          if (Helper.isMessagesEmpty()) {
+            $('.messages').html('<ul></ul>');
+          }
+
+          if ($('.messages').hasClass('no-message')) {
+            $('.messages').removeClass('no-message');
+          }
+
+          // render to messages block
+          var tmpl = _.template($('#message-item-tmpl').html());
+          var sender = Helper.getAuthInfo();
+          $('.messages ul').append(tmpl({
+            is_sender: true,
+            picture: sender.picture,
+            message: sent_message.message
+          }));
+          Helper.scrollMessage();
+
+          // render to contact preview message block
+          var contact_el = $('#contacts .contact[data-id="'+chatting_to_id+'"]');
+          $('.meta .preview', contact_el).text(sent_message.message);
+
+          // Emitter.webSocketChat.emitMessage(msg);
+
+          var msg = {
+            event: WebSocketChat.ON_SEND_MESSAGE,
+            chatting_to_id: chatting_to_id,
+            message_id: sent_message.id
+          };
+
+          Emitter.onStopTyping();
+          Emitter.webSocketChat.emitMessage(msg);
+        }
+      });
     } else {
       $('.message-input :input[name="message"]').val("");
     }
   },
-
-  // onReadMessage: function() {
-  //   var user_id = $(this).data('id');
-
-  //   $('.messages').addClass("invisible");
-  //   Emitter.load_more_counter = 0;
-
-  //   Emitter.webSocketChat.emitMessage({
-  //     event: WebSocketChat.ON_READ_MESSAGE,
-  //     chatting_to_id: user_id
-  //   });
-
-  //   Emitter.webSocketChat.emitMessage({
-  //     event: WebSocketChat.ON_FETCH_MESSAGE,
-  //     chatting_to_id: user_id
-  //   });
-  // },
 
   onHitEnter: function(e) {
     var ENTER_KEYCODE = 13;
@@ -247,8 +277,6 @@ var Emitter = {
   },
 };
 
-window.Emitter = Emitter;
-
 var Receiver = {
   typing_delay: "",
   typing_delay_time: 3000, // 3 seconds
@@ -280,46 +308,6 @@ var Receiver = {
 
   onSendMessage: function(data) {
     if (Helper.isTokenValid(data.token)) {
-      $('.submit').prop('disabled', false);
-      $('.submit').button("reset");
-      $('.message-input :input[name="message"]')
-      .attr('placeholder', "Write your message...")
-      .prop('disabled', false)
-      .focus();
-
-      var message = data.message;
-
-      var msg = {
-        event: WebSocketChat.ON_RECEIVE_MESSAGE,
-        chatting_to_id: Helper.getActiveContactId(),
-        message: message
-      };
-
-      if ($('.messages ul').length === 0) {
-        $('.messages').html('<ul></ul>');
-      }
-
-      if ($('.messages').hasClass('no-message')) {
-        $('.messages').removeClass('no-message');
-      }
-
-      var tmpl = _.template($('#message-item-tmpl').html());
-      $('.messages ul').append(tmpl({
-        is_sender: true,
-        picture: message.sender.picture,
-        message: message.message
-      }));
-      Helper.scrollMessage();
-
-      var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
-      $('.meta .preview', contact_el).text(message.message);
-
-      Emitter.webSocketChat.emitMessage(msg);
-    }
-  },
-
-  onReceiveMessage: function(data) {
-    if (Helper.isTokenValid(data.token)) {
       var message = data.message;
       var unread_number = data.unread_number;
 
@@ -341,8 +329,7 @@ var Receiver = {
           message: message.message
         }));
 
-        var contact_el = $('#contacts .contact[data-id="'+message.sender.id+'"]');
-        $('.meta .name .unread-number', contact_el).text("(" + unread_number + ")");
+        Helper.setUnreadNumber(message.sender.id, unread_number);
         $('.meta .preview', contact_el).text(message.message);
 
         Helper.scrollMessage();
@@ -353,15 +340,18 @@ var Receiver = {
   onTyping: function(data) {
     if (Helper.isTokenValid(data.token)) {
       var active_contact_id = $('#contacts .contact.active').data('id');
+      var user = data.chatting_from;
 
-      if (active_contact_id == data.chatting_from_id) {
+      if (active_contact_id == user.id) {
         var tmpl = _.template($('#typing-tmpl').html());
-        $('.messages ul').append(tmpl());
+        $('.messages ul').append(tmpl({
+          picture: user.picture
+        }));
 
         Helper.scrollMessage();
       }
 
-      $('#contacts .contact[data-id="'+data.chatting_from_id+'"] .meta .preview').text("...");
+      $('#contacts .contact[data-id="'+user.id+'"] .meta .preview').text("...");
     }
   },
 
@@ -373,36 +363,6 @@ var Receiver = {
       $('#contacts .contact[data-id="'+data.chatting_from_id+'"] .meta .preview').text(last_message);
     }
   },
-
-  // onReadMessage: function(data) {
-  //   if (Helper.isTokenValid(data.token)) {
-  //     var contact_el = $('#contacts .contact[data-id="'+data.chatting_to_id+'"]');
-  //     $('.meta .name .unread-number', contact_el).text("");
-  //   }
-  // },
-
-  // onFetchMessage: function(data) {
-  //   if (Helper.isTokenValid(data.token)) {
-  //     if (data.conversation.length > 0) {
-  //       if ($('.messages').hasClass("no-message")) {
-  //         $('.messages').removeClass("no-message");
-  //       }
-
-  //       var tmpl = _.template($('#messages-item-tmpl').html());
-  //       $('.messages').html('<ul>'+tmpl({conversation: data.conversation})+'</ul>');
-  //     } else {
-  //       if (!$('.messages').hasClass("no-message")) {
-  //         $('.messages').addClass("no-message");
-  //       }
-
-  //       $('.messages').html('<p>No conversation yet</p>');
-  //     }
-
-  //     Helper.scrollMessage(function() {
-  //       $('.messages').removeClass("invisible");
-  //     });
-  //   }
-  // },
 
   onLoadMoreMessages: function(data) {
     if (Helper.isTokenValid(data.token)) {
@@ -439,6 +399,15 @@ var Helper = {
     $('.messages').animate({ scrollTop: bottom }, "fast", callback);
   },
 
+  getAuthInfo: function() {
+    var profile_el = $('#profile');
+
+    return {
+      'picture': profile_el.data('picture'),
+      'full_name': profile_el.data('full-name')
+    };
+  },
+
   getActiveContactId: function() {
     return parseInt($('.contact-profile').data('id'));
   },
@@ -467,6 +436,28 @@ var Helper = {
 
   isContactEmpty: function() {
     return $('#contacts ul li:not(".contact")').length === 1;
+  },
+
+  setUnreadNumber: function(user_id, unread_number) {
+    var contact_el = $('#contacts .contact[data-id="'+user_id+'"]');
+    var unread_number_el = $('.meta .name .unread-number', contact_el);
+    unread_number_el.data('unread-number', unread_number);
+
+    if (unread_number !== 0) {
+      unread_number_el.text("(" + unread_number + ")");
+    } else {
+      unread_number_el.text("");
+    }
+  },
+
+  hasUnreadMessage: function(id) {
+    var contact_el = $('#contacts .contact[data-id="'+id+'"]');
+    var unread_number_el = $('.meta .name .unread-number', contact_el);
+    return parseInt(unread_number_el.data('unread-number')) > 0;
+  },
+
+  isMessagesEmpty: function() {
+    return $('.messages ul').length === 0;
   }
 };
 

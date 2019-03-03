@@ -11,6 +11,7 @@ api_image_generator($this);
 $this->group('/chat-application', function() {
     $this->put('/read-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "readMessages"]);
     $this->get('/fetch-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "fetchMessages"]);
+    $this->post('/send-message/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "sendMessage"]);
 
     $this->get('/search-contacts', ["SkeletonChatApp\\Api\\ChatApiController", "searchContacts"]);
     $this->get('/contact-requests', ["SkeletonChatApp\\Api\\ChatApiController", "contactRequests"]);

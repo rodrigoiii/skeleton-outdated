@@ -23,6 +23,7 @@
     - make sure sending contact request is legit
     - make sure accepting contact request is legit
     - make sure all emit and receive message is legit
+ - clean api url
 
 ## License
 This project is released under the MIT Licence. See the bundled LICENSE file for details.

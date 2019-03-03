@@ -19,6 +19,14 @@ ChatApi.prototype.fetchMessages = function(chatting_to_id, callback) {
   $.get("/api/chat-application/fetch-messages/" + chatting_to_id, params, callback);
 };
 
+ChatApi.prototype.sendMessage = function(chatting_to_id, message, callback) {
+  var params = {
+    login_token: this.login_token,
+    message: message
+  };
+  $.post("/api/chat-application/send-message/" + chatting_to_id, params, callback);
+};
+
 ChatApi.prototype.searchContacts = function(keyword, callback) {
   $.get("/api/chat-application/search-contacts?keyword=" + keyword + "&login_token=" + this.login_token, callback);
 };

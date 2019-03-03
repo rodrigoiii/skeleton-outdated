@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\ContactRequest;
+use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsRequestTransformer;
@@ -53,6 +54,37 @@ class ChatApiController extends BaseController
             'success' => true,
             'message' => "Successfully fetch message.",
             'conversation' => $conversation['data']
+        ]);
+    }
+
+    public function sendMessage(Request $request, Response $response, $chatting_to_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $chattingFrom = User::findByLoginToken($login_token);
+        $chattingTo = User::find($chatting_to_id);
+
+        $message = $request->getParam('message');
+
+        $sentMessage = $chattingFrom->sendMessage(new Message([
+            'message' => $message,
+            'receiver_id' => $chattingTo->id
+        ]));
+
+        if ($sentMessage instanceof Message)
+        {
+            return $response->withJson([
+                'success' => true,
+                'message' => "Successfully send message.",
+                'sent_message' => [
+                    'id' => $sentMessage->id,
+                    'message' => $sentMessage->message
+                ]
+            ]);
+        }
+
+        return $response->withJson([
+            'success' => true,
+            'message' => "Cannot send message this time. Please try again later."
         ]);
     }
 
