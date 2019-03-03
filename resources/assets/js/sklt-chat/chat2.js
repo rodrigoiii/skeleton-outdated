@@ -15,8 +15,11 @@ require("bootstrap/js/button");
 
 var _ = require("underscore");
 var Emitter = require("./functions/Emitter");
+var ChatApi = require("./functions/ChatApi");
 
 var Chat = {
+  chatApi: null,
+
   is_user_typing: false,
 
   init: function() {
@@ -25,6 +28,8 @@ var Chat = {
       port: sklt_chat.port,
       login_token: sklt_chat.login_token,
     });
+
+    Chat.chatApi = new ChatApi(sklt_chat.login_token);
 
     $('#contacts').on('click', '.contact:not(".active")', Chat.onSelectContact);
     $('.message-input :input[name="message"]').on('keyup', Chat.onTyping);
@@ -40,6 +45,30 @@ var Chat = {
   onSelectContact: function() {
     var data = $(this).data();
     Helper.changeActiveContact(data.id, data.picture, data.fullname);
+
+    var chatting_to_id = Helper.getActiveContactId();
+    Chat.chatApi.fetchMessages(chatting_to_id, function(response) {
+      if (response.success) {
+        if (response.conversation.length > 0) {
+          if ($('.messages').hasClass("no-message")) {
+            $('.messages').removeClass("no-message");
+          }
+
+          var tmpl = _.template($('#messages-item-tmpl').html());
+          $('.messages').html('<ul>'+tmpl({conversation: response.conversation})+'</ul>');
+        } else {
+          if (!$('.messages').hasClass("no-message")) {
+            $('.messages').addClass("no-message");
+          }
+
+          $('.messages').html('<p>No conversation yet</p>');
+        }
+
+        Helper.scrollMessage(function() {
+          $('.messages').removeClass("invisible");
+        });
+      }
+    });
   },
 
   onTyping: function(e) {
@@ -55,7 +84,6 @@ var Chat = {
 
       var chatting_to_id = Helper.getActiveContactId();
       Chat.emitter.typing(chatting_to_id);
-      // console.log("typing ...");
     }
   },
 
@@ -142,6 +170,11 @@ var Helper = {
       tmpl += '<p>'+user_fullname+'</p>';
 
     $('.contact-profile .image-fullname').html(tmpl);
+  },
+
+  scrollMessage: function(callback) {
+    var bottom = $('.messages').prop('scrollHeight');
+    $('.messages').animate({ scrollTop: bottom }, "fast", callback);
   }
 };
 
