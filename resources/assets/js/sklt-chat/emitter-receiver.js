@@ -34,7 +34,7 @@ var Emitter = {
     $('body').on('click', ".show-contact-requests .remove-request-btn", Emitter.onRemoveRequestContact);
 
     _.delay(function() {
-      if ($('#contacts .contact.empty').length === 0) {
+      if (!Helper.isContactEmpty()) {
         // activate first contact
         $('#contacts .contact:first').click();
       }
@@ -153,57 +153,60 @@ var Emitter = {
     var user_id = $(this).data('user-id');
     var tr_el = $(this).closest('tr');
 
-    // $(this).prop('disabled', true);
-    // $(this).button('loading');
+    $(this).prop('disabled', true);
+    $(this).button('loading');
 
     Emitter.chatApi.addContact(user_id, function(response) {
       console.log(response);
-      // if (response.success) {
-      //   switch(response.type) {
-      //     case Emitter.TYPE_ACCEPTED:
-      //       console.log("accepted");
+      if (response.success) {
+        switch(response.type) {
+          case Emitter.TYPE_ACCEPTED:
+            console.log("accepted");
 
-      //       $(_this).prop('disabled', false);
-      //       $(_this).button('reset');
-      //       bootbox.hideAll();
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
 
-      //       Helper.addContactItem({
-      //         'user': _.extend(response.user, {id: contact_id})
-      //       });
+            Helper.addContactItem({
+              'user': _.extend(response.user, {id: user_id})
+            });
 
-      //       // Emitter.onAcceptContact(contact_id);
-      //       break;
+            // activate new contact
+            $('#contacts .contact[data-id="'+user_id+'"]').click();
 
-      //     case Emitter.TYPE_REQUESTED:
-      //       console.log("requested");
+            // Emitter.onAcceptContact(contact_id);
+            break;
 
-      //       $(_this).prop('disabled', false);
-      //       $(_this).button('reset');
-      //       bootbox.hideAll();
+          case Emitter.TYPE_REQUESTED:
+            console.log("requested");
 
-      //       Emitter.onRequestContact(contact_id);
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
 
-      //       break;
-      //   }
+            Emitter.onRequestContact(user_id);
 
-      //   // var tmpl = _.template($('#contact-item-tmpl').html());
-      //   // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+            break;
+        }
 
-      //   // var template = tmpl({
-      //   //   picture: $('.contact-picture', tr_el).attr('src'),
-      //   //   fullname: $('.contact-fullname', tr_el).text()
-      //   // });
+        // var tmpl = _.template($('#contact-item-tmpl').html());
+        // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
 
-      //   // if (is_contacts_empty) {
-      //   //   $('#contacts ul').html(template);
-      //   // } else {
-      //   //   $('#contacts ul').prepend(template);
-      //   // }
+        // var template = tmpl({
+        //   picture: $('.contact-picture', tr_el).attr('src'),
+        //   fullname: $('.contact-fullname', tr_el).text()
+        // });
 
-      //   // bootbox.hideAll();
-      // } else {
-      //   console.log(response.message);
-      // }
+        // if (is_contacts_empty) {
+        //   $('#contacts ul').html(template);
+        // } else {
+        //   $('#contacts ul').prepend(template);
+        // }
+
+        // bootbox.hideAll();
+      } else {
+        console.log(response.message);
+      }
     });
   },
 
@@ -454,15 +457,17 @@ var Helper = {
 
   addContactItem: function(data) {
     var tmpl = _.template($('#contact-item-tmpl').html());
-    var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
-
     var template = tmpl(data);
 
-    if (is_contacts_empty) {
+    if (Helper.isContactEmpty()) {
       $('#contacts ul').html(template);
     } else {
       $('#contacts ul').prepend(template);
     }
+  },
+
+  isContactEmpty: function() {
+    return $('#contacts ul li:not(".contact")').length === 1;
   }
 };
 

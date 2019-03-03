@@ -34,10 +34,15 @@ class User extends Model
         return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id");
     }
 
-    // public function contacts()
-    // {
-    //     return $this->hasMany("SkeletonChatApp\Models\Contact");
-    // }
+    public function contact_requests_from()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "to_id");
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\Contact", "owner_id");
+    }
 
     public function getFullName()
     {
@@ -92,20 +97,21 @@ class User extends Model
 
     public function addContact($user_id)
     {
-        $contact_request = $this->contact_requests()
+        $contactRequest = $this->contact_requests_from()
                                 ->notYetAccepted()
-                                ->where('to_id', $user_id)
+                                ->where('by_id', $user_id)
                                 ->first();
 
         $result = false;
 
         // if contact to be add has pending request
-        if (!is_null($contact_request))
+        if (!is_null($contactRequest))
         {
             // accept the contact request
-            if ($contact_request->markAsAccepted())
+            if ($contactRequest->markAsAccepted())
             {
                 // Notification::createAcceptedNotification($this->id, $user_id);
+                $contactRequest->markAsUnread();
                 $result = ContactRequest::TYPE_ACCEPTED;
             }
         }

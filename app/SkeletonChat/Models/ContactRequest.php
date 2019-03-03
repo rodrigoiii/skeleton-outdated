@@ -12,7 +12,7 @@ class ContactRequest extends Model
     const IS_NOT_YET_READ = 0;
 
     const IS_ACCEPTED = 1;
-    const IS_NOT_YET_ACCEPTED = 1;
+    const IS_NOT_YET_ACCEPTED = 0;
 
     const TYPE_ACCEPTED = "accepted";
     const TYPE_REQUESTED = "requested";
@@ -35,5 +35,18 @@ class ContactRequest extends Model
     public function scopeNotYetAccepted($query)
     {
         return $query->where('is_accepted', static::IS_NOT_YET_ACCEPTED);
+    }
+
+    public function markAsAccepted()
+    {
+        $this->is_accepted = static::IS_ACCEPTED;
+        return $this->save();
+    }
+
+    public function markAsUnread()
+    {
+        $this->is_read_by = static::IS_NOT_YET_READ;
+        $this->is_read_to = static::IS_NOT_YET_READ;
+        return $this->save();
     }
 }

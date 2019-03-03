@@ -55,7 +55,7 @@
                             </li>
                         {% endfor %}
                     {% else %}
-                        <li class="contact empty">
+                        <li>
                             <div class="wrap">
                                 <p>You have no contacts.</p>
                             </div>
@@ -236,17 +236,6 @@
     </script>
 
     <script type="text/template" id="contact-item-tmpl">
-        <li class="contact">
-            <div class="wrap">
-                <span class="contact-status online"></span>
-                <img src="<%= picture %>" alt="" />
-                <div class="meta">
-                    <p class="name"><%= fullname %></p>
-                    <p class="preview"></p>
-                </div>
-            </div>
-        </li>
-
         <li class="contact"
             data-id="<%= user.id %>"
             data-picture="<%= user.picture %>"

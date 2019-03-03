@@ -21,10 +21,10 @@ class ChatApiController extends BaseController
 
         $keyword = $request->getParam('keyword');
 
-        $contact_ids = $user->contactsBothUser()->pluck('user_id')->toArray();
+        $contact_ids = $user->contacts()->pluck('user_id')->toArray();
         $contact_requests_ids = $user->contact_requests()->pluck('to_id')->toArray();
 
-        // make it unsearchable
+        // unsearchable ids
         $ignore_user_ids = array_flatten([$contact_ids, $contact_requests_ids, $user->id]);
 
         $results = User::search($keyword)
