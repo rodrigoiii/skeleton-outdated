@@ -12,11 +12,11 @@ ChatApi.prototype.readMessages = function(chatting_to_id, callback) {
   $.post("/api/chat-application/read-messages/" + chatting_to_id, params, callback);
 };
 
-ChatApi.prototype.fetchMessages = function(chatting_to_id, callback) {
+ChatApi.prototype.fetchConversation = function(chatting_to_id, callback) {
   var params = {
     login_token: this.login_token
   };
-  $.get("/api/chat-application/fetch-messages/" + chatting_to_id, params, callback);
+  $.get("/api/chat-application/fetch-conversation/" + chatting_to_id, params, callback);
 };
 
 ChatApi.prototype.sendMessage = function(chatting_to_id, message, callback) {
@@ -25,6 +25,14 @@ ChatApi.prototype.sendMessage = function(chatting_to_id, message, callback) {
     message: message
   };
   $.post("/api/chat-application/send-message/" + chatting_to_id, params, callback);
+};
+
+ChatApi.prototype.loadMoreMessages = function(chatting_to_id, load_more_counter, callback) {
+  var params = {
+    login_token: this.login_token,
+    load_more_counter: load_more_counter
+  };
+  $.get("/api/chat-application/load-more-messages/" + chatting_to_id, params, callback);
 };
 
 ChatApi.prototype.searchContacts = function(keyword, callback) {

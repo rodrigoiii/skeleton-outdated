@@ -22,6 +22,7 @@ var Chat = {
   chatApi: null,
 
   is_user_typing: false,
+  load_more_counter: 0,
 
   init: function() {
     Chat.emitter = new Emitter(Chat, EventHandler, {
@@ -37,7 +38,7 @@ var Chat = {
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Chat.onStopTyping, 1500));
     $('.submit').click(Chat.onSendMessage);
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
-    $('.messages').scroll(Emitter.onLoadMoreMessages);
+    $('.messages').scroll(Chat.onLoadMoreMessages);
 
     _.delay(function() {
       if (!Helper.isContactEmpty()) {
@@ -60,7 +61,10 @@ var Chat = {
       });
     }
 
-    Chat.chatApi.fetchMessages(chatting_to_id, function(response) {
+    // hide the messages block while fetching the conversation
+    $('.messages').addClass("invisible");
+
+    Chat.chatApi.fetchConversation(chatting_to_id, function(response) {
       if (response.success) {
         if (response.conversation.length > 0) {
           if ($('.messages').hasClass("no-message")) {
@@ -77,7 +81,7 @@ var Chat = {
           $('.messages').html('<p>No conversation yet</p>');
         }
 
-        Helper.scrollMessage(function() {
+        Helper.scrollMessage(null, function() {
           $('.messages').removeClass("invisible");
         });
       }
@@ -153,22 +157,25 @@ var Chat = {
   },
 
   onLoadMoreMessages: function() {
-    if ($(this).scrollTop() === 0) {
-      // if messages not show all yet
-      if ($('ul li:first-child.no-more', $(this)).length === 0) {
-        // if still loading
-        if ($('ul li:first-child.load-more', $(this)).length === 0) {
-          Emitter.load_more_counter++;
+    if (Helper.isLoadMoreMessages()) {
+      Chat.load_more_counter++;
 
-          $('ul', $(this)).prepend('<li class="load-more text-center">Loading...</li>');
+      $('ul', $(this)).prepend('<li class="load-more text-center">Loading...</li>');
 
-          // Emitter.webSocketChat.emitMessage({
-          //   event: WebSocketChat.ON_LOAD_MORE_MESSAGES,
-          //   load_more_counter: Emitter.load_more_counter,
-          //   chatting_to_id: Helper.getActiveContactId()
-          // });
+      Chat.chatApi.loadMoreMessages(Helper.getActiveContactId(), Chat.load_more_counter, function(response) {
+        var conversation = response.conversation;
+
+        $('.messages ul li:first-child.load-more').remove();
+
+        var tmpl = _.template($('#messages-item-tmpl').html());
+        $('.messages ul').prepend(tmpl({conversation: conversation}));
+
+        if (conversation.length === 0) {
+          $('.messages ul').prepend('<li class="no-more text-center">No more message.</li>');
+        } else {
+          Helper.scrollMessage(5);
         }
-      }
+      });
     }
   }
 };
@@ -284,8 +291,8 @@ var Helper = {
     $('.contact-profile .image-fullname').html(tmpl);
   },
 
-  scrollMessage: function(callback) {
-    var bottom = $('.messages').prop('scrollHeight');
+  scrollMessage: function(height, callback) {
+    var bottom = height || $('.messages').prop('scrollHeight');
     $('.messages').animate({ scrollTop: bottom }, "fast", callback);
   },
 
@@ -341,6 +348,22 @@ var Helper = {
     var contact_el = $('#contacts .contact[data-id="'+id+'"]');
     var unread_number_el = $('.meta .name .unread-number', contact_el);
     return parseInt(unread_number_el.data('unread-number')) > 0;
+  },
+
+  isLoadMoreMessages: function() {
+    var messages_el = $('.messages');
+
+    if (messages_el.scrollTop() === 0) {
+      // if messages not show all yet
+      if ($('ul li:first-child.no-more', messages_el).length === 0) {
+        // if still loading
+        if ($('ul li:first-child.load-more', messages_el).length === 0) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 };
 

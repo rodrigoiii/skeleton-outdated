@@ -36,7 +36,7 @@ class ChatApiController extends BaseController
         );
     }
 
-    public function fetchMessages(Request $request, Response $response, $chatting_to_id)
+    public function fetchConversation(Request $request, Response $response, $chatting_to_id)
     {
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
@@ -85,6 +85,32 @@ class ChatApiController extends BaseController
         return $response->withJson([
             'success' => true,
             'message' => "Cannot send message this time. Please try again later."
+        ]);
+    }
+
+    public function loadMoreMessages(Request $request, Response $response, $chatting_to_id)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $load_more_counter = $request->getParam('load_more_counter');
+
+        $default_convo_length = config('sklt-chat.default_conversation_length');
+
+        $conversation = $authUser->conversation($chatting_to_id)
+                            ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
+                            ->orderBy('id', "DESC")
+                            ->offset($default_convo_length * $load_more_counter)
+                            ->limit($default_convo_length)
+                            ->get()
+                            ->sortBy('id');
+
+        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+
+        return $response->withJson([
+            'success' => true,
+            'message' => "Successfully load more messages.",
+            'conversation' => $conversation['data']
         ]);
     }
 

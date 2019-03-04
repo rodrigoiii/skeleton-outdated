@@ -207,32 +207,32 @@ class EventHandler
     //     $from->send(json_encode($return_data));
     // }
 
-    public function onLoadMoreMessages(ConnectionInterface $from, $msg)
-    {
-        parse_str($from->httpRequest->getUri()->getQuery(), $params);
+    // public function onLoadMoreMessages(ConnectionInterface $from, $msg)
+    // {
+    //     parse_str($from->httpRequest->getUri()->getQuery(), $params);
 
-        $authUser = User::findByLoginToken($params['login_token']);
+    //     $authUser = User::findByLoginToken($params['login_token']);
 
-        $default_convo_length = config('sklt-chat.default_conversation_length');
+    //     $default_convo_length = config('sklt-chat.default_conversation_length');
 
-        $conversation = $authUser->conversation($msg->chatting_to_id)
-                            ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
-                            ->orderBy('id', "DESC")
-                            ->offset($default_convo_length * $msg->load_more_counter)
-                            ->limit($default_convo_length)
-                            ->get()
-                            ->sortBy('id');
+    //     $conversation = $authUser->conversation($msg->chatting_to_id)
+    //                         ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
+    //                         ->orderBy('id', "DESC")
+    //                         ->offset($default_convo_length * $msg->load_more_counter)
+    //                         ->limit($default_convo_length)
+    //                         ->get()
+    //                         ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+    //     $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
 
-        $return_data = [
-            'event' => __FUNCTION__,
-            'conversation' => $conversation['data'],
-            'token' => $authUser->login_token
-        ];
+    //     $return_data = [
+    //         'event' => __FUNCTION__,
+    //         'conversation' => $conversation['data'],
+    //         'token' => $authUser->login_token
+    //     ];
 
-        $from->send(json_encode($return_data));
-    }
+    //     $from->send(json_encode($return_data));
+    // }
 
     public function onRequestContact(ConnectionInterface $from, $msg)
     {
