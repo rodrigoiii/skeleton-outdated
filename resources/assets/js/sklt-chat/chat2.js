@@ -18,12 +18,13 @@ var Emitter = require("./functions/Emitter");
 var ChatApi = require("./functions/ChatApi");
 
 var Chat = {
+  emitter: null,
   chatApi: null,
 
   is_user_typing: false,
 
   init: function() {
-    Chat.emitter = new Emitter(EventHandler, {
+    Chat.emitter = new Emitter(Chat, EventHandler, {
       host: sklt_chat.host,
       port: sklt_chat.port,
       login_token: sklt_chat.login_token,

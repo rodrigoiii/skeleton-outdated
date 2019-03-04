@@ -1,9 +1,33 @@
-function Emitter(EventHandler, config) {
+function Emitter(Chat, EventHandler, config) {
   var webSocket = new WebSocket("ws://" + config.host + ":" + config.port + "?login_token=" + config.login_token);
 
   webSocket.onopen = function(e) {
     console.log("Connection established!");
     this.send(JSON.stringify({ event: Emitter.ON_CONNECTION_ESTABLISH }));
+  };
+
+  webSocket.onclose = function(e) {
+    console.log("Connection closed!");
+
+    Chat.emitter = null;
+    webSocket = null;
+
+    var reconnect_countdown = 5000;
+
+    var reconnectTime = setInterval(function () {
+      if (reconnect_countdown !== 0) {
+        console.log("Reconnecting... " + (reconnect_countdown/1000));
+        reconnect_countdown -= 1000;
+      } else {
+        Chat.emitter = new Emitter(Chat, EventHandler, {
+          host: sklt_chat.host,
+          port: sklt_chat.port,
+          login_token: sklt_chat.login_token,
+        });
+
+        clearInterval(reconnectTime);
+      }
+    }, 1000);
   };
 
   webSocket.onmessage = function(e) {
@@ -19,7 +43,6 @@ function Emitter(EventHandler, config) {
 }
 
 Emitter.ON_CONNECTION_ESTABLISH = "onConnectionEstablish";
-Emitter.ON_DISCONNECT = "onDisconnect";
 Emitter.ON_SEND_MESSAGE = "onSendMessage";
 Emitter.ON_RECEIVE_MESSAGE = "onReceiveMessage";
 Emitter.ON_TYPING = "onTyping";
