@@ -44,12 +44,12 @@ function Emitter(Chat, EventHandler, config) {
 
 Emitter.ON_CONNECTION_ESTABLISH = "onConnectionEstablish";
 Emitter.ON_SEND_MESSAGE = "onSendMessage";
-Emitter.ON_RECEIVE_MESSAGE = "onReceiveMessage";
+// Emitter.ON_RECEIVE_MESSAGE = "onReceiveMessage";
 Emitter.ON_TYPING = "onTyping";
 Emitter.ON_STOP_TYPING = "onStopTyping";
 Emitter.ON_READ_MESSAGE = "onReadMessage";
 Emitter.ON_FETCH_MESSAGE = "onFetchMessage";
-Emitter.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
+// Emitter.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
 Emitter.ON_REQUEST_CONTACT = "onRequestContact";
 Emitter.ON_ACCEPT_CONTACT = "onAcceptContact";
 

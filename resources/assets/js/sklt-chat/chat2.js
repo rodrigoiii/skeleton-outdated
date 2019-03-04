@@ -37,6 +37,7 @@ var Chat = {
     $('.message-input :input[name="message"]').on('keyup', _.debounce(Chat.onStopTyping, 1500));
     $('.submit').click(Chat.onSendMessage);
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
+    $('.messages').scroll(Emitter.onLoadMoreMessages);
 
     _.delay(function() {
       if (!Helper.isContactEmpty()) {
@@ -149,6 +150,26 @@ var Chat = {
     } else {
       $('.message-input :input[name="message"]').val("");
     }
+  },
+
+  onLoadMoreMessages: function() {
+    if ($(this).scrollTop() === 0) {
+      // if messages not show all yet
+      if ($('ul li:first-child.no-more', $(this)).length === 0) {
+        // if still loading
+        if ($('ul li:first-child.load-more', $(this)).length === 0) {
+          Emitter.load_more_counter++;
+
+          $('ul', $(this)).prepend('<li class="load-more text-center">Loading...</li>');
+
+          // Emitter.webSocketChat.emitMessage({
+          //   event: WebSocketChat.ON_LOAD_MORE_MESSAGES,
+          //   load_more_counter: Emitter.load_more_counter,
+          //   chatting_to_id: Helper.getActiveContactId()
+          // });
+        }
+      }
+    }
   }
 };
 
@@ -255,7 +276,7 @@ var Helper = {
     $('.contact-profile').data('id', user_id);
 
     $('#contacts .contact').removeClass("active");
-    $(this).addClass("active");
+    $('#contacts .contact[data-id="'+user_id+'"]').addClass("active");
 
     var tmpl = '<img src="'+user_picture+'" alt="" />';
       tmpl += '<p>'+user_fullname+'</p>';
