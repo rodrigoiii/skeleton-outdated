@@ -2,12 +2,12 @@
 
 ## Todo
  - Time of message sent
- - Show number of unread
- - Auto add number of unread after the message successfully send of the sender.
+ - Show number of unread - ok
+ - Auto add number of unread after the message successfully send of the sender. - ok
  - Reset number of unread when
     - the reader start typing
-    - change active contact to sender.
- - Load more message
+    - change active contact to sender. - ok
+ - Load more message - ok
  - notification number
  - Remove user request then
     - remove user request notification
