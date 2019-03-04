@@ -185,6 +185,8 @@ var EventHandler = {
       }
 
       $('#contacts .contact[data-id="'+user.id+'"] .meta .preview').text("...");
+
+      Helper.scrollMessage();
     }
   },
 
