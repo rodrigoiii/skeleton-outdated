@@ -85,16 +85,30 @@ Emitter.prototype = {
 };
 
 Emitter.prototype.emitMessage = function(msg, errorCallback) {
-  var OPEN_STATE = 1;
+  switch(this.webSocket.readyState) {
+    case this.webSocket.CONNECTING:
+      console.log("Connecting...");
+      break;
 
-  if (this.webSocket.readyState === OPEN_STATE) {
-    this.webSocket.send(JSON.stringify(msg));
-  } else {
-    if (typeof(errorCallback) !== "undefined") {
-      errorCallback();
-    } else {
-      console.log("The server is disconnect.");
-    }
+    case this.webSocket.OPEN:
+      console.log("Connected!");
+
+      this.webSocket.send(JSON.stringify(msg));
+      break;
+
+    case this.webSocket.CLOSING:
+      console.log("Closing...");
+      break;
+
+    case this.webSocket.CLOSED:
+      console.log("Closed!");
+
+      if (typeof(errorCallback) !== "undefined") {
+        errorCallback();
+      } else {
+        console.log("The server is disconnect.");
+      }
+      break;
   }
 };
 
