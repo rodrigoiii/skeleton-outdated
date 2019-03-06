@@ -18,7 +18,7 @@ var Emitter = require("./functions/Emitter");
 var ChatApi = require("./functions/ChatApi");
 
 var Chat = {
-  emitter: null,
+  emitter: null, // interface
   chatApi: null,
 
   is_user_typing: false,
@@ -45,6 +45,16 @@ var Chat = {
         $('#contacts .contact:first').click(); // select first contact
       }
     }, 100);
+  },
+
+  onConnected: function() { // interface
+    console.log("Connection established!");
+    $('body').show();
+  },
+
+  onDisconnected: function() { // interface
+    console.log("Connection closed!");
+    $('body').hide();
   },
 
   onSelectContact: function() {

@@ -2,12 +2,13 @@ function Emitter(Chat, EventHandler, config) {
   var webSocket = new WebSocket("ws://" + config.host + ":" + config.port + "?login_token=" + config.login_token);
 
   webSocket.onopen = function(e) {
-    console.log("Connection established!");
+    Chat.onConnected();
+
     this.send(JSON.stringify({ event: Emitter.ON_CONNECTION_ESTABLISH }));
   };
 
   webSocket.onclose = function(e) {
-    console.log("Connection closed!");
+    Chat.onDisconnected();
 
     Chat.emitter = null;
     webSocket = null;
