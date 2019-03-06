@@ -92,8 +92,6 @@ Emitter.prototype.emitMessage = function(msg, errorCallback) {
       break;
 
     case this.webSocket.OPEN:
-      console.log("Connected!");
-
       this.webSocket.send(JSON.stringify(msg));
       break;
 

@@ -5,7 +5,7 @@
  - Show number of unread - ok
  - Auto add number of unread after the message successfully send of the sender. - ok
  - Reset number of unread when
-    - the reader start typing
+    - the reader start typing - ok
     - change active contact to sender. - ok
  - Load more message - ok
  - notification number
