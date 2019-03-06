@@ -110,6 +110,15 @@ var Chat = {
       Chat.is_user_typing = true;
 
       var chatting_to_id = Helper.getActiveContactId();
+
+      if (Helper.hasUnreadMessage(chatting_to_id)) {
+        Chat.chatApi.readMessages(chatting_to_id, function(response) {
+          if (response.success) {
+            Helper.setUnreadNumber(chatting_to_id, 0);
+          }
+        });
+      }
+
       Chat.emitter.typing(chatting_to_id);
     }
   },
