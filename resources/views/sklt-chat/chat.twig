@@ -137,7 +137,7 @@
                         <img src="<%= user.picture %>" class="img-responsive contact-picture" alt="" width="50" />
                     </td>
                     <td>
-                        <p class="contact-fullname"><%= user.first_name + " " + user.last_name %></p>
+                        <p class="contact-fullname"><%= user.full_name %></p>
                     </td>
                     <td>
                         <% if (!user.has_request) { %>
@@ -145,7 +145,10 @@
                                 <span class="glyphicon glyphicon-plus-sign"></span> Add Contact
                             </button>
                         <% } else {  %>
-                            <button class="btn btn-info btn-xs accept-request" data-loading-text='<span class="fa fa-refresh fa-spin"></span>' data-user-id="<%= user.id %>">
+                            <button class="btn btn-info btn-xs accept-request"
+                                    data-loading-text='<span class="fa fa-refresh fa-spin"></span>'
+                                    data-user-id="<%= user.id %>"
+                                    >
                                 <span class="glyphicon glyphicon-plus-sign"></span> Accept Request
                             </button>
                         <% } %>

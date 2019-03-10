@@ -26,8 +26,7 @@ class SearchContactsTransformer extends TransformerAbstract
         return [
             'id' => $user->id,
             'picture' => $user->picture,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
+            'full_name' => $user->getFullName(),
             'has_request' => !is_null($user->contact_requests()
                                 ->notYetAccepted()
                                 ->where('to_id', $this->userWhosSearching->id)

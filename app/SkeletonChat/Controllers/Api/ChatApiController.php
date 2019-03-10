@@ -141,6 +141,53 @@ class ChatApiController extends BaseController
         ]);
     }
 
+    public function addContactRequest(Request $request, Response $response)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $user_id = $request->getParam('user_id');
+
+        $is_sent = $authUser->sendContactRequest($user_id);
+
+        return $response->withJson($is_sent ?
+            [
+                'success' => true,
+                'message' => "Successfully send request."
+            ] :
+            [
+                'success' => false,
+                'message' => "Cannot send request this time. Please try again later."
+            ]
+        );
+    }
+
+    public function acceptRequest(Request $request, Response $response)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $user_id = $request->getParam('user_id');
+        $requestedBy = User::find($user_id);
+
+        $is_accept = $authUser->acceptRequest($user_id);
+
+        return $response->withJson($is_accept ?
+            [
+                'success' => true,
+                'message' => "Successfully accept request.",
+                'user' => [
+                    'picture' => $requestedBy->picture,
+                    'full_name' => $requestedBy->getFullName()
+                ]
+            ] :
+            [
+                'success' => false,
+                'message' => "Cannot accept request this time. Please try again later."
+            ]
+        );
+    }
+
     // public function contactRequests(Request $request, Response $response)
     // {
     //     $login_token = $request->getParam('login_token');
@@ -157,48 +204,48 @@ class ChatApiController extends BaseController
     // }
 
     // ok
-    public function addContactRequest(Request $request, Response $response)
-    {
-        $login_token = $request->getParam('login_token');
-        $user_id = $request->getParam('user_id');
+    // public function addContactRequest(Request $request, Response $response)
+    // {
+    //     $login_token = $request->getParam('login_token');
+    //     $user_id = $request->getParam('user_id');
 
-        $authUser = User::findByLoginToken($login_token);
+    //     $authUser = User::findByLoginToken($login_token);
 
-        $contact_type = $authUser->addContactRequest($user_id);
+    //     $contact_type = $authUser->addContactRequest($user_id);
 
-        switch ($contact_type) {
-            case ContactRequest::TYPE_ACCEPTED:
-                $authUser = User::find($user_id);
+    //     switch ($contact_type) {
+    //         case ContactRequest::TYPE_ACCEPTED:
+    //             $authUser = User::find($user_id);
 
-                $data = [
-                    'success' => true,
-                    'message' => "Successfully add contact.",
-                    'type' => ContactRequest::TYPE_ACCEPTED,
-                    'user' => [
-                        'picture' => $authUser->picture,
-                        'full_name' => $authUser->getFullName()
-                    ]
-                ];
-                break;
+    //             $data = [
+    //                 'success' => true,
+    //                 'message' => "Successfully add contact.",
+    //                 'type' => ContactRequest::TYPE_ACCEPTED,
+    //                 'user' => [
+    //                     'picture' => $authUser->picture,
+    //                     'full_name' => $authUser->getFullName()
+    //                 ]
+    //             ];
+    //             break;
 
-            case ContactRequest::TYPE_REQUESTED:
-                $data = [
-                    'success' => true,
-                    'message' => "Successfully send request.",
-                    'type' => ContactRequest::TYPE_REQUESTED
-                ];
-                break;
+    //         case ContactRequest::TYPE_REQUESTED:
+    //             $data = [
+    //                 'success' => true,
+    //                 'message' => "Successfully send request.",
+    //                 'type' => ContactRequest::TYPE_REQUESTED
+    //             ];
+    //             break;
 
-            default:
-                $data = [
-                    'success' => false,
-                    'message' => "Cannot add contact this time. Please try again later."
-                ];
-                break;
-        }
+    //         default:
+    //             $data = [
+    //                 'success' => false,
+    //                 'message' => "Cannot add contact this time. Please try again later."
+    //             ];
+    //             break;
+    //     }
 
-        return $response->withJson($data);
-    }
+    //     return $response->withJson($data);
+    // }
 
     /**
      * @param Request  $request

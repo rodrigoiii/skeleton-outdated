@@ -95,48 +95,76 @@ class User extends Model
                 ->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
     }
 
-    public function addContactRequest($user_id)
+    public function sendContactRequest($user_id)
+    {
+        // send contact request
+        $contactRequest = ContactRequest::create([
+            'by_id' => $this->id,
+            'to_id' => $user_id
+        ]);
+
+        return $contactRequest instanceof ContactRequest;
+    }
+
+    public function acceptRequest($user_id)
     {
         $contactRequest = $this->contact_requests_from()
                                 ->notYetAccepted()
                                 ->where('by_id', $user_id)
                                 ->first();
 
-        $result = false;
-
-        // if contact to be add has pending request
         if (!is_null($contactRequest))
         {
-            // accept the contact request
-            if ($contactRequest->markAsAccepted())
-            {
-                $this->addContact($user_id);
-
-                $contactRequest->markAsUnread();
-                $result = ContactRequest::TYPE_ACCEPTED;
-            }
-        }
-        else
-        {
-            // send contact request
-            $contactRequest = ContactRequest::create([
-                'by_id' => $this->id,
-                'to_id' => $user_id
-            ]);
-
-            $result = ContactRequest::TYPE_REQUESTED;
+            return $contactRequest->markAsAccepted();
         }
 
-        return $result;
+        $user = static::find($user_id);
+        \Log::error($user->getFullName() . " has no request to " . $this->getFullName());
+        return false;
     }
 
-    public function addContact($user_id)
-    {
-        return Contact::create([
-            'user_id' => $user_id,
-            'owner_id' => $this->id
-        ]);
-    }
+    // public function addContactRequest($user_id)
+    // {
+    //     $contactRequest = $this->contact_requests_from()
+    //                             ->notYetAccepted()
+    //                             ->where('by_id', $user_id)
+    //                             ->first();
+
+    //     $result = false;
+
+    //     // if contact to be add has pending request
+    //     if (!is_null($contactRequest))
+    //     {
+    //         // accept the contact request
+    //         if ($contactRequest->markAsAccepted())
+    //         {
+    //             $this->addContact($user_id);
+
+    //             $contactRequest->markAsUnread();
+    //             $result = ContactRequest::TYPE_ACCEPTED;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // send contact request
+    //         $contactRequest = ContactRequest::create([
+    //             'by_id' => $this->id,
+    //             'to_id' => $user_id
+    //         ]);
+
+    //         $result = ContactRequest::TYPE_REQUESTED;
+    //     }
+
+    //     return $result;
+    // }
+
+    // public function addContact($user_id)
+    // {
+    //     return Contact::create([
+    //         'user_id' => $user_id,
+    //         'owner_id' => $this->id
+    //     ]);
+    // }
 
     // public function addContact($contact_id)
     // {
