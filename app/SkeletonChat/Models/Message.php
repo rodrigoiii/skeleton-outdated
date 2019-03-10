@@ -21,4 +21,12 @@ class Message extends Model
     {
         return $this->belongsTo("SkeletonChatApp\Models\User", "receiver_id");
     }
+
+    public static function conversation($sender_id, $receiver_id)
+    {
+        return static::where('sender_id', $sender_id)
+                ->where('receiver_id', $receiver_id)
+                ->orWhere('sender_id', $receiver_id)
+                ->where('receiver_id', $sender_id);
+    }
 }

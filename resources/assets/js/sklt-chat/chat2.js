@@ -243,12 +243,13 @@ var Chat = {
     $(this).button('loading');
 
     Chat.chatApi.addContactRequest(user_id, function(response) {
-      console.log(response);
       if (response.success) {
         $(_this).fadeOut(function() {
           $(this).parent().html('<span class="label label-success">Successfully send request. Please wait of acceptance</span>');
           $(this).remove();
         });
+
+        // Helper.updateNotificationNumber();
 
         // switch(response.type) {
         //   case Emitter.TYPE_ACCEPTED:
@@ -517,10 +518,26 @@ var Helper = {
 
     if (Helper.isContactEmpty()) {
       $('#contacts ul').html(template);
+
+      // show field and button to able to send message
+      $('.message-input').removeClass('hide');
     } else {
       $('#contacts ul').prepend(template);
     }
   },
+
+  updateNotificationNumber: function(number) {
+    var notification_el = $('#contact-request-notification');
+
+    if ($('.badge', notification_el).length > 0) {
+      $('.badge', notification_el).data('count', number);
+      $('.badge', notification_el).text(number);
+    } else {
+      notification_el.html('<span class="badge" data-count="'+number+'">'+number+'</span>');
+    }
+  }
 };
+
+window.Helper = Helper;
 
 $(document).ready(Chat.init);

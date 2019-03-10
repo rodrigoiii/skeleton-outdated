@@ -58,14 +58,6 @@ class User extends Model
                     ->count();
     }
 
-    public function conversation($receiver_id)
-    {
-        return Message::where('sender_id', $this->id)
-                ->where('receiver_id', $receiver_id)
-                ->orWhere('sender_id', $receiver_id)
-                ->where('receiver_id', $this->id);
-    }
-
     public function sendMessage(Message $message)
     {
         $message->sender_id = $this->id;
@@ -129,41 +121,6 @@ class User extends Model
         \Log::error($user->getFullName() . " has no request to " . $this->getFullName());
         return false;
     }
-
-    // public function addContactRequest($user_id)
-    // {
-    //     $contactRequest = $this->contact_requests_from()
-    //                             ->notYetAccepted()
-    //                             ->where('by_id', $user_id)
-    //                             ->first();
-
-    //     $result = false;
-
-    //     // if contact to be add has pending request
-    //     if (!is_null($contactRequest))
-    //     {
-    //         // accept the contact request
-    //         if ($contactRequest->markAsAccepted())
-    //         {
-    //             $this->addContact($user_id);
-
-    //             $contactRequest->markAsUnread();
-    //             $result = ContactRequest::TYPE_ACCEPTED;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         // send contact request
-    //         $contactRequest = ContactRequest::create([
-    //             'by_id' => $this->id,
-    //             'to_id' => $user_id
-    //         ]);
-
-    //         $result = ContactRequest::TYPE_REQUESTED;
-    //     }
-
-    //     return $result;
-    // }
 
     public function addContact($user_id)
     {

@@ -42,7 +42,7 @@ class ChatApiController extends BaseController
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
 
-        $conversation = $authUser->conversation($chatting_to_id)
+        $conversation = Message::conversation($authUser->id, $chatting_to_id)
                             ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                             ->orderBy('id', "DESC")
                             ->limit(config('sklt-chat.default_conversation_length'))
@@ -98,7 +98,7 @@ class ChatApiController extends BaseController
 
         $default_convo_length = config('sklt-chat.default_conversation_length');
 
-        $conversation = $authUser->conversation($chatting_to_id)
+        $conversation = Message::conversation($authUser->id, $chatting_to_id)
                             ->select(["id", "message", "sender_id", "receiver_id", "created_at"])
                             ->orderBy('id', "DESC")
                             ->offset($default_convo_length * $load_more_counter)

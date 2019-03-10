@@ -30,9 +30,9 @@ class ContactsBothOfUserTransformer extends TransformerAbstract
                 'id' => $userContact->id,
                 'picture' => $userContact->picture,
                 'full_name' => $userContact->getFullName(),
-                'conversation' => $userContact->conversation($this->user->id)
-                                        ->get()
-                                        ->last()
+                'conversation' => Message::conversation($userContact->id, $this->user->id)
+                                    ->get()
+                                    ->last()
             ]
         ];
     }

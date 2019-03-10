@@ -82,6 +82,10 @@ Emitter.prototype = {
 
     this.stopTyping(chatting_to_id);
     this.emitMessage(msg);
+  },
+
+  sendContactRequest: function() {
+
   }
 };
 
