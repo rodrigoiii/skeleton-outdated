@@ -10,6 +10,7 @@ use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
 use SkeletonChatApp\Transformers\ContactsRequestTransformer;
+use SkeletonChatApp\Transformers\SearchContactsTransformer;
 use SkeletonChatApp\Transformers\SendMessageTransformer;
 use SkeletonChatApp\Transformers\UserRequestTransformer;
 use SkeletonCore\BaseController;
@@ -129,13 +130,14 @@ class ChatApiController extends BaseController
         $ignore_user_ids = array_flatten([$contact_ids, $contact_requests_ids, $authUser->id]);
 
         $results = User::search($keyword)
-                    ->select(\DB::raw("id, picture, first_name, last_name"))
                     ->whereNotIn('id', $ignore_user_ids)
                     ->get();
 
+        $results = sklt_transformer($results, new SearchContactsTransformer($authUser))->toArray();
+
         return $response->withJson([
             'success' => true,
-            'data' => $results
+            'users' => $results['data']
         ]);
     }
 

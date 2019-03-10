@@ -7,11 +7,14 @@ use SkeletonAuthApp\Auth;
 use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\User;
 
-/**
- * Use this if the user authenticated
- */
 class ContactsBothOfUserTransformer extends TransformerAbstract
 {
+    protected $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
     /**
      * [transform description]
      *
@@ -20,15 +23,14 @@ class ContactsBothOfUserTransformer extends TransformerAbstract
      */
     public function transform(Contact $contact)
     {
-        $auth_user = Auth::user();
-        $user_contact = User::find($contact->user_id === $auth_user->id ? $contact->owner_id : $contact->user_id);
+        $userContact = User::find($contact->user_id === $this->user->id ? $contact->owner_id : $contact->user_id);
 
         return [
             'user' => [
-                'id' => $user_contact->id,
-                'picture' => $user_contact->picture,
-                'full_name' => $user_contact->getFullName(),
-                'conversation' => $user_contact->conversation($auth_user->id)
+                'id' => $userContact->id,
+                'picture' => $userContact->picture,
+                'full_name' => $userContact->getFullName(),
+                'conversation' => $userContact->conversation($this->user->id)
                                         ->get()
                                         ->last()
             ]

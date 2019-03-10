@@ -18,7 +18,7 @@ class ChatController extends BaseController
         // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
         $contacts = $user->contactsBothUser()->get();
-        $contacts = sklt_transformer($contacts, new ContactsBothOfUserTransformer)->toArray()['data'];
+        $contacts = sklt_transformer($contacts, new ContactsBothOfUserTransformer($user))->toArray()['data'];
 
         $contactRequests = $user->contactRequestsBothUser()->get();
 

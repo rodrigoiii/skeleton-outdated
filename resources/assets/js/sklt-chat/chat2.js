@@ -40,6 +40,10 @@ var Chat = {
     $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
     $('.messages').scroll(Chat.onLoadMoreMessages);
 
+    $('#add-contact-btn').click(Chat.onSearchContact);
+    $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
+    $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
+
     _.delay(function() {
       if (!Helper.isContactEmpty()) {
         $('#contacts .contact:first').click(); // select first contact
@@ -196,7 +200,100 @@ var Chat = {
         }
       });
     }
-  }
+  },
+
+  onSearchContact: function() {
+    var tmpl = _.template($('#add-contact-tmpl').html());
+
+    var box = bootbox.dialog({
+      title: "Add Contact",
+      message: tmpl(),
+      className: "add-contact-modal"
+    });
+
+    box.on("shown.bs.modal", function() {
+      $('.add-contact-modal :input[name="search_contact"]').focus();
+    });
+  },
+
+  onSearchingContact: function() {
+    var keyword = $(this).val();
+
+    Chat.chatApi.searchContacts(keyword, function(response) {
+      if (response.success) {
+        var tmpl = _.template($('#result-contacts-tmpl').html());
+
+        $('.add-contact-modal table tbody').html(tmpl({
+          result_users: response.users
+        }));
+      } else {
+        console.log(response.message);
+      }
+    });
+  },
+
+  onAddContact: function() {
+    var _this = this;
+
+    var user_id = $(this).data('user-id');
+    var tr_el = $(this).closest('tr');
+
+    $(this).prop('disabled', true);
+    $(this).button('loading');
+
+    Emitter.chatApi.addContactRequest(user_id, function(response) {
+      console.log(response);
+      if (response.success) {
+        switch(response.type) {
+          case Emitter.TYPE_ACCEPTED:
+            console.log("accepted");
+
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
+
+            Helper.addContactItem({
+              'user': _.extend(response.user, {id: user_id})
+            });
+
+            // activate new contact
+            $('#contacts .contact[data-id="'+user_id+'"]').click();
+
+            // Emitter.onAcceptContact(contact_id);
+            break;
+
+          case Emitter.TYPE_REQUESTED:
+            console.log("requested");
+
+            $(_this).prop('disabled', false);
+            $(_this).button('reset');
+            bootbox.hideAll();
+
+            Emitter.onRequestContact(user_id);
+
+            break;
+        }
+
+        // var tmpl = _.template($('#contact-item-tmpl').html());
+        // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
+
+        // var template = tmpl({
+        //   picture: $('.contact-picture', tr_el).attr('src'),
+        //   fullname: $('.contact-fullname', tr_el).text()
+        // });
+
+        // if (is_contacts_empty) {
+        //   $('#contacts ul').html(template);
+        // } else {
+        //   $('#contacts ul').prepend(template);
+        // }
+
+        // bootbox.hideAll();
+      } else {
+        console.log(response.message);
+      }
+    });
+  },
 };
 
 var EventHandler = {
