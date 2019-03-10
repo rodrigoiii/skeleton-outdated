@@ -115,7 +115,14 @@ class User extends Model
 
         if (!is_null($contactRequest))
         {
-            return $contactRequest->markAsAccepted();
+            // accept the contact request
+            if ($contactRequest->markAsAccepted())
+            {
+                $contactRequest->markAsUnread();
+                $newContact = $this->addContact($user_id);
+
+                return $newContact instanceof Contact;
+            }
         }
 
         $user = static::find($user_id);
@@ -158,13 +165,13 @@ class User extends Model
     //     return $result;
     // }
 
-    // public function addContact($user_id)
-    // {
-    //     return Contact::create([
-    //         'user_id' => $user_id,
-    //         'owner_id' => $this->id
-    //     ]);
-    // }
+    public function addContact($user_id)
+    {
+        return Contact::create([
+            'user_id' => $user_id,
+            'owner_id' => $this->id
+        ]);
+    }
 
     // public function addContact($contact_id)
     // {
