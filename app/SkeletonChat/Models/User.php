@@ -29,9 +29,14 @@ class User extends Model
         return $this->hasOne("SkeletonChatApp\Models\ChatStatus");
     }
 
-    public function contact_requests()
+    public function contact_requests($include_self = false)
     {
-        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id");
+        $contact_requests = $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id")
+                                ->where('is_read_by', ContactRequest::IS_NOT_YET_READ);
+
+        return $include_self ? $contact_requests->orWhere('to_id', $this->id)
+                                    ->where('is_read_to', ContactRequest::IS_NOT_YET_READ) :
+                                $contact_requests;
     }
 
     public function contact_requests_from()
@@ -56,14 +61,6 @@ class User extends Model
         $is_sent = $message->save();
 
         return $is_sent ? $message : false;
-    }
-
-    public function contactRequestsBothUser()
-    {
-        return ContactRequest::where('by_id', $this->id)
-                ->where('is_read_by', ContactRequest::IS_NOT_YET_READ)
-                ->orWhere('to_id', $this->id)
-                ->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
     }
 
     public function sendContactRequest($user_id)
