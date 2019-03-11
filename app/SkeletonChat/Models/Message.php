@@ -29,4 +29,21 @@ class Message extends Model
                 ->orWhere('sender_id', $receiver_id)
                 ->where('receiver_id', $sender_id);
     }
+
+    public static function numberOfUnread($sender_id, $receiver_id)
+    {
+        return static::where('sender_id', $sender_id)
+                    ->where('receiver_id', $receiver_id)
+                    ->where('is_read', static::IS_UNREAD)
+                    ->get()
+                    ->count();
+    }
+
+    public static function markAsRead($sender_id, $receiver_id)
+    {
+        return static::where('sender_id', $sender_id)
+                    ->where('receiver_id', $receiver_id)
+                    ->where('is_read', static::IS_UNREAD)
+                    ->update(['is_read', static::READ]);
+    }
 }

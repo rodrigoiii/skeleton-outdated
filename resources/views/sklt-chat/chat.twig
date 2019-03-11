@@ -43,9 +43,10 @@
                                         <p class="name">
                                             {{ contact.user.full_name }}
 
-                                            <b class="unread-number" data-unread-number="{{ authUserChat.numberOfUnread(contact.user.id) }}">
-                                                {% if authUserChat.numberOfUnread(contact.user.id) > 0 %}
-                                                    ({{ authUserChat.numberOfUnread(contact.user.id) }})
+                                            {% set number_of_unread = call_user_func_array(["SkeletonChatApp\\Models\\User", "numberOfUnread", [contact.user.id, authUserChat.id]]) %}
+                                            <b class="unread-number" data-unread-number="{{ number_of_unread }}">
+                                                {% if number_of_unread > 0 %}
+                                                    ({{ number_of_unread }})
                                                 {% endif %}
                                             </b>
                                         </p>

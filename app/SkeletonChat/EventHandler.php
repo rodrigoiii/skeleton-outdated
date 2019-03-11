@@ -87,7 +87,7 @@ class EventHandler
                 $return_data = [
                     'event' => __FUNCTION__,
                     'message' => $message['data'],
-                    'unread_number' => $chattingTo->numberOfUnread($chattingFrom->id),
+                    'unread_number' => Message::numberOfUnread($chattingFrom->id, $chattingTo->id),
                     'token' => $chattingTo->login_token
                 ];
 
@@ -109,7 +109,7 @@ class EventHandler
             $return_data = [
                 'event' => __FUNCTION__,
                 'message' => $message,
-                'unread_number' => $receiver->numberOfUnread($sender->id),
+                'unread_number' => Message::numberOfUnread($sender->id, $receiver->id),
                 'token' => $receiver->login_token
             ];
 

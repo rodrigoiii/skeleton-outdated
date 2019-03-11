@@ -22,7 +22,7 @@ class ChatApiController extends BaseController
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
 
-        $is_read = $authUser->markUnreadMessageAsRead($chatting_to_id);
+        $is_read = Message::markAsRead($authUser->id, $chatting_to_id);
 
         return $response->withJson(
             $is_read ?

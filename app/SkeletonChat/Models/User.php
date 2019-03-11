@@ -39,23 +39,15 @@ class User extends Model
         return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "to_id");
     }
 
-    public function contacts()
+    public function contacts($include_self = false)
     {
-        return $this->hasMany("SkeletonChatApp\Models\Contact", "owner_id");
+        $contacts = $this->hasMany("SkeletonChatApp\Models\Contact", "owner_id");
+        return $include_self ? $contacts->orWhere('user_id', $this->id) : $contacts;
     }
 
     public function getFullName()
     {
         return $this->first_name . " " . $this->last_name;
-    }
-
-    public function numberOfUnread($sender_id)
-    {
-        return $this->received_messages()
-                    ->where('sender_id', $sender_id)
-                    ->where('is_read', 0)
-                    ->get()
-                    ->count();
     }
 
     public function sendMessage(Message $message)
@@ -64,19 +56,6 @@ class User extends Model
         $is_sent = $message->save();
 
         return $is_sent ? $message : false;
-    }
-
-    public function markUnreadMessageAsRead($sender_id)
-    {
-        return $this->received_messages()
-            ->where('sender_id', $sender_id)
-            ->update(['is_read' => 1]);
-    }
-
-    public function contactsBothUser()
-    {
-        return Contact::where('user_id', $this->id)
-                ->orWhere('owner_id', $this->id);
     }
 
     public function contactRequestsBothUser()

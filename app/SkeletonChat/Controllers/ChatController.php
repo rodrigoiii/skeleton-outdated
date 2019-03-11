@@ -17,8 +17,7 @@ class ChatController extends BaseController
         $user = User::find(Auth::user()->id);
         // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $contacts = $user->contactsBothUser()->get();
-        $contacts = sklt_transformer($contacts, new ContactsBothOfUserTransformer($user))->toArray()['data'];
+        $contacts = sklt_transformer($user->contacts(true)->get(), new ContactsBothOfUserTransformer($user))->toArray()['data'];
 
         $contactRequests = $user->contactRequestsBothUser()->get();
 
