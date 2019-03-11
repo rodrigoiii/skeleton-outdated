@@ -42,8 +42,8 @@ var Chat = {
 
     $('#add-contact-btn').click(Chat.onSearchContact);
     $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
-    $('body').on('click', ".add-contact-modal .add-contact", Chat.onAddContact);
-    $('body').on('click', ".add-contact-modal .accept-request", Chat.onAcceptRequest);
+    $('body').on('click', ".add-contact-modal .send-contact-request", Chat.onSendContactRequest);
+    $('body').on('click', ".add-contact-modal .accept-contact-request", Chat.onAcceptContactRequest);
 
     _.delay(function() {
       if (!Helper.isContactEmpty()) {
@@ -233,16 +233,16 @@ var Chat = {
     });
   },
 
-  onAddContact: function() {
+  onSendContactRequest: function() {
     var _this = this;
 
-    var user_id = $(this).data('user-id');
+    var to_id = $(this).data('user-id');
     var tr_el = $(this).closest('tr');
 
     $(this).prop('disabled', true);
     $(this).button('loading');
 
-    Chat.chatApi.addContactRequest(user_id, function(response) {
+    Chat.chatApi.sendContactRequest(to_id, function(response) {
       if (response.success) {
         $(_this).fadeOut(function() {
           $(this).parent().html('<span class="label label-success">Successfully send request. Please wait of acceptance</span>');
@@ -302,23 +302,23 @@ var Chat = {
     });
   },
 
-  onAcceptRequest: function() {
+  onAcceptContactRequest: function() {
     var _this = this;
 
-    var user_id = $(this).data('user-id');
+    var from_id = $(this).data('user-id');
     var tr_el = $(this).closest('tr');
 
     $(this).prop('disabled', true);
     $(this).button('loading');
 
-    Chat.chatApi.acceptRequest(user_id, function(response) {
+    Chat.chatApi.acceptContactRequest(from_id, function(response) {
       if (response.success) {
         Helper.addContactItem({
-          'user': _.extend(response.user, {id: user_id})
+          'user': _.extend(response.user, {id: from_id})
         });
 
         // select new contact
-        $('#contacts .contact[data-id="'+user_id+'"]').click();
+        $('#contacts .contact[data-id="'+from_id+'"]').click();
 
         bootbox.hideAll();
       }

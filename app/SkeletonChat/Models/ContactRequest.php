@@ -49,4 +49,13 @@ class ContactRequest extends Model
         $this->is_read_to = static::IS_NOT_YET_READ;
         return $this->save();
     }
+
+    public static function send($by_id, $to_id)
+    {
+        // send contact request
+        return static::create([
+            'by_id' => $by_id,
+            'to_id' => $to_id
+        ]);
+    }
 }

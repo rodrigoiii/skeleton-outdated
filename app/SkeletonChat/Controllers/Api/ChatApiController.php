@@ -141,14 +141,13 @@ class ChatApiController extends BaseController
         ]);
     }
 
-    public function addContactRequest(Request $request, Response $response)
+    public function sendContactRequest(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
+        $to_id = $request->getParam('to_id');
 
-        $user_id = $request->getParam('user_id');
-
-        $is_sent = $authUser->sendContactRequest($user_id);
+        $is_sent = ContactRequest::send($authUser->id, $to_id);
 
         return $response->withJson($is_sent ?
             [
@@ -162,15 +161,15 @@ class ChatApiController extends BaseController
         );
     }
 
-    public function acceptRequest(Request $request, Response $response)
+    public function acceptContactRequest(Request $request, Response $response)
     {
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
 
-        $user_id = $request->getParam('user_id');
-        $requestedBy = User::find($user_id);
+        $from_id = $request->getParam('from_id');
+        $requestedBy = User::find($from_id);
 
-        $is_accept = $authUser->acceptRequest($user_id);
+        $is_accept = $authUser->acceptRequest($from_id);
 
         return $response->withJson($is_accept ?
             [

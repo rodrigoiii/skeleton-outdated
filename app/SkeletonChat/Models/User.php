@@ -63,17 +63,6 @@ class User extends Model
         return $is_sent ? $message : false;
     }
 
-    public function sendContactRequest($user_id)
-    {
-        // send contact request
-        $contactRequest = ContactRequest::create([
-            'by_id' => $this->id,
-            'to_id' => $user_id
-        ]);
-
-        return $contactRequest instanceof ContactRequest;
-    }
-
     public function acceptRequest($user_id)
     {
         $contactRequest = $this->contact_requests_from()
