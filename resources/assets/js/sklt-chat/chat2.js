@@ -54,12 +54,20 @@ var Chat = {
 
   onConnected: function() { // interface
     console.log("Connection established!");
-    $('body').show();
+    $('#frame').show(function() {
+      if ($('body > .disconnected').length === 1) {
+        $('body > .disconnected').remove();
+      }
+    });
   },
 
   onDisconnected: function() { // interface
     console.log("Connection closed!");
-    $('body').hide();
+    $('#frame').hide(function() {
+      if ($('body > .disconnected').length === 0) {
+        $('body').append('<p class="disconnected">Disconnected!</p>');
+      }
+    });
   },
 
   onSelectContact: function() {
