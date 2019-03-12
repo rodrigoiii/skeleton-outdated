@@ -29,25 +29,29 @@ class User extends Model
         return $this->hasOne("SkeletonChatApp\Models\ChatStatus");
     }
 
-    public function contact_requests($include_self = false)
-    {
-        $contact_requests = $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id")
-                                ->where('is_read_by', ContactRequest::IS_NOT_YET_READ);
-
-        return $include_self ? $contact_requests->orWhere('to_id', $this->id)
-                                    ->where('is_read_to', ContactRequest::IS_NOT_YET_READ) :
-                                $contact_requests;
-    }
-
-    public function contact_requests_from()
-    {
-        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "to_id");
-    }
-
     public function contacts($include_self = false)
     {
         $contacts = $this->hasMany("SkeletonChatApp\Models\Contact", "owner_id");
         return $include_self ? $contacts->orWhere('user_id', $this->id) : $contacts;
+    }
+
+    public function contact_requests($include_self = false)
+    {
+        $contact_requests = $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id")
+                                ->where('is_read_by', ContactRequest::IS_NOT_YET_READ);
+        $user_id = $this->id;
+
+        return $include_self ?
+                $contact_requests->orWhere(function($query) use($user_id) {
+                    $query->where('to_id', $user_id);
+                    $query->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
+                }) :
+                $contact_requests;
+    }
+
+    public function contact_requests_for_self()
+    {
+        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "to_id");
     }
 
     public function getFullName()
@@ -65,7 +69,7 @@ class User extends Model
 
     public function acceptRequest($user_id)
     {
-        $contactRequest = $this->contact_requests_from()
+        $contactRequest = $this->contact_requests_for_self()
                                 ->notYetAccepted()
                                 ->where('by_id', $user_id)
                                 ->first();

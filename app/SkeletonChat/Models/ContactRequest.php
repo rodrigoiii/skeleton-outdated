@@ -58,4 +58,16 @@ class ContactRequest extends Model
             'to_id' => $to_id
         ]);
     }
+
+    public static function getUnreadNumber($user_id)
+    {
+        return static::where(function($query) use($user_id) {
+                $query->where('by_id', $user_id);
+                $query->where('is_read_by', static::IS_NOT_YET_READ);
+            })->orWhere(function($query) use($user_id) {
+                $query->where('to_id', $user_id);
+                $query->where('is_read_to', static::IS_NOT_YET_READ);
+            })->get()
+            ->count();
+    }
 }

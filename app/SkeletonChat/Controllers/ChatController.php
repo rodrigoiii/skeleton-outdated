@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use SkeletonAuthApp\Auth;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;
-use SkeletonChatApp\Transformers\ContactsBothOfUserTransformer;
+use SkeletonChatApp\Transformers\ContactsTransformer;
 use SkeletonCore\BaseController;
 
 class ChatController extends BaseController
@@ -17,7 +17,7 @@ class ChatController extends BaseController
         $user = User::find(Auth::user()->id);
         // $contacts = User::contactsOrderByOnlineStatus($auth_user->id)->get();
 
-        $contacts = sklt_transformer($user->contacts(true)->get(), new ContactsBothOfUserTransformer($user))->toArray()['data'];
+        $contacts = sklt_transformer($user->contacts(true)->get(), new ContactsTransformer($user))->toArray()['data'];
 
         $contactRequests = $user->contact_requests(true)->get();
 

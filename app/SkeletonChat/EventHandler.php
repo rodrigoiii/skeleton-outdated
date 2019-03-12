@@ -163,6 +163,26 @@ class EventHandler
         }
     }
 
+    public function onSendContactRequest(ConnectionInterface $from, $msg)
+    {
+        parse_str($from->httpRequest->getUri()->getQuery(), $params);
+
+        $authUser = User::findByLoginToken($params['login_token']);
+        $requestTo = User::find($msg->to_id);
+
+        // if the user that would receive contact request is online
+        if (isset($this->clients[$msg->to_id]))
+        {
+            $return_data = [
+                'event' => __FUNCTION__,
+                'token' => $requestTo->login_token
+            ];
+
+            $requestToSocket = $this->clients[$msg->to_id];
+            $requestToSocket->send(json_encode($return_data));
+        }
+    }
+
     // public function onReadMessage(ConnectionInterface $from, $msg)
     // {
     //     parse_str($from->httpRequest->getUri()->getQuery(), $params);
@@ -233,38 +253,4 @@ class EventHandler
 
     //     $from->send(json_encode($return_data));
     // }
-
-    public function onRequestContact(ConnectionInterface $from, $msg)
-    {
-        parse_str($from->httpRequest->getUri()->getQuery(), $params);
-
-        $authUser = User::findByLoginToken($params['login_token']);
-        // $chattingTo = User::find($msg->chatting_to_id);
-
-        $authUserNotifications = $authUser->userNotifications()->get();
-
-        $return_data = [
-            'event' => __FUNCTION__,
-            'token' => $authUser->login_token,
-            'notification_num' => $authUserNotifications->count()
-        ];
-
-        $from->send(json_encode($return_data));
-
-        unset($return_data['token']);
-        unset($return_data['notification_num']);
-
-        // if the soon to be contact is online
-        if (isset($this->clients[$msg->contact_id]))
-        {
-            $contact = User::find($msg->contact_id);
-            $contactNotifications = $contact->userNotifications()->get();
-
-            $return_data['token'] = $contact->login_token;
-            $return_data['notification_num'] = $authUserNotifications->count();
-
-            $contactSocket = $this->clients[$msg->contact_id];
-            $contactSocket->send(json_encode($return_data));
-        }
-    }
 }

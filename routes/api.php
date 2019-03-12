@@ -10,14 +10,14 @@ api_image_generator($this);
 
 $this->group('/chat-application', function() {
     $this->put('/read-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "readMessages"]);
-    $this->get('/fetch-conversation/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "fetchConversation"]);
+    $this->get('/get-conversation/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "getConversation"]);
     $this->post('/send-message/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "sendMessage"]);
     $this->get('/load-more-messages/{chatting_to_id}', ["SkeletonChatApp\\Api\\ChatApiController", "loadMoreMessages"]);
 
     $this->get('/search-contacts', ["SkeletonChatApp\\Api\\ChatApiController", "searchContacts"]);
-    $this->get('/contact-requests', ["SkeletonChatApp\\Api\\ChatApiController", "contactRequests"]);
     $this->post('/send-contact-request', ["SkeletonChatApp\\Api\\ChatApiController", "sendContactRequest"]);
     $this->post('/accept-contact-request', ["SkeletonChatApp\\Api\\ChatApiController", "acceptContactRequest"]);
+    $this->get('/get-unread-number', ["SkeletonChatApp\\Api\\ChatApiController", "getUnreadNumber"]);
     // $this->delete('/remove-request/{contact_id}', ["SkeletonChatApp\\Api\\ChatApiController", "removeRequest"]);
 
     // $this->put('/read-notification', ["SkeletonChatApp\\Api\\ChatApiController", "readNotification"]);

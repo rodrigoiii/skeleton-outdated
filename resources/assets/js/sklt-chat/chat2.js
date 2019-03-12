@@ -87,7 +87,7 @@ var Chat = {
     // hide the messages block while fetching the conversation
     $('.messages').addClass("invisible");
 
-    Chat.chatApi.fetchConversation(chatting_to_id, function(response) {
+    Chat.chatApi.getConversation(chatting_to_id, function(response) {
       if (response.success) {
         if (response.conversation.length > 0) {
           if ($('.messages').hasClass("no-message")) {
@@ -255,57 +255,14 @@ var Chat = {
         $(_this).fadeOut(function() {
           $(this).parent().html('<span class="label label-success">Successfully send request. Please wait of acceptance</span>');
           $(this).remove();
+
+          Chat.chatApi.getUnreadNumber(function(unreadNumberResponse) {
+            if (unreadNumberResponse.success) {
+              Helper.updateNotificationNumber(unreadNumberResponse.unread_number);
+              Chat.emitter.sendContactRequest(to_id);
+            }
+          });
         });
-
-        // Helper.updateNotificationNumber();
-
-        // switch(response.type) {
-        //   case Emitter.TYPE_ACCEPTED:
-        //     console.log("accepted");
-
-        //     $(_this).prop('disabled', false);
-        //     $(_this).button('reset');
-        //     bootbox.hideAll();
-
-        //     Helper.addContactItem({
-        //       'user': _.extend(response.user, {id: user_id})
-        //     });
-
-        //     // activate new contact
-        //     $('#contacts .contact[data-id="'+user_id+'"]').click();
-
-        //     // Emitter.onAcceptContact(contact_id);
-        //     break;
-
-        //   case Emitter.TYPE_REQUESTED:
-        //     console.log("requested");
-
-        //     $(_this).prop('disabled', false);
-        //     $(_this).button('reset');
-        //     bootbox.hideAll();
-
-        //     Emitter.onRequestContact(user_id);
-
-        //     break;
-        // }
-
-      //   // var tmpl = _.template($('#contact-item-tmpl').html());
-      //   // var is_contacts_empty = $('#contacts ul .contact.empty').length === 1;
-
-      //   // var template = tmpl({
-      //   //   picture: $('.contact-picture', tr_el).attr('src'),
-      //   //   fullname: $('.contact-fullname', tr_el).text()
-      //   // });
-
-      //   // if (is_contacts_empty) {
-      //   //   $('#contacts ul').html(template);
-      //   // } else {
-      //   //   $('#contacts ul').prepend(template);
-      //   // }
-
-      //   // bootbox.hideAll();
-      // } else {
-      //   console.log(response.message);
       }
     });
   },
@@ -328,7 +285,7 @@ var Chat = {
         // select new contact
         $('#contacts .contact[data-id="'+from_id+'"]').click();
 
-        bootbox.hideAll();
+        // bootbox.hideAll();
       }
     });
   }
@@ -413,6 +370,16 @@ var EventHandler = {
       }
     }
   },
+
+  onSendContactRequest: function(data) {
+    if (Helper.isTokenValid(data.token)) {
+      Chat.chatApi.getUnreadNumber(function(unreadNumberResponse) {
+        if (unreadNumberResponse.success) {
+          Helper.updateNotificationNumber(unreadNumberResponse.unread_number);
+        }
+      });
+    }
+  }
 };
 
 var Helper = {

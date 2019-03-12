@@ -37,7 +37,7 @@ class ChatApiController extends BaseController
         );
     }
 
-    public function fetchConversation(Request $request, Response $response, $chatting_to_id)
+    public function getConversation(Request $request, Response $response, $chatting_to_id)
     {
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
@@ -185,6 +185,17 @@ class ChatApiController extends BaseController
                 'message' => "Cannot accept request this time. Please try again later."
             ]
         );
+    }
+
+    public function getUnreadNumber(Request $request, Response $response)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        return $response->withJson([
+            'success' => true,
+            'unread_number' => ContactRequest::getUnreadNumber($authUser->id)
+        ]);
     }
 
     // public function contactRequests(Request $request, Response $response)

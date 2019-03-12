@@ -51,7 +51,7 @@ Emitter.ON_STOP_TYPING = "onStopTyping";
 Emitter.ON_READ_MESSAGE = "onReadMessage";
 Emitter.ON_FETCH_MESSAGE = "onFetchMessage";
 // Emitter.ON_LOAD_MORE_MESSAGES = "onLoadMoreMessages";
-Emitter.ON_REQUEST_CONTACT = "onRequestContact";
+Emitter.ON_SEND_CONTACT_REQUEST = "onSendContactRequest";
 Emitter.ON_ACCEPT_CONTACT = "onAcceptContact";
 
 Emitter.prototype = {
@@ -84,8 +84,13 @@ Emitter.prototype = {
     this.emitMessage(msg);
   },
 
-  sendContactRequest: function() {
+  sendContactRequest: function(to_id) {
+    var msg = {
+      event: Emitter.ON_SEND_CONTACT_REQUEST,
+      to_id: to_id
+    };
 
+    this.emitMessage(msg);
   }
 };
 

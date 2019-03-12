@@ -24,10 +24,14 @@ class Message extends Model
 
     public static function conversation($sender_id, $receiver_id)
     {
-        return static::where('sender_id', $sender_id)
-                ->where('receiver_id', $receiver_id)
-                ->orWhere('sender_id', $receiver_id)
-                ->where('receiver_id', $sender_id);
+        return static::where(function($query) {
+                    $query->where('sender_id', $sender_id);
+                    $query->where('receiver_id', $receiver_id);
+                })
+                ->orWhere(function($query) {
+                    $query->where('sender_id', $receiver_id);
+                    $query->where('receiver_id', $sender_id);
+                });
     }
 
     public static function numberOfUnread($sender_id, $receiver_id)
