@@ -3,6 +3,7 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use SkeletonChatApp\Models\User;
 
 class Contact extends Model
 {
@@ -10,12 +11,12 @@ class Contact extends Model
 
     public function user()
     {
-        return $this->belongsTo("SkeletonChatApp\Models\User");
+        return $this->belongsTo(User::class);
     }
 
     public function owner()
     {
-        return $this->belongsTo("SkeletonChatApp\Models\User", "owner_id");
+        return $this->belongsTo(User::class, "owner_id");
     }
 
     // public function contact()

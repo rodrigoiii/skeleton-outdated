@@ -36,7 +36,7 @@ class ChatStatus extends Model
     public static function createOnlineUser($user_id)
     {
         return static::create([
-            'status' => ChatStatus::ONLINE_STATUS,
+            'status' => static::ONLINE_STATUS,
             'user_id' => $user_id
         ]);
     }

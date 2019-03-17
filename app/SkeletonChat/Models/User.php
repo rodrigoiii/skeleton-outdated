@@ -3,6 +3,7 @@
 namespace SkeletonChatApp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use SkeletonChatApp\Models\ChatStatus;
 use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\ContactRequest;
 use SkeletonChatApp\Models\Message;
@@ -16,28 +17,28 @@ class User extends Model
 
     public function sent_messages()
     {
-        return $this->hasMany("SkeletonChatApp\Models\Message", "sender_id");
+        return $this->hasMany(Message::class, "sender_id");
     }
 
     public function received_messages()
     {
-        return $this->hasMany("SkeletonChatApp\Models\Message", "receiver_id");
+        return $this->hasMany(Message::class, "receiver_id");
     }
 
     public function chatStatus()
     {
-        return $this->hasOne("SkeletonChatApp\Models\ChatStatus");
+        return $this->hasOne(ChatStatus::class);
     }
 
     public function contacts($include_self = false)
     {
-        $contacts = $this->hasMany("SkeletonChatApp\Models\Contact", "owner_id");
+        $contacts = $this->hasMany(Contact::class, "owner_id");
         return $include_self ? $contacts->orWhere('user_id', $this->id) : $contacts;
     }
 
     public function contact_requests($include_self = false)
     {
-        $contact_requests = $this->hasMany("SkeletonChatApp\Models\ContactRequest", "by_id")
+        $contact_requests = $this->hasMany(ContactRequest::class, "by_id")
                                 ->where('is_read_by', ContactRequest::IS_NOT_YET_READ);
         $user_id = $this->id;
 
@@ -51,7 +52,7 @@ class User extends Model
 
     public function contact_requests_for_self()
     {
-        return $this->hasMany("SkeletonChatApp\Models\ContactRequest", "to_id");
+        return $this->hasMany(ContactRequest::class, "to_id");
     }
 
     public function getFullName()

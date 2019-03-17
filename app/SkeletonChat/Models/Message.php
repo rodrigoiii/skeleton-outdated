@@ -14,12 +14,12 @@ class Message extends Model
 
     public function sender()
     {
-        return $this->belongsTo("SkeletonChatApp\Models\User", "sender_id");
+        return $this->belongsTo(User::class, "sender_id");
     }
 
     public function receiver()
     {
-        return $this->belongsTo("SkeletonChatApp\Models\User", "receiver_id");
+        return $this->belongsTo(User::class, "receiver_id");
     }
 
     public static function conversation($sender_id, $receiver_id)
