@@ -3,7 +3,6 @@
 namespace SkeletonChatApp\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use SkeletonAuthApp\Auth;
 use SkeletonChatApp\Models\User;
 
 class SearchContactsTransformer extends TransformerAbstract

@@ -38,16 +38,18 @@ class User extends Model
 
     public function contact_requests($include_self = false)
     {
-        $contact_requests = $this->hasMany(ContactRequest::class, "by_id")
-                                ->where('is_read_by', ContactRequest::IS_NOT_YET_READ);
-        $user_id = $this->id;
+        $contact_requests = $this->hasMany(ContactRequest::class, "by_id");
 
-        return $include_self ?
-                $contact_requests->orWhere(function($query) use($user_id) {
-                    $query->where('to_id', $user_id);
-                    $query->where('is_read_to', ContactRequest::IS_NOT_YET_READ);
-                }) :
-                $contact_requests;
+        if ($include_self)
+        {
+            $user_id = $this->id;
+
+            $contact_requests = $contact_requests->orWhere(function($query) use($user_id) {
+                $query->where('to_id', $user_id);
+            });
+        }
+
+        return $contact_requests;
     }
 
     public function contact_requests_for_self()

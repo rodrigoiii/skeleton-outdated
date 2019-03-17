@@ -5,9 +5,9 @@ function ChatApi(login_token) {
 }
 
 ChatApi.prototype = {
-  getContactRequests: function(user_id, callback) {
+  contactRequests: function(callback) {
     var query_string = "?login_token=" + this.login_token;
-    $.get("/api/chat-application/get-contact-requests/" + user_id + query_string, callback);
+    $.get("/api/chat-application/contact-requests" + query_string, callback);
   },
 
   readMessages: function(chatting_to_id, callback) {
@@ -18,9 +18,9 @@ ChatApi.prototype = {
     $.post("/api/chat-application/read-messages/" + chatting_to_id, params, callback);
   },
 
-  getConversation: function(chatting_to_id, callback) {
+  conversation: function(chatting_to_id, callback) {
     var query_string = "?login_token=" + this.login_token;
-    $.get("/api/chat-application/get-conversation/" + chatting_to_id + query_string, callback);
+    $.get("/api/chat-application/conversation/" + chatting_to_id + query_string, callback);
   },
 
   sendMessage: function(chatting_to_id, message, callback) {

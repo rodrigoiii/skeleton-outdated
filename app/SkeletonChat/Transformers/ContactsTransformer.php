@@ -3,7 +3,6 @@
 namespace SkeletonChatApp\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use SkeletonAuthApp\Auth;
 use SkeletonChatApp\Models\Contact;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;

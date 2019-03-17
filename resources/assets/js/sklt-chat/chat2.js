@@ -24,33 +24,7 @@ var Chat = {
   is_user_typing: false,
   load_more_counter: 0,
 
-  init: function() {
-    Chat.emitter = new Emitter(Chat, EventHandler, {
-      host: sklt_chat.host,
-      port: sklt_chat.port,
-      login_token: sklt_chat.login_token,
-    });
-
-    Chat.chatApi = new ChatApi(sklt_chat.login_token);
-
-    $('#contacts').on('click', '.contact:not(".active")', Chat.onSelectContact);
-    $('.message-input :input[name="message"]').on('keyup', Chat.onTyping);
-    $('.message-input :input[name="message"]').on('keyup', _.debounce(Chat.onStopTyping, 1500));
-    $('.submit').click(Chat.onSendMessage);
-    $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
-    $('.messages').scroll(Chat.onLoadMoreMessages);
-
-    $('#add-contact-btn').click(Chat.onSearchContact);
-    $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
-    $('body').on('click', ".add-contact-modal .send-contact-request", Chat.onSendContactRequest);
-    $('body').on('click', ".add-contact-modal .accept-contact-request", Chat.onAcceptContactRequest);
-
-    _.delay(function() {
-      if (!Helper.isContactEmpty()) {
-        $('#contacts .contact:first').click(); // select first contact
-      }
-    }, 100);
-  },
+  contact_requests: [],
 
   onConnected: function() { // interface
     console.log("Connection established!");
@@ -67,6 +41,42 @@ var Chat = {
       if ($('body > .disconnected').length === 0) {
         $('body').append('<p class="disconnected">Disconnected!</p>');
       }
+    });
+  },
+
+  init: function() {
+    Chat.emitter = new Emitter(Chat, EventHandler, {
+      host: sklt_chat.host,
+      port: sklt_chat.port,
+      login_token: sklt_chat.login_token,
+    });
+
+    Chat.chatApi = new ChatApi(sklt_chat.login_token);
+
+    // set contact requests before declare the event handlers
+    Chat.chatApi.contactRequests(function(response) {
+      console.log(response);
+      if (response.success) {
+        Chat.contact_requests = response.contact_requests;
+      }
+
+      $('#contacts').on('click', '.contact:not(".active")', Chat.onSelectContact);
+      $('.message-input :input[name="message"]').on('keyup', Chat.onTyping);
+      $('.message-input :input[name="message"]').on('keyup', _.debounce(Chat.onStopTyping, 1500));
+      $('.submit').click(Chat.onSendMessage);
+      $('.message-input :input[name="message"]').on('keydown', Emitter.onHitEnter);
+      $('.messages').scroll(Chat.onLoadMoreMessages);
+
+      $('#add-contact-btn').click(Chat.onSearchContact);
+      $('body').on("keyup", '.add-contact-modal :input[name="search_contact"]', _.throttle(Chat.onSearchingContact, 800));
+      $('body').on('click', ".add-contact-modal .send-contact-request", Chat.onSendContactRequest);
+      $('body').on('click', ".add-contact-modal .accept-contact-request", Chat.onAcceptContactRequest);
+
+      _.delay(function() {
+        if (!Helper.isContactEmpty()) {
+          $('#contacts .contact:first').click(); // select first contact
+        }
+      }, 100);
     });
   },
 
@@ -87,7 +97,7 @@ var Chat = {
     // hide the messages block while fetching the conversation
     $('.messages').addClass("invisible");
 
-    Chat.chatApi.getConversation(chatting_to_id, function(response) {
+    Chat.chatApi.conversation(chatting_to_id, function(response) {
       if (response.success) {
         if (response.conversation.length > 0) {
           if ($('.messages').hasClass("no-message")) {
@@ -290,6 +300,9 @@ var Chat = {
     });
   }
 };
+
+window._ = _;
+window.Chat = Chat;
 
 var EventHandler = {
   onConnectionEstablish: function(data) {

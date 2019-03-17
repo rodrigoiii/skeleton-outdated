@@ -5,7 +5,7 @@ namespace SkeletonChatApp\Transformers;
 use League\Fractal\TransformerAbstract;
 use SkeletonChatApp\Models\Message;
 
-class SendMessageTransformer extends TransformerAbstract
+class ConversationTransformer extends TransformerAbstract
 {
     /**
      * [transform description]

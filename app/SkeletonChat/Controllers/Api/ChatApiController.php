@@ -9,14 +9,26 @@ use SkeletonChatApp\Models\ContactRequest;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\Notification;
 use SkeletonChatApp\Models\User;
-use SkeletonChatApp\Transformers\ContactsRequestTransformer;
+use SkeletonChatApp\Transformers\ContactRequestsTransformer;
+use SkeletonChatApp\Transformers\ConversationTransformer;
 use SkeletonChatApp\Transformers\SearchContactsTransformer;
-use SkeletonChatApp\Transformers\SendMessageTransformer;
-use SkeletonChatApp\Transformers\UserRequestTransformer;
 use SkeletonCore\BaseController;
 
 class ChatApiController extends BaseController
 {
+    public function contactRequests(Request $request, Response $response)
+    {
+        $login_token = $request->getParam('login_token');
+        $authUser = User::findByLoginToken($login_token);
+
+        $contactRequests = sklt_transformer($authUser->contact_requests(true)->get(), new ContactRequestsTransformer)->toArray();
+
+        return $response->withJson([
+            'success' => true,
+            'contact_requests' => $contactRequests['data']
+        ]);
+    }
+
     public function readMessages(Request $request, Response $response, $chatting_to_id)
     {
         $login_token = $request->getParam('login_token');
@@ -37,7 +49,7 @@ class ChatApiController extends BaseController
         );
     }
 
-    public function getConversation(Request $request, Response $response, $chatting_to_id)
+    public function conversations(Request $request, Response $response, $chatting_to_id)
     {
         $login_token = $request->getParam('login_token');
         $authUser = User::findByLoginToken($login_token);
@@ -49,7 +61,7 @@ class ChatApiController extends BaseController
                             ->get()
                             ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        $conversation = sklt_transformer($conversation, new ConversationTransformer)->toArray();
 
         return $response->withJson([
             'success' => true,
@@ -106,7 +118,7 @@ class ChatApiController extends BaseController
                             ->get()
                             ->sortBy('id');
 
-        $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+        $conversation = sklt_transformer($conversation, new ConversationTransformer)->toArray();
 
         return $response->withJson([
             'success' => true,

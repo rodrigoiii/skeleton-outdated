@@ -6,7 +6,7 @@ use Ratchet\ConnectionInterface;
 use SkeletonChatApp\Models\ChatStatus;
 use SkeletonChatApp\Models\Message;
 use SkeletonChatApp\Models\User;
-use SkeletonChatApp\Transformers\SendMessageTransformer;
+use SkeletonChatApp\Transformers\ConversationTransformer;
 
 class EventHandler
 {
@@ -79,7 +79,7 @@ class EventHandler
 
         if (!is_null($message))
         {
-            $message = sklt_transformer($message, new SendMessageTransformer)->toArray();
+            $message = sklt_transformer($message, new ConversationTransformer)->toArray();
 
             // if receiver online
             if (isset($this->clients[$chattingTo->id]))
@@ -216,7 +216,7 @@ class EventHandler
     //                         ->get()
     //                         ->sortBy('id');
 
-    //     $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+    //     $conversation = sklt_transformer($conversation, new ConversationTransformer)->toArray();
 
     //     $return_data = [
     //         'event' => __FUNCTION__,
@@ -243,7 +243,7 @@ class EventHandler
     //                         ->get()
     //                         ->sortBy('id');
 
-    //     $conversation = sklt_transformer($conversation, new SendMessageTransformer)->toArray();
+    //     $conversation = sklt_transformer($conversation, new ConversationTransformer)->toArray();
 
     //     $return_data = [
     //         'event' => __FUNCTION__,
